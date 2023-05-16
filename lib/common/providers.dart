@@ -1,10 +1,38 @@
-import 'package:borrow_app/views/my_home.view.dart';
-import 'package:borrow_app/views/my_home_view_controller.dart';
+import 'package:borrow_app/services/api/backend_service.dart';
+import 'package:borrow_app/services/api/rest_backend_service.dart';
+import 'package:borrow_app/util/dio.util.dart';
+import 'package:borrow_app/views/authentication/login/login.controller.dart';
+import 'package:borrow_app/views/authentication/login/login.view.dart';
+import 'package:borrow_app/views/authentication/signup/signup.controller.dart';
+import 'package:borrow_app/views/authentication/auth.model.dart';
+import 'package:borrow_app/views/authentication/signup/signup.view.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final providers = Providers();
 
 class Providers {
-  final StateNotifierProvider<MyHomeViewController, int> homeViewControllerProvider =
-      StateNotifierProvider((ref) => MyHomeViewControllerImplementation());
+  final dioProvider = Provider<Dio>((ProviderRef ref) => DioUtil.dio);
+
+  final Provider<BackendServiceAggregator> backendServiceProvider = Provider<BackendServiceAggregator>(
+    (ProviderRef ref) => RestBackendServiceImplementation(
+      dioClient: ref.watch(providers.dioProvider),
+      baseUri: Uri.parse(dotenv.get("API_URL")),
+    ),
+  );
+
+  final StateNotifierProvider<SignupController, SignupDto> signupControllerProvider =
+      StateNotifierProvider<SignupController, SignupDto>(
+    (ref) => SignupControllerImplementation(
+      authService: ref.read(providers.backendServiceProvider),
+    ),
+  );
+
+  final StateNotifierProvider<LoginController, LoginDto> loginControllerProvider =
+      StateNotifierProvider<LoginController, LoginDto>(
+    (ref) => LoginControllerImplementation(
+      authService: ref.read(providers.backendServiceProvider),
+    ),
+  );
 }
