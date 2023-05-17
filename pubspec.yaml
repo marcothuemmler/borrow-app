@@ -41,6 +41,7 @@ dependencies:
   freezed: ^2.3.4
   freezed_annotation: ^2.2.0
   email_validator: ^2.1.16
+  flutter_secure_storage: ^8.0.0
 
 dev_dependencies:
   flutter_test:

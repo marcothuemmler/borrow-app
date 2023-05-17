@@ -26,6 +26,7 @@ class PasswordFieldWidget extends StatelessWidget {
         const SizedBox(height: 10),
         TextFormField(
           maxLines: 1,
+          autocorrect: false,
           validator: validator,
           decoration: InputDecoration(
             errorMaxLines: 3,

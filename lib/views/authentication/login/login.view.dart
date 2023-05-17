@@ -51,6 +51,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
             children: [
               TextFieldWidget(
                 text: 'Email',
+                autocorrect: false,
                 validator: (_) => controller.validateFormField(fieldName: 'email'),
                 onChanged: controller.setEmail,
               ),
