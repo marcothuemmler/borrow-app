@@ -14,23 +14,31 @@ class LoginScreen extends ConsumerState{
               children: <Widget>[
                 const Text("E-Mail:"),
                 const SizedBox(
-                  width: 200,
-                  height: 30,
+                  width: 300,
+                  height: 40,
                   child: TextField(),
                 ),
                 const Text("Passwort:"),
                 const SizedBox(
-                  width: 200,
-                  height: 30,
-                  child: TextField(),
+                  width: 300,
+                  height: 40,
+                  child: TextField(obscureText: true,),
                 ),
                 ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       elevation: 12.0,
-                      textStyle: const TextStyle(color: Colors.green),
+                        backgroundColor: Colors.green
                     ),
                     child: const Text("Login")
+                ),
+                ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      elevation: 12.0,
+                      backgroundColor: Colors.blueAccent
+                    ),
+                    child: const Text("Registrieren")
                 ),
               ],
             )
