@@ -20,12 +20,12 @@ class LoginControllerImplementation extends LoginController {
         );
 
   @override
-  setEmail(String value) {
+  void setEmail(String value) {
     state = state.copyWith(email: value);
   }
 
   @override
-  setPassword(String value) {
+  void setPassword(String value) {
     state = state.copyWith(password: value);
   }
 

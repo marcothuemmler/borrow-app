@@ -2,11 +2,14 @@ import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/services/api/rest_backend_service.dart';
 import 'package:borrow_app/services/routing/router.dart';
 import 'package:borrow_app/util/dio.util.dart';
+import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/authentication/login/login.controller.dart';
 import 'package:borrow_app/views/authentication/login/login.view.dart';
 import 'package:borrow_app/views/authentication/signup/signup.controller.dart';
-import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/authentication/signup/signup.view.dart';
+import 'package:borrow_app/views/dashboard/dashboard.controller.dart';
+import 'package:borrow_app/views/dashboard/dashboard.model.dart';
+import 'package:borrow_app/views/dashboard/dashboard_wrapper.view.dart';
 import 'package:borrow_app/views/home/group.controller.dart';
 import 'package:borrow_app/views/home/group.view.dart';
 import 'package:dio/dio.dart';
@@ -45,6 +48,13 @@ class Providers {
       AutoDisposeStateNotifierProvider<LoginController, LoginDto>(
     (ref) => LoginControllerImplementation(
       authService: ref.watch(providers.backendServiceProvider),
+    ),
+  );
+
+  final StateNotifierProvider<DashboardController, DashboardModel> dashboardControllerProvider =
+      StateNotifierProvider<DashboardController, DashboardModel>(
+    (ref) => DashboardControllerImplementation(
+      router: ref.watch(providers.routerProvider),
     ),
   );
 

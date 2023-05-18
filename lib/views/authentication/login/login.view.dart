@@ -1,11 +1,11 @@
 import 'package:borrow_app/common/providers.dart';
-// import 'package:borrow_app/services/routing/routes.dart';
+import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/widgets/textform_fields/password_field.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
@@ -67,7 +67,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         // TODO: go to group selection screen first
                         // context.goNamed(groupsRoute.name);
                         // TODO: await response and continue only when logged in
-                        // context.goNamed(groupRoute.name);
+                        context.goNamed(groupRoute.name);
                       }
                     },
                   )
