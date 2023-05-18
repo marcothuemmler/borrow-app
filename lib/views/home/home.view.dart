@@ -1,6 +1,6 @@
-import 'package:borrow_app/widgets/buttons/primary_button.widget.dart';
-import 'package:borrow_app/widgets/buttons/secondary_button.widget.dart';
-import 'package:flutter/material.dart';
+import "package:borrow_app/services/routing/routes.dart";
+import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -24,16 +24,16 @@ class HomeView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              PrimaryButtonWidget(
-                onPressed: () => Navigator.pushNamed(context, "/login"),
-                text: "Login",
+              ElevatedButton(
+                onPressed: () => context.goNamed(loginRoute.name),
+                child: const Text("Login"),
               ),
               const SizedBox(
                 height: 20,
               ),
-              SecondaryButtonWidget(
-                onPressed: () => Navigator.pushNamed(context, "/register"),
-                text: "Register",
+              TextButton(
+                onPressed: () => context.goNamed(signupRoute.name),
+                child: const Text("Register"),
               )
             ],
           ),
