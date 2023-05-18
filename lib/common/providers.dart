@@ -6,9 +6,12 @@ import 'package:borrow_app/views/authentication/login/login.view.dart';
 import 'package:borrow_app/views/authentication/signup/signup.controller.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/authentication/signup/signup.view.dart';
+import 'package:borrow_app/views/home/group.controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../views/home/group.view.dart';
 
 final providers = Providers();
 
@@ -35,4 +38,7 @@ class Providers {
       authService: ref.read(providers.backendServiceProvider),
     ),
   );
+
+  final StateNotifierProvider<GroupController, int> groupControllerProvider =
+      StateNotifierProvider<GroupController, int>((ref) => GroupControllerImplementation(0));
 }

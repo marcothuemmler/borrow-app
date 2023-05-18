@@ -1,7 +1,7 @@
 import 'package:borrow_app/util/dio.util.dart';
 import 'package:borrow_app/views/authentication/login/login.view.dart';
 import 'package:borrow_app/views/authentication/signup/signup.view.dart';
-import 'package:borrow_app/views/home/home.view.dart';
+import 'package:borrow_app/views/home/group.view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomeView(),
         "/login": (context) => const LoginView(),
         "/register": (context) => const SignupView(),
+        "/showGroups": (context) => GroupView(),
       },
       debugShowCheckedModeBanner: false,
     );
