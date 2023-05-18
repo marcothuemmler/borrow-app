@@ -1,16 +1,17 @@
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/dashboard.model.dart";
-import "package:borrow_app/widgets/cards/item_card.widget.dart";
 import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class DashboardWrapperView extends ConsumerStatefulWidget {
   final Widget child;
+  final String groupId;
 
   const DashboardWrapperView({
     super.key,
     required this.child,
+    required this.groupId,
   });
 
   @override
@@ -20,8 +21,12 @@ class DashboardWrapperView extends ConsumerStatefulWidget {
 class _DashboardWrapperViewState extends ConsumerState<DashboardWrapperView> {
   @override
   Widget build(BuildContext context) {
-    final DashboardController controller = ref.read(providers.dashboardControllerProvider.notifier);
-    final DashboardModel model = ref.watch(providers.dashboardControllerProvider);
+    final DashboardController controller = ref.read(
+      providers.dashboardControllerProvider(widget.groupId).notifier,
+    );
+    final DashboardModel model = ref.watch(
+      providers.dashboardControllerProvider(widget.groupId),
+    );
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -30,39 +35,20 @@ class _DashboardWrapperViewState extends ConsumerState<DashboardWrapperView> {
           children: [
             Text(model.currentTitle ?? ""),
             if (model.currentIndex == 0)
-              DropdownWidget<String?>(
+              DropdownWidget<String>(
                 hint: const Text("Category"),
                 items: model.categories,
-                onChanged: controller.setCategory,
+                onChanged: controller.setCategoryFilter,
                 value: model.selectedCategory,
                 mapFunction: (item) => DropdownMenuItem(
                   value: item,
-                  child: Text(item!),
+                  child: Text(item),
                 ),
               )
           ],
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            const Padding(padding: EdgeInsets.symmetric(horizontal: 25), child: Text("Items:")),
-            const SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 5,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return const ItemCard();
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         onTap: controller.setCurrentIndex,
         currentIndex: model.currentIndex,
@@ -86,5 +72,7 @@ abstract class DashboardController extends StateNotifier<DashboardModel> {
 
   void setCurrentIndex(int index);
 
-  void setCategory(String? category);
+  void setCategoryFilter(String? category);
+
+  void navigateToItem();
 }

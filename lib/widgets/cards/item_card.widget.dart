@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({super.key});
+  final void Function()? onTap;
+
+  const ItemCard({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class ItemCard extends StatelessWidget {
         elevation: 0,
         clipBehavior: Clip.hardEdge,
         child: InkWell(
+          onTap: onTap,
           // child: Padding(
           // padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
           child: SizedBox(
@@ -70,8 +73,6 @@ class ItemCard extends StatelessWidget {
               ],
             ),
           ),
-          // ),
-          onTap: () {},
         ),
       ),
     );

@@ -48,4 +48,16 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       throw Exception("Failed to sign in: $error");
     }
   }
+
+  @override
+  Future<dynamic> getGroupWithItemsWithOwner({required String id}) async {
+    try {
+      // TODO: implement and use proper backend route
+      // TODO: GroupModel
+      await _client.get("/group/$id");
+    } catch (error) {
+      // TODO: error handling
+      //
+    }
+  }
 }

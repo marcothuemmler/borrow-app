@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DropdownWidget<T> extends StatelessWidget {
-  final T value;
+  final T? value;
   final List<T> items;
   final void Function(T?)? onChanged;
   final DropdownMenuItem<T> Function(T) mapFunction;

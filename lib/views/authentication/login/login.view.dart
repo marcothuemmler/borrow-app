@@ -67,7 +67,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         // TODO: go to group selection screen first
                         // context.goNamed(groupsRoute.name);
                         // TODO: await response and continue only when logged in
-                        context.goNamed(groupRoute.name);
+                        context.goNamed(
+                          groupRoute.name,
+                          // TODO: ID from group selection screen
+                          pathParameters: {
+                            "groupId": "cb86c89d-9ba3-4024-9477-fa1a236643c5",
+                          },
+                        );
                       }
                     },
                   )

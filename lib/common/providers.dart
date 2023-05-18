@@ -51,10 +51,12 @@ class Providers {
     ),
   );
 
-  final StateNotifierProvider<DashboardController, DashboardModel> dashboardControllerProvider =
-      StateNotifierProvider<DashboardController, DashboardModel>(
-    (ref) => DashboardControllerImplementation(
+  final StateNotifierProviderFamily<DashboardController, DashboardModel, String> dashboardControllerProvider =
+      StateNotifierProviderFamily<DashboardController, DashboardModel, String>(
+    (ref, groupId) => DashboardControllerImplementation(
       router: ref.watch(providers.routerProvider),
+      dashboardService: ref.watch(providers.backendServiceProvider),
+      groupId: groupId,
     ),
   );
 
