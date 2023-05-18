@@ -10,6 +10,7 @@ import 'package:borrow_app/views/home/group.controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../views/home/group.view.dart';
 
@@ -18,10 +19,15 @@ final providers = Providers();
 class Providers {
   final dioProvider = Provider<Dio>((ProviderRef ref) => DioUtil.dio);
 
+  final secureStorageProvider = Provider<FlutterSecureStorage>(
+    (ProviderRef ref) => DioUtil.storage,
+  );
+
   final Provider<BackendServiceAggregator> backendServiceProvider = Provider<BackendServiceAggregator>(
     (ProviderRef ref) => RestBackendServiceImplementation(
       dioClient: ref.watch(providers.dioProvider),
       baseUri: Uri.parse(dotenv.get("API_URL")),
+      secureStorage: ref.watch(providers.secureStorageProvider),
     ),
   );
 

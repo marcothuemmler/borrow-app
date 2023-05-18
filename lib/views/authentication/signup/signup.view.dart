@@ -51,13 +51,15 @@ class _SignupViewState extends ConsumerState<SignupView> {
             children: [
               TextFieldWidget(
                 text: 'Email',
+                autocorrect: false,
                 validator: (_) => controller.validateFormField(fieldName: 'email'),
                 onChanged: controller.setEmail,
               ),
               TextFieldWidget(
                 text: 'Username',
+                autocorrect: false,
                 validator: (_) => controller.validateFormField(fieldName: 'username'),
-                onChanged: controller.setEmail,
+                onChanged: controller.setUsername,
               ),
               PasswordFieldWidget(
                 text: 'Password',
