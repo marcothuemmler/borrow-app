@@ -33,17 +33,22 @@ class _LoginViewState extends ConsumerState<GroupView> {
           elevation: 0,
           foregroundColor: Colors.black),
       body: Container(
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                elevation: 12.0,
-                backgroundColor: Colors.blueAccent
-            ), child: const Text("Neue Gruppe"),
-            )
-          ],
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 50),
+        child: Form(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    elevation: 12.0,
+                    backgroundColor: Colors.blueAccent
+                ), child: const Text("Neue Gruppe"),
+              )
+            ],
+          ),
+        )
       ),
     );
   }
