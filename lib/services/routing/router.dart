@@ -88,7 +88,7 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                 },
                 routes: [
                   GoRoute(
-                    parentNavigatorKey: _shellNavigatorKey,
+                    parentNavigatorKey: _rootNavigatorKey,
                     name: itemRoute.name,
                     path: itemRoute.path,
                     builder: (context, state) {

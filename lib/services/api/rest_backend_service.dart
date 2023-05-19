@@ -1,5 +1,6 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
+import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -28,14 +29,15 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<void> login({required LoginDto payload}) async {
+  Future<bool> login({required LoginDto payload}) async {
     try {
       final response = await _client.post("/auth/login", data: payload);
       await _secureStorage.write(key: 'accessToken', value: response.data['accessToken']);
       await _secureStorage.write(key: 'refreshToken', value: response.data['refreshToken']);
+      return true;
     } catch (error) {
       await _secureStorage.deleteAll();
-      throw Exception("Failed to sign in: $error");
+      return false;
     }
   }
 
@@ -50,14 +52,14 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<dynamic> getGroupWithItemsWithOwner({required String id}) async {
+  Future<List<ItemModel>> getItemsByGroupId({required String groupId}) async {
     try {
-      // TODO: implement and use proper backend route
-      // TODO: GroupModel
-      await _client.get("/group/$id");
+      final response = await _client.get("/item/by-group/$groupId");
+      return List<ItemModel>.from(
+        response.data.map((json) => ItemModel.fromJson(json)),
+      );
     } catch (error) {
-      // TODO: error handling
-      //
+      throw Exception("Could not get group items: $error");
     }
   }
 }

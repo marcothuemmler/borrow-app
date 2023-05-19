@@ -27,6 +27,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(providers.loginControllerProvider.notifier);
+    final model = ref.watch(providers.loginControllerProvider);
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -54,7 +55,17 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 onChanged: controller.setPassword,
                 obscureText: _obscurePassword,
               ),
-              const SizedBox(height: 60),
+              if (model.loginError)
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 5),
+                    child: Text(
+                      "Beim Einloggen ist etwas schiefgelaufen",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -63,15 +74,19 @@ class _LoginViewState extends ConsumerState<LoginView> {
                     onPressed: () {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
-                        controller.login();
-                        // TODO: go to group selection screen first
-                        // context.goNamed(groupsRoute.name);
-                        // TODO: await response and continue only when logged in
-                        context.goNamed(
-                          groupRoute.name,
-                          // TODO: ID from group selection screen
-                          pathParameters: {
-                            "groupId": "cb86c89d-9ba3-4024-9477-fa1a236643c5",
+                        controller.login().then(
+                          (logInSuccess) {
+                            if (logInSuccess) {
+                              // TODO: go to group selection screen first
+                              // context.goNamed(groupsRoute.name);
+                              context.goNamed(
+                                groupRoute.name,
+                                // TODO: ID from group selection screen
+                                pathParameters: {
+                                  "groupId": "cb86c89d-9ba3-4024-9477-fa1a236643c5",
+                                },
+                              );
+                            }
                           },
                         );
                       }
@@ -87,11 +102,14 @@ class _LoginViewState extends ConsumerState<LoginView> {
   }
 }
 
-abstract class LoginController extends StateNotifier<LoginDto> {
-  LoginController(LoginDto model) : super(model);
+abstract class LoginController extends StateNotifier<LoginModel> {
+  LoginController(LoginModel model) : super(model);
 
-  Future<void> login();
+  Future<bool> login();
+
   void setEmail(String value);
+
   void setPassword(String value);
+
   String? validateFormField({required String fieldName});
 }

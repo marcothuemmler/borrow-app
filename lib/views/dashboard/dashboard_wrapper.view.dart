@@ -73,6 +73,4 @@ abstract class DashboardController extends StateNotifier<DashboardModel> {
   void setCurrentIndex(int index);
 
   void setCategoryFilter(String? category);
-
-  void navigateToItem();
 }

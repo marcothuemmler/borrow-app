@@ -1,19 +1,15 @@
 import "package:borrow_app/services/routing/routes.dart";
 import "package:borrow_app/views/dashboard/dashboard.model.dart";
-import "package:borrow_app/views/dashboard/dashboard.service.dart";
 import "package:borrow_app/views/dashboard/dashboard_wrapper.view.dart";
 import "package:go_router/go_router.dart";
 
-// TODO: possibly implement separate dashboard controller and item list controller
 class DashboardControllerImplementation extends DashboardController {
   final GoRouter _router;
-  final DashboardService dashboardService;
   final String groupId;
 
   DashboardControllerImplementation({
     DashboardModel? model,
     required GoRouter router,
-    required this.dashboardService,
     required this.groupId,
   })  : _router = router,
         super(
@@ -23,13 +19,7 @@ class DashboardControllerImplementation extends DashboardController {
                 currentTitle: "Browse",
                 selectedCategory: null,
               ),
-        ) {
-    _init();
-  }
-
-  void _init() {
-    dashboardService.getGroupWithItemsWithOwner(id: groupId);
-  }
+        );
 
   @override
   void setCurrentIndex(int index) {
@@ -47,10 +37,5 @@ class DashboardControllerImplementation extends DashboardController {
   @override
   void setCategoryFilter(String? category) {
     state = state.copyWith(selectedCategory: category);
-  }
-
-  @override
-  void navigateToItem() {
-    dashboardService.getGroupWithItemsWithOwner(id: groupId);
   }
 }
