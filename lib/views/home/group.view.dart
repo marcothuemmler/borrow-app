@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import '../../common/providers.dart';
 
 const exampleGroups = ["Sportverein", "WG", "Kaffeeklatsch", "Nachbarschaft"];
@@ -44,8 +44,25 @@ class _LoginViewState extends ConsumerState<GroupView> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Column(
-                  children: createWidgets(Colors.blueAccent, 12.0, 16.0),
+                CarouselSlider(
+                  options: CarouselOptions(height: 400),
+                  items: exampleGroups.map((s) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                            decoration: const BoxDecoration(
+                                color: Colors.amber,
+                            ),
+                            child: Center(
+                                child: Text(s, style: const TextStyle(fontSize: 32.0)
+                            ),)
+                        );
+                      },
+                    );
+                  }).toList(),
                 ),
                 buttonWidget("Neue Gruppe", Colors.greenAccent, 24.0, 24.0),
               ],
@@ -55,14 +72,6 @@ class _LoginViewState extends ConsumerState<GroupView> {
       ),
     );
   }
-}
-
-List<Widget> createWidgets(MaterialAccentColor color, double padding, double fontsize) {
-  var l = <Widget>[];
-  for (var s in exampleGroups) {l.add(
-    buttonWidget(s, color, padding, fontsize),
-  );}
-  return l;
 }
 
 Widget buttonWidget(String s, MaterialAccentColor c, double padding, double fontsize) {
