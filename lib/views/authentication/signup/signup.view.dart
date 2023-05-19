@@ -1,6 +1,5 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
-import 'package:borrow_app/widgets/buttons/primary_button.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/password_field.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
@@ -26,21 +25,12 @@ class _SignupViewState extends ConsumerState<SignupView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.read(providers.signupControllerProvider.notifier);
+    final controller = ref.watch(providers.signupControllerProvider.notifier);
     return Scaffold(
       appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: const BackButton(),
-          centerTitle: false,
-          title: const Text("Register"),
-          titleTextStyle: const TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          foregroundColor: Colors.black),
+        leading: const BackButton(),
+        title: const Text("Register"),
+      ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Form(
@@ -72,8 +62,8 @@ class _SignupViewState extends ConsumerState<SignupView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  PrimaryButtonWidget(
-                    text: "Submit",
+                  ElevatedButton(
+                    child: const Text("Submit"),
                     onPressed: () {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {

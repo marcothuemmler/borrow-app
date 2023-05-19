@@ -1,10 +1,11 @@
 import 'package:borrow_app/common/providers.dart';
+// import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
-import 'package:borrow_app/widgets/buttons/primary_button.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/password_field.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:go_router/go_router.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
@@ -25,21 +26,12 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.read(providers.loginControllerProvider.notifier);
+    final controller = ref.watch(providers.loginControllerProvider.notifier);
     return Scaffold(
       appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: const BackButton(),
-          centerTitle: false,
-          title: const Text("Log In"),
-          titleTextStyle: const TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          foregroundColor: Colors.black),
+        leading: const BackButton(),
+        title: const Text("Log In"),
+      ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Form(
@@ -66,12 +58,16 @@ class _LoginViewState extends ConsumerState<LoginView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  PrimaryButtonWidget(
-                    text: "Submit",
+                  ElevatedButton(
+                    child: const Text("Submit"),
                     onPressed: () {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
                         controller.login();
+                        // TODO: go to group selection screen first
+                        // context.goNamed(groupsRoute.name);
+                        // TODO: await response and continue only when logged in
+                        // context.goNamed(groupRoute.name);
                       }
                     },
                   )
