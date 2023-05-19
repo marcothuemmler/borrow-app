@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../common/providers.dart';
 
+const exampleGroups = ["Sportverein", "WG", "Kaffeeklatsch", "Nachbarschaft"];
+
 class GroupView extends ConsumerStatefulWidget {
 
   @override
@@ -15,6 +17,7 @@ class GroupView extends ConsumerStatefulWidget {
 class _LoginViewState extends ConsumerState<GroupView> {
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     final controller = ref.read(providers.groupControllerProvider.notifier);
     final model = ref.watch(providers.groupControllerProvider);
 
@@ -32,26 +35,47 @@ class _LoginViewState extends ConsumerState<GroupView> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           foregroundColor: Colors.black),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
+      body: Center(
+        key: _formKey,
         child: Form(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    elevation: 12.0,
-                    backgroundColor: Colors.blueAccent
-                ), child: const Text("Neue Gruppe"),
-              )
-            ],
-          ),
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Column(
+                  children: createWidgets(Colors.blueAccent, 12.0, 16.0),
+                ),
+                buttonWidget("Neue Gruppe", Colors.greenAccent, 24.0, 24.0),
+              ],
+            ),
+          )
         )
       ),
     );
   }
+}
+
+List<Widget> createWidgets(MaterialAccentColor color, double padding, double fontsize) {
+  var l = <Widget>[];
+  for (var s in exampleGroups) {l.add(
+    buttonWidget(s, color, padding, fontsize),
+  );}
+  return l;
+}
+
+Widget buttonWidget(String s, MaterialAccentColor c, double padding, double fontsize) {
+  return Padding(
+    padding: EdgeInsets.all(padding),
+    child: ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(
+          elevation: 12.0,
+          backgroundColor: c
+      ), child: Text(s, style: TextStyle(fontSize: fontsize),),
+    ),
+  );
 }
 
 abstract class GroupController extends StateNotifier<int> {
