@@ -88,6 +88,10 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
             ElevatedButton(
               onPressed: () => controller.addGroup("eine neue Gruppe"),
               child: const Text("Neue Gruppe"),
+            ),
+            ElevatedButton(
+              onPressed: () => {},
+              child: const Text("Einladen"),
             )
           ],
         ),
