@@ -7,21 +7,30 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   const SystemUiOverlayStyle(
+    //     statusBarBrightness: Brightness.dark,
+    //   ),
+    // );
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(bottom: 120),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        // decoration: const BoxDecoration(
-        //   image: DecorationImage(
-        //     image: AssetImage("assets/images/background"),
-        //     fit: BoxFit.cover,
-        //   ),
-        // ),
-        child: SafeArea(
-          top: true,
-          bottom: true,
-          child: Column(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          ShaderMask(
+            shaderCallback: (rect) {
+              return const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.black, Colors.black87, Colors.black26, Colors.transparent],
+              ).createShader(Rect.fromLTRB(0, 0, rect.width, MediaQuery.of(context).size.height));
+            },
+            blendMode: BlendMode.dstIn,
+            child: Image.asset(
+              'assets/images/mess.jpg',
+              fit: BoxFit.cover,
+            ),
+          ),
+          Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               ElevatedButton(
@@ -34,10 +43,13 @@ class HomeView extends StatelessWidget {
               TextButton(
                 onPressed: () => context.goNamed(signupRoute.name),
                 child: const Text("Register"),
+              ),
+              const SizedBox(
+                height: 120,
               )
             ],
           ),
-        ),
+        ],
       ),
     );
   }
