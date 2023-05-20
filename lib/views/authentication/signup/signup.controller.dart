@@ -21,17 +21,17 @@ class SignupControllerImplementation extends SignupController {
         );
 
   @override
-  setEmail(String value) {
+  void setEmail(String value) {
     state = state.copyWith(email: value);
   }
 
   @override
-  setPassword(String value) {
+  void setPassword(String value) {
     state = state.copyWith(password: value);
   }
 
   @override
-  setUsername(String value) {
+  void setUsername(String value) {
     state = state.copyWith(username: value);
   }
 

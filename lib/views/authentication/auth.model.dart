@@ -4,6 +4,14 @@ part 'auth.model.freezed.dart';
 part 'auth.model.g.dart';
 
 @freezed
+class LoginModel with _$LoginModel {
+  const factory LoginModel({
+    required bool loginError,
+    required LoginDto loginDto,
+  }) = _LoginModel;
+}
+
+@freezed
 class SignupDto with _$SignupDto {
   const factory SignupDto({
     required String? email,

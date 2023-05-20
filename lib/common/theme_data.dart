@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 
 final themeData = ThemeData(
   textButtonTheme: TextButtonThemeData(
@@ -33,13 +34,14 @@ final themeData = ThemeData(
   ),
   primarySwatch: Colors.blue,
   appBarTheme: const AppBarTheme(
+    systemOverlayStyle: SystemUiOverlayStyle.dark,
     titleTextStyle: TextStyle(
       fontSize: 26,
       fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
-    backgroundColor: Colors.transparent,
-    elevation: 0,
+    backgroundColor: Colors.white,
+    elevation: 0.4,
     foregroundColor: Colors.black,
     centerTitle: false,
   ),

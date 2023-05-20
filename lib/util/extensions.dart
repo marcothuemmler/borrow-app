@@ -1,5 +1,5 @@
 extension IsStrongPassword on String {
-  _isStrongPassword() {
+  bool _isStrongPassword() {
     //
     // final strongPasswordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     final strongPasswordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');

@@ -14,6 +14,156 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+/// @nodoc
+mixin _$LoginModel {
+  bool get loginError => throw _privateConstructorUsedError;
+  LoginDto get loginDto => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $LoginModelCopyWith<LoginModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LoginModelCopyWith<$Res> {
+  factory $LoginModelCopyWith(
+          LoginModel value, $Res Function(LoginModel) then) =
+      _$LoginModelCopyWithImpl<$Res, LoginModel>;
+  @useResult
+  $Res call({bool loginError, LoginDto loginDto});
+
+  $LoginDtoCopyWith<$Res> get loginDto;
+}
+
+/// @nodoc
+class _$LoginModelCopyWithImpl<$Res, $Val extends LoginModel>
+    implements $LoginModelCopyWith<$Res> {
+  _$LoginModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? loginError = null,
+    Object? loginDto = null,
+  }) {
+    return _then(_value.copyWith(
+      loginError: null == loginError
+          ? _value.loginError
+          : loginError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      loginDto: null == loginDto
+          ? _value.loginDto
+          : loginDto // ignore: cast_nullable_to_non_nullable
+              as LoginDto,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $LoginDtoCopyWith<$Res> get loginDto {
+    return $LoginDtoCopyWith<$Res>(_value.loginDto, (value) {
+      return _then(_value.copyWith(loginDto: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_LoginModelCopyWith<$Res>
+    implements $LoginModelCopyWith<$Res> {
+  factory _$$_LoginModelCopyWith(
+          _$_LoginModel value, $Res Function(_$_LoginModel) then) =
+      __$$_LoginModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool loginError, LoginDto loginDto});
+
+  @override
+  $LoginDtoCopyWith<$Res> get loginDto;
+}
+
+/// @nodoc
+class __$$_LoginModelCopyWithImpl<$Res>
+    extends _$LoginModelCopyWithImpl<$Res, _$_LoginModel>
+    implements _$$_LoginModelCopyWith<$Res> {
+  __$$_LoginModelCopyWithImpl(
+      _$_LoginModel _value, $Res Function(_$_LoginModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? loginError = null,
+    Object? loginDto = null,
+  }) {
+    return _then(_$_LoginModel(
+      loginError: null == loginError
+          ? _value.loginError
+          : loginError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      loginDto: null == loginDto
+          ? _value.loginDto
+          : loginDto // ignore: cast_nullable_to_non_nullable
+              as LoginDto,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_LoginModel implements _LoginModel {
+  const _$_LoginModel({required this.loginError, required this.loginDto});
+
+  @override
+  final bool loginError;
+  @override
+  final LoginDto loginDto;
+
+  @override
+  String toString() {
+    return 'LoginModel(loginError: $loginError, loginDto: $loginDto)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_LoginModel &&
+            (identical(other.loginError, loginError) ||
+                other.loginError == loginError) &&
+            (identical(other.loginDto, loginDto) ||
+                other.loginDto == loginDto));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, loginError, loginDto);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LoginModelCopyWith<_$_LoginModel> get copyWith =>
+      __$$_LoginModelCopyWithImpl<_$_LoginModel>(this, _$identity);
+}
+
+abstract class _LoginModel implements LoginModel {
+  const factory _LoginModel(
+      {required final bool loginError,
+      required final LoginDto loginDto}) = _$_LoginModel;
+
+  @override
+  bool get loginError;
+  @override
+  LoginDto get loginDto;
+  @override
+  @JsonKey(ignore: true)
+  _$$_LoginModelCopyWith<_$_LoginModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 SignupDto _$SignupDtoFromJson(Map<String, dynamic> json) {
   return _SignupDto.fromJson(json);
 }
