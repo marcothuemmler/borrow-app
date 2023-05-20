@@ -19,25 +19,30 @@ class ItemListControllerImplementation extends ItemListController {
         super(
           model ??
               ItemListModel(
+                selectedCategory: null,
                 hasError: false,
                 isLoading: true,
-                items: none(),
+                group: none(),
               ),
         ) {
     _init();
   }
 
   void _init() {
-    getItemsByGroupId(id: groupId);
+    getGroupItemsAndCategories(id: groupId);
   }
 
-  Future<void> getItemsByGroupId({required String id}) async {
-    state = state.copyWith(isLoading: true);
+  Future<void> getGroupItemsAndCategories({required String id}) async {
+    state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await itemListService.getItemsByGroupId(groupId: id);
-      state = state.copyWith(items: optionOf(response), isLoading: false);
+      final response = await itemListService.getGroupItemsAndCategories(groupId: id);
+      state = state.copyWith(
+        group: optionOf(response),
+        isLoading: false,
+        hasError: false,
+      );
     } catch (error) {
-      state = state.copyWith(hasError: true);
+      state = state.copyWith(hasError: true, isLoading: false);
     }
   }
 
@@ -47,5 +52,10 @@ class ItemListControllerImplementation extends ItemListController {
       itemRoute.name,
       pathParameters: {"itemId": itemId, "groupId": groupId},
     );
+  }
+
+  @override
+  void selectCategory(CategoryModel? category) {
+    state = state.copyWith(selectedCategory: category);
   }
 }

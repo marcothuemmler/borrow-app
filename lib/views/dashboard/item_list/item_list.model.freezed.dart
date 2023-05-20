@@ -18,7 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ItemListModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-  Option<List<ItemModel>> get items => throw _privateConstructorUsedError;
+  CategoryModel? get selectedCategory => throw _privateConstructorUsedError;
+  Option<GroupModel> get group => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ItemListModelCopyWith<ItemListModel> get copyWith =>
@@ -31,7 +32,13 @@ abstract class $ItemListModelCopyWith<$Res> {
           ItemListModel value, $Res Function(ItemListModel) then) =
       _$ItemListModelCopyWithImpl<$Res, ItemListModel>;
   @useResult
-  $Res call({bool isLoading, bool hasError, Option<List<ItemModel>> items});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      CategoryModel? selectedCategory,
+      Option<GroupModel> group});
+
+  $CategoryModelCopyWith<$Res>? get selectedCategory;
 }
 
 /// @nodoc
@@ -49,7 +56,8 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? items = null,
+    Object? selectedCategory = freezed,
+    Object? group = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -60,11 +68,27 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      items: null == items
-          ? _value.items
-          : items // ignore: cast_nullable_to_non_nullable
-              as Option<List<ItemModel>>,
+      selectedCategory: freezed == selectedCategory
+          ? _value.selectedCategory
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
+      group: null == group
+          ? _value.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as Option<GroupModel>,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get selectedCategory {
+    if (_value.selectedCategory == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.selectedCategory!, (value) {
+      return _then(_value.copyWith(selectedCategory: value) as $Val);
+    });
   }
 }
 
@@ -76,7 +100,14 @@ abstract class _$$_ItemListModelCopyWith<$Res>
       __$$_ItemListModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, bool hasError, Option<List<ItemModel>> items});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      CategoryModel? selectedCategory,
+      Option<GroupModel> group});
+
+  @override
+  $CategoryModelCopyWith<$Res>? get selectedCategory;
 }
 
 /// @nodoc
@@ -92,7 +123,8 @@ class __$$_ItemListModelCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? items = null,
+    Object? selectedCategory = freezed,
+    Object? group = null,
   }) {
     return _then(_$_ItemListModel(
       isLoading: null == isLoading
@@ -103,10 +135,14 @@ class __$$_ItemListModelCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      items: null == items
-          ? _value.items
-          : items // ignore: cast_nullable_to_non_nullable
-              as Option<List<ItemModel>>,
+      selectedCategory: freezed == selectedCategory
+          ? _value.selectedCategory
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
+      group: null == group
+          ? _value.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as Option<GroupModel>,
     ));
   }
 }
@@ -115,18 +151,23 @@ class __$$_ItemListModelCopyWithImpl<$Res>
 
 class _$_ItemListModel implements _ItemListModel {
   _$_ItemListModel(
-      {required this.isLoading, required this.hasError, required this.items});
+      {required this.isLoading,
+      required this.hasError,
+      required this.selectedCategory,
+      required this.group});
 
   @override
   final bool isLoading;
   @override
   final bool hasError;
   @override
-  final Option<List<ItemModel>> items;
+  final CategoryModel? selectedCategory;
+  @override
+  final Option<GroupModel> group;
 
   @override
   String toString() {
-    return 'ItemListModel(isLoading: $isLoading, hasError: $hasError, items: $items)';
+    return 'ItemListModel(isLoading: $isLoading, hasError: $hasError, selectedCategory: $selectedCategory, group: $group)';
   }
 
   @override
@@ -138,11 +179,14 @@ class _$_ItemListModel implements _ItemListModel {
                 other.isLoading == isLoading) &&
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
-            (identical(other.items, items) || other.items == items));
+            (identical(other.selectedCategory, selectedCategory) ||
+                other.selectedCategory == selectedCategory) &&
+            (identical(other.group, group) || other.group == group));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, hasError, items);
+  int get hashCode =>
+      Object.hash(runtimeType, isLoading, hasError, selectedCategory, group);
 
   @JsonKey(ignore: true)
   @override
@@ -155,61 +199,59 @@ abstract class _ItemListModel implements ItemListModel {
   factory _ItemListModel(
       {required final bool isLoading,
       required final bool hasError,
-      required final Option<List<ItemModel>> items}) = _$_ItemListModel;
+      required final CategoryModel? selectedCategory,
+      required final Option<GroupModel> group}) = _$_ItemListModel;
 
   @override
   bool get isLoading;
   @override
   bool get hasError;
   @override
-  Option<List<ItemModel>> get items;
+  CategoryModel? get selectedCategory;
+  @override
+  Option<GroupModel> get group;
   @override
   @JsonKey(ignore: true)
   _$$_ItemListModelCopyWith<_$_ItemListModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-ItemModel _$ItemModelFromJson(Map<String, dynamic> json) {
-  return _ItemsModel.fromJson(json);
+GroupModel _$GroupModelFromJson(Map<String, dynamic> json) {
+  return _GroupModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ItemModel {
+mixin _$GroupModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  CategoryModel get category => throw _privateConstructorUsedError;
-  GroupModel? get group => throw _privateConstructorUsedError;
-  UserModel get owner => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+  List<ItemModel> get items => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ItemModelCopyWith<ItemModel> get copyWith =>
+  $GroupModelCopyWith<GroupModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ItemModelCopyWith<$Res> {
-  factory $ItemModelCopyWith(ItemModel value, $Res Function(ItemModel) then) =
-      _$ItemModelCopyWithImpl<$Res, ItemModel>;
+abstract class $GroupModelCopyWith<$Res> {
+  factory $GroupModelCopyWith(
+          GroupModel value, $Res Function(GroupModel) then) =
+      _$GroupModelCopyWithImpl<$Res, GroupModel>;
   @useResult
   $Res call(
       {String id,
       String name,
       String? description,
-      CategoryModel category,
-      GroupModel? group,
-      UserModel owner});
-
-  $CategoryModelCopyWith<$Res> get category;
-  $GroupModelCopyWith<$Res>? get group;
-  $UserModelCopyWith<$Res> get owner;
+      List<CategoryModel> categories,
+      List<ItemModel> items});
 }
 
 /// @nodoc
-class _$ItemModelCopyWithImpl<$Res, $Val extends ItemModel>
-    implements $ItemModelCopyWith<$Res> {
-  _$ItemModelCopyWithImpl(this._value, this._then);
+class _$GroupModelCopyWithImpl<$Res, $Val extends GroupModel>
+    implements $GroupModelCopyWith<$Res> {
+  _$GroupModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -222,9 +264,8 @@ class _$ItemModelCopyWithImpl<$Res, $Val extends ItemModel>
     Object? id = null,
     Object? name = null,
     Object? description = freezed,
-    Object? category = null,
-    Object? group = freezed,
-    Object? owner = null,
+    Object? categories = null,
+    Object? items = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -239,80 +280,40 @@ class _$ItemModelCopyWithImpl<$Res, $Val extends ItemModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as GroupModel?,
-      owner: null == owner
-          ? _value.owner
-          : owner // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+      categories: null == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryModel>,
+      items: null == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<ItemModel>,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryModelCopyWith<$Res> get category {
-    return $CategoryModelCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $GroupModelCopyWith<$Res>? get group {
-    if (_value.group == null) {
-      return null;
-    }
-
-    return $GroupModelCopyWith<$Res>(_value.group!, (value) {
-      return _then(_value.copyWith(group: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res> get owner {
-    return $UserModelCopyWith<$Res>(_value.owner, (value) {
-      return _then(_value.copyWith(owner: value) as $Val);
-    });
   }
 }
 
 /// @nodoc
-abstract class _$$_ItemsModelCopyWith<$Res>
-    implements $ItemModelCopyWith<$Res> {
-  factory _$$_ItemsModelCopyWith(
-          _$_ItemsModel value, $Res Function(_$_ItemsModel) then) =
-      __$$_ItemsModelCopyWithImpl<$Res>;
+abstract class _$$_GroupModelCopyWith<$Res>
+    implements $GroupModelCopyWith<$Res> {
+  factory _$$_GroupModelCopyWith(
+          _$_GroupModel value, $Res Function(_$_GroupModel) then) =
+      __$$_GroupModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String id,
       String name,
       String? description,
-      CategoryModel category,
-      GroupModel? group,
-      UserModel owner});
-
-  @override
-  $CategoryModelCopyWith<$Res> get category;
-  @override
-  $GroupModelCopyWith<$Res>? get group;
-  @override
-  $UserModelCopyWith<$Res> get owner;
+      List<CategoryModel> categories,
+      List<ItemModel> items});
 }
 
 /// @nodoc
-class __$$_ItemsModelCopyWithImpl<$Res>
-    extends _$ItemModelCopyWithImpl<$Res, _$_ItemsModel>
-    implements _$$_ItemsModelCopyWith<$Res> {
-  __$$_ItemsModelCopyWithImpl(
-      _$_ItemsModel _value, $Res Function(_$_ItemsModel) _then)
+class __$$_GroupModelCopyWithImpl<$Res>
+    extends _$GroupModelCopyWithImpl<$Res, _$_GroupModel>
+    implements _$$_GroupModelCopyWith<$Res> {
+  __$$_GroupModelCopyWithImpl(
+      _$_GroupModel _value, $Res Function(_$_GroupModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -321,11 +322,10 @@ class __$$_ItemsModelCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? description = freezed,
-    Object? category = null,
-    Object? group = freezed,
-    Object? owner = null,
+    Object? categories = null,
+    Object? items = null,
   }) {
-    return _then(_$_ItemsModel(
+    return _then(_$_GroupModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -338,35 +338,32 @@ class __$$_ItemsModelCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as GroupModel?,
-      owner: null == owner
-          ? _value.owner
-          : owner // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryModel>,
+      items: null == items
+          ? _value._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<ItemModel>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_ItemsModel implements _ItemsModel {
-  _$_ItemsModel(
+class _$_GroupModel implements _GroupModel {
+  _$_GroupModel(
       {required this.id,
       required this.name,
       required this.description,
-      required this.category,
-      required this.group,
-      required this.owner});
+      required final List<CategoryModel> categories,
+      required final List<ItemModel> items})
+      : _categories = categories,
+        _items = items;
 
-  factory _$_ItemsModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ItemsModelFromJson(json);
+  factory _$_GroupModel.fromJson(Map<String, dynamic> json) =>
+      _$$_GroupModelFromJson(json);
 
   @override
   final String id;
@@ -374,63 +371,75 @@ class _$_ItemsModel implements _ItemsModel {
   final String name;
   @override
   final String? description;
+  final List<CategoryModel> _categories;
   @override
-  final CategoryModel category;
+  List<CategoryModel> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
+  final List<ItemModel> _items;
   @override
-  final GroupModel? group;
-  @override
-  final UserModel owner;
+  List<ItemModel> get items {
+    if (_items is EqualUnmodifiableListView) return _items;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_items);
+  }
 
   @override
   String toString() {
-    return 'ItemModel(id: $id, name: $name, description: $description, category: $category, group: $group, owner: $owner)';
+    return 'GroupModel(id: $id, name: $name, description: $description, categories: $categories, items: $items)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ItemsModel &&
+            other is _$_GroupModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
-            (identical(other.group, group) || other.group == group) &&
-            (identical(other.owner, owner) || other.owner == owner));
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories) &&
+            const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, description, category, group, owner);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      description,
+      const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ItemsModelCopyWith<_$_ItemsModel> get copyWith =>
-      __$$_ItemsModelCopyWithImpl<_$_ItemsModel>(this, _$identity);
+  _$$_GroupModelCopyWith<_$_GroupModel> get copyWith =>
+      __$$_GroupModelCopyWithImpl<_$_GroupModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ItemsModelToJson(
+    return _$$_GroupModelToJson(
       this,
     );
   }
 }
 
-abstract class _ItemsModel implements ItemModel {
-  factory _ItemsModel(
+abstract class _GroupModel implements GroupModel {
+  factory _GroupModel(
       {required final String id,
       required final String name,
       required final String? description,
-      required final CategoryModel category,
-      required final GroupModel? group,
-      required final UserModel owner}) = _$_ItemsModel;
+      required final List<CategoryModel> categories,
+      required final List<ItemModel> items}) = _$_GroupModel;
 
-  factory _ItemsModel.fromJson(Map<String, dynamic> json) =
-      _$_ItemsModel.fromJson;
+  factory _GroupModel.fromJson(Map<String, dynamic> json) =
+      _$_GroupModel.fromJson;
 
   @override
   String get id;
@@ -439,14 +448,12 @@ abstract class _ItemsModel implements ItemModel {
   @override
   String? get description;
   @override
-  CategoryModel get category;
+  List<CategoryModel> get categories;
   @override
-  GroupModel? get group;
-  @override
-  UserModel get owner;
+  List<ItemModel> get items;
   @override
   @JsonKey(ignore: true)
-  _$$_ItemsModelCopyWith<_$_ItemsModel> get copyWith =>
+  _$$_GroupModelCopyWith<_$_GroupModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -623,6 +630,252 @@ abstract class _CategoryModel implements CategoryModel {
       throw _privateConstructorUsedError;
 }
 
+ItemModel _$ItemModelFromJson(Map<String, dynamic> json) {
+  return _ItemsModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ItemModel {
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  CategoryModel get category => throw _privateConstructorUsedError;
+  UserModel get owner => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ItemModelCopyWith<ItemModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ItemModelCopyWith<$Res> {
+  factory $ItemModelCopyWith(ItemModel value, $Res Function(ItemModel) then) =
+      _$ItemModelCopyWithImpl<$Res, ItemModel>;
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      String? description,
+      CategoryModel category,
+      UserModel owner});
+
+  $CategoryModelCopyWith<$Res> get category;
+  $UserModelCopyWith<$Res> get owner;
+}
+
+/// @nodoc
+class _$ItemModelCopyWithImpl<$Res, $Val extends ItemModel>
+    implements $ItemModelCopyWith<$Res> {
+  _$ItemModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? description = freezed,
+    Object? category = null,
+    Object? owner = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as CategoryModel,
+      owner: null == owner
+          ? _value.owner
+          : owner // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res> get category {
+    return $CategoryModelCopyWith<$Res>(_value.category, (value) {
+      return _then(_value.copyWith(category: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserModelCopyWith<$Res> get owner {
+    return $UserModelCopyWith<$Res>(_value.owner, (value) {
+      return _then(_value.copyWith(owner: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_ItemsModelCopyWith<$Res>
+    implements $ItemModelCopyWith<$Res> {
+  factory _$$_ItemsModelCopyWith(
+          _$_ItemsModel value, $Res Function(_$_ItemsModel) then) =
+      __$$_ItemsModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      String? description,
+      CategoryModel category,
+      UserModel owner});
+
+  @override
+  $CategoryModelCopyWith<$Res> get category;
+  @override
+  $UserModelCopyWith<$Res> get owner;
+}
+
+/// @nodoc
+class __$$_ItemsModelCopyWithImpl<$Res>
+    extends _$ItemModelCopyWithImpl<$Res, _$_ItemsModel>
+    implements _$$_ItemsModelCopyWith<$Res> {
+  __$$_ItemsModelCopyWithImpl(
+      _$_ItemsModel _value, $Res Function(_$_ItemsModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? description = freezed,
+    Object? category = null,
+    Object? owner = null,
+  }) {
+    return _then(_$_ItemsModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as CategoryModel,
+      owner: null == owner
+          ? _value.owner
+          : owner // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ItemsModel implements _ItemsModel {
+  _$_ItemsModel(
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.category,
+      required this.owner});
+
+  factory _$_ItemsModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemsModelFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String name;
+  @override
+  final String? description;
+  @override
+  final CategoryModel category;
+  @override
+  final UserModel owner;
+
+  @override
+  String toString() {
+    return 'ItemModel(id: $id, name: $name, description: $description, category: $category, owner: $owner)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ItemsModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
+            (identical(other.owner, owner) || other.owner == owner));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, description, category, owner);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ItemsModelCopyWith<_$_ItemsModel> get copyWith =>
+      __$$_ItemsModelCopyWithImpl<_$_ItemsModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ItemsModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ItemsModel implements ItemModel {
+  factory _ItemsModel(
+      {required final String id,
+      required final String name,
+      required final String? description,
+      required final CategoryModel category,
+      required final UserModel owner}) = _$_ItemsModel;
+
+  factory _ItemsModel.fromJson(Map<String, dynamic> json) =
+      _$_ItemsModel.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get name;
+  @override
+  String? get description;
+  @override
+  CategoryModel get category;
+  @override
+  UserModel get owner;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ItemsModelCopyWith<_$_ItemsModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 UserModel _$UserModelFromJson(Map<String, dynamic> json) {
   return _UserModel.fromJson(json);
 }
@@ -773,178 +1026,5 @@ abstract class _UserModel implements UserModel {
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-GroupModel _$GroupModelFromJson(Map<String, dynamic> json) {
-  return _GroupModel.fromJson(json);
-}
-
-/// @nodoc
-mixin _$GroupModel {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $GroupModelCopyWith<GroupModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $GroupModelCopyWith<$Res> {
-  factory $GroupModelCopyWith(
-          GroupModel value, $Res Function(GroupModel) then) =
-      _$GroupModelCopyWithImpl<$Res, GroupModel>;
-  @useResult
-  $Res call({String id, String name, String? description});
-}
-
-/// @nodoc
-class _$GroupModelCopyWithImpl<$Res, $Val extends GroupModel>
-    implements $GroupModelCopyWith<$Res> {
-  _$GroupModelCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? description = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_GroupModelCopyWith<$Res>
-    implements $GroupModelCopyWith<$Res> {
-  factory _$$_GroupModelCopyWith(
-          _$_GroupModel value, $Res Function(_$_GroupModel) then) =
-      __$$_GroupModelCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String id, String name, String? description});
-}
-
-/// @nodoc
-class __$$_GroupModelCopyWithImpl<$Res>
-    extends _$GroupModelCopyWithImpl<$Res, _$_GroupModel>
-    implements _$$_GroupModelCopyWith<$Res> {
-  __$$_GroupModelCopyWithImpl(
-      _$_GroupModel _value, $Res Function(_$_GroupModel) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? description = freezed,
-  }) {
-    return _then(_$_GroupModel(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_GroupModel implements _GroupModel {
-  _$_GroupModel(
-      {required this.id, required this.name, required this.description});
-
-  factory _$_GroupModel.fromJson(Map<String, dynamic> json) =>
-      _$$_GroupModelFromJson(json);
-
-  @override
-  final String id;
-  @override
-  final String name;
-  @override
-  final String? description;
-
-  @override
-  String toString() {
-    return 'GroupModel(id: $id, name: $name, description: $description)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_GroupModel &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, name, description);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_GroupModelCopyWith<_$_GroupModel> get copyWith =>
-      __$$_GroupModelCopyWithImpl<_$_GroupModel>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_GroupModelToJson(
-      this,
-    );
-  }
-}
-
-abstract class _GroupModel implements GroupModel {
-  factory _GroupModel(
-      {required final String id,
-      required final String name,
-      required final String? description}) = _$_GroupModel;
-
-  factory _GroupModel.fromJson(Map<String, dynamic> json) =
-      _$_GroupModel.fromJson;
-
-  @override
-  String get id;
-  @override
-  String get name;
-  @override
-  String? get description;
-  @override
-  @JsonKey(ignore: true)
-  _$$_GroupModelCopyWith<_$_GroupModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

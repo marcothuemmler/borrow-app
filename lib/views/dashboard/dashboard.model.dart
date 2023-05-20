@@ -7,7 +7,5 @@ class DashboardModel with _$DashboardModel {
   factory DashboardModel({
     required int currentIndex,
     required String? currentTitle,
-    required String? selectedCategory,
-    @Default([]) List<String> categories,
   }) = _DashboardModel;
 }

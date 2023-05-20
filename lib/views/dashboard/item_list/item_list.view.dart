@@ -33,9 +33,9 @@ class _ItemListViewState extends ConsumerState<ItemListView> {
     if (model.hasError) {
       return const Center(child: Text("something went wrong"));
     }
-    return model.items.fold(
+    return model.group.fold(
       () => const Center(child: Text("something went wrong")),
-      (items) {
+      (group) {
         return SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -44,13 +44,13 @@ class _ItemListViewState extends ConsumerState<ItemListView> {
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.only(top: 20),
-                  itemCount: items.length,
+                  itemCount: group.items.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return ItemCard(
-                      item: items.elementAt(index),
+                      item: group.items.elementAt(index),
                       onTap: () => controller.navigateToItem(
-                        itemId: items.elementAt(index).id,
+                        itemId: group.items.elementAt(index).id,
                       ),
                     );
                   },
@@ -68,4 +68,5 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
   ItemListController(ItemListModel model) : super(model);
 
   void navigateToItem({required String itemId});
+  void selectCategory(CategoryModel? category);
 }

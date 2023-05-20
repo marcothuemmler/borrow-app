@@ -18,23 +18,24 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DashboardModel {
   int get currentIndex => throw _privateConstructorUsedError;
   String? get currentTitle => throw _privateConstructorUsedError;
-  String? get selectedCategory => throw _privateConstructorUsedError;
-  List<String> get categories => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $DashboardModelCopyWith<DashboardModel> get copyWith => throw _privateConstructorUsedError;
+  $DashboardModelCopyWith<DashboardModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $DashboardModelCopyWith<$Res> {
-  factory $DashboardModelCopyWith(DashboardModel value, $Res Function(DashboardModel) then) =
+  factory $DashboardModelCopyWith(
+          DashboardModel value, $Res Function(DashboardModel) then) =
       _$DashboardModelCopyWithImpl<$Res, DashboardModel>;
   @useResult
-  $Res call({int currentIndex, String? currentTitle, String? selectedCategory, List<String> categories});
+  $Res call({int currentIndex, String? currentTitle});
 }
 
 /// @nodoc
-class _$DashboardModelCopyWithImpl<$Res, $Val extends DashboardModel> implements $DashboardModelCopyWith<$Res> {
+class _$DashboardModelCopyWithImpl<$Res, $Val extends DashboardModel>
+    implements $DashboardModelCopyWith<$Res> {
   _$DashboardModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -47,8 +48,6 @@ class _$DashboardModelCopyWithImpl<$Res, $Val extends DashboardModel> implements
   $Res call({
     Object? currentIndex = null,
     Object? currentTitle = freezed,
-    Object? selectedCategory = freezed,
-    Object? categories = null,
   }) {
     return _then(_value.copyWith(
       currentIndex: null == currentIndex
@@ -59,31 +58,27 @@ class _$DashboardModelCopyWithImpl<$Res, $Val extends DashboardModel> implements
           ? _value.currentTitle
           : currentTitle // ignore: cast_nullable_to_non_nullable
               as String?,
-      selectedCategory: freezed == selectedCategory
-          ? _value.selectedCategory
-          : selectedCategory // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categories: null == categories
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_DashboardModelCopyWith<$Res> implements $DashboardModelCopyWith<$Res> {
-  factory _$$_DashboardModelCopyWith(_$_DashboardModel value, $Res Function(_$_DashboardModel) then) =
+abstract class _$$_DashboardModelCopyWith<$Res>
+    implements $DashboardModelCopyWith<$Res> {
+  factory _$$_DashboardModelCopyWith(
+          _$_DashboardModel value, $Res Function(_$_DashboardModel) then) =
       __$$_DashboardModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int currentIndex, String? currentTitle, String? selectedCategory, List<String> categories});
+  $Res call({int currentIndex, String? currentTitle});
 }
 
 /// @nodoc
-class __$$_DashboardModelCopyWithImpl<$Res> extends _$DashboardModelCopyWithImpl<$Res, _$_DashboardModel>
+class __$$_DashboardModelCopyWithImpl<$Res>
+    extends _$DashboardModelCopyWithImpl<$Res, _$_DashboardModel>
     implements _$$_DashboardModelCopyWith<$Res> {
-  __$$_DashboardModelCopyWithImpl(_$_DashboardModel _value, $Res Function(_$_DashboardModel) _then)
+  __$$_DashboardModelCopyWithImpl(
+      _$_DashboardModel _value, $Res Function(_$_DashboardModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -91,8 +86,6 @@ class __$$_DashboardModelCopyWithImpl<$Res> extends _$DashboardModelCopyWithImpl
   $Res call({
     Object? currentIndex = null,
     Object? currentTitle = freezed,
-    Object? selectedCategory = freezed,
-    Object? categories = null,
   }) {
     return _then(_$_DashboardModel(
       currentIndex: null == currentIndex
@@ -103,14 +96,6 @@ class __$$_DashboardModelCopyWithImpl<$Res> extends _$DashboardModelCopyWithImpl
           ? _value.currentTitle
           : currentTitle // ignore: cast_nullable_to_non_nullable
               as String?,
-      selectedCategory: freezed == selectedCategory
-          ? _value.selectedCategory
-          : selectedCategory // ignore: cast_nullable_to_non_nullable
-              as String?,
-      categories: null == categories
-          ? _value._categories
-          : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ));
   }
 }
@@ -118,31 +103,16 @@ class __$$_DashboardModelCopyWithImpl<$Res> extends _$DashboardModelCopyWithImpl
 /// @nodoc
 
 class _$_DashboardModel implements _DashboardModel {
-  _$_DashboardModel(
-      {required this.currentIndex,
-      required this.currentTitle,
-      required this.selectedCategory,
-      final List<String> categories = const []})
-      : _categories = categories;
+  _$_DashboardModel({required this.currentIndex, required this.currentTitle});
 
   @override
   final int currentIndex;
   @override
   final String? currentTitle;
-  @override
-  final String? selectedCategory;
-  final List<String> _categories;
-  @override
-  @JsonKey()
-  List<String> get categories {
-    if (_categories is EqualUnmodifiableListView) return _categories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_categories);
-  }
 
   @override
   String toString() {
-    return 'DashboardModel(currentIndex: $currentIndex, currentTitle: $currentTitle, selectedCategory: $selectedCategory, categories: $categories)';
+    return 'DashboardModel(currentIndex: $currentIndex, currentTitle: $currentTitle)';
   }
 
   @override
@@ -150,15 +120,14 @@ class _$_DashboardModel implements _DashboardModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DashboardModel &&
-            (identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex) &&
-            (identical(other.currentTitle, currentTitle) || other.currentTitle == currentTitle) &&
-            (identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory) &&
-            const DeepCollectionEquality().equals(other._categories, _categories));
+            (identical(other.currentIndex, currentIndex) ||
+                other.currentIndex == currentIndex) &&
+            (identical(other.currentTitle, currentTitle) ||
+                other.currentTitle == currentTitle));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, currentIndex, currentTitle, selectedCategory, const DeepCollectionEquality().hash(_categories));
+  int get hashCode => Object.hash(runtimeType, currentIndex, currentTitle);
 
   @JsonKey(ignore: true)
   @override
@@ -170,19 +139,14 @@ class _$_DashboardModel implements _DashboardModel {
 abstract class _DashboardModel implements DashboardModel {
   factory _DashboardModel(
       {required final int currentIndex,
-      required final String? currentTitle,
-      required final String? selectedCategory,
-      final List<String> categories}) = _$_DashboardModel;
+      required final String? currentTitle}) = _$_DashboardModel;
 
   @override
   int get currentIndex;
   @override
   String? get currentTitle;
   @override
-  String? get selectedCategory;
-  @override
-  List<String> get categories;
-  @override
   @JsonKey(ignore: true)
-  _$$_DashboardModelCopyWith<_$_DashboardModel> get copyWith => throw _privateConstructorUsedError;
+  _$$_DashboardModelCopyWith<_$_DashboardModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }

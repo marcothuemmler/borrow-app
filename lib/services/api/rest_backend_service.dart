@@ -52,12 +52,15 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<List<ItemModel>> getItemsByGroupId({required String groupId}) async {
+  Future<GroupModel> getGroupItemsAndCategories({required String groupId}) async {
     try {
-      final response = await _client.get("/item/by-group/$groupId");
-      return List<ItemModel>.from(
-        response.data.map((json) => ItemModel.fromJson(json)),
+      final response = await _client.get(
+        "/group/$groupId",
+        queryParameters: {
+          "relations": ["categories", "items.category", "items.owner"]
+        },
       );
+      return GroupModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get group items: $error");
     }

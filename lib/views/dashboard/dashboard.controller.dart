@@ -17,7 +17,6 @@ class DashboardControllerImplementation extends DashboardController {
               DashboardModel(
                 currentIndex: 0,
                 currentTitle: "Browse",
-                selectedCategory: null,
               ),
         );
 
@@ -32,10 +31,5 @@ class DashboardControllerImplementation extends DashboardController {
       state = state.copyWith(currentTitle: "Profile");
       _router.pushNamed(profileRoute.name);
     }
-  }
-
-  @override
-  void setCategoryFilter(String? category) {
-    state = state.copyWith(selectedCategory: category);
   }
 }
