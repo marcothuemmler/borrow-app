@@ -1,18 +1,18 @@
 import 'package:borrow_app/services/api/backend_service.dart';
-import 'package:borrow_app/services/storage/secure_storage_service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class RestBackendServiceImplementation implements BackendServiceAggregator {
   final Dio _client;
-  final SecureStorageService _storageService;
+  final FlutterSecureStorage _secureStorage;
 
-  const RestBackendServiceImplementation({
+  RestBackendServiceImplementation({
     required Dio dioClient,
-    required SecureStorageService storageService,
+    required FlutterSecureStorage secureStorage,
   })  : _client = dioClient,
-        _storageService = storageService;
+        _secureStorage = secureStorage;
 
   @override
   Future<void> signup({required SignupDto payload}) async {
@@ -27,9 +27,10 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   Future<void> login({required LoginDto payload}) async {
     try {
       final response = await _client.post("/auth/login", data: payload);
-      await _storageService.writeTokenData(tokenData: response.data);
+      await _secureStorage.write(key: 'accessToken', value: response.data['accessToken']);
+      await _secureStorage.write(key: 'refreshToken', value: response.data['refreshToken']);
     } catch (error) {
-      await _storageService.deleteAll();
+      await _secureStorage.deleteAll();
       throw Exception("Failed to sign in: $error");
     }
   }
@@ -38,7 +39,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   Future<void> logout() async {
     try {
       await _client.post("/auth/logout");
-      await _storageService.deleteAll();
+      await _secureStorage.deleteAll();
     } catch (error) {
       throw Exception("Failed to sign in: $error");
     }

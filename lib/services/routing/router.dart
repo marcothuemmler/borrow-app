@@ -28,8 +28,8 @@ final routerProviderDef = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     redirect: (context, state) async {
-      final storageService = ref.watch(providers.secureStorageServiceProvider);
-      final isLoggedIn = await storageService.containsKey(key: "refreshToken");
+      final secureStorage = ref.watch(providers.secureStorageProvider);
+      final isLoggedIn = await secureStorage.containsKey(key: "refreshToken");
       final isLoginIn = RegExp(r"^/(login)*$").hasMatch(state.location);
       if (!isLoggedIn && !isLoginIn) {
         return state.namedLocation(homeRoute.name);
