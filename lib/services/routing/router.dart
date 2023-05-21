@@ -1,3 +1,4 @@
+import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/services/routing/routes.dart";
 import "package:borrow_app/views/authentication/login/login.view.dart";
 import "package:borrow_app/views/authentication/signup/signup.view.dart";
@@ -26,20 +27,21 @@ MaterialPage _errorPage({
 final routerProviderDef = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    // TODO: redirect
-    // debugLogDiagnostics: true,
-    // redirect: (context, state) async {
-    //   final secureStorage = ref.watch(providers.secureStorageProvider);
-    //   final refreshToken = await secureStorage.read(key: "refreshToken");
-    //   final isLoggedIn = refreshToken is String;
-    //   final isLoginIn = RegExp(r"^/(login|signup)").hasMatch(state.location);
-    //   if (!isLoggedIn && !isLoginIn) {
-    //     return "/";
-    //   }
-    //   return null;
-    // },
+    redirect: (context, state) async {
+      final storageService = ref.watch(providers.secureStorageServiceProvider);
+      final isLoggedIn = await storageService.containsKey(key: "refreshToken");
+      final isLoginIn = RegExp(r"^/(login|signup)").hasMatch(state.location);
+      if (!isLoggedIn && !isLoginIn) {
+        return homeRoute.path;
+      }
+      // if (isLoggedIn && isLoginIn) {
+      //   return "/${groupsRoute.path}";
+      // }
+      return null;
+    },
     routes: [
       GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
         name: homeRoute.name,
         path: homeRoute.path,
         pageBuilder: (context, state) => const MaterialPage(

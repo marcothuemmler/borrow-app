@@ -1,7 +1,8 @@
 import 'package:borrow_app/services/api/backend_service.dart';
+import 'package:borrow_app/services/api/dio_service.dart';
 import 'package:borrow_app/services/api/rest_backend_service.dart';
 import 'package:borrow_app/services/routing/router.dart';
-import 'package:borrow_app/util/dio.util.dart';
+import 'package:borrow_app/services/storage/secure_storage_service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/authentication/login/login.controller.dart';
 import 'package:borrow_app/views/authentication/login/login.view.dart';
@@ -16,27 +17,31 @@ import 'package:borrow_app/views/dashboard/item_list/item_list.view.dart';
 import 'package:borrow_app/views/home/group.controller.dart';
 import 'package:borrow_app/views/home/group.view.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 final providers = Providers();
 
 class Providers {
-  final dioProvider = Provider<Dio>((ProviderRef ref) => DioUtil.dio);
+  final dioProvider = Provider<Dio>((ProviderRef ref) => Dio());
 
   final Provider<GoRouter> routerProvider = routerProviderDef;
 
-  final secureStorageProvider = Provider<FlutterSecureStorage>(
-    (ProviderRef ref) => DioUtil.storage,
+  final secureStorageServiceProvider = Provider<SecureStorageService>(
+    (ProviderRef ref) => SecureStorageService(),
+  );
+
+  final dioServiceProvider = Provider<DioService>(
+    (ProviderRef ref) => DioService(
+      dio: ref.watch(providers.dioProvider),
+      storageService: ref.watch(providers.secureStorageServiceProvider),
+    ),
   );
 
   final Provider<BackendServiceAggregator> backendServiceProvider = Provider<BackendServiceAggregator>(
     (ProviderRef ref) => RestBackendServiceImplementation(
       dioClient: ref.watch(providers.dioProvider),
-      baseUri: Uri.parse(dotenv.get("API_URL")),
-      secureStorage: ref.watch(providers.secureStorageProvider),
+      storageService: ref.watch(providers.secureStorageServiceProvider),
     ),
   );
 

@@ -1,29 +1,34 @@
+import 'package:borrow_app/services/storage/secure_storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-class DioUtil {
-  static final dio = Dio();
-  static const storage = FlutterSecureStorage();
+class DioService {
+  final Dio _dio;
+  final SecureStorageService _storageService;
 
-  factory DioUtil() => DioUtil._internal();
+  DioService({
+    required Dio dio,
+    required SecureStorageService storageService,
+  })  : _dio = dio,
+        _storageService = storageService {
+    _init();
+  }
 
-  DioUtil._internal();
+  Future<void> _init() async {
+    await dotenv.load(fileName: 'assets/.env');
+    _dio.options.baseUrl = dotenv.get("API_URL");
+    _dio.options.contentType = Headers.jsonContentType;
 
-  Future<void> init() async {
-    dio.options.baseUrl = dotenv.get("API_URL");
-    dio.options.contentType = Headers.jsonContentType;
-
-    dio.interceptors.add(
+    _dio.interceptors.add(
       PrettyDioLogger(requestHeader: true),
     );
 
-    dio.interceptors.add(
+    _dio.interceptors.add(
       QueuedInterceptorsWrapper(
         onRequest: (options, handler) async {
-          final accessToken = await storage.read(key: 'accessToken');
-          final refreshToken = await storage.read(key: 'refreshToken');
+          final accessToken = await _storageService.read(key: 'accessToken');
+          final refreshToken = await _storageService.read(key: 'refreshToken');
           if (options.path.contains("/auth/refresh")) {
             options.headers['Authorization'] = 'Bearer $refreshToken';
           } else {
@@ -33,7 +38,7 @@ class DioUtil {
         },
         onError: (DioError error, handler) async {
           if (error.response?.statusCode == 401) {
-            if (await storage.containsKey(key: 'refreshToken') &&
+            if (await _storageService.containsKey(key: 'refreshToken') &&
                 !error.requestOptions.path.contains("/auth/login")) {
               if (await refreshToken()) {
                 return handler.resolve(await _retry(error.requestOptions));
@@ -51,7 +56,7 @@ class DioUtil {
       method: requestOptions.method,
       headers: requestOptions.headers,
     );
-    return dio.request<dynamic>(
+    return _dio.request<dynamic>(
       requestOptions.path,
       data: requestOptions.data,
       queryParameters: requestOptions.queryParameters,
@@ -60,13 +65,12 @@ class DioUtil {
   }
 
   Future<bool> refreshToken() async {
-    final response = await dio.post('/auth/refresh');
+    final response = await _dio.post('/auth/refresh');
     if (response.statusCode == 200) {
-      storage.write(key: 'accessToken', value: response.data['accessToken']);
-      storage.write(key: 'refreshToken', value: response.data['refreshToken']);
+      _storageService.writeTokenData(tokenData: response.data);
       return true;
     } else {
-      storage.deleteAll();
+      _storageService.deleteAll();
       return false;
     }
   }
