@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LoginModel {
-  bool get loginError => throw _privateConstructorUsedError;
+  bool get hasError => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
   LoginDto get loginDto => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +31,7 @@ abstract class $LoginModelCopyWith<$Res> {
           LoginModel value, $Res Function(LoginModel) then) =
       _$LoginModelCopyWithImpl<$Res, LoginModel>;
   @useResult
-  $Res call({bool loginError, LoginDto loginDto});
+  $Res call({bool hasError, bool isLoading, LoginDto loginDto});
 
   $LoginDtoCopyWith<$Res> get loginDto;
 }
@@ -48,13 +49,18 @@ class _$LoginModelCopyWithImpl<$Res, $Val extends LoginModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? loginError = null,
+    Object? hasError = null,
+    Object? isLoading = null,
     Object? loginDto = null,
   }) {
     return _then(_value.copyWith(
-      loginError: null == loginError
-          ? _value.loginError
-          : loginError // ignore: cast_nullable_to_non_nullable
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       loginDto: null == loginDto
           ? _value.loginDto
@@ -80,7 +86,7 @@ abstract class _$$_LoginModelCopyWith<$Res>
       __$$_LoginModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool loginError, LoginDto loginDto});
+  $Res call({bool hasError, bool isLoading, LoginDto loginDto});
 
   @override
   $LoginDtoCopyWith<$Res> get loginDto;
@@ -97,13 +103,18 @@ class __$$_LoginModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? loginError = null,
+    Object? hasError = null,
+    Object? isLoading = null,
     Object? loginDto = null,
   }) {
     return _then(_$_LoginModel(
-      loginError: null == loginError
-          ? _value.loginError
-          : loginError // ignore: cast_nullable_to_non_nullable
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       loginDto: null == loginDto
           ? _value.loginDto
@@ -116,16 +127,21 @@ class __$$_LoginModelCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoginModel implements _LoginModel {
-  const _$_LoginModel({required this.loginError, required this.loginDto});
+  const _$_LoginModel(
+      {required this.hasError,
+      required this.isLoading,
+      required this.loginDto});
 
   @override
-  final bool loginError;
+  final bool hasError;
+  @override
+  final bool isLoading;
   @override
   final LoginDto loginDto;
 
   @override
   String toString() {
-    return 'LoginModel(loginError: $loginError, loginDto: $loginDto)';
+    return 'LoginModel(hasError: $hasError, isLoading: $isLoading, loginDto: $loginDto)';
   }
 
   @override
@@ -133,14 +149,16 @@ class _$_LoginModel implements _LoginModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LoginModel &&
-            (identical(other.loginError, loginError) ||
-                other.loginError == loginError) &&
+            (identical(other.hasError, hasError) ||
+                other.hasError == hasError) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
             (identical(other.loginDto, loginDto) ||
                 other.loginDto == loginDto));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loginError, loginDto);
+  int get hashCode => Object.hash(runtimeType, hasError, isLoading, loginDto);
 
   @JsonKey(ignore: true)
   @override
@@ -151,11 +169,14 @@ class _$_LoginModel implements _LoginModel {
 
 abstract class _LoginModel implements LoginModel {
   const factory _LoginModel(
-      {required final bool loginError,
+      {required final bool hasError,
+      required final bool isLoading,
       required final LoginDto loginDto}) = _$_LoginModel;
 
   @override
-  bool get loginError;
+  bool get hasError;
+  @override
+  bool get isLoading;
   @override
   LoginDto get loginDto;
   @override

@@ -24,14 +24,13 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<bool> login({required LoginDto payload}) async {
+  Future<void> login({required LoginDto payload}) async {
     try {
       final response = await _client.post("/auth/login", data: payload);
       await _storageService.writeTokenData(tokenData: response.data);
-      return true;
     } catch (error) {
       await _storageService.deleteAll();
-      return false;
+      throw Exception("Failed to sign in: $error");
     }
   }
 

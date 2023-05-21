@@ -30,12 +30,15 @@ final routerProviderDef = Provider<GoRouter>((ref) {
     redirect: (context, state) async {
       final storageService = ref.watch(providers.secureStorageServiceProvider);
       final isLoggedIn = await storageService.containsKey(key: "refreshToken");
-      final isLoginIn = RegExp(r"^/(login|signup)").hasMatch(state.location);
+      final isLoginIn = RegExp(r"^/(login)*$").hasMatch(state.location);
       if (!isLoggedIn && !isLoginIn) {
-        return homeRoute.path;
+        return state.namedLocation(homeRoute.name);
+      }
+      if (!isLoggedIn && isLoginIn) {
+        return state.namedLocation(loginRoute.name);
       }
       // if (isLoggedIn && isLoginIn) {
-      //   return "/${groupsRoute.path}";
+      //   return state.namedLocation(groupsRoute.name);
       // }
       return null;
     },

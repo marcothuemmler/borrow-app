@@ -6,7 +6,8 @@ part 'auth.model.g.dart';
 @freezed
 class LoginModel with _$LoginModel {
   const factory LoginModel({
-    required bool loginError,
+    required bool hasError,
+    required bool isLoading,
     required LoginDto loginDto,
   }) = _LoginModel;
 }

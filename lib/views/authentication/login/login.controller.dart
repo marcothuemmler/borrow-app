@@ -14,7 +14,8 @@ class LoginControllerImplementation extends LoginController {
         super(
           model ??
               const LoginModel(
-                loginError: false,
+                hasError: false,
+                isLoading: false,
                 loginDto: LoginDto(
                   email: null,
                   password: null,
@@ -33,11 +34,14 @@ class LoginControllerImplementation extends LoginController {
   }
 
   @override
-  Future<bool> login() async {
-    state = state.copyWith(loginError: false);
-    final logInSuccess = await _signupService.login(payload: state.loginDto);
-    state = state.copyWith(loginError: !logInSuccess);
-    return logInSuccess;
+  Future<void> login() async {
+    state = state.copyWith(hasError: false, isLoading: true);
+    try {
+      await _signupService.login(payload: state.loginDto);
+      state = state.copyWith(isLoading: false);
+    } catch (error) {
+      state = state.copyWith(isLoading: false, hasError: true);
+    }
   }
 
   @override
