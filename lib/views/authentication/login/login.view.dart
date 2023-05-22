@@ -1,11 +1,11 @@
 import 'package:borrow_app/common/providers.dart';
-// import 'package:borrow_app/services/routing/routes.dart';
+import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/widgets/textform_fields/password_field.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
@@ -27,6 +27,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(providers.loginControllerProvider.notifier);
+    final model = ref.watch(providers.loginControllerProvider);
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -54,7 +55,17 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 onChanged: controller.setPassword,
                 obscureText: _obscurePassword,
               ),
-              const SizedBox(height: 60),
+              if (model.hasError)
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 5),
+                    child: Text(
+                      "Beim Einloggen ist etwas schiefgelaufen",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -63,11 +74,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
                     onPressed: () {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
-                        controller.login();
-                        // TODO: go to group selection screen first
-                        // context.goNamed(groupsRoute.name);
-                        // TODO: await response and continue only when logged in
-                        // context.goNamed(groupRoute.name);
+                        controller.login().then((_) {
+                          context.goNamed(groupsRoute.name);
+                        });
                       }
                     },
                   )
@@ -81,11 +90,14 @@ class _LoginViewState extends ConsumerState<LoginView> {
   }
 }
 
-abstract class LoginController extends StateNotifier<LoginDto> {
-  LoginController(LoginDto model) : super(model);
+abstract class LoginController extends StateNotifier<LoginModel> {
+  LoginController(LoginModel model) : super(model);
 
   Future<void> login();
+
   void setEmail(String value);
+
   void setPassword(String value);
+
   String? validateFormField({required String fieldName});
 }
