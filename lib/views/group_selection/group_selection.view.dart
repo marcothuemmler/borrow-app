@@ -25,6 +25,13 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
     final controller = ref.read(providers.groupControllerProvider.notifier);
     final model = ref.watch(providers.groupControllerProvider);
 
+    void onNewGroup() {
+      Future<String?> res = _showAlertDialog();
+      res.then((value) => {
+        controller.addGroup(GroupModel(name: value.toString(), description: null))
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Gruppenansicht"),
@@ -113,7 +120,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                           ),
                         const SizedBox(height: 40),
                         ElevatedButton(
-                          onPressed: () => controller.addGroup(GroupModel(name: "", description: null)),
+                        onPressed: () => onNewGroup(),
                           child: const Text("Neue Gruppe"),
                         ),
                         ElevatedButton(
@@ -124,6 +131,40 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                     ),
                   ),
                 ),
+    );
+  }
+  Future<String?> _showAlertDialog() async {
+    TextEditingController t = TextEditingController();
+    return showDialog<String>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog( // <-- SEE HERE
+          title: const Text('Cancel booking'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                const Text('Name für neue Gruppe'),
+                TextField(controller: t,),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Einfügen'),
+              onPressed: () {
+                Navigator.of(context).pop(t.text);
+              },
+            ),
+            TextButton(
+              child: const Text('Abbrechen'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
