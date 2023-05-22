@@ -8,6 +8,7 @@ import 'package:borrow_app/views/authentication/login/login.view.dart';
 import 'package:borrow_app/views/authentication/signup/signup.controller.dart';
 import 'package:borrow_app/views/authentication/signup/signup.view.dart';
 import 'package:borrow_app/views/group_selection/group_selection.controller.dart';
+import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -48,6 +49,11 @@ class Providers {
     ),
   );
 
-  final StateNotifierProvider<GroupSelectionController, List<String>> groupControllerProvider =
-      StateNotifierProvider<GroupSelectionController, List<String>>((ref) => GroupSelectionControllerImplementation());
+  final AutoDisposeStateNotifierProvider<GroupSelectionController, GroupSelectionModel> groupControllerProvider =
+      AutoDisposeStateNotifierProvider<GroupSelectionController, GroupSelectionModel>(
+    (ref) => GroupSelectionControllerImplementation(
+      itemListService: ref.watch(providers.backendServiceProvider),
+      groupSelectionService: ref.watch(providers.backendServiceProvider),
+    ),
+  );
 }

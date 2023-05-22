@@ -1,6 +1,7 @@
 import "package:borrow_app/services/routing/routes.dart";
 import "package:borrow_app/views/authentication/login/login.view.dart";
 import "package:borrow_app/views/authentication/signup/signup.view.dart";
+import "package:borrow_app/views/group_selection/group_selection.view.dart";
 // import "package:borrow_app/views/dashboard/dashboard_wrapper.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
 import "package:flutter/material.dart";
@@ -43,7 +44,7 @@ final routerProviderDef = Provider<GoRouter>((ref) {
           GoRoute(
             name: groupsRoute.name,
             path: groupsRoute.path,
-            pageBuilder: (context, state) => MaterialPage(child: Container()),
+            pageBuilder: (context, state) => const MaterialPage(child: GroupSelectionView()),
           ),
           // TODO: Possibly replace with TabBarView
           // ShellRoute(
