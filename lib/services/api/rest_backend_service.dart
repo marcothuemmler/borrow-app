@@ -1,6 +1,7 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart' as item_list_model;
+import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -36,6 +37,21 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
+  Future<UserModel> getGroups() async {
+    try {
+      final response = await _client.get(
+        "/user/auth/current-user",
+        queryParameters: {
+          "relations": ['groups']
+        },
+      );
+      return UserModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception("Could not get group items: $error");
+    }
+  }
+
+  @override
   Future<void> logout() async {
     try {
       await _client.post("/auth/logout");
@@ -46,7 +62,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<GroupModel> getGroupItemsAndCategories({required String groupId}) async {
+  Future<item_list_model.GroupModel> getGroupItemsAndCategories({required String groupId}) async {
     try {
       final response = await _client.get(
         "/group/$groupId",
@@ -54,7 +70,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
           "relations": ["categories", "items.category", "items.owner"]
         },
       );
-      return GroupModel.fromJson(response.data);
+      return item_list_model.GroupModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get group items: $error");
     }

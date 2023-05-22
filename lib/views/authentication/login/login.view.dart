@@ -75,14 +75,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
                         controller.login().then((_) {
-                          // context.goNamed(groupsRoute.name);
-                          context.goNamed(
-                            groupRoute.name,
-                            // TODO: ID from group selection screen
-                            pathParameters: {
-                              "groupId": "cb86c89d-9ba3-4024-9477-fa1a236643c5",
-                            },
-                          );
+                          context.goNamed(groupsRoute.name);
                         });
                       }
                     },
