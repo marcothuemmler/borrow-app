@@ -1,5 +1,6 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
+import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -36,6 +37,21 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     } catch (error) {
       await _secureStorage.deleteAll();
       throw Exception("Failed to sign in: $error");
+    }
+  }
+
+  @override
+  Future<UserModel> getGroups() async {
+    try {
+      final response = await _client.get(
+        "/user/auth/current-user",
+        queryParameters: {
+          "relations": ['groups']
+        },
+      );
+      return UserModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception("Could not get group items: $error");
     }
   }
 

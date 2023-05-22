@@ -2,13 +2,14 @@ import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/services/api/rest_backend_service.dart';
 import 'package:borrow_app/services/routing/router.dart';
 import 'package:borrow_app/util/dio.util.dart';
+import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/authentication/login/login.controller.dart';
 import 'package:borrow_app/views/authentication/login/login.view.dart';
 import 'package:borrow_app/views/authentication/signup/signup.controller.dart';
-import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/authentication/signup/signup.view.dart';
-import 'package:borrow_app/views/home/group.controller.dart';
-import 'package:borrow_app/views/home/group.view.dart';
+import 'package:borrow_app/views/group_selection/group_selection.controller.dart';
+import 'package:borrow_app/views/group_selection/group_selection.model.dart';
+import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,6 +49,11 @@ class Providers {
     ),
   );
 
-  final StateNotifierProvider<GroupController, int> groupControllerProvider =
-      StateNotifierProvider<GroupController, int>((ref) => GroupControllerImplementation(0));
+  final AutoDisposeStateNotifierProvider<GroupSelectionController, GroupSelectionModel> groupControllerProvider =
+      AutoDisposeStateNotifierProvider<GroupSelectionController, GroupSelectionModel>(
+    (ref) => GroupSelectionControllerImplementation(
+      itemListService: ref.watch(providers.backendServiceProvider),
+      groupSelectionService: ref.watch(providers.backendServiceProvider),
+    ),
+  );
 }
