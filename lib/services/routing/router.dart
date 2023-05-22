@@ -38,9 +38,9 @@ final routerProviderDef = Provider<GoRouter>((ref) {
       if (!isLoggedIn && isLoginIn) {
         return state.namedLocation(loginRoute.name);
       }
-      // if (isLoggedIn && isLoginIn) {
-      //   return state.namedLocation(groupsRoute.name);
-      // }
+      if (isLoggedIn && isLoginIn) {
+        return state.namedLocation(groupSelectionRoute.name);
+      }
       return null;
     },
     routes: [
@@ -64,11 +64,10 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             path: signupRoute.path,
             pageBuilder: (context, state) => const MaterialPage(child: SignupView()),
           ),
-          // TODO: group selection screen
           GoRoute(
             parentNavigatorKey: _rootNavigatorKey,
-            name: groupsRoute.name,
-            path: groupsRoute.path,
+            name: groupSelectionRoute.name,
+            path: groupSelectionRoute.path,
             pageBuilder: (context, state) => const MaterialPage(child: GroupSelectionView()),
           ),
           // TODO: Possibly replace with TabBarView
