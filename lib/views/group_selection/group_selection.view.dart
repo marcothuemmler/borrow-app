@@ -1,9 +1,11 @@
 import 'package:borrow_app/common/providers.dart';
+import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class GroupSelectionView extends ConsumerStatefulWidget {
   const GroupSelectionView({super.key});
@@ -73,14 +75,25 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                       offset: Offset(0, 3),
                                     )
                                   ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
                                   color: Colors.white,
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    user.groups.elementAt(index).name,
-                                    style: const TextStyle(fontSize: 32),
+                                child: InkWell(
+                                  hoverColor: Colors.transparent,
+                                  onTap: () => context.goNamed(
+                                    groupRoute.name,
+                                    pathParameters: {
+                                      "groupId": user.groups.elementAt(index).id!,
+                                    },
+                                  ),
+                                  child: Ink(
+                                    color: Colors.transparent,
+                                    child: Center(
+                                      child: Text(
+                                        user.groups.elementAt(index).name,
+                                        style: const TextStyle(fontSize: 32),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               );
@@ -100,8 +113,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                           ),
                         const SizedBox(height: 40),
                         ElevatedButton(
-                          onPressed: () => controller.addGroup(
-                              GroupModel(name: "", description: null)),
+                          onPressed: () => controller.addGroup(GroupModel(name: "", description: null)),
                           child: const Text("Neue Gruppe"),
                         ),
                         ElevatedButton(
@@ -116,8 +128,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
   }
 }
 
-abstract class GroupSelectionController
-    extends StateNotifier<GroupSelectionModel> {
+abstract class GroupSelectionController extends StateNotifier<GroupSelectionModel> {
   GroupSelectionController(GroupSelectionModel model) : super(model);
 
   void addGroup(GroupModel group);

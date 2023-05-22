@@ -1,23 +1,19 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
+import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart' as item_list_model;
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class RestBackendServiceImplementation implements BackendServiceAggregator {
   final Dio _client;
-  final Uri _baseUri;
   final FlutterSecureStorage _secureStorage;
 
   RestBackendServiceImplementation({
     required Dio dioClient,
-    required Uri baseUri,
     required FlutterSecureStorage secureStorage,
   })  : _client = dioClient,
-        _baseUri = baseUri,
-        _secureStorage = secureStorage {
-    _client.options.baseUrl = _baseUri.toString();
-  }
+        _secureStorage = secureStorage;
 
   @override
   Future<void> signup({required SignupDto payload}) async {
@@ -62,6 +58,21 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       await _secureStorage.deleteAll();
     } catch (error) {
       throw Exception("Failed to sign in: $error");
+    }
+  }
+
+  @override
+  Future<item_list_model.GroupModel> getGroupItemsAndCategories({required String groupId}) async {
+    try {
+      final response = await _client.get(
+        "/group/$groupId",
+        queryParameters: {
+          "relations": ["categories", "items.category", "items.owner"]
+        },
+      );
+      return item_list_model.GroupModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception("Could not get group items: $error");
     }
   }
 }

@@ -43,9 +43,10 @@ dependencies:
   email_validator: ^2.1.16
   flutter_secure_storage: ^8.0.0
   go_router: ^7.0.1
+  dartz: ^0.10.1
+  json_annotation: ^4.8.1
   carousel_slider: ^4.2.1
   carousel_indicator: ^1.0.6
-  dartz: ^0.10.1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/.env
+    - assets/images/default.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

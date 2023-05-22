@@ -12,6 +12,7 @@ class DioUtil {
   DioUtil._internal();
 
   Future<void> init() async {
+    await dotenv.load(fileName: 'assets/.env');
     dio.options.baseUrl = dotenv.get("API_URL");
     dio.options.contentType = Headers.jsonContentType;
 
@@ -22,19 +23,15 @@ class DioUtil {
     dio.interceptors.add(
       QueuedInterceptorsWrapper(
         onRequest: (options, handler) async {
-          final accessToken = await storage.read(key: 'accessToken');
-          final refreshToken = await storage.read(key: 'refreshToken');
-          if (options.path.contains("/auth/refresh")) {
-            options.headers['Authorization'] = 'Bearer $refreshToken';
-          } else {
-            options.headers['Authorization'] = 'Bearer $accessToken';
-          }
+          final isRefreshPath = options.path.contains("/auth/refresh");
+          final key = isRefreshPath ? "refreshToken" : "accessToken";
+          final authToken = await storage.read(key: key);
+          options.headers['Authorization'] = 'Bearer $authToken';
           return handler.next(options);
         },
         onError: (DioError error, handler) async {
           if (error.response?.statusCode == 401) {
-            if (await storage.containsKey(key: 'refreshToken') &&
-                !error.requestOptions.path.contains("/auth/login")) {
+            if (await storage.containsKey(key: 'refreshToken') && !error.requestOptions.path.contains("/auth/login")) {
               if (await refreshToken()) {
                 return handler.resolve(await _retry(error.requestOptions));
               }
@@ -62,11 +59,11 @@ class DioUtil {
   Future<bool> refreshToken() async {
     final response = await dio.post('/auth/refresh');
     if (response.statusCode == 200) {
-      storage.write(key: 'accessToken', value: response.data['accessToken']);
-      storage.write(key: 'refreshToken', value: response.data['refreshToken']);
+      await storage.write(key: 'accessToken', value: response.data['accessToken']);
+      await storage.write(key: 'refreshToken', value: response.data['refreshToken']);
       return true;
     } else {
-      storage.deleteAll();
+      await storage.deleteAll();
       return false;
     }
   }
