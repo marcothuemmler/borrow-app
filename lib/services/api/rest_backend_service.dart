@@ -45,7 +45,9 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
           "relations": ['groups']
         },
       );
-      return UserModel.fromJson(response.data);
+      final user = UserModel.fromJson(response.data);
+      await _secureStorage.write(key: 'user-id', value: user.id);
+      return user;
     } catch (error) {
       throw Exception("Could not get group items: $error");
     }
@@ -73,6 +75,19 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       return item_list_model.GroupModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get group items: $error");
+    }
+  }
+
+  @override
+  Future<GroupModel> postGroup(GroupModel group) async {
+    try {
+      final userID = (await _secureStorage.read(key: "user-id"))!;
+      final groupWithCreatorId = CreateGroupDTO(name: group.name, description: group.description, creatorId: userID);
+      final response = await _client.post("/group", data: groupWithCreatorId);
+      return GroupModel.fromJson(response.data);
+    } catch (error) {
+      print(error.toString());
+      throw Exception("Could not set group $error");
     }
   }
 }

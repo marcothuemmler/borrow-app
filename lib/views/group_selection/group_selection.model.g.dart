@@ -27,6 +27,7 @@ _$_GroupModel _$$_GroupModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
+      creatorId: json['creatorId'] as String?,
     );
 
 Map<String, dynamic> _$$_GroupModelToJson(_$_GroupModel instance) =>
@@ -34,4 +35,19 @@ Map<String, dynamic> _$$_GroupModelToJson(_$_GroupModel instance) =>
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
+      'creatorId': instance.creatorId,
+    };
+
+_$_CreateGroupDTO _$$_CreateGroupDTOFromJson(Map<String, dynamic> json) =>
+    _$_CreateGroupDTO(
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      creatorId: json['creatorId'] as String,
+    );
+
+Map<String, dynamic> _$$_CreateGroupDTOToJson(_$_CreateGroupDTO instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'description': instance.description,
+      'creatorId': instance.creatorId,
     };

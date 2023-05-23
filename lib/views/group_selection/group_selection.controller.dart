@@ -25,7 +25,8 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   }
 
   @override
-  void addGroup(GroupModel group) {
+  Future<void> addGroup(GroupModel group) async {
     // state = [...state, GroupModel(name: "", description: "", creatorID: "")];
+    final response = await groupSelectionService.postGroup(group);
   }
 }

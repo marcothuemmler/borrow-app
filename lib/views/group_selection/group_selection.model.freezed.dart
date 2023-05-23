@@ -360,6 +360,7 @@ mixin _$GroupModel {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  String? get creatorId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -373,7 +374,7 @@ abstract class $GroupModelCopyWith<$Res> {
           GroupModel value, $Res Function(GroupModel) then) =
       _$GroupModelCopyWithImpl<$Res, GroupModel>;
   @useResult
-  $Res call({String? id, String name, String? description});
+  $Res call({String? id, String name, String? description, String? creatorId});
 }
 
 /// @nodoc
@@ -392,6 +393,7 @@ class _$GroupModelCopyWithImpl<$Res, $Val extends GroupModel>
     Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? creatorId = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -406,6 +408,10 @@ class _$GroupModelCopyWithImpl<$Res, $Val extends GroupModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      creatorId: freezed == creatorId
+          ? _value.creatorId
+          : creatorId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -418,7 +424,7 @@ abstract class _$$_GroupModelCopyWith<$Res>
       __$$_GroupModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String name, String? description});
+  $Res call({String? id, String name, String? description, String? creatorId});
 }
 
 /// @nodoc
@@ -435,6 +441,7 @@ class __$$_GroupModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? creatorId = freezed,
   }) {
     return _then(_$_GroupModel(
       id: freezed == id
@@ -449,6 +456,10 @@ class __$$_GroupModelCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      creatorId: freezed == creatorId
+          ? _value.creatorId
+          : creatorId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -456,7 +467,8 @@ class __$$_GroupModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_GroupModel implements _GroupModel {
-  _$_GroupModel({this.id, required this.name, required this.description});
+  _$_GroupModel(
+      {this.id, required this.name, required this.description, this.creatorId});
 
   factory _$_GroupModel.fromJson(Map<String, dynamic> json) =>
       _$$_GroupModelFromJson(json);
@@ -467,10 +479,12 @@ class _$_GroupModel implements _GroupModel {
   final String name;
   @override
   final String? description;
+  @override
+  final String? creatorId;
 
   @override
   String toString() {
-    return 'GroupModel(id: $id, name: $name, description: $description)';
+    return 'GroupModel(id: $id, name: $name, description: $description, creatorId: $creatorId)';
   }
 
   @override
@@ -481,12 +495,15 @@ class _$_GroupModel implements _GroupModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.creatorId, creatorId) ||
+                other.creatorId == creatorId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, description);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, description, creatorId);
 
   @JsonKey(ignore: true)
   @override
@@ -506,7 +523,8 @@ abstract class _GroupModel implements GroupModel {
   factory _GroupModel(
       {final String? id,
       required final String name,
-      required final String? description}) = _$_GroupModel;
+      required final String? description,
+      final String? creatorId}) = _$_GroupModel;
 
   factory _GroupModel.fromJson(Map<String, dynamic> json) =
       _$_GroupModel.fromJson;
@@ -518,7 +536,183 @@ abstract class _GroupModel implements GroupModel {
   @override
   String? get description;
   @override
+  String? get creatorId;
+  @override
   @JsonKey(ignore: true)
   _$$_GroupModelCopyWith<_$_GroupModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+CreateGroupDTO _$CreateGroupDTOFromJson(Map<String, dynamic> json) {
+  return _CreateGroupDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CreateGroupDTO {
+  String get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String get creatorId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CreateGroupDTOCopyWith<CreateGroupDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateGroupDTOCopyWith<$Res> {
+  factory $CreateGroupDTOCopyWith(
+          CreateGroupDTO value, $Res Function(CreateGroupDTO) then) =
+      _$CreateGroupDTOCopyWithImpl<$Res, CreateGroupDTO>;
+  @useResult
+  $Res call({String name, String? description, String creatorId});
+}
+
+/// @nodoc
+class _$CreateGroupDTOCopyWithImpl<$Res, $Val extends CreateGroupDTO>
+    implements $CreateGroupDTOCopyWith<$Res> {
+  _$CreateGroupDTOCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? description = freezed,
+    Object? creatorId = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      creatorId: null == creatorId
+          ? _value.creatorId
+          : creatorId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateGroupDTOCopyWith<$Res>
+    implements $CreateGroupDTOCopyWith<$Res> {
+  factory _$$_CreateGroupDTOCopyWith(
+          _$_CreateGroupDTO value, $Res Function(_$_CreateGroupDTO) then) =
+      __$$_CreateGroupDTOCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, String? description, String creatorId});
+}
+
+/// @nodoc
+class __$$_CreateGroupDTOCopyWithImpl<$Res>
+    extends _$CreateGroupDTOCopyWithImpl<$Res, _$_CreateGroupDTO>
+    implements _$$_CreateGroupDTOCopyWith<$Res> {
+  __$$_CreateGroupDTOCopyWithImpl(
+      _$_CreateGroupDTO _value, $Res Function(_$_CreateGroupDTO) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? description = freezed,
+    Object? creatorId = null,
+  }) {
+    return _then(_$_CreateGroupDTO(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      creatorId: null == creatorId
+          ? _value.creatorId
+          : creatorId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_CreateGroupDTO implements _CreateGroupDTO {
+  _$_CreateGroupDTO(
+      {required this.name, required this.description, required this.creatorId});
+
+  factory _$_CreateGroupDTO.fromJson(Map<String, dynamic> json) =>
+      _$$_CreateGroupDTOFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String? description;
+  @override
+  final String creatorId;
+
+  @override
+  String toString() {
+    return 'CreateGroupDTO(name: $name, description: $description, creatorId: $creatorId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreateGroupDTO &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.creatorId, creatorId) ||
+                other.creatorId == creatorId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, description, creatorId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateGroupDTOCopyWith<_$_CreateGroupDTO> get copyWith =>
+      __$$_CreateGroupDTOCopyWithImpl<_$_CreateGroupDTO>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CreateGroupDTOToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CreateGroupDTO implements CreateGroupDTO {
+  factory _CreateGroupDTO(
+      {required final String name,
+      required final String? description,
+      required final String creatorId}) = _$_CreateGroupDTO;
+
+  factory _CreateGroupDTO.fromJson(Map<String, dynamic> json) =
+      _$_CreateGroupDTO.fromJson;
+
+  @override
+  String get name;
+  @override
+  String? get description;
+  @override
+  String get creatorId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateGroupDTOCopyWith<_$_CreateGroupDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }

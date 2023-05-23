@@ -29,7 +29,18 @@ class GroupModel with _$GroupModel {
     String? id,
     required String name,
     required String? description,
+    String? creatorId,
   }) = _GroupModel;
 
   factory GroupModel.fromJson(Map<String, dynamic> json) => _$GroupModelFromJson(json);
+}
+
+@freezed
+class CreateGroupDTO with _$CreateGroupDTO {
+  factory CreateGroupDTO({
+    required String name,
+    required String? description,
+    required String creatorId,
+}) = _CreateGroupDTO;
+  factory CreateGroupDTO.fromJson(Map<String, dynamic> json) => _$CreateGroupDTOFromJson(json);
 }
