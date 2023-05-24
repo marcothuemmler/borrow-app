@@ -1,5 +1,6 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -53,15 +54,15 @@ class _ItemDetailViewState extends ConsumerState<ItemDetailView> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: Container(
-                            constraints: const BoxConstraints(maxWidth: 500),
+                  child: Center(
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 600),
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
                             child: AspectRatio(
                               aspectRatio: 1.5,
                               child: Container(
@@ -87,37 +88,37 @@ class _ItemDetailViewState extends ConsumerState<ItemDetailView> {
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            const CircleAvatar(
-                              radius: 14,
-                              backgroundColor: Color.fromARGB(255, 220, 220, 220),
-                              child: Icon(Icons.person, color: Colors.grey, size: 18),
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              "@${item.owner.username}",
-                              style: const TextStyle(color: Colors.black54),
-                            ),
-                            const Spacer(),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          const SizedBox(height: 20),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(width: 5),
+                              const CircleAvatar(
+                                radius: 14,
+                                backgroundColor: Color.fromARGB(255, 220, 220, 220),
+                                foregroundColor: Colors.grey,
+                                child: Icon(Icons.person, size: 18),
                               ),
-                              onPressed: () => controller.contactOwner(ownerId: item.owner.id),
-                              child: const Text(
-                                "Contact owner",
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                              const SizedBox(width: 10),
+                              Text(
+                                "@${item.owner.username}",
+                                style: const TextStyle(color: Colors.black54),
                               ),
-                            ),
-                            const SizedBox(width: 10)
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
+                              const Spacer(),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+                                ),
+                                onPressed: () => controller.contactOwner(ownerId: item.owner.id),
+                                child: const Text(
+                                  "Contact owner",
+                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              const SizedBox(width: 5)
+                            ],
+                          ),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 30),
@@ -125,27 +126,47 @@ class _ItemDetailViewState extends ConsumerState<ItemDetailView> {
                                 "Description:",
                                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 30),
                               Text(item.description ?? "No description provided"),
                             ],
                           ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: 30),
-                              Text(
+                              const SizedBox(height: 50),
+                              const Text(
                                 "Available:",
                                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 20),
-                              // TODO: calendar / backend relation for availability
+                              const SizedBox(height: 40),
+                              Container(
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 230, 230, 230),
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      offset: Offset(0, 3),
+                                      blurRadius: 10,
+                                    ),
+                                  ],
+                                ),
+                                child: AspectRatio(
+                                  aspectRatio: 1.3,
+                                  child: CalendarDatePicker2(
+                                    config: CalendarDatePicker2Config(
+                                      firstDate: DateTime.now(),
+                                      lastDate: DateTime.now().add(const Duration(days: 365)),
+                                      calendarType: CalendarDatePicker2Type.range,
+                                    ),
+                                    value: const [],
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
