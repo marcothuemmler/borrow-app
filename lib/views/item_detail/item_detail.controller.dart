@@ -35,4 +35,14 @@ class ItemDetailControllerImplementation extends ItemDetailController {
       state = state.copyWith(isLoading: false, hasError: true);
     }
   }
+
+  @override
+  void contactOwner({required String ownerId}) {
+    // TODO: implement contactOwner
+  }
+
+  @override
+  void selectDate() {
+    // TODO: implement selectdate
+  }
 }
