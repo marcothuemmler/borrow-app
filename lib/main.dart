@@ -1,6 +1,8 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/common/theme_data.dart';
 import 'package:borrow_app/util/dio.util.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,6 +16,41 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final excludedPaths = RegExp(r"^/auth/(login|signup)$");
+    final dio = ref.watch(providers.dioProvider);
+    final storageService = ref.watch(providers.secureStorageServiceProvider);
+    final backendService = ref.watch(providers.backendServiceProvider);
+
+    dio.interceptors.add(
+      QueuedInterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final accessToken = await storageService.read(key: "accessToken");
+          final refreshToken = await storageService.read(key: "refreshToken");
+          final isRefreshPath = options.path == ("/auth/refresh");
+          options.disableRetry = isRefreshPath || excludedPaths.hasMatch(options.path);
+          final authorizationToken = isRefreshPath ? refreshToken : accessToken;
+          options.headers['Authorization'] = 'Bearer $authorizationToken';
+          return handler.next(options);
+        },
+      ),
+    );
+
+    dio.interceptors.add(
+      RetryInterceptor(
+        dio: dio,
+        retries: 1,
+        retryDelays: const [
+          Duration(seconds: 1),
+        ],
+        retryEvaluator: (error, attempt) async {
+          if (error.response?.statusCode == 401) {
+            return await backendService.refreshTokens();
+          }
+          return false;
+        },
+      ),
+    );
+
     return MaterialApp.router(
       theme: themeData,
       routerConfig: ref.watch(providers.routerProvider),
