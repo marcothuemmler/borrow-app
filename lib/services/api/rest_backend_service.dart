@@ -1,20 +1,20 @@
 import 'package:borrow_app/services/api/backend_service.dart';
+import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart' as item_list_model;
 import 'package:borrow_app/views/group_selection/group_selection.model.dart' as group_selection_model;
 import 'package:borrow_app/views/item_detail/item_detail.model.dart' as item_detail_model;
 import 'package:dio/dio.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class RestBackendServiceImplementation implements BackendServiceAggregator {
   final Dio _client;
-  final FlutterSecureStorage _secureStorage;
+  final SecureStorageService _storageService;
 
-  RestBackendServiceImplementation({
+  const RestBackendServiceImplementation({
     required Dio dioClient,
-    required FlutterSecureStorage secureStorage,
+    required SecureStorageService storageService,
   })  : _client = dioClient,
-        _secureStorage = secureStorage;
+        _storageService = storageService;
 
   @override
   Future<void> signup({required SignupDto payload}) async {
@@ -29,11 +29,20 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   Future<void> login({required LoginDto payload}) async {
     try {
       final response = await _client.post("/auth/login", data: payload);
-      await _secureStorage.write(key: 'accessToken', value: response.data['accessToken']);
-      await _secureStorage.write(key: 'refreshToken', value: response.data['refreshToken']);
+      await _storageService.writeTokenData(data: response.data);
     } catch (error) {
-      await _secureStorage.deleteAll();
+      await _storageService.deleteAll();
       throw Exception("Failed to sign in: $error");
+    }
+  }
+
+  @override
+  Future<bool> refreshTokens() async {
+    try {
+      final response = await _client.post('/auth/refresh');
+      return await _storageService.writeTokenData(data: response.data);
+    } catch (error) {
+      return await _storageService.deleteAll();
     }
   }
 
@@ -56,7 +65,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   Future<void> logout() async {
     try {
       await _client.post("/auth/logout");
-      await _secureStorage.deleteAll();
+      await _storageService.deleteAll();
     } catch (error) {
       throw Exception("Failed to sign in: $error");
     }

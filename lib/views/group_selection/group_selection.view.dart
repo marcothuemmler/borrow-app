@@ -22,7 +22,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.read(providers.groupControllerProvider.notifier);
+    final controller = ref.watch(providers.groupControllerProvider.notifier);
     final model = ref.watch(providers.groupControllerProvider);
 
     return Scaffold(

@@ -1,6 +1,7 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/services/api/rest_backend_service.dart';
 import 'package:borrow_app/services/routing/router.dart';
+import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/util/dio.util.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/authentication/login/login.controller.dart';
@@ -32,13 +33,19 @@ class Providers {
   final Provider<GoRouter> routerProvider = routerProviderDef;
 
   final secureStorageProvider = Provider<FlutterSecureStorage>(
-    (ProviderRef ref) => DioUtil.storage,
+    (ProviderRef ref) => const FlutterSecureStorage(),
+  );
+
+  final Provider<SecureStorageService> secureStorageServiceProvider = Provider<SecureStorageService>(
+    (ref) => SecureStorageService(
+      storage: ref.watch(providers.secureStorageProvider),
+    ),
   );
 
   final Provider<BackendServiceAggregator> backendServiceProvider = Provider<BackendServiceAggregator>(
     (ProviderRef ref) => RestBackendServiceImplementation(
       dioClient: ref.watch(providers.dioProvider),
-      secureStorage: ref.watch(providers.secureStorageProvider),
+      storageService: ref.watch(providers.secureStorageServiceProvider),
     ),
   );
 
