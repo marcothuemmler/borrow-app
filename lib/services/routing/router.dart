@@ -6,6 +6,7 @@ import "package:borrow_app/views/dashboard/dashboard_wrapper.view.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
+import "package:borrow_app/views/item_detail/item_detail.view.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
@@ -32,12 +33,6 @@ final routerProviderDef = Provider<GoRouter>((ref) {
       final secureStorage = ref.watch(providers.secureStorageProvider);
       final isLoggedIn = await secureStorage.containsKey(key: "refreshToken");
       final isLoginIn = RegExp(r"^/(login)*$").hasMatch(state.location);
-      if (!isLoggedIn && !isLoginIn) {
-        return state.namedLocation(homeRoute.name);
-      }
-      if (!isLoggedIn && isLoginIn) {
-        return state.namedLocation(loginRoute.name);
-      }
       if (isLoggedIn && isLoginIn) {
         return state.namedLocation(groupSelectionRoute.name);
       }
@@ -53,18 +48,31 @@ final routerProviderDef = Provider<GoRouter>((ref) {
         ),
         routes: [
           GoRoute(
+            redirect: (context, state) => _redirect(
+              context: context,
+              state: state,
+              ref: ref,
+              location: loginRoute.name,
+            ),
             parentNavigatorKey: _rootNavigatorKey,
             name: loginRoute.name,
             path: loginRoute.path,
             pageBuilder: (context, state) => const MaterialPage(child: LoginView()),
           ),
           GoRoute(
+            redirect: (context, state) => _redirect(
+              context: context,
+              state: state,
+              ref: ref,
+              location: signupRoute.name,
+            ),
             parentNavigatorKey: _rootNavigatorKey,
             name: signupRoute.name,
             path: signupRoute.path,
             pageBuilder: (context, state) => const MaterialPage(child: SignupView()),
           ),
           GoRoute(
+            redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
             parentNavigatorKey: _rootNavigatorKey,
             name: groupSelectionRoute.name,
             path: groupSelectionRoute.path,
@@ -84,6 +92,7 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             },
             routes: [
               GoRoute(
+                redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
                 parentNavigatorKey: _shellNavigatorKey,
                 name: groupRoute.name,
                 path: groupRoute.path,
@@ -93,16 +102,19 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                 },
                 routes: [
                   GoRoute(
+                    redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
                     parentNavigatorKey: _rootNavigatorKey,
-                    name: itemRoute.name,
-                    path: itemRoute.path,
+                    name: itemDetailRoute.name,
+                    path: itemDetailRoute.path,
                     builder: (context, state) {
-                      return Container();
+                      final String itemId = state.pathParameters['itemId']!;
+                      return ItemDetailView(itemId: itemId);
                     },
                   )
                 ],
               ),
               GoRoute(
+                redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
                 parentNavigatorKey: _shellNavigatorKey,
                 name: profileRoute.name,
                 path: profileRoute.path,
@@ -119,3 +131,15 @@ final routerProviderDef = Provider<GoRouter>((ref) {
     ),
   );
 });
+
+Future<String?> _redirect({
+  required BuildContext context,
+  required GoRouterState state,
+  required ProviderRef ref,
+  String? location,
+}) async {
+  final returnLocation = location ?? homeRoute.name;
+  final secureStorage = ref.watch(providers.secureStorageProvider);
+  final isLoggedIn = await secureStorage.containsKey(key: "refreshToken");
+  return isLoggedIn ? null : state.namedLocation(returnLocation);
+}
