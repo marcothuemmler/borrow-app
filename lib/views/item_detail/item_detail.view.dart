@@ -64,11 +64,25 @@ class _ItemDetailViewState extends ConsumerState<ItemDetailView> {
                             constraints: const BoxConstraints(maxWidth: 500),
                             child: AspectRatio(
                               aspectRatio: 1.5,
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                child: Image.asset(
-                                  "assets/images/default.jpg",
-                                  fit: BoxFit.cover,
+                              child: Container(
+                                padding: const EdgeInsets.all(3),
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      offset: Offset(0, 3),
+                                      blurRadius: 10,
+                                    ),
+                                  ],
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(Radius.circular(7)),
+                                  child: Image.asset(
+                                    "assets/images/default.jpg",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),

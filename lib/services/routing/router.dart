@@ -106,9 +106,20 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                     parentNavigatorKey: _rootNavigatorKey,
                     name: itemDetailRoute.name,
                     path: itemDetailRoute.path,
-                    builder: (context, state) {
+                    pageBuilder: (context, state) {
                       final String itemId = state.pathParameters['itemId']!;
-                      return ItemDetailView(itemId: itemId);
+                      return CustomTransitionPage(
+                        barrierColor: Colors.black26,
+                        child: ItemDetailView(itemId: itemId),
+                        transitionsBuilder: (
+                          BuildContext context,
+                          Animation<double> animation,
+                          Animation<double> secondaryAnimation,
+                          Widget child,
+                        ) {
+                          return ScaleTransition(scale: animation, child: child);
+                        },
+                      );
                     },
                   )
                 ],
