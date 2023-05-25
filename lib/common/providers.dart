@@ -17,6 +17,9 @@ import 'package:borrow_app/views/dashboard/item_list/item_list.view.dart';
 import 'package:borrow_app/views/group_selection/group_selection.controller.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.view.dart';
+import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
+import 'package:borrow_app/views/item_detail/item_detail.model.dart';
+import 'package:borrow_app/views/item_detail/item_detail.view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -82,6 +85,15 @@ class Providers {
     (ref) => GroupSelectionControllerImplementation(
       itemListService: ref.watch(providers.backendServiceProvider),
       groupSelectionService: ref.watch(providers.backendServiceProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<ItemDetailController, ItemDetailModel, String>
+      itemDetailControllerProvider =
+      AutoDisposeStateNotifierProviderFamily<ItemDetailController, ItemDetailModel, String>(
+    (ref, itemId) => ItemDetailControllerImplementation(
+      itemId: itemId,
+      itemDetailService: ref.watch(providers.backendServiceProvider),
     ),
   );
 }
