@@ -51,31 +51,40 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "@${item.owner.username}",
-                        style: const TextStyle(
-                          color: Colors.black54,
-                          fontSize: 12,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "@${item.owner.username}",
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 12,
+                          ),
+                          maxLines: 1,
                         ),
-                        maxLines: 1,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        item.name,
-                        style: const TextStyle(fontWeight: FontWeight.w700),
-                        maxLines: 1,
-                      ),
-                      Text(
-                        item.description ?? "",
-                        maxLines: 1,
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        Text(
+                          item.name,
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                          maxLines: 1,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                item.description ?? "",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  const Spacer(),
                   // IconButton(
                   //   padding: EdgeInsets.zero,
                   //   onPressed: () {},
