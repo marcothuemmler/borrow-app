@@ -37,7 +37,9 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
     void onNewGroup() {
       Future<String?> res = _showAlertDialog();
       res.then((value) => {
-        newGroupCreated(value)
+        if(value != null && value != "") {
+          newGroupCreated(value),
+        }
       },);
     }
 
