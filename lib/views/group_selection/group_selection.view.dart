@@ -101,6 +101,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                       offset: Offset(0, 3),
                                     )
                                   ],
+                                  gradient: LinearGradient(colors: [Colors.greenAccent, Colors.blueAccent, Colors.deepPurpleAccent]),
                                   borderRadius: BorderRadius.all(Radius.circular(10)),
                                   color: Colors.white,
                                 ),
