@@ -20,16 +20,25 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
   final _carouselController = CarouselController();
   int _currentIndex = 0;
 
+  void update() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = ref.read(providers.groupControllerProvider.notifier);
     final model = ref.watch(providers.groupControllerProvider);
 
+    void newGroupCreated(String? value) {
+      controller.addGroup(GroupModel(name: value.toString(), description: null));
+      update();
+    }
+
     void onNewGroup() {
       Future<String?> res = _showAlertDialog();
       res.then((value) => {
-        controller.addGroup(GroupModel(name: value.toString(), description: null))
-      });
+        newGroupCreated(value)
+      },);
     }
 
     return Scaffold(
