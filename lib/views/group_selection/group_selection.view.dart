@@ -3,6 +3,7 @@ import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -29,16 +30,23 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
     final controller = ref.read(providers.groupControllerProvider.notifier);
     final model = ref.watch(providers.groupControllerProvider);
 
-    void newGroupCreated(String? value) {
-      controller.addGroup(GroupModel(name: value.toString(), description: null));
-      update();
-    }
-
     void onNewGroup() {
-      Future<String?> res = _showAlertDialog();
+      Future<Option<Tuple2<String, String>>?> res = _showAlertDialog();
+      String name = "";
+      String description = "";
       res.then((value) => {
-        if(value != null && value != "") {
-          newGroupCreated(value),
+        value?.fold(() => null, (t) => {
+          name = t.value1,
+          description = t.value2,
+        },),
+        if(name != "") {
+          if(description == "") {
+            controller.addGroup(
+                GroupModel(name: name.toString(), description: null),),
+          } else {
+              controller.addGroup(
+                  GroupModel(name: name.toString(), description: description),),
+            }
         }
       },);
     }
@@ -144,19 +152,22 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                 ),
     );
   }
-  Future<String?> _showAlertDialog() async {
-    TextEditingController t = TextEditingController();
-    return showDialog<String>(
+  Future<Option<Tuple2<String, String>>?> _showAlertDialog() async {
+    TextEditingController groupName = TextEditingController();
+    TextEditingController description = TextEditingController();
+    return showDialog<Option<Tuple2<String, String>>>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog( // <-- SEE HERE
-          title: const Text('Cancel booking'),
+          title: const Text('Neue Gruppe'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 const Text('Name für neue Gruppe'),
-                TextField(controller: t,),
+                TextField(controller: groupName,),
+                const Text('Gruppenbeschreibung'),
+                TextField(controller: description,),
               ],
             ),
           ),
@@ -164,13 +175,13 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
             TextButton(
               child: const Text('Einfügen'),
               onPressed: () {
-                Navigator.of(context).pop(t.text);
+                Navigator.of(context).pop(Some(Tuple2(groupName.text, description.text)));
               },
             ),
             TextButton(
               child: const Text('Abbrechen'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(const None<Tuple2<String, String>>());
               },
             ),
           ],
