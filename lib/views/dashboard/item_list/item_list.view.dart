@@ -30,36 +30,31 @@ class _ItemListViewState extends ConsumerState<ItemListView> {
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    if (model.hasError) {
+    if (model.hasError || model.group is! GroupModel) {
       return const Center(child: Text("something went wrong"));
     }
-    return model.group.fold(
-      () => const Center(child: Text("something went wrong")),
-      (group) {
-        return SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(top: 20),
-                  itemCount: group.items.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return ItemCard(
-                      item: group.items.elementAt(index),
-                      onTap: () => controller.navigateToItem(
-                        itemId: group.items.elementAt(index).id,
-                      ),
-                    );
-                  },
-                ),
-              )
-            ],
-          ),
-        );
-      },
+    return SafeArea(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.only(top: 20),
+              itemCount: model.items.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return ItemCard(
+                  item: model.items.elementAt(index),
+                  onTap: () => controller.navigateToItem(
+                    itemId: model.items.elementAt(index).id,
+                  ),
+                );
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }
