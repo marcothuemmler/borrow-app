@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'item_list.model.freezed.dart';
@@ -10,7 +9,8 @@ class ItemListModel with _$ItemListModel {
     required bool isLoading,
     required bool hasError,
     required CategoryModel? selectedCategory,
-    required Option<GroupModel> group,
+    required GroupModel? group,
+    required List<ItemModel> items,
   }) = _ItemListModel;
 }
 
@@ -30,9 +30,9 @@ class GroupModel with _$GroupModel {
 @freezed
 class CategoryModel with _$CategoryModel {
   factory CategoryModel({
-    required String id,
+    String? id,
     required String name,
-    required String? description,
+    String? description,
   }) = _CategoryModel;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => _$CategoryModelFromJson(json);

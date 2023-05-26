@@ -1,6 +1,7 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/services/api/rest_backend_service.dart';
 import 'package:borrow_app/services/routing/router.dart';
+import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/util/dio.util.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/authentication/login/login.controller.dart';
@@ -16,6 +17,9 @@ import 'package:borrow_app/views/dashboard/item_list/item_list.view.dart';
 import 'package:borrow_app/views/group_selection/group_selection.controller.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.view.dart';
+import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
+import 'package:borrow_app/views/item_detail/item_detail.model.dart';
+import 'package:borrow_app/views/item_detail/item_detail.view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -29,13 +33,19 @@ class Providers {
   final Provider<GoRouter> routerProvider = routerProviderDef;
 
   final secureStorageProvider = Provider<FlutterSecureStorage>(
-    (ProviderRef ref) => DioUtil.storage,
+    (ProviderRef ref) => const FlutterSecureStorage(),
+  );
+
+  final Provider<SecureStorageService> secureStorageServiceProvider = Provider<SecureStorageService>(
+    (ref) => SecureStorageService(
+      storage: ref.watch(providers.secureStorageProvider),
+    ),
   );
 
   final Provider<BackendServiceAggregator> backendServiceProvider = Provider<BackendServiceAggregator>(
     (ProviderRef ref) => RestBackendServiceImplementation(
       dioClient: ref.watch(providers.dioProvider),
-      secureStorage: ref.watch(providers.secureStorageProvider),
+      storageService: ref.watch(providers.secureStorageServiceProvider),
     ),
   );
 
@@ -75,6 +85,15 @@ class Providers {
     (ref) => GroupSelectionControllerImplementation(
       itemListService: ref.watch(providers.backendServiceProvider),
       groupSelectionService: ref.watch(providers.backendServiceProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<ItemDetailController, ItemDetailModel, String>
+      itemDetailControllerProvider =
+      AutoDisposeStateNotifierProviderFamily<ItemDetailController, ItemDetailModel, String>(
+    (ref, itemId) => ItemDetailControllerImplementation(
+      itemId: itemId,
+      itemDetailService: ref.watch(providers.backendServiceProvider),
     ),
   );
 }
