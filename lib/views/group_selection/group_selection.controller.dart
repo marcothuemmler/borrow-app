@@ -6,6 +6,8 @@ import 'package:dartz/dartz.dart';
 
 class GroupSelectionControllerImplementation extends GroupSelectionController {
   final GroupSelectionService groupSelectionService;
+  String? newGroupName = "";
+  String? newGroupDescription = "";
   GroupSelectionControllerImplementation({
     GroupSelectionModel? state,
     required this.groupSelectionService,
@@ -29,5 +31,37 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
     // state = [...state, GroupModel(name: "", description: "", creatorID: "")];
     final response = await groupSelectionService.postGroup(group);
     _init();
+  }
+
+  @override
+  String? validateFormField({required String fieldName}) {
+    switch (fieldName) {
+      case 'groupName':
+        return newGroupName!.length < 3
+            ? null
+            : "Der Gruppenname muss größer als 3 sein";
+      case 'groupDescription':
+        return null;
+      default:
+        return null;
+    }
+  }
+  @override
+  void setNewGroupName(String value) {
+    newGroupName = value;
+  }
+  @override
+  void setNewGroupDescription(String value) {
+    newGroupDescription = value;
+  }
+
+  @override
+  String? getNewGroupName() {
+    return newGroupName;
+  }
+
+  @override
+  String? getNewGroupDescription() {
+    return newGroupName;
   }
 }

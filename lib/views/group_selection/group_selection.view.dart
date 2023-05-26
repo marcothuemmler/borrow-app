@@ -1,6 +1,7 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
+import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dartz/dartz.dart';
@@ -31,22 +32,22 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
     final model = ref.watch(providers.groupControllerProvider);
 
     void onNewGroup() {
-      Future<Option<Tuple2<String, String>>?> res = _showAlertDialog();
-      String name = "";
-      String description = "";
+      Future<bool?> res = _showAlertDialog(controller);
+      String? name;
+      String? description;
       res.then((value) => {
-        value?.fold(() => null, (t) => {
-          name = t.value1,
-          description = t.value2,
-        },),
-        if(name != "") {
-          if(description == "") {
-            controller.addGroup(
-                GroupModel(name: name.toString(), description: null),),
-          } else {
+        if(value != null && value == true) {
+          name = controller.getNewGroupName(),
+          description = controller.getNewGroupDescription(),
+          if(name != "") {
+            if(description == "") {
               controller.addGroup(
-                  GroupModel(name: name.toString(), description: description),),
+                GroupModel(name: name.toString(), description: null),),
+            } else {
+              controller.addGroup(
+                GroupModel(name: name.toString(), description: description),),
             }
+          }
         }
       },);
     }
@@ -153,10 +154,10 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                 ),
     );
   }
-  Future<Option<Tuple2<String, String>>?> _showAlertDialog() async {
-    TextEditingController groupName = TextEditingController();
-    TextEditingController description = TextEditingController();
-    return showDialog<Option<Tuple2<String, String>>>(
+  Future<bool?> _showAlertDialog(GroupSelectionController controller) async {
+    controller.setNewGroupName("");
+    controller.setNewGroupDescription("value");
+    return showDialog<bool>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
@@ -166,9 +167,16 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
             child: ListBody(
               children: <Widget>[
                 const Text('Name für neue Gruppe'),
-                TextField(controller: groupName,),
+                TextFieldWidget(
+                  text: "Name",
+                  validator: (_) => controller.validateFormField(fieldName: 'groupName'),
+                  onChanged: controller.setNewGroupName,
+                  autocorrect: false,),
                 const Text('Gruppenbeschreibung'),
-                TextField(controller: description,),
+                TextFieldWidget(text: "Beschreibung",
+                  validator: (_) => controller.validateFormField(fieldName: 'groupDescription'),
+                  onChanged: controller.setNewGroupDescription,
+                  autocorrect: false,),
               ],
             ),
           ),
@@ -176,13 +184,13 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
             TextButton(
               child: const Text('Einfügen'),
               onPressed: () {
-                Navigator.of(context).pop(Some(Tuple2(groupName.text, description.text)));
+                Navigator.of(context).pop(true);
               },
             ),
             TextButton(
               child: const Text('Abbrechen'),
               onPressed: () {
-                Navigator.of(context).pop(const None<Tuple2<String, String>>());
+                Navigator.of(context).pop(false);
               },
             ),
           ],
@@ -196,4 +204,14 @@ abstract class GroupSelectionController extends StateNotifier<GroupSelectionMode
   GroupSelectionController(GroupSelectionModel model) : super(model);
 
   void addGroup(GroupModel group);
+
+  String? validateFormField({required String fieldName});
+
+  void setNewGroupName(String value);
+
+  void setNewGroupDescription(String value);
+
+  String? getNewGroupName();
+
+  String? getNewGroupDescription();
 }
