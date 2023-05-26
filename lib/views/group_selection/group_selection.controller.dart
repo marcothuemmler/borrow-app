@@ -37,7 +37,7 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   String? validateFormField({required String fieldName}) {
     switch (fieldName) {
       case 'groupName':
-        return newGroupName!.length < 2
+        return newGroupName!.length > 2
             ? null
             : "Der Gruppenname muss größer als 2 sein";
       case 'groupDescription':

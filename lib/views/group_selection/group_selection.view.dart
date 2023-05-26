@@ -36,21 +36,17 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
       Future<bool?> res = _showAlertDialog(controller);
       String? name;
       String? description;
-      res.then((value) => {
-        if(value != null && value == true) {
-          name = controller.getNewGroupName(),
-          description = controller.getNewGroupDescription(),
-          if(name != "") {
-            if(description == "") {
-              controller.addGroup(
-                GroupModel(name: name.toString(), description: null),),
-            } else {
-              controller.addGroup(
-                GroupModel(name: name.toString(), description: description),),
-            }
+      res.then(
+        (value) {
+          if (value is bool && value) {
+            name = controller.getNewGroupName();
+            description = controller.getNewGroupDescription();
+            controller.addGroup(
+              GroupModel(name: name!, description: description == "" ? null : description),
+            );
           }
-        }
-      },);
+        },
+      );
     }
 
     return Scaffold(
@@ -103,8 +99,13 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                       offset: Offset(0, 3),
                                     )
                                   ],
-                                  gradient: LinearGradient(colors: [Colors.greenAccent, Colors.blueAccent, Colors.deepPurpleAccent]),
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  gradient: LinearGradient(colors: [
+                                    Colors.greenAccent,
+                                    Colors.blueAccent,
+                                    Colors.deepPurpleAccent
+                                  ]),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
                                   color: Colors.white,
                                 ),
                                 child: InkWell(
@@ -112,7 +113,8 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                   onTap: () => context.goNamed(
                                     groupRoute.name,
                                     pathParameters: {
-                                      "groupId": user.groups.elementAt(index).id!,
+                                      "groupId":
+                                          user.groups.elementAt(index).id!,
                                     },
                                   ),
                                   child: Ink(
@@ -142,7 +144,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                           ),
                         const SizedBox(height: 40),
                         ElevatedButton(
-                        onPressed: () => onNewGroup(),
+                          onPressed: () => onNewGroup(),
                           child: const Text("Neue Gruppe"),
                         ),
                         ElevatedButton(
@@ -155,6 +157,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                 ),
     );
   }
+
   Future<bool?> _showAlertDialog(GroupSelectionController controller) async {
     controller.setNewGroupName("");
     controller.setNewGroupDescription("value");
@@ -163,8 +166,10 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return NewGroupDialog(
-          nameValidator: (_) => controller.validateFormField(fieldName: "groupName"),
-          descriptionValidator: (_) => controller.validateFormField(fieldName: "groupDescription"),
+          nameValidator: (_) =>
+              controller.validateFormField(fieldName: "groupName"),
+          descriptionValidator: (_) =>
+              controller.validateFormField(fieldName: "groupDescription"),
           setGroupName: controller.setNewGroupName,
           setGroupDescription: controller.setNewGroupDescription,
         );
@@ -173,7 +178,8 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
   }
 }
 
-abstract class GroupSelectionController extends StateNotifier<GroupSelectionModel> {
+abstract class GroupSelectionController
+    extends StateNotifier<GroupSelectionModel> {
   GroupSelectionController(GroupSelectionModel model) : super(model);
 
   void addGroup(GroupModel group);

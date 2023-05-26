@@ -7,7 +7,9 @@ class NewGroupDialog extends StatelessWidget {
     this.nameValidator,
     this.descriptionValidator,
     required this.setGroupName,
-    required this.setGroupDescription,});
+    required this.setGroupDescription,
+  });
+
   final String? Function(String?)? nameValidator;
   final String? Function(String?)? descriptionValidator;
   final Function(String) setGroupName;
@@ -16,30 +18,38 @@ class NewGroupDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    return AlertDialog( // <-- SEE HERE
+    return AlertDialog(
+      // <-- SEE HERE
       title: const Text('Neue Gruppe'),
       content: SingleChildScrollView(
-        child: Form(child: ListBody(
+        child: Form(
           key: _formKey,
-          children: <Widget>[
-            TextFieldWidget(
-              text: "Name",
-              validator: nameValidator,
-              onChanged: setGroupName,
-              autocorrect: false,),
-            TextFieldWidget(text: "Beschreibung",
-              validator: descriptionValidator,
-              onChanged: setGroupDescription,
-              autocorrect: false,),
-          ],
-        ),
+          child: ListBody(
+            children: <Widget>[
+              TextFieldWidget(
+                text: "Name",
+                validator: nameValidator,
+                onChanged: setGroupName,
+                autocorrect: false,
+              ),
+              TextFieldWidget(
+                text: "Beschreibung",
+                validator: descriptionValidator,
+                onChanged: setGroupDescription,
+                autocorrect: false,
+              ),
+            ],
+          ),
         ),
       ),
       actions: <Widget>[
         TextButton(
           child: const Text('Einfügen'),
           onPressed: () {
-            Navigator.of(context).pop(true);
+            _formKey.currentState!.save();
+            if (_formKey.currentState!.validate()) {
+              Navigator.of(context).pop(true);
+            }
           },
         ),
         TextButton(
