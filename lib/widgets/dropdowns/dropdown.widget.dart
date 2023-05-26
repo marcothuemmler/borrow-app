@@ -29,6 +29,7 @@ class DropdownWidget<T> extends StatelessWidget {
         margin: const EdgeInsets.only(left: 20, right: 10),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<T>(
+            focusColor: Colors.transparent,
             borderRadius: BorderRadius.circular(7),
             hint: hint,
             value: value,

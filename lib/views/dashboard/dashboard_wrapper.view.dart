@@ -30,7 +30,6 @@ class _DashboardWrapperViewState extends ConsumerState<DashboardWrapperView> {
     );
     final dashboardModel = ref.watch(providers.dashboardControllerProvider(widget.groupId));
     final groupModel = ref.watch(providers.itemListControllerProvider(widget.groupId));
-    final categories = groupModel.group.toNullable()?.categories ?? [];
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -41,12 +40,12 @@ class _DashboardWrapperViewState extends ConsumerState<DashboardWrapperView> {
             if (dashboardModel.currentIndex == 0)
               DropdownWidget<CategoryModel>(
                 hint: const Text("Category"),
-                items: categories,
+                items: [...?groupModel.group?.categories, CategoryModel(name: "All")],
                 onChanged: groupController.selectCategory,
                 value: groupModel.selectedCategory,
-                mapFunction: (item) => DropdownMenuItem(
-                  value: item,
-                  child: Text(item.name),
+                mapFunction: (category) => DropdownMenuItem(
+                  value: category,
+                  child: Text(category.name),
                 ),
               )
           ],

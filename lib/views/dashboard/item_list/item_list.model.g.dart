@@ -30,7 +30,7 @@ Map<String, dynamic> _$$_GroupModelToJson(_$_GroupModel instance) =>
 
 _$_CategoryModel _$$_CategoryModelFromJson(Map<String, dynamic> json) =>
     _$_CategoryModel(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
     );

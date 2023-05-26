@@ -72,65 +72,71 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             pageBuilder: (context, state) => const MaterialPage(child: SignupView()),
           ),
           GoRoute(
-            redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
+            redirect: (context, state) => _redirect(
+              context: context,
+              state: state,
+              ref: ref,
+              location: loginRoute.name,
+            ),
             parentNavigatorKey: _rootNavigatorKey,
             name: groupSelectionRoute.name,
             path: groupSelectionRoute.path,
             pageBuilder: (context, state) => const MaterialPage(child: GroupSelectionView()),
-          ),
-          // TODO: Possibly replace with TabBarView
-          ShellRoute(
-            navigatorKey: _shellNavigatorKey,
-            pageBuilder: (context, state, child) {
-              final String? groupId = state.pathParameters['groupId'];
-              if (groupId is! String) {
-                return _errorPage(state: state, error: "No ID provided");
-              }
-              return MaterialPage(
-                child: DashboardWrapperView(groupId: groupId, child: child),
-              );
-            },
             routes: [
-              GoRoute(
-                redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
-                parentNavigatorKey: _shellNavigatorKey,
-                name: groupRoute.name,
-                path: groupRoute.path,
-                builder: (context, state) {
-                  final String groupId = state.pathParameters['groupId']!;
-                  return ItemListView(groupId: groupId);
+              ShellRoute(
+                navigatorKey: _shellNavigatorKey,
+                pageBuilder: (context, state, child) {
+                  final String? groupId = state.pathParameters['groupId'];
+                  if (groupId is! String) {
+                    return _errorPage(state: state, error: "No ID provided");
+                  }
+                  return MaterialPage(
+                    child: DashboardWrapperView(groupId: groupId, child: child),
+                  );
                 },
                 routes: [
                   GoRoute(
                     redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
-                    parentNavigatorKey: _rootNavigatorKey,
-                    name: itemDetailRoute.name,
-                    path: itemDetailRoute.path,
-                    pageBuilder: (context, state) {
-                      final String itemId = state.pathParameters['itemId']!;
-                      return CustomTransitionPage(
-                        barrierColor: Colors.black26,
-                        child: ItemDetailView(itemId: itemId),
-                        transitionsBuilder: (
-                          BuildContext context,
-                          Animation<double> animation,
-                          Animation<double> secondaryAnimation,
-                          Widget child,
-                        ) {
-                          return ScaleTransition(scale: animation, child: child);
-                        },
-                      );
+                    parentNavigatorKey: _shellNavigatorKey,
+                    name: groupRoute.name,
+                    path: groupRoute.path,
+                    builder: (context, state) {
+                      final String groupId = state.pathParameters['groupId']!;
+                      return ItemListView(groupId: groupId);
                     },
+                    routes: [
+                      GoRoute(
+                        redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
+                        parentNavigatorKey: _rootNavigatorKey,
+                        name: itemDetailRoute.name,
+                        path: itemDetailRoute.path,
+                        pageBuilder: (context, state) {
+                          final String itemId = state.pathParameters['itemId']!;
+                          return CustomTransitionPage(
+                            barrierColor: Colors.black26,
+                            child: ItemDetailView(itemId: itemId),
+                            transitionsBuilder: (
+                              BuildContext context,
+                              Animation<double> animation,
+                              Animation<double> secondaryAnimation,
+                              Widget child,
+                            ) {
+                              return ScaleTransition(scale: animation, child: child);
+                            },
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                  GoRoute(
+                    redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
+                    parentNavigatorKey: _shellNavigatorKey,
+                    name: profileRoute.name,
+                    path: profileRoute.path,
+                    builder: (context, state) => Container(),
                   )
                 ],
               ),
-              GoRoute(
-                redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
-                parentNavigatorKey: _shellNavigatorKey,
-                name: profileRoute.name,
-                path: profileRoute.path,
-                builder: (context, state) => Container(),
-              )
             ],
           ),
         ],
