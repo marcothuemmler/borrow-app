@@ -1,6 +1,7 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
+import 'package:borrow_app/widgets/dialogs/new_group_dialog.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -161,39 +162,11 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog( // <-- SEE HERE
-          title: const Text('Neue Gruppe'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                const Text('Name für neue Gruppe'),
-                TextFieldWidget(
-                  text: "Name",
-                  validator: (_) => controller.validateFormField(fieldName: 'groupName'),
-                  onChanged: controller.setNewGroupName,
-                  autocorrect: false,),
-                const Text('Gruppenbeschreibung'),
-                TextFieldWidget(text: "Beschreibung",
-                  validator: (_) => controller.validateFormField(fieldName: 'groupDescription'),
-                  onChanged: controller.setNewGroupDescription,
-                  autocorrect: false,),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Einfügen'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-            TextButton(
-              child: const Text('Abbrechen'),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-            ),
-          ],
+        return NewGroupDialog(
+          nameValidator: (_) => controller.validateFormField(fieldName: "groupName"),
+          descriptionValidator: (_) => controller.validateFormField(fieldName: "groupDescription"),
+          setGroupName: controller.setNewGroupName,
+          setGroupDescription: controller.setNewGroupDescription,
         );
       },
     );
