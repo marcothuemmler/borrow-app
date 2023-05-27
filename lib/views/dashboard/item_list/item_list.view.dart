@@ -1,5 +1,6 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,21 +39,51 @@ class _ItemListViewState extends ConsumerState<ItemListView> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.only(top: 20),
-              itemCount: model.items.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return ItemCard(
-                  item: model.items.elementAt(index),
-                  onTap: () => controller.navigateToItem(
-                    itemId: model.items.elementAt(index).id,
+          if (model.items.isNotEmpty)
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.only(top: 20),
+                itemCount: model.items.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return ItemCard(
+                    item: model.items.elementAt(index),
+                    onTap: () => controller.navigateToItem(
+                      itemId: model.items.elementAt(index).id,
+                    ),
+                  );
+                },
+              ),
+            )
+          else
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Center(
+                    child: Text(
+                      "It's empty in here",
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+                    ),
                   ),
-                );
-              },
+                  const SizedBox(height: 25),
+                  DottedBorderButton(
+                    title: "Create a new category",
+                    icon: const Icon(Icons.add),
+                    onTap: controller.createCategory,
+                    width: 200,
+                  ),
+                  const SizedBox(height: 10),
+                  DottedBorderButton(
+                    title: "Add a new item",
+                    icon: const Icon(Icons.add),
+                    onTap: controller.createItem,
+                    width: 200,
+                  ),
+                ],
+              ),
             ),
-          )
         ],
       ),
     );
@@ -63,5 +94,10 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
   ItemListController(ItemListModel model) : super(model);
 
   void navigateToItem({required String itemId});
+
   void selectCategory(CategoryModel? category);
+
+  void createCategory();
+
+  void createItem();
 }
