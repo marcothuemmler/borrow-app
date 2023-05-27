@@ -142,14 +142,20 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                             count: user.groups.length,
                             index: _currentIndex,
                           ),
-                        const SizedBox(height: 40),
-                        ElevatedButton(
-                          onPressed: () => onNewGroup(),
-                          child: const Text("Neue Gruppe"),
+                        const SizedBox(height: 24.0,),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            onPressed: () => onNewGroup(),
+                            child: const Text("Neue Gruppe"),
+                          ),
                         ),
-                        ElevatedButton(
-                          onPressed: () => {},
-                          child: const Text("Einladen"),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            onPressed: () => {},
+                            child: const Text("Einladen"),
+                          )
                         )
                       ],
                     ),
