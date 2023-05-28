@@ -24,7 +24,8 @@ class GroupModel with _$GroupModel {
     required List<ItemModel> items,
   }) = _GroupModel;
 
-  factory GroupModel.fromJson(Map<String, dynamic> json) => _$GroupModelFromJson(json);
+  factory GroupModel.fromJson(Map<String, dynamic> json) =>
+      _$GroupModelFromJson(json);
 }
 
 @freezed
@@ -35,7 +36,8 @@ class CategoryModel with _$CategoryModel {
     String? description,
   }) = _CategoryModel;
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) => _$CategoryModelFromJson(json);
+  factory CategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$CategoryModelFromJson(json);
 }
 
 @freezed
@@ -48,7 +50,8 @@ class ItemModel with _$ItemModel {
     required UserModel owner,
   }) = _ItemsModel;
 
-  factory ItemModel.fromJson(Map<String, dynamic> json) => _$ItemModelFromJson(json);
+  factory ItemModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemModelFromJson(json);
 }
 
 @freezed
@@ -58,5 +61,6 @@ class UserModel with _$UserModel {
     required String username,
   }) = _UserModel;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 }

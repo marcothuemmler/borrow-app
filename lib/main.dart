@@ -16,19 +16,17 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final excludedPaths = RegExp(r"^/auth/(login|signup)$");
-    final dio = ref.watch(providers.dioProvider);
-    final storageService = ref.watch(providers.secureStorageServiceProvider);
-    final backendService = ref.watch(providers.backendServiceProvider);
+    final dio = ref.read(providers.dioProvider);
+    final storageService = ref.read(providers.secureStorageServiceProvider);
+    final backendService = ref.read(providers.backendServiceProvider);
 
     dio.interceptors.add(
       QueuedInterceptorsWrapper(
         onRequest: (options, handler) async {
-          final accessToken = await storageService.read(key: "accessToken");
-          final refreshToken = await storageService.read(key: "refreshToken");
           final isRefreshPath = options.path == ("/auth/refresh");
-          options.disableRetry = isRefreshPath || excludedPaths.hasMatch(options.path);
-          final authorizationToken = isRefreshPath ? refreshToken : accessToken;
+          options.disableRetry = options.path.startsWith("/auth");
+          final key = isRefreshPath ? "refreshToken" : "accessToken";
+          final authorizationToken = await storageService.read(key: key);
           options.headers['Authorization'] = 'Bearer $authorizationToken';
           return handler.next(options);
         },
