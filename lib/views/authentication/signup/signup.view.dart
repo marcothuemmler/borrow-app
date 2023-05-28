@@ -17,10 +17,9 @@ class SignupView extends ConsumerStatefulWidget {
 class _SignupViewState extends ConsumerState<SignupView> {
   bool _obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
+
   void _toggleObscurePassword() {
-    setState(() {
-      _obscurePassword = !_obscurePassword;
-    });
+    setState(() => _obscurePassword = !_obscurePassword);
   }
 
   @override
@@ -42,18 +41,24 @@ class _SignupViewState extends ConsumerState<SignupView> {
               TextFieldWidget(
                 text: 'Email',
                 autocorrect: false,
-                validator: (_) => controller.validateFormField(fieldName: 'email'),
+                validator: (_) => controller.validateFormField(
+                  fieldName: 'email',
+                ),
                 onChanged: controller.setEmail,
               ),
               TextFieldWidget(
                 text: 'Username',
                 autocorrect: false,
-                validator: (_) => controller.validateFormField(fieldName: 'username'),
+                validator: (_) => controller.validateFormField(
+                  fieldName: 'username',
+                ),
                 onChanged: controller.setUsername,
               ),
               PasswordFieldWidget(
                 text: 'Password',
-                validator: (_) => controller.validateFormField(fieldName: 'password'),
+                validator: (_) => controller.validateFormField(
+                  fieldName: 'password',
+                ),
                 onTapIcon: _toggleObscurePassword,
                 onChanged: controller.setPassword,
                 obscureText: _obscurePassword,
@@ -85,8 +90,12 @@ abstract class SignupController extends StateNotifier<SignupDto> {
   SignupController(SignupDto model) : super(model);
 
   Future<void> signup();
+
   String? validateFormField({required String fieldName});
+
   void setUsername(String value);
+
   void setEmail(String value);
+
   void setPassword(String value);
 }

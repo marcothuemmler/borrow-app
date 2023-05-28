@@ -1,9 +1,12 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart' as item_list_model;
-import 'package:borrow_app/views/group_selection/group_selection.model.dart' as group_selection_model;
-import 'package:borrow_app/views/item_detail/item_detail.model.dart' as item_detail_model;
+import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart'
+    as item_list_model;
+import 'package:borrow_app/views/group_selection/group_selection.model.dart'
+    as group_selection_model;
+import 'package:borrow_app/views/item_detail/item_detail.model.dart'
+    as item_detail_model;
 import 'package:dio/dio.dart';
 
 class RestBackendServiceImplementation implements BackendServiceAggregator {
@@ -72,7 +75,9 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<item_list_model.GroupModel> getGroupItemsAndCategories({required String groupId}) async {
+  Future<item_list_model.GroupModel> getGroupItemsAndCategories({
+    required String groupId,
+  }) async {
     try {
       final response = await _client.get(
         "/group/$groupId",
@@ -87,7 +92,9 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<item_detail_model.ItemModel> getItemDetails({required String itemId}) async {
+  Future<item_detail_model.ItemModel> getItemDetails({
+    required String itemId,
+  }) async {
     try {
       final response = await _client.get("/item/$itemId");
       return item_detail_model.ItemModel.fromJson(response.data);

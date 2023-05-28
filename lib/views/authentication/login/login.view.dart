@@ -45,12 +45,16 @@ class _LoginViewState extends ConsumerState<LoginView> {
               TextFieldWidget(
                 text: 'Email',
                 autocorrect: false,
-                validator: (_) => controller.validateFormField(fieldName: 'email'),
+                validator: (_) => controller.validateFormField(
+                  fieldName: 'email',
+                ),
                 onChanged: controller.setEmail,
               ),
               PasswordFieldWidget(
                 text: 'Password',
-                validator: (_) => controller.validateFormField(fieldName: 'password'),
+                validator: (_) => controller.validateFormField(
+                  fieldName: 'password',
+                ),
                 onTapIcon: _toggleObscurePassword,
                 onChanged: controller.setPassword,
                 obscureText: _obscurePassword,

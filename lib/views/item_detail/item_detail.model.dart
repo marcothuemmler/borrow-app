@@ -23,7 +23,8 @@ class ItemModel with _$ItemModel {
     required CategoryModel category,
   }) = _ItemModel;
 
-  factory ItemModel.fromJson(Map<String, dynamic> json) => _$ItemModelFromJson(json);
+  factory ItemModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemModelFromJson(json);
 }
 
 @freezed
@@ -35,7 +36,8 @@ class CategoryModel with _$CategoryModel {
     CategoryModel? parent,
   }) = _CategoryModel;
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) => _$CategoryModelFromJson(json);
+  factory CategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$CategoryModelFromJson(json);
 }
 
 @freezed
@@ -45,5 +47,6 @@ class UserModel with _$UserModel {
     required String username,
   }) = _UserModel;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 }
