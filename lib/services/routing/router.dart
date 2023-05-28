@@ -7,6 +7,7 @@ import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
+import "package:borrow_app/views/welcome/welcome.view.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
@@ -31,14 +32,14 @@ final routerProviderDef = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     refreshListenable: storageService,
-    debugLogDiagnostics: false,
+    debugLogDiagnostics: true,
     redirect: (context, state) async {
       final isLoggedIn = await storageService.containsKey(key: "refreshToken");
-      final isLoginIn = state.location == "/login";
-      final isSigningUp = state.location == "/signup";
-      if (isSigningUp) {
+      final isLoginIn = state.matchedLocation == "/login";
+      final isSigningUp = state.matchedLocation == "/signup";
+      final signedUp = state.matchedLocation == "/welcome";
+      if (isSigningUp || signedUp) {
         return null;
-        // TODO: welcome screen => login
       }
       if (!isLoggedIn && !isLoginIn) {
         return state.namedLocation(homeRoute.name);
@@ -73,6 +74,12 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             path: signupRoute.path,
             pageBuilder: (context, state) =>
                 const MaterialPage(child: SignupView()),
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: welcomeRoute.name,
+            path: welcomeRoute.path,
+            builder: (context, state) => const WelcomeView(),
           ),
           GoRoute(
             parentNavigatorKey: _rootNavigatorKey,

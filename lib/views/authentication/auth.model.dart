@@ -13,6 +13,15 @@ class LoginModel with _$LoginModel {
 }
 
 @freezed
+class SignupModel with _$SignupModel {
+  const factory SignupModel({
+    required bool hasError,
+    required bool isLoading,
+    required SignupDto signupDto,
+  }) = _SignupModel;
+}
+
+@freezed
 class SignupDto with _$SignupDto {
   const factory SignupDto({
     required String? email,

@@ -52,9 +52,9 @@ class Providers {
     ),
   );
 
-  final StateNotifierProvider<SignupController, SignupDto>
+  final StateNotifierProvider<SignupController, SignupModel>
       signupControllerProvider =
-      StateNotifierProvider<SignupController, SignupDto>(
+      StateNotifierProvider<SignupController, SignupModel>(
     (ref) => SignupControllerImplementation(
       authService: ref.read(providers.backendServiceProvider),
     ),

@@ -22,6 +22,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   @override
   Future<void> signup({required SignupDto payload}) async {
     try {
+      await _storageService.deleteAll();
       await _client.post("/auth/signup", data: payload);
     } catch (error) {
       throw Exception("Failed to sign in: $error");

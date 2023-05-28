@@ -8,50 +8,62 @@ class SignupControllerImplementation extends SignupController {
 
   SignupControllerImplementation({
     required AuthService authService,
-    SignupDto? model,
+    SignupModel? model,
   })  : _signupService = authService,
         super(
           model ??
-              const SignupDto(
-                email: null,
-                username: null,
-                password: null,
+              const SignupModel(
+                hasError: false,
+                isLoading: false,
+                signupDto: SignupDto(
+                  email: null,
+                  username: null,
+                  password: null,
+                ),
               ),
         );
 
   @override
   void setEmail(String value) {
-    state = state.copyWith(email: value);
+    state = state.copyWith.signupDto(email: value);
   }
 
   @override
   void setPassword(String value) {
-    state = state.copyWith(password: value);
+    state = state.copyWith.signupDto(password: value);
   }
 
   @override
   void setUsername(String value) {
-    state = state.copyWith(username: value);
+    state = state.copyWith.signupDto(username: value);
   }
 
   @override
-  Future<void> signup() {
-    return _signupService.signup(payload: state);
+  Future<bool> signup() async {
+    state = state.copyWith(isLoading: true, hasError: false);
+    try {
+      await _signupService.signup(payload: state.signupDto);
+      state = state.copyWith(isLoading: false);
+      return true;
+    } catch (error) {
+      state = state.copyWith(isLoading: false, hasError: true);
+      return false;
+    }
   }
 
   @override
   String? validateFormField({required String fieldName}) {
     switch (fieldName) {
       case 'email':
-        return state.email.isEmail
+        return state.signupDto.email.isEmail
             ? null
             : "Bitte geben Sie eine gültige Email ein";
       case 'username':
-        return state.username.isValidUsername
+        return state.signupDto.username.isValidUsername
             ? null
             : "Username muss mindestens 3 Zeichen haben";
       case 'password':
-        return state.password.isStrongPassword
+        return state.signupDto.password.isStrongPassword
             ? null
             : 'Passwort muss mindestens 8 Zeichen lang sein und mindestens eine'
                 ' Zahl, einen Großbuchstaben und einen Kleinbuchstaben'
