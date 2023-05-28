@@ -35,53 +35,57 @@ class _LoginViewState extends ConsumerState<LoginView> {
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              TextFieldWidget(
-                text: 'Email',
-                autocorrect: false,
-                validator: (_) => controller.validateFormField(
-                  fieldName: 'email',
+          child: AutofillGroup(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                TextFieldWidget(
+                  text: 'Email',
+                  keyboardType: TextInputType.emailAddress,
+                  autofillHints: const [AutofillHints.email],
+                  autocorrect: false,
+                  validator: (_) => controller.validateFormField(
+                    fieldName: 'email',
+                  ),
+                  onChanged: controller.setEmail,
                 ),
-                onChanged: controller.setEmail,
-              ),
-              PasswordFieldWidget(
-                text: 'Password',
-                validator: (_) => controller.validateFormField(
-                  fieldName: 'password',
+                PasswordFieldWidget(
+                  text: 'Password',
+                  validator: (_) => controller.validateFormField(
+                    fieldName: 'password',
+                  ),
+                  onTapIcon: _toggleObscurePassword,
+                  onChanged: controller.setPassword,
+                  obscureText: _obscurePassword,
                 ),
-                onTapIcon: _toggleObscurePassword,
-                onChanged: controller.setPassword,
-                obscureText: _obscurePassword,
-              ),
-              if (model.hasError)
-                const Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 5),
-                    child: Text(
-                      "Beim Einloggen ist etwas schiefgelaufen",
-                      style: TextStyle(color: Colors.red),
+                if (model.hasError)
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Text(
+                        "Beim Einloggen ist etwas schiefgelaufen",
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ),
                   ),
+                const SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      child: const Text("Submit"),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          controller.login();
+                        }
+                      },
+                    )
+                  ],
                 ),
-              const SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    child: const Text("Submit"),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        controller.login();
-                      }
-                    },
-                  )
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
