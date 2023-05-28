@@ -4,7 +4,9 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 class SecureStorageService {
   final FlutterSecureStorage _storage;
 
-  SecureStorageService({required FlutterSecureStorage storage}) : _storage = storage;
+  SecureStorageService({
+    required FlutterSecureStorage storage,
+  }) : _storage = storage;
 
   Future<bool> containsKey({required String key}) async {
     return await _storage.containsKey(key: key);

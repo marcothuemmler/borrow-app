@@ -37,7 +37,9 @@ class PasswordFieldWidget extends StatelessWidget {
             suffixIcon: GestureDetector(
               onTap: onTapIcon,
               child: Icon(
-                obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                obscureText
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
               ),
             ),
           ),

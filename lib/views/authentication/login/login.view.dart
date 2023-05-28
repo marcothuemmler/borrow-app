@@ -27,7 +27,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(providers.loginControllerProvider.notifier);
+    final controller = ref.read(providers.loginControllerProvider.notifier);
     final model = ref.watch(providers.loginControllerProvider);
     return Scaffold(
       appBar: AppBar(

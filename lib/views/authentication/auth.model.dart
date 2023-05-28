@@ -20,7 +20,8 @@ class SignupDto with _$SignupDto {
     required String? password,
   }) = _SignupDto;
 
-  factory SignupDto.fromJson(Map<String, Object?> json) => _$SignupDtoFromJson(json);
+  factory SignupDto.fromJson(Map<String, Object?> json) =>
+      _$SignupDtoFromJson(json);
 }
 
 @freezed
@@ -30,5 +31,6 @@ class LoginDto with _$LoginDto {
     required String? password,
   }) = _LoginDto;
 
-  factory LoginDto.fromJson(Map<String, Object?> json) => _$LoginDtoFromJson(json);
+  factory LoginDto.fromJson(Map<String, Object?> json) =>
+      _$LoginDtoFromJson(json);
 }

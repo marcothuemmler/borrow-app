@@ -25,7 +25,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(providers.signupControllerProvider.notifier);
+    final controller = ref.read(providers.signupControllerProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -97,8 +97,12 @@ abstract class SignupController extends StateNotifier<SignupDto> {
   SignupController(SignupDto model) : super(model);
 
   Future<void> signup();
+
   String? validateFormField({required String fieldName});
+
   void setUsername(String value);
+
   void setEmail(String value);
+
   void setPassword(String value);
 }
