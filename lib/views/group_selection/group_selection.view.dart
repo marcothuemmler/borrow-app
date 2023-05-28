@@ -22,8 +22,10 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(providers.groupControllerProvider.notifier);
-    final model = ref.watch(providers.groupControllerProvider);
+    final controller = ref.read(
+      providers.groupSelectionControllerProvider.notifier,
+    );
+    final model = ref.watch(providers.groupSelectionControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -75,7 +77,9 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                       offset: Offset(0, 3),
                                     )
                                   ],
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
                                   color: Colors.white,
                                 ),
                                 child: InkWell(
@@ -83,7 +87,8 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                   onTap: () => context.goNamed(
                                     groupRoute.name,
                                     pathParameters: {
-                                      "groupId": user.groups.elementAt(index).id!,
+                                      "groupId":
+                                          user.groups.elementAt(index).id!,
                                     },
                                   ),
                                   child: Ink(
@@ -113,7 +118,9 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                           ),
                         const SizedBox(height: 40),
                         ElevatedButton(
-                          onPressed: () => controller.addGroup(GroupModel(name: "", description: null)),
+                          onPressed: () => controller.addGroup(
+                            GroupModel(name: "", description: null),
+                          ),
                           child: const Text("Neue Gruppe"),
                         ),
                         ElevatedButton(
@@ -128,7 +135,8 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
   }
 }
 
-abstract class GroupSelectionController extends StateNotifier<GroupSelectionModel> {
+abstract class GroupSelectionController
+    extends StateNotifier<GroupSelectionModel> {
   GroupSelectionController(GroupSelectionModel model) : super(model);
 
   void addGroup(GroupModel group);
