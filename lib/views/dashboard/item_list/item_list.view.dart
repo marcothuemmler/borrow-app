@@ -5,29 +5,17 @@ import 'package:borrow_app/widgets/cards/item_card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ItemListView extends ConsumerStatefulWidget {
+class ItemListView extends ConsumerWidget {
   final String groupId;
 
-  const ItemListView({
-    super.key,
-    required this.groupId,
-  });
+  const ItemListView({super.key, required this.groupId});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
-    return _ItemListViewState();
-  }
-}
-
-class _ItemListViewState extends ConsumerState<ItemListView> {
-  @override
-  Widget build(BuildContext context) {
-    final controller = ref.watch(
-      providers.itemListControllerProvider(widget.groupId).notifier,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.read(
+      providers.itemListControllerProvider(groupId).notifier,
     );
-    final model = ref.watch(
-      providers.itemListControllerProvider(widget.groupId),
-    );
+    final model = ref.watch(providers.itemListControllerProvider(groupId));
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -46,11 +34,10 @@ class _ItemListViewState extends ConsumerState<ItemListView> {
                 itemCount: model.items.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
+                  final item = model.items.elementAt(index);
                   return ItemCard(
-                    item: model.items.elementAt(index),
-                    onTap: () => controller.navigateToItem(
-                      itemId: model.items.elementAt(index).id,
-                    ),
+                    item: item,
+                    onTap: () => controller.navigateToItem(itemId: item.id),
                   );
                 },
               ),
@@ -64,7 +51,8 @@ class _ItemListViewState extends ConsumerState<ItemListView> {
                   const Center(
                     child: Text(
                       "It's empty in here",
-                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
                     ),
                   ),
                   const SizedBox(height: 25),
