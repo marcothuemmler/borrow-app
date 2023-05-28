@@ -17,14 +17,15 @@ class SignupView extends ConsumerStatefulWidget {
 class _SignupViewState extends ConsumerState<SignupView> {
   bool _obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
-
   void _toggleObscurePassword() {
-    setState(() => _obscurePassword = !_obscurePassword);
+    setState(() {
+      _obscurePassword = !_obscurePassword;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(providers.signupControllerProvider.notifier);
+    final controller = ref.read(providers.signupControllerProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -34,51 +35,57 @@ class _SignupViewState extends ConsumerState<SignupView> {
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              TextFieldWidget(
-                text: 'Email',
-                autocorrect: false,
-                validator: (_) => controller.validateFormField(
-                  fieldName: 'email',
+          child: AutofillGroup(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                TextFieldWidget(
+                  keyboardType: TextInputType.emailAddress,
+                  autofillHints: const [AutofillHints.email],
+                  text: 'Email',
+                  autocorrect: false,
+                  validator: (_) => controller.validateFormField(
+                    fieldName: 'email',
+                  ),
+                  onChanged: controller.setEmail,
                 ),
-                onChanged: controller.setEmail,
-              ),
-              TextFieldWidget(
-                text: 'Username',
-                autocorrect: false,
-                validator: (_) => controller.validateFormField(
-                  fieldName: 'username',
+                TextFieldWidget(
+                  keyboardType: TextInputType.name,
+                  autofillHints: const [AutofillHints.username],
+                  text: 'Username',
+                  autocorrect: false,
+                  validator: (_) => controller.validateFormField(
+                    fieldName: 'username',
+                  ),
+                  onChanged: controller.setUsername,
                 ),
-                onChanged: controller.setUsername,
-              ),
-              PasswordFieldWidget(
-                text: 'Password',
-                validator: (_) => controller.validateFormField(
-                  fieldName: 'password',
+                PasswordFieldWidget(
+                  text: 'Password',
+                  validator: (_) => controller.validateFormField(
+                    fieldName: 'password',
+                  ),
+                  onTapIcon: _toggleObscurePassword,
+                  onChanged: controller.setPassword,
+                  obscureText: _obscurePassword,
                 ),
-                onTapIcon: _toggleObscurePassword,
-                onChanged: controller.setPassword,
-                obscureText: _obscurePassword,
-              ),
-              const SizedBox(height: 60),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    child: const Text("Submit"),
-                    onPressed: () {
-                      _formKey.currentState!.save();
-                      if (_formKey.currentState!.validate()) {
-                        controller.signup();
-                      }
-                    },
-                  )
-                ],
-              ),
-            ],
+                const SizedBox(height: 60),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      child: const Text("Submit"),
+                      onPressed: () {
+                        _formKey.currentState!.save();
+                        if (_formKey.currentState!.validate()) {
+                          controller.signup();
+                        }
+                      },
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

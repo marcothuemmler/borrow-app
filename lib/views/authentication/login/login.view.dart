@@ -4,6 +4,7 @@ import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/widgets/textform_fields/password_field.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,7 +27,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(providers.loginControllerProvider.notifier);
+    final controller = ref.read(providers.loginControllerProvider.notifier);
     final model = ref.watch(providers.loginControllerProvider);
     return Scaffold(
       appBar: AppBar(
@@ -37,56 +38,61 @@ class _LoginViewState extends ConsumerState<LoginView> {
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              TextFieldWidget(
-                text: 'Email',
-                autocorrect: false,
-                validator: (_) => controller.validateFormField(
-                  fieldName: 'email',
+          child: AutofillGroup(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                TextFieldWidget(
+                  text: 'Email',
+                  keyboardType: TextInputType.emailAddress,
+                  autofillHints: const [AutofillHints.email],
+                  autocorrect: false,
+                  validator: (_) => controller.validateFormField(
+                    fieldName: 'email',
+                  ),
+                  onChanged: controller.setEmail,
                 ),
-                onChanged: controller.setEmail,
-              ),
-              PasswordFieldWidget(
-                text: 'Password',
-                validator: (_) => controller.validateFormField(
-                  fieldName: 'password',
+                PasswordFieldWidget(
+                  text: 'Password',
+                  validator: (_) => controller.validateFormField(
+                    fieldName: 'password',
+                  ),
+                  onTapIcon: _toggleObscurePassword,
+                  onChanged: controller.setPassword,
+                  obscureText: _obscurePassword,
                 ),
-                onTapIcon: _toggleObscurePassword,
-                onChanged: controller.setPassword,
-                obscureText: _obscurePassword,
-              ),
-              if (model.hasError)
-                const Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 5),
-                    child: Text(
-                      "Beim Einloggen ist etwas schiefgelaufen",
-                      style: TextStyle(color: Colors.red),
+                if (model.hasError)
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Text(
+                        "Beim Einloggen ist etwas schiefgelaufen",
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ),
                   ),
+                const SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      child: const Text("Submit"),
+                      onPressed: () {
+                        _formKey.currentState!.save();
+                        if (_formKey.currentState!.validate()) {
+                          controller.login().then((_) {
+                            TextInput.finishAutofillContext();
+                            context.goNamed(groupSelectionRoute.name);
+                          });
+                        }
+                      },
+                    )
+                  ],
                 ),
-              const SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    child: const Text("Submit"),
-                    onPressed: () {
-                      _formKey.currentState!.save();
-                      if (_formKey.currentState!.validate()) {
-                        controller.login().then((_) {
-                          context.goNamed(groupSelectionRoute.name);
-                        });
-                      }
-                    },
-                  )
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
