@@ -34,11 +34,23 @@ class CategoryModel with _$CategoryModel {
     String? id,
     required String name,
     String? description,
+    String? groupId,
   }) = _CategoryModel;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$CategoryModelFromJson(json);
 }
+
+@freezed
+class CreateCategoryDTO with _$CreateCategoryDTO {
+  factory CreateCategoryDTO({
+    required String name,
+    required String? description,
+    required String? groupId,
+  }) = _CreateCategoryDTO;
+  factory CreateCategoryDTO.fromJson(Map<String, dynamic> json) => _$CreateCategoryDTOFromJson(json);
+}
+
 
 @freezed
 class ItemModel with _$ItemModel {

@@ -90,8 +90,12 @@ class ItemListControllerImplementation extends ItemListController {
   }
 
   @override
-  void addCategory() {
-    String a = "";
-
+  Future<void> addCategory() async {
+    CategoryModel model = CategoryModel(
+        name: newCategoryName,
+        description: newCategoryDescription == "" ? null : newCategoryDescription,
+        groupId: _groupId,
+    );
+    await _itemListService.postCategory(model);
   }
 }

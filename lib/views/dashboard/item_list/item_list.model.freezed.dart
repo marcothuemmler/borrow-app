@@ -507,6 +507,7 @@ mixin _$CategoryModel {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  String? get groupId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -520,7 +521,7 @@ abstract class $CategoryModelCopyWith<$Res> {
           CategoryModel value, $Res Function(CategoryModel) then) =
       _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
   @useResult
-  $Res call({String? id, String name, String? description});
+  $Res call({String? id, String name, String? description, String? groupId});
 }
 
 /// @nodoc
@@ -539,6 +540,7 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
     Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? groupId = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -553,6 +555,10 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -565,7 +571,7 @@ abstract class _$$_CategoryModelCopyWith<$Res>
       __$$_CategoryModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String name, String? description});
+  $Res call({String? id, String name, String? description, String? groupId});
 }
 
 /// @nodoc
@@ -582,6 +588,7 @@ class __$$_CategoryModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? groupId = freezed,
   }) {
     return _then(_$_CategoryModel(
       id: freezed == id
@@ -596,6 +603,10 @@ class __$$_CategoryModelCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -603,7 +614,8 @@ class __$$_CategoryModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CategoryModel implements _CategoryModel {
-  _$_CategoryModel({this.id, required this.name, this.description});
+  _$_CategoryModel(
+      {this.id, required this.name, this.description, this.groupId});
 
   factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$$_CategoryModelFromJson(json);
@@ -614,10 +626,12 @@ class _$_CategoryModel implements _CategoryModel {
   final String name;
   @override
   final String? description;
+  @override
+  final String? groupId;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, description: $description)';
+    return 'CategoryModel(id: $id, name: $name, description: $description, groupId: $groupId)';
   }
 
   @override
@@ -628,12 +642,13 @@ class _$_CategoryModel implements _CategoryModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, description);
+  int get hashCode => Object.hash(runtimeType, id, name, description, groupId);
 
   @JsonKey(ignore: true)
   @override
@@ -653,7 +668,8 @@ abstract class _CategoryModel implements CategoryModel {
   factory _CategoryModel(
       {final String? id,
       required final String name,
-      final String? description}) = _$_CategoryModel;
+      final String? description,
+      final String? groupId}) = _$_CategoryModel;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$_CategoryModel.fromJson;
@@ -665,8 +681,184 @@ abstract class _CategoryModel implements CategoryModel {
   @override
   String? get description;
   @override
+  String? get groupId;
+  @override
   @JsonKey(ignore: true)
   _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+CreateCategoryDTO _$CreateCategoryDTOFromJson(Map<String, dynamic> json) {
+  return _CreateCategoryDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CreateCategoryDTO {
+  String get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get groupId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CreateCategoryDTOCopyWith<CreateCategoryDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateCategoryDTOCopyWith<$Res> {
+  factory $CreateCategoryDTOCopyWith(
+          CreateCategoryDTO value, $Res Function(CreateCategoryDTO) then) =
+      _$CreateCategoryDTOCopyWithImpl<$Res, CreateCategoryDTO>;
+  @useResult
+  $Res call({String name, String? description, String? groupId});
+}
+
+/// @nodoc
+class _$CreateCategoryDTOCopyWithImpl<$Res, $Val extends CreateCategoryDTO>
+    implements $CreateCategoryDTOCopyWith<$Res> {
+  _$CreateCategoryDTOCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? description = freezed,
+    Object? groupId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateCategoryDTOCopyWith<$Res>
+    implements $CreateCategoryDTOCopyWith<$Res> {
+  factory _$$_CreateCategoryDTOCopyWith(_$_CreateCategoryDTO value,
+          $Res Function(_$_CreateCategoryDTO) then) =
+      __$$_CreateCategoryDTOCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, String? description, String? groupId});
+}
+
+/// @nodoc
+class __$$_CreateCategoryDTOCopyWithImpl<$Res>
+    extends _$CreateCategoryDTOCopyWithImpl<$Res, _$_CreateCategoryDTO>
+    implements _$$_CreateCategoryDTOCopyWith<$Res> {
+  __$$_CreateCategoryDTOCopyWithImpl(
+      _$_CreateCategoryDTO _value, $Res Function(_$_CreateCategoryDTO) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? description = freezed,
+    Object? groupId = freezed,
+  }) {
+    return _then(_$_CreateCategoryDTO(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_CreateCategoryDTO implements _CreateCategoryDTO {
+  _$_CreateCategoryDTO(
+      {required this.name, required this.description, required this.groupId});
+
+  factory _$_CreateCategoryDTO.fromJson(Map<String, dynamic> json) =>
+      _$$_CreateCategoryDTOFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String? description;
+  @override
+  final String? groupId;
+
+  @override
+  String toString() {
+    return 'CreateCategoryDTO(name: $name, description: $description, groupId: $groupId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreateCategoryDTO &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, description, groupId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateCategoryDTOCopyWith<_$_CreateCategoryDTO> get copyWith =>
+      __$$_CreateCategoryDTOCopyWithImpl<_$_CreateCategoryDTO>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CreateCategoryDTOToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CreateCategoryDTO implements CreateCategoryDTO {
+  factory _CreateCategoryDTO(
+      {required final String name,
+      required final String? description,
+      required final String? groupId}) = _$_CreateCategoryDTO;
+
+  factory _CreateCategoryDTO.fromJson(Map<String, dynamic> json) =
+      _$_CreateCategoryDTO.fromJson;
+
+  @override
+  String get name;
+  @override
+  String? get description;
+  @override
+  String? get groupId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateCategoryDTOCopyWith<_$_CreateCategoryDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

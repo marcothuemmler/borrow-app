@@ -9,6 +9,8 @@ import 'package:borrow_app/views/item_detail/item_detail.model.dart'
     as item_detail_model;
 import 'package:dio/dio.dart';
 
+import '../../views/dashboard/item_list/item_list.model.dart';
+
 class RestBackendServiceImplementation implements BackendServiceAggregator {
   final Dio _client;
   final SecureStorageService _storageService;
@@ -100,6 +102,21 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       return item_detail_model.ItemModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get item detail: $error");
+    }
+  }
+  @override
+  Future<CategoryModel> postCategory (CategoryModel model) async {
+    try {
+      final userID = (await _storageService.read(key: "user-id"))!;
+      final modelDTO = CreateCategoryDTO(
+          name: model.name,
+          description: model.description,
+          groupId: model.groupId,);
+      final response = await _client.post("/category", data: modelDTO);
+      return model;
+    } catch (error) {
+      print(error.toString());
+      throw Exception("Could not set group $error");
     }
   }
 }
