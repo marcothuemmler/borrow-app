@@ -19,6 +19,7 @@ mixin _$GroupSelectionModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   Option<UserModel> get user => throw _privateConstructorUsedError;
+  GroupModel? get newGroup => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GroupSelectionModelCopyWith<GroupSelectionModel> get copyWith =>
@@ -31,7 +32,13 @@ abstract class $GroupSelectionModelCopyWith<$Res> {
           GroupSelectionModel value, $Res Function(GroupSelectionModel) then) =
       _$GroupSelectionModelCopyWithImpl<$Res, GroupSelectionModel>;
   @useResult
-  $Res call({bool isLoading, bool hasError, Option<UserModel> user});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      Option<UserModel> user,
+      GroupModel? newGroup});
+
+  $GroupModelCopyWith<$Res>? get newGroup;
 }
 
 /// @nodoc
@@ -50,6 +57,7 @@ class _$GroupSelectionModelCopyWithImpl<$Res, $Val extends GroupSelectionModel>
     Object? isLoading = null,
     Object? hasError = null,
     Object? user = null,
+    Object? newGroup = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -64,7 +72,23 @@ class _$GroupSelectionModelCopyWithImpl<$Res, $Val extends GroupSelectionModel>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as Option<UserModel>,
+      newGroup: freezed == newGroup
+          ? _value.newGroup
+          : newGroup // ignore: cast_nullable_to_non_nullable
+              as GroupModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GroupModelCopyWith<$Res>? get newGroup {
+    if (_value.newGroup == null) {
+      return null;
+    }
+
+    return $GroupModelCopyWith<$Res>(_value.newGroup!, (value) {
+      return _then(_value.copyWith(newGroup: value) as $Val);
+    });
   }
 }
 
@@ -76,7 +100,14 @@ abstract class _$$_GroupSelectionModelCopyWith<$Res>
       __$$_GroupSelectionModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, bool hasError, Option<UserModel> user});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      Option<UserModel> user,
+      GroupModel? newGroup});
+
+  @override
+  $GroupModelCopyWith<$Res>? get newGroup;
 }
 
 /// @nodoc
@@ -93,6 +124,7 @@ class __$$_GroupSelectionModelCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? hasError = null,
     Object? user = null,
+    Object? newGroup = freezed,
   }) {
     return _then(_$_GroupSelectionModel(
       isLoading: null == isLoading
@@ -107,6 +139,10 @@ class __$$_GroupSelectionModelCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as Option<UserModel>,
+      newGroup: freezed == newGroup
+          ? _value.newGroup
+          : newGroup // ignore: cast_nullable_to_non_nullable
+              as GroupModel?,
     ));
   }
 }
@@ -115,7 +151,10 @@ class __$$_GroupSelectionModelCopyWithImpl<$Res>
 
 class _$_GroupSelectionModel implements _GroupSelectionModel {
   _$_GroupSelectionModel(
-      {required this.isLoading, required this.hasError, required this.user});
+      {required this.isLoading,
+      required this.hasError,
+      required this.user,
+      required this.newGroup});
 
   @override
   final bool isLoading;
@@ -123,10 +162,12 @@ class _$_GroupSelectionModel implements _GroupSelectionModel {
   final bool hasError;
   @override
   final Option<UserModel> user;
+  @override
+  final GroupModel? newGroup;
 
   @override
   String toString() {
-    return 'GroupSelectionModel(isLoading: $isLoading, hasError: $hasError, user: $user)';
+    return 'GroupSelectionModel(isLoading: $isLoading, hasError: $hasError, user: $user, newGroup: $newGroup)';
   }
 
   @override
@@ -138,11 +179,14 @@ class _$_GroupSelectionModel implements _GroupSelectionModel {
                 other.isLoading == isLoading) &&
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.newGroup, newGroup) ||
+                other.newGroup == newGroup));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, hasError, user);
+  int get hashCode =>
+      Object.hash(runtimeType, isLoading, hasError, user, newGroup);
 
   @JsonKey(ignore: true)
   @override
@@ -156,7 +200,8 @@ abstract class _GroupSelectionModel implements GroupSelectionModel {
   factory _GroupSelectionModel(
       {required final bool isLoading,
       required final bool hasError,
-      required final Option<UserModel> user}) = _$_GroupSelectionModel;
+      required final Option<UserModel> user,
+      required final GroupModel? newGroup}) = _$_GroupSelectionModel;
 
   @override
   bool get isLoading;
@@ -164,6 +209,8 @@ abstract class _GroupSelectionModel implements GroupSelectionModel {
   bool get hasError;
   @override
   Option<UserModel> get user;
+  @override
+  GroupModel? get newGroup;
   @override
   @JsonKey(ignore: true)
   _$$_GroupSelectionModelCopyWith<_$_GroupSelectionModel> get copyWith =>

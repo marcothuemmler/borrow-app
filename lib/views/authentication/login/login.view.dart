@@ -1,9 +1,11 @@
 import 'package:borrow_app/common/providers.dart';
+import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/widgets/textform_fields/password_field.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
@@ -78,7 +80,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       child: const Text("Submit"),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          controller.login();
+                          controller.login().then((_) {
+                            context.goNamed(groupSelectionRoute.name);
+                          });
                         }
                       },
                     )

@@ -92,20 +92,17 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<group_selection_model.GroupModel> postGroup(
-    group_selection_model.GroupModel group,
-  ) async {
+  Future<void> postGroup(group_selection_model.GroupModel group) async {
     try {
-      final userID = (await _storageService.read(key: "user-id"))!;
+      final userId = await _storageService.read(key: "user-id");
       final groupWithCreatorId = group_selection_model.CreateGroupDTO(
         name: group.name,
         description: group.description,
-        creatorId: userID,
+        creatorId: userId!,
       );
-      final response = await _client.post("/group", data: groupWithCreatorId);
-      return group_selection_model.GroupModel.fromJson(response.data);
+      await _client.post("/group", data: groupWithCreatorId);
     } catch (error) {
-      throw Exception("Could not set group $error");
+      throw Exception("Could not create group: $error");
     }
   }
 

@@ -10,6 +10,7 @@ class GroupSelectionModel with _$GroupSelectionModel {
     required bool isLoading,
     required bool hasError,
     required Option<UserModel> user,
+    required GroupModel? newGroup,
   }) = _GroupSelectionModel;
 }
 

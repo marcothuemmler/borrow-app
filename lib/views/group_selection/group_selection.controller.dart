@@ -5,8 +5,6 @@ import 'package:dartz/dartz.dart';
 
 class GroupSelectionControllerImplementation extends GroupSelectionController {
   final GroupSelectionService _groupSelectionService;
-  String? newGroupName = "";
-  String? newGroupDescription = "";
 
   GroupSelectionControllerImplementation({
     GroupSelectionModel? state,
@@ -18,12 +16,17 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
                 isLoading: true,
                 hasError: false,
                 user: none(),
+                newGroup: null,
               ),
         ) {
     _init();
   }
 
-  void _init() async {
+  void _init() {
+    _getGroups();
+  }
+
+  Future<void> _getGroups() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
       final response = await _groupSelectionService.getGroups();
@@ -38,16 +41,19 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   }
 
   @override
-  Future<void> addGroup(GroupModel group) async {
-    await _groupSelectionService.postGroup(group);
-    _init();
+  Future<void> addGroup({required bool? confirmed}) async {
+    if (confirmed is! bool || !confirmed) {
+      return;
+    }
+    await _groupSelectionService.postGroup(state.newGroup!);
+    _getGroups();
   }
 
   @override
   String? validateFormField({required String fieldName}) {
     switch (fieldName) {
       case 'groupName':
-        return newGroupName!.length > 2
+        return state.newGroup!.name.length > 2
             ? null
             : "Der Gruppenname muss größer als 2 sein";
       case 'groupDescription':
@@ -58,22 +64,17 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   }
 
   @override
+  void createNewGroup() {
+    state = state.copyWith(newGroup: GroupModel(name: "", description: null));
+  }
+
+  @override
   void setNewGroupName(String value) {
-    newGroupName = value;
+    state = state.copyWith.newGroup!(name: value);
   }
 
   @override
   void setNewGroupDescription(String value) {
-    newGroupDescription = value;
-  }
-
-  @override
-  String? getNewGroupName() {
-    return newGroupName;
-  }
-
-  @override
-  String? getNewGroupDescription() {
-    return newGroupName;
+    state = state.copyWith.newGroup!(description: value);
   }
 }

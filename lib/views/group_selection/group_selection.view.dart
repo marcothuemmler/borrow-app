@@ -1,7 +1,7 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
-import 'package:borrow_app/widgets/dialogs/new_group_dialog.dart';
+import 'package:borrow_app/widgets/dialogs/create_group_dialog.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -28,30 +28,31 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
     );
     final model = ref.watch(providers.groupSelectionControllerProvider);
 
-    void onNewGroup() {
-      Future<bool?> res = _showAlertDialog(controller);
-      String? name;
-      String? description;
-      res.then(
-        (value) {
-          if (value is bool && value) {
-            name = controller.getNewGroupName();
-            description = controller.getNewGroupDescription();
-            controller.addGroup(
-              GroupModel(
-                name: name!,
-                description: description == "" ? null : description,
-              ),
-            );
-          }
-        },
-      );
-    }
-
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Gruppenansicht"),
+        title: const Text("My Groups"),
         leading: const BackButton(),
+        actions: [
+          if (!isPortrait)
+            Row(
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                  ),
+                  onPressed: () async {
+                    controller.addGroup(
+                      confirmed: await _showAlertDialog(controller),
+                    );
+                  },
+                  child: const Text("New Group"),
+                ),
+                const SizedBox(width: 20),
+              ],
+            )
+        ],
       ),
       body: model.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -63,16 +64,20 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                   () => const Center(
                     child: Text("Something went wrong"),
                   ),
-                  (user) => Center(
+                  (user) => SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 70),
+                        SizedBox(height: isPortrait ? 70 : 10),
                         if (user.groups.isNotEmpty)
                           CarouselSlider.builder(
                             carouselController: _carouselController,
                             options: CarouselOptions(
-                              height: 400,
+                              enableInfiniteScroll: user.groups.length > 1,
+                              viewportFraction: isPortrait ? .75 : .5,
+                              height: !isPortrait
+                                  ? MediaQuery.of(context).size.height * 0.8
+                                  : 400,
                               enlargeCenterPage: true,
                               onPageChanged: (val, _) {
                                 setState(() {
@@ -84,10 +89,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                             itemCount: user.groups.length,
                             itemBuilder: (context, index, pageViewIndex) {
                               return Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.height,
                                 margin: const EdgeInsets.symmetric(
-                                  horizontal: 10,
                                   vertical: 20,
                                 ),
                                 decoration: const BoxDecoration(
@@ -125,28 +127,43 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                               );
                             },
                           ),
-                        const SizedBox(height: 20),
-                        if (user.groups.isNotEmpty)
-                          CarouselIndicator(
-                            animationDuration: 0,
-                            space: 15,
-                            height: 8,
-                            width: 8,
-                            activeColor: Colors.black,
-                            color: Colors.black26,
-                            count: user.groups.length,
-                            index: _currentIndex,
+                        if (isPortrait)
+                          IntrinsicWidth(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const SizedBox(height: 20),
+                                if (user.groups.isNotEmpty)
+                                  Center(
+                                    child: CarouselIndicator(
+                                      animationDuration: 0,
+                                      space: 15,
+                                      height: 8,
+                                      width: 8,
+                                      activeColor: Colors.black,
+                                      color: Colors.black26,
+                                      count: user.groups.length,
+                                      index: _currentIndex,
+                                    ),
+                                  ),
+                                const SizedBox(height: 40),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    controller.addGroup(
+                                      confirmed:
+                                          await _showAlertDialog(controller),
+                                    );
+                                  },
+                                  child: const Text("New Group"),
+                                ),
+                                const SizedBox(height: 10),
+                                TextButton(
+                                  onPressed: () {},
+                                  child: const Text("Invite Member"),
+                                )
+                              ],
+                            ),
                           ),
-                        const SizedBox(height: 40),
-                        ElevatedButton(
-                          onPressed: () => onNewGroup(),
-                          child: const Text("Neue Gruppe"),
-                        ),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () => {},
-                          child: const Text("Einladen"),
-                        )
                       ],
                     ),
                   ),
@@ -155,19 +172,17 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
   }
 
   Future<bool?> _showAlertDialog(GroupSelectionController controller) async {
-    controller.setNewGroupName("");
-    controller.setNewGroupDescription("value");
+    controller.createNewGroup();
     return showDialog<bool>(
       context: context,
-      barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return NewGroupDialog(
+        return CreateGroupDialog(
           nameValidator: (_) =>
               controller.validateFormField(fieldName: "groupName"),
           descriptionValidator: (_) =>
               controller.validateFormField(fieldName: "groupDescription"),
-          setGroupName: controller.setNewGroupName,
-          setGroupDescription: controller.setNewGroupDescription,
+          onGroupNameChanged: controller.setNewGroupName,
+          onGroupDescriptionChanged: controller.setNewGroupDescription,
         );
       },
     );
@@ -178,15 +193,13 @@ abstract class GroupSelectionController
     extends StateNotifier<GroupSelectionModel> {
   GroupSelectionController(GroupSelectionModel model) : super(model);
 
-  void addGroup(GroupModel group);
+  void addGroup({required bool? confirmed});
 
   String? validateFormField({required String fieldName});
+
+  void createNewGroup();
 
   void setNewGroupName(String value);
 
   void setNewGroupDescription(String value);
-
-  String? getNewGroupName();
-
-  String? getNewGroupDescription();
 }
