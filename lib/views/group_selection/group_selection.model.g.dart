@@ -27,6 +27,7 @@ _$_GroupModel _$$_GroupModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
+      imageUrl: json['imageUrl'] as String?,
       creatorId: json['creatorId'] as String?,
     );
 
@@ -35,6 +36,7 @@ Map<String, dynamic> _$$_GroupModelToJson(_$_GroupModel instance) =>
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
+      'imageUrl': instance.imageUrl,
       'creatorId': instance.creatorId,
     };
 

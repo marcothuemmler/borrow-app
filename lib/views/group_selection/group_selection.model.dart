@@ -34,6 +34,7 @@ class GroupModel with _$GroupModel {
     String? id,
     required String name,
     required String? description,
+    String? imageUrl,
     String? creatorId,
   }) = _GroupModel;
 

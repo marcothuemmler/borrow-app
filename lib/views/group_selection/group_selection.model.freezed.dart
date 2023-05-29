@@ -428,6 +428,7 @@ mixin _$GroupModel {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
   String? get creatorId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -442,7 +443,12 @@ abstract class $GroupModelCopyWith<$Res> {
           GroupModel value, $Res Function(GroupModel) then) =
       _$GroupModelCopyWithImpl<$Res, GroupModel>;
   @useResult
-  $Res call({String? id, String name, String? description, String? creatorId});
+  $Res call(
+      {String? id,
+      String name,
+      String? description,
+      String? imageUrl,
+      String? creatorId});
 }
 
 /// @nodoc
@@ -461,6 +467,7 @@ class _$GroupModelCopyWithImpl<$Res, $Val extends GroupModel>
     Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? imageUrl = freezed,
     Object? creatorId = freezed,
   }) {
     return _then(_value.copyWith(
@@ -475,6 +482,10 @@ class _$GroupModelCopyWithImpl<$Res, $Val extends GroupModel>
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       creatorId: freezed == creatorId
           ? _value.creatorId
@@ -492,7 +503,12 @@ abstract class _$$_GroupModelCopyWith<$Res>
       __$$_GroupModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String name, String? description, String? creatorId});
+  $Res call(
+      {String? id,
+      String name,
+      String? description,
+      String? imageUrl,
+      String? creatorId});
 }
 
 /// @nodoc
@@ -509,6 +525,7 @@ class __$$_GroupModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? imageUrl = freezed,
     Object? creatorId = freezed,
   }) {
     return _then(_$_GroupModel(
@@ -524,6 +541,10 @@ class __$$_GroupModelCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       creatorId: freezed == creatorId
           ? _value.creatorId
           : creatorId // ignore: cast_nullable_to_non_nullable
@@ -536,7 +557,11 @@ class __$$_GroupModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_GroupModel implements _GroupModel {
   _$_GroupModel(
-      {this.id, required this.name, required this.description, this.creatorId});
+      {this.id,
+      required this.name,
+      required this.description,
+      this.imageUrl,
+      this.creatorId});
 
   factory _$_GroupModel.fromJson(Map<String, dynamic> json) =>
       _$$_GroupModelFromJson(json);
@@ -548,11 +573,13 @@ class _$_GroupModel implements _GroupModel {
   @override
   final String? description;
   @override
+  final String? imageUrl;
+  @override
   final String? creatorId;
 
   @override
   String toString() {
-    return 'GroupModel(id: $id, name: $name, description: $description, creatorId: $creatorId)';
+    return 'GroupModel(id: $id, name: $name, description: $description, imageUrl: $imageUrl, creatorId: $creatorId)';
   }
 
   @override
@@ -564,6 +591,8 @@ class _$_GroupModel implements _GroupModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
             (identical(other.creatorId, creatorId) ||
                 other.creatorId == creatorId));
   }
@@ -571,7 +600,7 @@ class _$_GroupModel implements _GroupModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, name, description, creatorId);
+      Object.hash(runtimeType, id, name, description, imageUrl, creatorId);
 
   @JsonKey(ignore: true)
   @override
@@ -592,6 +621,7 @@ abstract class _GroupModel implements GroupModel {
       {final String? id,
       required final String name,
       required final String? description,
+      final String? imageUrl,
       final String? creatorId}) = _$_GroupModel;
 
   factory _GroupModel.fromJson(Map<String, dynamic> json) =
@@ -603,6 +633,8 @@ abstract class _GroupModel implements GroupModel {
   String get name;
   @override
   String? get description;
+  @override
+  String? get imageUrl;
   @override
   String? get creatorId;
   @override

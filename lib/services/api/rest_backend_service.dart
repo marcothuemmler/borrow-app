@@ -148,7 +148,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       // await _client.put(
       //   "/group/cover/$groupId",
       //   data: formData,
-      //   options: Options(contentType: "multipart/formdata"),
+      //   options: Options(contentType: "multipart/form-data"),
       // );
     } catch (error) {
       throw Exception("Failed to upload project image: $error");
