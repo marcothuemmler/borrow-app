@@ -97,5 +97,6 @@ class ItemListControllerImplementation extends ItemListController {
         groupId: _groupId,
     );
     await _itemListService.postCategory(model);
+    _init();
   }
 }
