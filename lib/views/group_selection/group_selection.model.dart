@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:image_picker/image_picker.dart';
 
 part 'group_selection.model.freezed.dart';
 part 'group_selection.model.g.dart';
@@ -11,6 +12,7 @@ class GroupSelectionModel with _$GroupSelectionModel {
     required bool hasError,
     required Option<UserModel> user,
     required GroupModel? newGroup,
+    required XFile? groupImage,
   }) = _GroupSelectionModel;
 }
 
@@ -21,6 +23,7 @@ class UserModel with _$UserModel {
     required String username,
     @Default([]) List<GroupModel> groups,
   }) = _UserModel;
+
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
 }
@@ -45,6 +48,7 @@ class CreateGroupDTO with _$CreateGroupDTO {
     required String? description,
     required String creatorId,
   }) = _CreateGroupDTO;
+
   factory CreateGroupDTO.fromJson(Map<String, dynamic> json) =>
       _$CreateGroupDTOFromJson(json);
 }

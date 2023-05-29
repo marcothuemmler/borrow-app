@@ -2,6 +2,7 @@ import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.service.dart';
 import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:dartz/dartz.dart';
+import 'package:image_picker/image_picker.dart';
 
 class GroupSelectionControllerImplementation extends GroupSelectionController {
   final GroupSelectionService _groupSelectionService;
@@ -17,6 +18,7 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
                 hasError: false,
                 user: none(),
                 newGroup: null,
+                groupImage: null,
               ),
         ) {
     _init();
@@ -45,8 +47,17 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
     if (confirmed is! bool || !confirmed) {
       return;
     }
-    await _groupSelectionService.postGroup(state.newGroup!);
-    _getGroups();
+    try {
+      state = state.copyWith(isLoading: true, hasError: false);
+      final response = await _groupSelectionService.postGroup(state.newGroup!);
+      await _groupSelectionService.postGroupImage(
+        groupId: response.id!,
+        groupImage: state.groupImage,
+      );
+      _getGroups();
+    } catch (error) {
+      state = state.copyWith(hasError: true, isLoading: false);
+    }
   }
 
   @override
@@ -76,5 +87,10 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   @override
   void setNewGroupDescription(String value) {
     state = state.copyWith.newGroup!(description: value);
+  }
+
+  @override
+  void setGroupImage(XFile? file) {
+    state = state.copyWith(groupImage: file);
   }
 }

@@ -2,6 +2,7 @@ import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:borrow_app/widgets/various_components/image_upload.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateGroupDialog extends StatelessWidget {
   CreateGroupDialog({
@@ -10,12 +11,14 @@ class CreateGroupDialog extends StatelessWidget {
     this.descriptionValidator,
     required this.onGroupNameChanged,
     required this.onGroupDescriptionChanged,
+    required this.onImageChanged,
   });
 
   final String? Function(String?)? nameValidator;
   final String? Function(String?)? descriptionValidator;
-  final Function(String) onGroupNameChanged;
-  final Function(String) onGroupDescriptionChanged;
+  final void Function(String) onGroupNameChanged;
+  final void Function(String) onGroupDescriptionChanged;
+  final void Function(XFile?) onImageChanged;
 
   final formKey = GlobalKey<FormState>();
 
@@ -39,7 +42,10 @@ class CreateGroupDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             direction: isPortrait ? Axis.vertical : Axis.horizontal,
             children: <Widget>[
-              const Padding(padding: EdgeInsets.all(30), child: ImageUpload()),
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: ImageUpload(onImageChanged: onImageChanged),
+              ),
               Flexible(
                 fit: FlexFit.loose,
                 child: Column(

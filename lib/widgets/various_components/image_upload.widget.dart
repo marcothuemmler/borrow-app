@@ -1,10 +1,14 @@
 import 'dart:typed_data';
 
+import 'package:borrow_app/widgets/dialogs/image_change_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageUpload extends StatefulWidget {
-  const ImageUpload({Key? key}) : super(key: key);
+  final void Function(XFile? image)? onImageChanged;
+
+  const ImageUpload({Key? key, required this.onImageChanged}) : super(key: key);
 
   @override
   State<ImageUpload> createState() => _ImageUploadState();
@@ -13,14 +17,42 @@ class ImageUpload extends StatefulWidget {
 class _ImageUploadState extends State<ImageUpload> {
   Image? _image;
   bool _hovered = false;
+  void Function(XFile? image)? _onImageChanged;
   final double size = 150;
 
-  void _selectFile() async {
+  @override
+  void initState() {
+    super.initState();
+    _onImageChanged = widget.onImageChanged;
+  }
+
+  Future<void> _selectFile() async {
     try {
-      final input = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (input is XFile) {
-        Uint8List image = await input.readAsBytes();
-        setState(() => _image = Image.memory(image));
+      final bool? newImageSelected = await showDialog(
+        context: context,
+        builder: (context) {
+          return ImageChangeDialog(
+            onSetImagePressed: () => context.pop(true),
+            onRemoveImagePressed: () => context.pop(false),
+            onCancelPressed: () => context.pop(null),
+            showRemoveOption: _image is Image,
+          );
+        },
+      );
+      if (newImageSelected is bool) {
+        XFile? input;
+        if (newImageSelected) {
+          input = await ImagePicker().pickImage(source: ImageSource.gallery);
+          if (input is XFile) {
+            Uint8List bytes = await input.readAsBytes();
+            setState(() => _image = Image.memory(bytes));
+          }
+        } else {
+          setState(() => _image = null);
+        }
+        if (_onImageChanged is Function) {
+          _onImageChanged!(input);
+        }
       }
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -83,7 +115,7 @@ class _ImageUploadState extends State<ImageUpload> {
                         height: 40,
                         child: const Center(
                           child: Text(
-                            "Upload image",
+                            "Set group image",
                             style: TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.w500,

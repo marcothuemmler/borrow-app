@@ -20,6 +20,7 @@ mixin _$GroupSelectionModel {
   bool get hasError => throw _privateConstructorUsedError;
   Option<UserModel> get user => throw _privateConstructorUsedError;
   GroupModel? get newGroup => throw _privateConstructorUsedError;
+  XFile? get groupImage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GroupSelectionModelCopyWith<GroupSelectionModel> get copyWith =>
@@ -36,7 +37,8 @@ abstract class $GroupSelectionModelCopyWith<$Res> {
       {bool isLoading,
       bool hasError,
       Option<UserModel> user,
-      GroupModel? newGroup});
+      GroupModel? newGroup,
+      XFile? groupImage});
 
   $GroupModelCopyWith<$Res>? get newGroup;
 }
@@ -58,6 +60,7 @@ class _$GroupSelectionModelCopyWithImpl<$Res, $Val extends GroupSelectionModel>
     Object? hasError = null,
     Object? user = null,
     Object? newGroup = freezed,
+    Object? groupImage = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -76,6 +79,10 @@ class _$GroupSelectionModelCopyWithImpl<$Res, $Val extends GroupSelectionModel>
           ? _value.newGroup
           : newGroup // ignore: cast_nullable_to_non_nullable
               as GroupModel?,
+      groupImage: freezed == groupImage
+          ? _value.groupImage
+          : groupImage // ignore: cast_nullable_to_non_nullable
+              as XFile?,
     ) as $Val);
   }
 
@@ -104,7 +111,8 @@ abstract class _$$_GroupSelectionModelCopyWith<$Res>
       {bool isLoading,
       bool hasError,
       Option<UserModel> user,
-      GroupModel? newGroup});
+      GroupModel? newGroup,
+      XFile? groupImage});
 
   @override
   $GroupModelCopyWith<$Res>? get newGroup;
@@ -125,6 +133,7 @@ class __$$_GroupSelectionModelCopyWithImpl<$Res>
     Object? hasError = null,
     Object? user = null,
     Object? newGroup = freezed,
+    Object? groupImage = freezed,
   }) {
     return _then(_$_GroupSelectionModel(
       isLoading: null == isLoading
@@ -143,6 +152,10 @@ class __$$_GroupSelectionModelCopyWithImpl<$Res>
           ? _value.newGroup
           : newGroup // ignore: cast_nullable_to_non_nullable
               as GroupModel?,
+      groupImage: freezed == groupImage
+          ? _value.groupImage
+          : groupImage // ignore: cast_nullable_to_non_nullable
+              as XFile?,
     ));
   }
 }
@@ -154,7 +167,8 @@ class _$_GroupSelectionModel implements _GroupSelectionModel {
       {required this.isLoading,
       required this.hasError,
       required this.user,
-      required this.newGroup});
+      required this.newGroup,
+      required this.groupImage});
 
   @override
   final bool isLoading;
@@ -164,10 +178,12 @@ class _$_GroupSelectionModel implements _GroupSelectionModel {
   final Option<UserModel> user;
   @override
   final GroupModel? newGroup;
+  @override
+  final XFile? groupImage;
 
   @override
   String toString() {
-    return 'GroupSelectionModel(isLoading: $isLoading, hasError: $hasError, user: $user, newGroup: $newGroup)';
+    return 'GroupSelectionModel(isLoading: $isLoading, hasError: $hasError, user: $user, newGroup: $newGroup, groupImage: $groupImage)';
   }
 
   @override
@@ -181,12 +197,14 @@ class _$_GroupSelectionModel implements _GroupSelectionModel {
                 other.hasError == hasError) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.newGroup, newGroup) ||
-                other.newGroup == newGroup));
+                other.newGroup == newGroup) &&
+            (identical(other.groupImage, groupImage) ||
+                other.groupImage == groupImage));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, isLoading, hasError, user, newGroup);
+      Object.hash(runtimeType, isLoading, hasError, user, newGroup, groupImage);
 
   @JsonKey(ignore: true)
   @override
@@ -201,7 +219,8 @@ abstract class _GroupSelectionModel implements GroupSelectionModel {
       {required final bool isLoading,
       required final bool hasError,
       required final Option<UserModel> user,
-      required final GroupModel? newGroup}) = _$_GroupSelectionModel;
+      required final GroupModel? newGroup,
+      required final XFile? groupImage}) = _$_GroupSelectionModel;
 
   @override
   bool get isLoading;
@@ -211,6 +230,8 @@ abstract class _GroupSelectionModel implements GroupSelectionModel {
   Option<UserModel> get user;
   @override
   GroupModel? get newGroup;
+  @override
+  XFile? get groupImage;
   @override
   @JsonKey(ignore: true)
   _$$_GroupSelectionModelCopyWith<_$_GroupSelectionModel> get copyWith =>

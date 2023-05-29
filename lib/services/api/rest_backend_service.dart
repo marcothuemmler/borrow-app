@@ -8,6 +8,8 @@ import 'package:borrow_app/views/group_selection/group_selection.model.dart'
 import 'package:borrow_app/views/item_detail/item_detail.model.dart'
     as item_detail_model;
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RestBackendServiceImplementation implements BackendServiceAggregator {
   final Dio _client;
@@ -31,6 +33,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   @override
   Future<void> login({required LoginDto payload}) async {
     try {
+      await _storageService.deleteAll();
       final response = await _client.post("/auth/login", data: payload);
       await _storageService.writeTokenData(data: response.data);
     } catch (error) {
@@ -92,7 +95,9 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<void> postGroup(group_selection_model.GroupModel group) async {
+  Future<group_selection_model.GroupModel> postGroup(
+    group_selection_model.GroupModel group,
+  ) async {
     try {
       final userId = await _storageService.read(key: "user-id");
       final groupWithCreatorId = group_selection_model.CreateGroupDTO(
@@ -100,7 +105,8 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
         description: group.description,
         creatorId: userId!,
       );
-      await _client.post("/group", data: groupWithCreatorId);
+      final response = await _client.post("/group", data: groupWithCreatorId);
+      return group_selection_model.GroupModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not create group: $error");
     }
@@ -115,6 +121,37 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       return item_detail_model.ItemModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get item detail: $error");
+    }
+  }
+
+  @override
+  Future<void> postGroupImage({
+    required String groupId,
+    required XFile? groupImage,
+  }) async {
+    if (groupImage is! XFile) {
+      return;
+    }
+    try {
+      final bytes = await groupImage.readAsBytes();
+      final type = groupImage.name.split(".").last;
+
+      // ignore: unused_local_variable
+      final formData = FormData.fromMap({
+        "file": MultipartFile.fromBytes(
+          bytes,
+          filename: groupImage.name,
+          contentType: MediaType("image", type),
+        ),
+        "type": "image/$type",
+      });
+      // await _client.put(
+      //   "/group/cover/$groupId",
+      //   data: formData,
+      //   options: Options(contentType: "multipart/formdata"),
+      // );
+    } catch (error) {
+      throw Exception("Failed to upload project image: $error");
     }
   }
 }

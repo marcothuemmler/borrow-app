@@ -8,6 +8,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
 class GroupSelectionView extends ConsumerStatefulWidget {
   const GroupSelectionView({super.key});
@@ -132,7 +133,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                 const SizedBox(height: 10),
                                 TextButton(
                                   onPressed: () {},
-                                  child: const Text("Invite Member"),
+                                  child: const Text("Invite Members"),
                                 )
                               ],
                             ),
@@ -156,6 +157,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
               controller.validateFormField(fieldName: "groupDescription"),
           onGroupNameChanged: controller.setNewGroupName,
           onGroupDescriptionChanged: controller.setNewGroupDescription,
+          onImageChanged: (XFile? file) => controller.setGroupImage(file),
         );
       },
     );
@@ -175,4 +177,6 @@ abstract class GroupSelectionController
   void setNewGroupName(String value);
 
   void setNewGroupDescription(String value);
+
+  void setGroupImage(XFile? file);
 }
