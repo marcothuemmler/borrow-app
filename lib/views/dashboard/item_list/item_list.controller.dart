@@ -9,8 +9,8 @@ class ItemListControllerImplementation extends ItemListController {
   final String _groupId;
   final GoRouter _router;
 
-  String _newCategoryName = "";
-  String _newCategoryDescription = "";
+  String newCategoryName = "";
+  String newCategoryDescription = "";
 
   ItemListControllerImplementation({
     ItemListModel? model,
@@ -75,27 +75,23 @@ class ItemListControllerImplementation extends ItemListController {
   }
 
   @override
-  void createCategory(CategoryModel categoryModel) {
-    // TODO: implement createCategory
-  }
-
-  @override
   void createItem() {
     // TODO: implement createItem
   }
 
   @override
   void setNewCategoryDescription(String description) {
-    _newCategoryDescription = description;
+    newCategoryDescription = description;
   }
 
   @override
   void setNewCategoryName(String name) {
-    _newCategoryName = name;
+    newCategoryName = name;
   }
 
   @override
   void addCategory() {
     String a = "";
+
   }
 }

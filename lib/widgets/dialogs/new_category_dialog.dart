@@ -22,7 +22,6 @@ class NewCategoryDialog extends StatelessWidget {
     final _formKey = GlobalKey<FormState>();
     setDescription("");
     setName("");
-    String res = "";
     return AlertDialog(
       // <-- SEE HERE
       title: const Text('Neue Gruppe'),
@@ -34,13 +33,13 @@ class NewCategoryDialog extends StatelessWidget {
               TextFieldWidget(
                 text: "Name",
                 validator: nameValidator,
-                onChanged: (s) => res = s,
+                onChanged: setName,
                 autocorrect: false,
               ),
               TextFieldWidget(
                 text: "Beschreibung",
                 validator: nameValidator,
-                onChanged: (s) => res = s,
+                onChanged: setDescription,
                 autocorrect: false,
               ),
             ],
