@@ -2,6 +2,7 @@ import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
+import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,12 +11,39 @@ class ItemListView extends ConsumerWidget {
 
   const ItemListView({super.key, required this.groupId});
 
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.read(
       providers.itemListControllerProvider(groupId).notifier,
     );
     final model = ref.watch(providers.itemListControllerProvider(groupId));
+
+    Future<bool?> _showNewCategoryDialog(ItemListController controller) async {
+      return showDialog<bool>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return NewCategoryDialog(
+            nameValidator: null,
+            descriptionValidator: null,
+            setCategoryValidator: (String ) {  },
+            setName: controller.setNewCategoryName,
+            setDescription: controller.setNewCategoryDescription,
+          );
+        },
+      );
+    }
+
+    void onNewCategory() {
+      Future<bool?> res = _showNewCategoryDialog(controller);
+      res.then((value) => {
+        if(value is bool && value) {
+          controller.addCategory()
+        }
+      });
+    }
+
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -59,7 +87,7 @@ class ItemListView extends ConsumerWidget {
                   DottedBorderButton(
                     title: "Create a new category",
                     icon: const Icon(Icons.add),
-                    onTap: controller.createCategory,
+                    onTap: onNewCategory,
                     width: 200,
                   ),
                   const SizedBox(height: 10),
@@ -85,7 +113,10 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
 
   void selectCategory(CategoryModel? category);
 
-  void createCategory();
+  void setNewCategoryName(String name);
+  void setNewCategoryDescription(String description);
 
   void createItem();
+
+  void addCategory();
 }
