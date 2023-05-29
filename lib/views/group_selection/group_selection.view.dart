@@ -1,6 +1,7 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
+import 'package:borrow_app/widgets/cards/group_selection_card.widget.dart';
 import 'package:borrow_app/widgets/dialogs/create_group_dialog.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -88,41 +89,13 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                             ),
                             itemCount: user.groups.length,
                             itemBuilder: (context, index, pageViewIndex) {
-                              return Container(
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 20,
-                                ),
-                                decoration: const BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius: 20,
-                                      offset: Offset(0, 3),
-                                    )
-                                  ],
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
-                                  ),
-                                  color: Colors.white,
-                                ),
-                                child: InkWell(
-                                  hoverColor: Colors.transparent,
-                                  onTap: () => context.goNamed(
-                                    groupRoute.name,
-                                    pathParameters: {
-                                      "groupId":
-                                          user.groups.elementAt(index).id!,
-                                    },
-                                  ),
-                                  child: Ink(
-                                    color: Colors.transparent,
-                                    child: Center(
-                                      child: Text(
-                                        user.groups.elementAt(index).name,
-                                        style: const TextStyle(fontSize: 32),
-                                      ),
-                                    ),
-                                  ),
+                              final group = user.groups.elementAt(index);
+                              return GroupSelectionCard(
+                                groupName: group.name,
+                                groupDescription: group.description,
+                                onTap: () => context.goNamed(
+                                  groupRoute.name,
+                                  pathParameters: {"groupId": group.id!},
                                 ),
                               );
                             },

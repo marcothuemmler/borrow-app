@@ -43,7 +43,8 @@ class _ImageUploadState extends State<ImageUpload> {
       child: SizedBox(
         height: size,
         width: size,
-        child: ClipOval(
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
           child: InkWell(
             hoverColor: Colors.transparent,
             focusColor: Colors.transparent,
@@ -60,7 +61,7 @@ class _ImageUploadState extends State<ImageUpload> {
                     fit: BoxFit.cover,
                   )
                 else
-                  Image(image: _image!.image, fit: BoxFit.fill),
+                  Image(image: _image!.image, fit: BoxFit.cover),
                 AnimatedOpacity(
                   opacity: _hovered ? 1 : 0,
                   duration: const Duration(milliseconds: 150),
@@ -68,7 +69,7 @@ class _ImageUploadState extends State<ImageUpload> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(bottom: 5),
+                        // padding: const EdgeInsets.only(bottom: 5),
                         decoration: const BoxDecoration(
                           color: Color.fromRGBO(255, 255, 255, 0.7),
                           boxShadow: [
