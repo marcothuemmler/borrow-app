@@ -5,6 +5,8 @@ class TextFieldWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final bool autocorrect;
+  final Iterable<String>? autofillHints;
+  final TextInputType? keyboardType;
 
   const TextFieldWidget({
     super.key,
@@ -12,6 +14,8 @@ class TextFieldWidget extends StatelessWidget {
     required this.validator,
     required this.onChanged,
     required this.autocorrect,
+    this.autofillHints,
+    this.keyboardType,
   });
 
   @override
@@ -23,6 +27,9 @@ class TextFieldWidget extends StatelessWidget {
         Text(text),
         const SizedBox(height: 10),
         TextFormField(
+          keyboardType: keyboardType,
+          textInputAction: TextInputAction.next,
+          autofillHints: autofillHints,
           autocorrect: autocorrect,
           maxLines: 1,
           validator: validator,

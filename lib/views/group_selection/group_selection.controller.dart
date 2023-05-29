@@ -1,26 +1,37 @@
-import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.service.dart';
 import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:dartz/dartz.dart';
 
 class GroupSelectionControllerImplementation extends GroupSelectionController {
-  final GroupSelectionService groupSelectionService;
+  final GroupSelectionService _groupSelectionService;
   String? newGroupName = "";
   String? newGroupDescription = "";
+
   GroupSelectionControllerImplementation({
     GroupSelectionModel? state,
-    required this.groupSelectionService,
-    required BackendServiceAggregator itemListService,
-  }) : super(state ?? GroupSelectionModel(isLoading: true, hasError: false, user: none())) {
+    required GroupSelectionService groupSelectionService,
+  })  : _groupSelectionService = groupSelectionService,
+        super(
+          state ??
+              GroupSelectionModel(
+                isLoading: true,
+                hasError: false,
+                user: none(),
+              ),
+        ) {
     _init();
   }
 
   void _init() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await groupSelectionService.getGroups();
-      state = state.copyWith(user: optionOf(response), isLoading: false, hasError: false);
+      final response = await _groupSelectionService.getGroups();
+      state = state.copyWith(
+        user: optionOf(response),
+        isLoading: false,
+        hasError: false,
+      );
     } catch (error) {
       state = state.copyWith(isLoading: false, hasError: true);
     }
@@ -28,8 +39,7 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
 
   @override
   Future<void> addGroup(GroupModel group) async {
-    // state = [...state, GroupModel(name: "", description: "", creatorID: "")];
-    final response = await groupSelectionService.postGroup(group);
+    await _groupSelectionService.postGroup(group);
     _init();
   }
 
@@ -46,10 +56,12 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
         return null;
     }
   }
+
   @override
   void setNewGroupName(String value) {
     newGroupName = value;
   }
+
   @override
   void setNewGroupDescription(String value) {
     newGroupDescription = value;

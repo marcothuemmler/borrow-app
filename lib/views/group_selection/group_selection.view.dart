@@ -2,10 +2,8 @@ import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/widgets/dialogs/new_group_dialog.dart';
-import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -23,14 +21,12 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
   final _carouselController = CarouselController();
   int _currentIndex = 0;
 
-  void update() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(providers.groupControllerProvider.notifier);
-    final model = ref.watch(providers.groupControllerProvider);
+    final controller = ref.read(
+      providers.groupSelectionControllerProvider.notifier,
+    );
+    final model = ref.watch(providers.groupSelectionControllerProvider);
 
     void onNewGroup() {
       Future<bool?> res = _showAlertDialog(controller);
@@ -42,7 +38,10 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
             name = controller.getNewGroupName();
             description = controller.getNewGroupDescription();
             controller.addGroup(
-              GroupModel(name: name!, description: description == "" ? null : description),
+              GroupModel(
+                name: name!,
+                description: description == "" ? null : description,
+              ),
             );
           }
         },
@@ -99,10 +98,10 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                       offset: Offset(0, 3),
                                     )
                                   ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
                                   color: Colors.white,
-                                  image: DecorationImage(image: AssetImage("images/default.jpg")),
                                 ),
                                 child: InkWell(
                                   hoverColor: Colors.transparent,
@@ -138,20 +137,15 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                             count: user.groups.length,
                             index: _currentIndex,
                           ),
-                        const SizedBox(height: 24.0,),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(
-                            onPressed: () => onNewGroup(),
-                            child: const Text("Neue Gruppe"),
-                          ),
+                        const SizedBox(height: 40),
+                        ElevatedButton(
+                          onPressed: () => onNewGroup(),
+                          child: const Text("Neue Gruppe"),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(
-                            onPressed: () => {},
-                            child: const Text("Einladen"),
-                          )
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () => {},
+                          child: const Text("Einladen"),
                         )
                       ],
                     ),

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class NewGroupDialog extends StatelessWidget {
   const NewGroupDialog({
@@ -17,13 +18,12 @@ class NewGroupDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     return AlertDialog(
-      // <-- SEE HERE
       title: const Text('Neue Gruppe'),
       content: SingleChildScrollView(
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: ListBody(
             children: <Widget>[
               TextFieldWidget(
@@ -46,16 +46,16 @@ class NewGroupDialog extends StatelessWidget {
         TextButton(
           child: const Text('Einfügen'),
           onPressed: () {
-            _formKey.currentState!.save();
-            if (_formKey.currentState!.validate()) {
-              Navigator.of(context).pop(true);
+            formKey.currentState!.save();
+            if (formKey.currentState!.validate()) {
+              context.pop(true);
             }
           },
         ),
         TextButton(
           child: const Text('Abbrechen'),
           onPressed: () {
-            Navigator.of(context).pop(false);
+            context.pop(false);
           },
         ),
       ],

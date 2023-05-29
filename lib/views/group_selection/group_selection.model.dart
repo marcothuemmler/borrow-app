@@ -20,7 +20,8 @@ class UserModel with _$UserModel {
     required String username,
     @Default([]) List<GroupModel> groups,
   }) = _UserModel;
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 }
 
 @freezed
@@ -32,7 +33,8 @@ class GroupModel with _$GroupModel {
     String? creatorId,
   }) = _GroupModel;
 
-  factory GroupModel.fromJson(Map<String, dynamic> json) => _$GroupModelFromJson(json);
+  factory GroupModel.fromJson(Map<String, dynamic> json) =>
+      _$GroupModelFromJson(json);
 }
 
 @freezed
@@ -41,6 +43,7 @@ class CreateGroupDTO with _$CreateGroupDTO {
     required String name,
     required String? description,
     required String creatorId,
-}) = _CreateGroupDTO;
-  factory CreateGroupDTO.fromJson(Map<String, dynamic> json) => _$CreateGroupDTOFromJson(json);
+  }) = _CreateGroupDTO;
+  factory CreateGroupDTO.fromJson(Map<String, dynamic> json) =>
+      _$CreateGroupDTOFromJson(json);
 }

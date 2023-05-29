@@ -27,12 +27,25 @@ MaterialPage _errorPage({
 }
 
 final routerProviderDef = Provider<GoRouter>((ref) {
+  final storageService = ref.read(providers.secureStorageServiceProvider);
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
+    refreshListenable: storageService,
+    debugLogDiagnostics: false,
     redirect: (context, state) async {
-      final secureStorage = ref.watch(providers.secureStorageProvider);
-      final isLoggedIn = await secureStorage.containsKey(key: "refreshToken");
-      final isLoginIn = RegExp(r"^/(login)*$").hasMatch(state.location);
+      final isLoggedIn = await storageService.containsKey(key: "refreshToken");
+      final isLoginIn = state.location == "/login";
+      final isSigningUp = state.location == "/signup";
+      if (isSigningUp) {
+        return null;
+        // TODO: welcome screen => login
+      }
+      if (!isLoggedIn && !isLoginIn) {
+        return state.namedLocation(homeRoute.name);
+      }
+      if (!isLoggedIn && isLoginIn) {
+        return state.namedLocation(loginRoute.name);
+      }
       if (isLoggedIn && isLoginIn) {
         return state.namedLocation(groupSelectionRoute.name);
       }
@@ -48,40 +61,26 @@ final routerProviderDef = Provider<GoRouter>((ref) {
         ),
         routes: [
           GoRoute(
-            redirect: (context, state) => _redirect(
-              context: context,
-              state: state,
-              ref: ref,
-              location: loginRoute.name,
-            ),
             parentNavigatorKey: _rootNavigatorKey,
             name: loginRoute.name,
             path: loginRoute.path,
-            pageBuilder: (context, state) => const MaterialPage(child: LoginView()),
+            pageBuilder: (context, state) =>
+                const MaterialPage(child: LoginView()),
           ),
           GoRoute(
-            redirect: (context, state) => _redirect(
-              context: context,
-              state: state,
-              ref: ref,
-              location: signupRoute.name,
-            ),
             parentNavigatorKey: _rootNavigatorKey,
             name: signupRoute.name,
             path: signupRoute.path,
-            pageBuilder: (context, state) => const MaterialPage(child: SignupView()),
+            pageBuilder: (context, state) =>
+                const MaterialPage(child: SignupView()),
           ),
           GoRoute(
-            redirect: (context, state) => _redirect(
-              context: context,
-              state: state,
-              ref: ref,
-              location: loginRoute.name,
-            ),
             parentNavigatorKey: _rootNavigatorKey,
             name: groupSelectionRoute.name,
             path: groupSelectionRoute.path,
-            pageBuilder: (context, state) => const MaterialPage(child: GroupSelectionView()),
+            pageBuilder: (context, state) => const MaterialPage(
+              child: GroupSelectionView(),
+            ),
             routes: [
               ShellRoute(
                 navigatorKey: _shellNavigatorKey,
@@ -96,7 +95,6 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                 },
                 routes: [
                   GoRoute(
-                    redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
                     parentNavigatorKey: _shellNavigatorKey,
                     name: groupRoute.name,
                     path: groupRoute.path,
@@ -106,7 +104,6 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                     },
                     routes: [
                       GoRoute(
-                        redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
                         parentNavigatorKey: _rootNavigatorKey,
                         name: itemDetailRoute.name,
                         path: itemDetailRoute.path,
@@ -121,7 +118,10 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                               Animation<double> secondaryAnimation,
                               Widget child,
                             ) {
-                              return ScaleTransition(scale: animation, child: child);
+                              return ScaleTransition(
+                                scale: animation,
+                                child: child,
+                              );
                             },
                           );
                         },
@@ -129,7 +129,6 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                     ],
                   ),
                   GoRoute(
-                    redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
                     parentNavigatorKey: _shellNavigatorKey,
                     name: profileRoute.name,
                     path: profileRoute.path,
@@ -148,15 +147,3 @@ final routerProviderDef = Provider<GoRouter>((ref) {
     ),
   );
 });
-
-Future<String?> _redirect({
-  required BuildContext context,
-  required GoRouterState state,
-  required ProviderRef ref,
-  String? location,
-}) async {
-  final returnLocation = location ?? homeRoute.name;
-  final secureStorage = ref.watch(providers.secureStorageProvider);
-  final isLoggedIn = await secureStorage.containsKey(key: "refreshToken");
-  return isLoggedIn ? null : state.namedLocation(returnLocation);
-}
