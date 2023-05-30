@@ -20,7 +20,7 @@ class CreateGroupDialog extends StatelessWidget {
   final void Function(String) onGroupDescriptionChanged;
   final void Function(XFile?) onImageChanged;
 
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class CreateGroupDialog extends StatelessWidget {
       contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
       content: SingleChildScrollView(
         child: Form(
-          key: formKey,
+          key: _formKey,
           child: Flex(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,19 +78,17 @@ class CreateGroupDialog extends StatelessWidget {
           child: Row(
             children: [
               SizedBox(width: isPortrait ? 0 : 200),
-              Flexible(
+              Expanded(
                 child: TextButton(
                   child: const Text('Cancel'),
-                  onPressed: () {
-                    context.pop(false);
-                  },
+                  onPressed: () => context.pop(false),
                 ),
               ),
-              Flexible(
+              Expanded(
                 child: ElevatedButton(
                   child: const Text('Add Group'),
                   onPressed: () {
-                    if (formKey.currentState!.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       context.pop(true);
                     }
                   },

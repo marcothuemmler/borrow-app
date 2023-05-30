@@ -21,55 +21,6 @@ class _ImageUploadState extends State<ImageUpload> {
   final double size = 150;
 
   @override
-  void initState() {
-    super.initState();
-    _onImageChanged = widget.onImageChanged;
-  }
-
-  Future<void> _selectFile() async {
-    try {
-      final bool? newImageSelected = await showDialog(
-        context: context,
-        builder: (context) {
-          return ImageChangeDialog(
-            onSetImagePressed: () => context.pop(true),
-            onRemoveImagePressed: () => context.pop(false),
-            onCancelPressed: () => context.pop(null),
-            showRemoveOption: _image is Image,
-          );
-        },
-      );
-      if (newImageSelected is bool) {
-        XFile? input;
-        if (newImageSelected) {
-          input = await ImagePicker().pickImage(source: ImageSource.gallery);
-          if (input is XFile) {
-            Uint8List bytes = await input.readAsBytes();
-            setState(() => _image = Image.memory(bytes));
-          }
-        } else {
-          setState(() => _image = null);
-        }
-        if (_onImageChanged is Function) {
-          _onImageChanged!(input);
-        }
-      }
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          content: Center(
-            child: Text(
-              "Could not select image, Please try again",
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-        ),
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
@@ -101,7 +52,6 @@ class _ImageUploadState extends State<ImageUpload> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        // padding: const EdgeInsets.only(bottom: 5),
                         decoration: const BoxDecoration(
                           color: Color.fromRGBO(255, 255, 255, 0.7),
                           boxShadow: [
@@ -131,6 +81,60 @@ class _ImageUploadState extends State<ImageUpload> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _onImageChanged = widget.onImageChanged;
+  }
+
+  Future<void> _selectFile() async {
+    try {
+      final bool? newImageSelected = await _showImageChangeDialog();
+      if (newImageSelected is! bool) {
+        return;
+      }
+      if (!newImageSelected) {
+        setState(() => _image = null);
+        return;
+      }
+      final XFile? input =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (input is XFile) {
+        Uint8List bytes = await input.readAsBytes();
+        setState(() => _image = Image.memory(bytes));
+      }
+      _onImageChanged?.call(input);
+    } catch (error) {
+      _showErrorSnackBar();
+    }
+  }
+
+  void _showErrorSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        backgroundColor: Colors.red,
+        content: Center(
+          child: Text(
+            "Could not select image. Please try again",
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<bool?> _showImageChangeDialog() async {
+    return await showDialog(
+      context: context,
+      builder: (context) => ImageChangeDialog(
+        onSetImagePressed: () => context.pop(true),
+        onRemoveImagePressed: () => context.pop(false),
+        onCancelPressed: () => context.pop(),
+        showRemoveOption: _image is Image,
       ),
     );
   }
