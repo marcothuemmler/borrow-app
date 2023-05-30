@@ -50,10 +50,12 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
     try {
       state = state.copyWith(isLoading: true, hasError: false);
       final response = await _groupSelectionService.postGroup(state.newGroup!);
-      await _groupSelectionService.postGroupImage(
-        groupId: response.id!,
-        groupImage: state.groupImage,
-      );
+      if (state.groupImage is XFile) {
+        await _groupSelectionService.postGroupImage(
+          groupId: response.id!,
+          groupImage: state.groupImage,
+        );
+      }
       _getGroups();
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);

@@ -59,15 +59,12 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
       body: model.isLoading
           ? const Center(child: CircularProgressIndicator())
           : model.hasError
-              ? const Center(
-                  child: Text("Something went wrong"),
-                )
+              ? const Center(child: Text("Something went wrong"))
               : model.user.fold(
-                  () => const Center(
-                    child: Text("Something went wrong"),
-                  ),
+                  () => const Center(child: Text("Something went wrong")),
                   (user) => SingleChildScrollView(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(height: isPortrait ? 70 : 10),
@@ -94,6 +91,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                               return GroupSelectionCard(
                                 groupName: group.name,
                                 groupDescription: group.description,
+                                groupImage: group.imageUrl,
                                 onTap: () => context.goNamed(
                                   groupRoute.name,
                                   pathParameters: {"groupId": group.id!},
@@ -104,7 +102,6 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                         if (isPortrait)
                           IntrinsicWidth(
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 const SizedBox(height: 20),
                                 if (user.groups.isNotEmpty)

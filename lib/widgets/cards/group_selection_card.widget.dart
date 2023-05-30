@@ -4,12 +4,14 @@ class GroupSelectionCard extends StatelessWidget {
   final String groupName;
   final String? groupDescription;
   final void Function()? onTap;
+  final String? groupImage;
 
   const GroupSelectionCard({
     super.key,
     required this.onTap,
     required this.groupName,
     required this.groupDescription,
+    required this.groupImage,
   });
 
   @override
@@ -34,16 +36,20 @@ class GroupSelectionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Flexible(
+            Flexible(
               child: Padding(
-                padding: EdgeInsets.all(3),
+                padding: const EdgeInsets.all(3),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(7),
                     topRight: Radius.circular(7),
                   ),
                   child: Image(
-                    image: AssetImage("assets/images/default.jpg"),
+                    height: double.infinity,
+                    width: double.infinity,
+                    image: groupImage is String
+                        ? Image.network(groupImage!).image
+                        : const AssetImage("assets/images/default.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),

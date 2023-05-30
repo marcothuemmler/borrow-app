@@ -56,7 +56,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   Future<group_selection_model.UserModel> getGroups() async {
     try {
       final response = await _client.get(
-        "/user/auth/current-user",
+        "/user/current-user",
         queryParameters: {
           "relations": ['groups']
         },
@@ -136,7 +136,6 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       final bytes = await groupImage.readAsBytes();
       final type = groupImage.name.split(".").last;
 
-      // ignore: unused_local_variable
       final formData = FormData.fromMap({
         "file": MultipartFile.fromBytes(
           bytes,
@@ -145,11 +144,11 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
         ),
         "type": "image/$type",
       });
-      // await _client.put(
-      //   "/group/cover/$groupId",
-      //   data: formData,
-      //   options: Options(contentType: "multipart/form-data"),
-      // );
+      await _client.put(
+        "/group/cover/$groupId",
+        data: formData,
+        options: Options(contentType: "multipart/form-data"),
+      );
     } catch (error) {
       throw Exception("Failed to upload project image: $error");
     }
