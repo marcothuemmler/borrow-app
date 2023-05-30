@@ -77,23 +77,24 @@ class CreateGroupDialog extends StatelessWidget {
           policy: _ReversedTraversalPolicy(),
           child: Row(
             children: [
-              SizedBox(
-                width: isPortrait ? 0 : 200,
+              SizedBox(width: isPortrait ? 0 : 200),
+              Flexible(
+                child: TextButton(
+                  child: const Text('Cancel'),
+                  onPressed: () {
+                    context.pop(false);
+                  },
+                ),
               ),
-              TextButton(
-                child: const Text('Cancel'),
-                onPressed: () {
-                  context.pop(false);
-                },
-              ),
-              const Spacer(),
-              ElevatedButton(
-                child: const Text('Add Group'),
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    context.pop(true);
-                  }
-                },
+              Flexible(
+                child: ElevatedButton(
+                  child: const Text('Add Group'),
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      context.pop(true);
+                    }
+                  },
+                ),
               ),
             ],
           ),

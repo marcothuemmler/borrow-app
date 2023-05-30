@@ -70,16 +70,17 @@ class Providers {
 
   final StateNotifierProviderFamily<DashboardController, DashboardModel, String>
       dashboardControllerProvider =
-      StateNotifierProviderFamily<DashboardController, DashboardModel, String>(
+      StateNotifierProvider.family<DashboardController, DashboardModel, String>(
     (ref, groupId) => DashboardControllerImplementation(
       router: ref.read(providers.routerProvider),
       groupId: groupId,
     ),
   );
 
-  final StateNotifierProviderFamily<ItemListController, ItemListModel, String>
-      itemListControllerProvider =
-      StateNotifierProviderFamily<ItemListController, ItemListModel, String>(
+  final AutoDisposeStateNotifierProviderFamily<ItemListController,
+          ItemListModel, String> itemListControllerProvider =
+      AutoDisposeStateNotifierProvider.family<ItemListController, ItemListModel,
+          String>(
     (ref, groupId) => ItemListControllerImplementation(
       itemListService: ref.read(providers.backendServiceProvider),
       router: ref.read(providers.routerProvider),
@@ -87,18 +88,19 @@ class Providers {
     ),
   );
 
-  final StateNotifierProvider<GroupSelectionController, GroupSelectionModel>
-      groupSelectionControllerProvider =
-      StateNotifierProvider<GroupSelectionController, GroupSelectionModel>(
+  final AutoDisposeStateNotifierProvider<GroupSelectionController,
+          GroupSelectionModel> groupSelectionControllerProvider =
+      AutoDisposeStateNotifierProvider<GroupSelectionController,
+          GroupSelectionModel>(
     (ref) => GroupSelectionControllerImplementation(
       groupSelectionService: ref.read(providers.backendServiceProvider),
     ),
   );
 
-  final StateNotifierProviderFamily<ItemDetailController, ItemDetailModel,
-          String> itemDetailControllerProvider =
-      StateNotifierProviderFamily<ItemDetailController, ItemDetailModel,
-          String>(
+  final AutoDisposeStateNotifierProviderFamily<ItemDetailController,
+          ItemDetailModel, String> itemDetailControllerProvider =
+      AutoDisposeStateNotifierProvider.family<ItemDetailController,
+          ItemDetailModel, String>(
     (ref, itemId) => ItemDetailControllerImplementation(
       itemId: itemId,
       itemDetailService: ref.read(providers.backendServiceProvider),
