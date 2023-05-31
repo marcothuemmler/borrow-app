@@ -30,7 +30,7 @@ class DashboardControllerImplementation extends DashboardController {
     }
     if (state.currentIndex == 1) {
       state = state.copyWith(currentTitle: "Profile");
-      _router.pushNamed(profileRoute.name);
+      _router.goNamed(profileRoute.name, pathParameters: {"groupId": _groupId});
     }
   }
 }

@@ -55,7 +55,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   Future<group_selection_model.UserModel> getGroups() async {
     try {
       final response = await _client.get(
-        "/user/auth/current-user",
+        "/user/current-user",
         queryParameters: {
           "relations": ['groups']
         },

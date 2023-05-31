@@ -8,6 +8,7 @@ class SettingsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: itemList.length,
       padding: const EdgeInsets.only(top: 20),
       itemBuilder: (context, index) {
