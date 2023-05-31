@@ -1,13 +1,13 @@
+import 'package:borrow_app/widgets/list_views/settings_list_view.widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/list_views/settings_list_view.widget.dart';
 
-class ProfileMain extends StatelessWidget {
-  const ProfileMain({super.key});
+class GroupSettingsView extends StatelessWidget {
+  const GroupSettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<String> items = ["Gruppe verwalten", "Meine Einstellungen"];
+    final List<String> items = ["Kategorien", "Gegenstände", "Balance"];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
