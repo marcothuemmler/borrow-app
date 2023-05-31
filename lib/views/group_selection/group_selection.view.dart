@@ -92,10 +92,18 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                 groupName: group.name,
                                 groupDescription: group.description,
                                 groupImage: group.imageUrl,
-                                onTap: () => context.goNamed(
-                                  groupRoute.name,
-                                  pathParameters: {"groupId": group.id!},
-                                ),
+                                onTap: () {
+                                  context.goNamed(
+                                    groupRoute.name,
+                                    pathParameters: {"groupId": group.id!},
+                                  );
+                                },
+                                onTapInviteButton: () {
+                                  controller.inviteGroupMember(
+                                    groupId: group.id,
+                                  );
+                                },
+                                inviteButtonHidden: index != _currentIndex,
                               );
                             },
                           ),
@@ -127,11 +135,6 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                   },
                                   child: const Text("New Group"),
                                 ),
-                                const SizedBox(height: 10),
-                                TextButton(
-                                  onPressed: () {},
-                                  child: const Text("Invite Members"),
-                                )
                               ],
                             ),
                           ),
@@ -176,4 +179,6 @@ abstract class GroupSelectionController
   void setNewGroupDescription(String value);
 
   void setGroupImage(XFile? file);
+
+  void inviteGroupMember({String? groupId});
 }

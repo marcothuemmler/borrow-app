@@ -95,4 +95,9 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   void setGroupImage(XFile? file) {
     state = state.copyWith(groupImage: file);
   }
+
+  @override
+  void inviteGroupMember({String? groupId}) {
+    // TODO: implement inviteMember
+  }
 }

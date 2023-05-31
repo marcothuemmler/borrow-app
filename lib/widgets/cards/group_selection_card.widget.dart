@@ -4,14 +4,18 @@ class GroupSelectionCard extends StatelessWidget {
   final String groupName;
   final String? groupDescription;
   final void Function()? onTap;
+  final void Function()? onTapInviteButton;
   final String? groupImage;
+  final bool inviteButtonHidden;
 
   const GroupSelectionCard({
     super.key,
     required this.onTap,
+    required this.onTapInviteButton,
     required this.groupName,
     required this.groupDescription,
     required this.groupImage,
+    required this.inviteButtonHidden,
   });
 
   @override
@@ -44,13 +48,41 @@ class GroupSelectionCard extends StatelessWidget {
                     topLeft: Radius.circular(7),
                     topRight: Radius.circular(7),
                   ),
-                  child: Image(
-                    height: double.infinity,
-                    width: double.infinity,
-                    image: groupImage is String
-                        ? Image.network(groupImage!).image
-                        : const AssetImage("assets/images/default.jpg"),
-                    fit: BoxFit.cover,
+                  child: IgnorePointer(
+                    ignoring: inviteButtonHidden,
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        Image(
+                          height: double.infinity,
+                          width: double.infinity,
+                          image: groupImage is String
+                              ? Image.network(groupImage!).image
+                              : const AssetImage("assets/images/default.jpg"),
+                          fit: BoxFit.cover,
+                        ),
+                        AnimatedOpacity(
+                          opacity: inviteButtonHidden ? 0 : 1,
+                          duration: const Duration(milliseconds: 250),
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                elevation: 5,
+                                backgroundColor: Colors.white70,
+                              ),
+                              onPressed: onTapInviteButton,
+                              child: const Icon(
+                                Icons.person_add,
+                                color: Colors.black,
+                                size: 22,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
