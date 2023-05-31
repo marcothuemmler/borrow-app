@@ -1,9 +1,11 @@
 import 'package:borrow_app/common/providers.dart';
+import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/widgets/textform_fields/password_field.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SignupView extends ConsumerStatefulWidget {
   const SignupView({super.key});
@@ -26,6 +28,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.read(providers.signupControllerProvider.notifier);
+    final model = ref.watch(providers.signupControllerProvider);
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -69,16 +72,29 @@ class _SignupViewState extends ConsumerState<SignupView> {
                   onChanged: controller.setPassword,
                   obscureText: _obscurePassword,
                 ),
-                const SizedBox(height: 60),
+                if (model.hasError)
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Text(
+                        "Beim Einloggen ist etwas schiefgelaufen",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ),
+                const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
                       child: const Text("Submit"),
-                      onPressed: () {
-                        _formKey.currentState!.save();
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          controller.signup();
+                          controller.signup().then((success) {
+                            if (success) {
+                              context.goNamed(welcomeRoute.name);
+                            }
+                          });
                         }
                       },
                     )
@@ -93,10 +109,10 @@ class _SignupViewState extends ConsumerState<SignupView> {
   }
 }
 
-abstract class SignupController extends StateNotifier<SignupDto> {
-  SignupController(SignupDto model) : super(model);
+abstract class SignupController extends StateNotifier<SignupModel> {
+  SignupController(SignupModel model) : super(model);
 
-  Future<void> signup();
+  Future<bool> signup();
 
   String? validateFormField({required String fieldName});
 
