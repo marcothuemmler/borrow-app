@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class InvitationChip extends StatelessWidget {
   final String text;
-  final void Function()? onDeleted;
+  final void Function(String) onDeleted;
 
   const InvitationChip({
     Key? key,
@@ -14,7 +14,7 @@ class InvitationChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Chip(
       elevation: 2,
-      onDeleted: onDeleted,
+      onDeleted: () => onDeleted(text),
       label: Text(text),
       deleteIcon: const Icon(
         Icons.cancel,

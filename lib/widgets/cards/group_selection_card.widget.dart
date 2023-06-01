@@ -23,7 +23,7 @@ class GroupSelectionCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20),
       decoration: const BoxDecoration(
-        boxShadow: [
+        boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black12,
             blurRadius: 20,
@@ -39,7 +39,7 @@ class GroupSelectionCard extends StatelessWidget {
         highlightColor: Colors.transparent,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: <Widget>[
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.all(3),
@@ -52,7 +52,7 @@ class GroupSelectionCard extends StatelessWidget {
                     ignoring: inviteButtonHidden,
                     child: Stack(
                       alignment: Alignment.bottomRight,
-                      children: [
+                      children: <Widget>[
                         Image(
                           height: double.infinity,
                           width: double.infinity,
@@ -95,7 +95,7 @@ class GroupSelectionCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text(groupName, style: const TextStyle(fontSize: 20)),
                   const SizedBox(height: 10),
                   Text(

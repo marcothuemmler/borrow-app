@@ -45,8 +45,8 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   }
 
   @override
-  Future<void> addGroup({required bool? confirmed}) async {
-    if (confirmed is! bool || !confirmed) {
+  Future<void> addGroup({required bool confirmed}) async {
+    if (!confirmed) {
       return;
     }
     try {
@@ -106,8 +106,8 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   }
 
   @override
-  String? validateAndAddEmail(String? email) {
-    final errorText =
+  String? validateAndAddEmailToInvitations(String? email) {
+    final String? errorText =
         email.isEmail ? null : "Bitte geben Sie eine gültige Email ein";
     if (errorText is! String) {
       state = state.copyWith.invitations!(
@@ -125,11 +125,10 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   }
 
   @override
-  void inviteGroupMembers(bool? confirmed) {
-    if (confirmed is! bool || !confirmed) {
-      state = state.copyWith(invitations: null);
-    } else {
+  void inviteGroupMembers({required bool confirmed}) {
+    if (confirmed) {
       _groupSelectionService.inviteGroupMembers(payload: state.invitations!);
     }
+    state = state.copyWith(invitations: null);
   }
 }

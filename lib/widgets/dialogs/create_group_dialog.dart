@@ -20,11 +20,11 @@ class CreateGroupDialog extends StatelessWidget {
   final void Function(String) onGroupDescriptionChanged;
   final void Function(XFile?) onImageChanged;
 
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final isPortrait =
+    final bool isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
     return AlertDialog(
       shape: const RoundedRectangleBorder(
@@ -50,7 +50,7 @@ class CreateGroupDialog extends StatelessWidget {
                 fit: FlexFit.loose,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: <TextFieldWidget>[
                     TextFieldWidget(
                       text: "Name",
                       keyboardType: TextInputType.name,
@@ -76,7 +76,7 @@ class CreateGroupDialog extends StatelessWidget {
         FocusTraversalGroup(
           policy: _ReversedTraversalPolicy(),
           child: Row(
-            children: [
+            children: <Widget>[
               SizedBox(width: isPortrait ? 0 : 200),
               Expanded(
                 child: TextButton(

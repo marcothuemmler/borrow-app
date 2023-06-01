@@ -22,7 +22,7 @@ class UserModel with _$UserModel {
   factory UserModel({
     required String id,
     required String username,
-    @Default([]) List<GroupModel> groups,
+    @Default(<GroupModel>[]) List<GroupModel> groups,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
@@ -59,7 +59,7 @@ class CreateGroupDTO with _$CreateGroupDTO {
 class InvitationModel with _$InvitationModel {
   factory InvitationModel({
     required String groupId,
-    @Default({}) Set<String> emails,
+    @Default(<String>{}) Set<String> emails,
   }) = _InvitationModel;
 
   factory InvitationModel.fromJson(Map<String, dynamic> json) =>

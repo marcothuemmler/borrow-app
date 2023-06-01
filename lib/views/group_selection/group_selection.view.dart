@@ -46,7 +46,8 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                     padding: const EdgeInsets.symmetric(horizontal: 0),
                   ),
                   onPressed: () async {
-                    controller.addGroup(confirmed: await _showAlertDialog());
+                    final bool confirmed = await _showAlertDialog() ?? false;
+                    controller.addGroup(confirmed: confirmed);
                   },
                   child: const Text("New Group"),
                 ),
@@ -108,7 +109,9 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                       groupName: group.name,
                                     ),
                                   );
-                                  controller.inviteGroupMembers(result);
+                                  controller.inviteGroupMembers(
+                                    confirmed: result ?? false,
+                                  );
                                 },
                                 inviteButtonHidden: index != _currentIndex,
                               );
@@ -117,7 +120,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                         if (isPortrait)
                           IntrinsicWidth(
                             child: Column(
-                              children: [
+                              children: <Widget>[
                                 const SizedBox(height: 20),
                                 if (user.groups.isNotEmpty)
                                   Center(
@@ -135,8 +138,8 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                 const SizedBox(height: 40),
                                 ElevatedButton(
                                   onPressed: () async {
-                                    final bool? confirmed =
-                                        await _showAlertDialog();
+                                    final bool confirmed =
+                                        await _showAlertDialog() ?? false;
                                     controller.addGroup(confirmed: confirmed);
                                   },
                                   child: const Text("New Group"),
@@ -152,7 +155,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
   }
 
   Future<bool?> _showAlertDialog() async {
-    final controller =
+    final GroupSelectionController controller =
         ref.read(providers.groupSelectionControllerProvider.notifier);
     controller.createNewGroup();
     return showDialog<bool>(
@@ -176,7 +179,7 @@ abstract class GroupSelectionController
     extends StateNotifier<GroupSelectionModel> {
   GroupSelectionController(GroupSelectionModel model) : super(model);
 
-  void addGroup({required bool? confirmed});
+  void addGroup({required bool confirmed});
 
   String? validateFormField({required String fieldName});
 
@@ -190,9 +193,9 @@ abstract class GroupSelectionController
 
   void setupMemberInvitation({required String groupId});
 
-  String? validateAndAddEmail(String? email);
+  String? validateAndAddEmailToInvitations(String? email);
 
   void removeMailFromInvitations(String email);
 
-  void inviteGroupMembers(bool? confirmed);
+  void inviteGroupMembers({required bool confirmed});
 }
