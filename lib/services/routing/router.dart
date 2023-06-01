@@ -109,13 +109,13 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                         parentNavigatorKey: _shellNavigatorKey,
                         name: profileRoute.name,
                         path: profileRoute.path,
-                        builder: (context, state) => ProfileMain(state.pathParameters['groupId']!),
+                        builder: (context, state) => ProfileMain(groupId: state.pathParameters['groupId']!,),
                       ),
                       GoRoute(
                         parentNavigatorKey: _shellNavigatorKey,
                         name: groupSettingsRoute.name,
                         path: groupSettingsRoute.path,
-                        builder: (context, state) => GroupSettingsView(state.pathParameters['groupId']!),
+                        builder: (context, state) => GroupSettingsView(groupId: state.pathParameters['groupId']!,),
                       ),
                       GoRoute(
                         parentNavigatorKey: _rootNavigatorKey,

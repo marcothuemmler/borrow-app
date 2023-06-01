@@ -1,16 +1,19 @@
-import 'package:borrow_app/common/providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../widgets/list_views/settings_list_view.widget.dart';
+import 'package:go_router/go_router.dart';
+import 'package:borrow_app/widgets/list_views/settings_list_view.widget.dart';
 
 class ProfileMain extends ConsumerWidget {
-  const ProfileMain(String groupID, {super.key});
+  final String groupId;
+  const ProfileMain({super.key, required this.groupId});
 
   @override
   Widget build(BuildContext context, WidgetRef widgetRef) {
     final List<String> items = ["Gruppe verwalten", "Meine Einstellungen"];
-    final List<void Function()> functions = [() => {}, () => {}];
+    final List<void Function()> functions = [
+      () => {context.goNamed("groupSettings", pathParameters: {"groupId": groupId})},
+      () => {}];
     return MaterialApp(
       home: Scaffold(
         body: SafeArea(
@@ -32,7 +35,7 @@ class ProfileMain extends ConsumerWidget {
                 ],
               ),
           ),
-        )
+        ),
     );
   }
 }
