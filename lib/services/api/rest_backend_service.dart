@@ -56,10 +56,11 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   @override
   Future<group_selection_model.UserModel> getGroups() async {
     try {
+      final userId = await _storageService.read(key: "user-id");
       final response = await _client.get(
-        "/user/current-user",
+        "/users/$userId",
         queryParameters: {
-          "relations": ['groups']
+          "join": ['groups']
         },
       );
       return group_selection_model.UserModel.fromJson(response.data);
@@ -84,9 +85,9 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }) async {
     try {
       final response = await _client.get(
-        "/group/$groupId",
+        "/groups/$groupId",
         queryParameters: {
-          "relations": ["categories", "items.category", "items.owner"]
+          "join": ["categories", "items", "items.category", "items.owner"]
         },
       );
       return item_list_model.GroupModel.fromJson(response.data);
@@ -106,7 +107,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
         description: group.description,
         creatorId: userId!,
       );
-      final response = await _client.post("/group", data: groupWithCreatorId);
+      final response = await _client.post("/groups", data: groupWithCreatorId);
       return group_selection_model.GroupModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not create group: $error");
@@ -118,7 +119,12 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     required String itemId,
   }) async {
     try {
-      final response = await _client.get("/item/$itemId");
+      final response = await _client.get(
+        "/items/$itemId",
+        queryParameters: {
+          'join': ['category', 'owner']
+        },
+      );
       return item_detail_model.ItemModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get item detail: $error");
@@ -146,7 +152,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
         "type": "image/$type",
       });
       await _client.put(
-        "/group/cover/$groupId",
+        "/groups/cover/$groupId",
         data: formData,
         options: Options(contentType: "multipart/form-data"),
       );
