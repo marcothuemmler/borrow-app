@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GroupSettingsView extends StatelessWidget {
-  const GroupSettingsView({super.key});
+  const GroupSettingsView(String groupID, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +16,7 @@ class GroupSettingsView extends StatelessWidget {
         ),
         body: SettingsListView(
           itemList: items,
+          functions: [() => {}, () => {}, () => {}],
         ),
       ),
     );

@@ -7,6 +7,7 @@ import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
+import "package:borrow_app/views/profile/group_settings.view.dart";
 import "package:borrow_app/views/profile/profile_main.view.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -108,7 +109,13 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                         parentNavigatorKey: _shellNavigatorKey,
                         name: profileRoute.name,
                         path: profileRoute.path,
-                        builder: (context, state) => const ProfileMain(),
+                        builder: (context, state) => ProfileMain(state.pathParameters['groupId']!),
+                      ),
+                      GoRoute(
+                        parentNavigatorKey: _shellNavigatorKey,
+                        name: groupSettingsRoute.name,
+                        path: groupSettingsRoute.path,
+                        builder: (context, state) => GroupSettingsView(state.pathParameters['groupId']!),
                       ),
                       GoRoute(
                         parentNavigatorKey: _rootNavigatorKey,

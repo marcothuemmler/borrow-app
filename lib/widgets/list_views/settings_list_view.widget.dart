@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class SettingsListView extends StatelessWidget {
   final List<String> itemList;
-  const SettingsListView({super.key, required this.itemList});
+  final List<void Function()> functions;
+  const SettingsListView({super.key, required this.itemList, required this.functions});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class SettingsListView extends StatelessWidget {
             elevation: 0,
             clipBehavior: Clip.hardEdge,
             child: InkWell(
-              onTap: null,
+              onTap: functions[index],
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
                 child: SizedBox(
