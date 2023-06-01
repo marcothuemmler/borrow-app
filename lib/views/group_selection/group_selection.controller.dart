@@ -1,3 +1,4 @@
+import 'package:borrow_app/util/extensions.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.service.dart';
 import 'package:borrow_app/views/group_selection/group_selection.view.dart';
@@ -19,6 +20,7 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
                 user: none(),
                 newGroup: null,
                 groupImage: null,
+                invitations: null,
               ),
         ) {
     _init();
@@ -51,7 +53,7 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
       state = state.copyWith(isLoading: true, hasError: false);
       final response = await _groupSelectionService.postGroup(state.newGroup!);
       if (state.groupImage is XFile) {
-        await _groupSelectionService.postGroupImage(
+        await _groupSelectionService.putGroupImage(
           groupId: response.id!,
           groupImage: state.groupImage,
         );
@@ -97,7 +99,37 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   }
 
   @override
-  void inviteGroupMember({String? groupId}) {
-    // TODO: implement inviteMember
+  void setupMemberInvitation({required String groupId}) {
+    state = state.copyWith(
+      invitations: InvitationModel(groupId: groupId, emails: {}),
+    );
+  }
+
+  @override
+  String? validateAndAddEmail(String? email) {
+    final errorText =
+        email.isEmail ? null : "Bitte geben Sie eine gültige Email ein";
+    if (errorText is! String) {
+      state = state.copyWith.invitations!(
+        emails: {...state.invitations!.emails, email!},
+      );
+    }
+    return errorText;
+  }
+
+  @override
+  void removeMailFromInvitations(String email) {
+    state = state.copyWith.invitations!(
+      emails: {...state.invitations!.emails.where((mail) => mail != email)},
+    );
+  }
+
+  @override
+  void inviteGroupMembers(bool? confirmed) {
+    if (confirmed is! bool || !confirmed) {
+      state = state.copyWith(invitations: null);
+    } else {
+      _groupSelectionService.inviteGroupMembers(payload: state.invitations!);
+    }
   }
 }

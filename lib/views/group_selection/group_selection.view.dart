@@ -3,6 +3,7 @@ import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/widgets/cards/group_selection_card.widget.dart';
 import 'package:borrow_app/widgets/dialogs/create_group_dialog.dart';
+import 'package:borrow_app/widgets/dialogs/invitation_dialog.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +46,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                     padding: const EdgeInsets.symmetric(horizontal: 0),
                   ),
                   onPressed: () async {
-                    controller.addGroup(
-                      confirmed: await _showAlertDialog(controller),
-                    );
+                    controller.addGroup(confirmed: await _showAlertDialog());
                   },
                   child: const Text("New Group"),
                 ),
@@ -98,10 +97,18 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                     pathParameters: {"groupId": group.id!},
                                   );
                                 },
-                                onTapInviteButton: () {
-                                  controller.inviteGroupMember(
-                                    groupId: group.id,
+                                onTapInviteButton: () async {
+                                  controller.setupMemberInvitation(
+                                    groupId: group.id!,
                                   );
+                                  final bool? result = await showDialog(
+                                    context: context,
+                                    builder: (context) => InviteMembersDialog(
+                                      groupId: group.id!,
+                                      groupName: group.name,
+                                    ),
+                                  );
+                                  controller.inviteGroupMembers(result);
                                 },
                                 inviteButtonHidden: index != _currentIndex,
                               );
@@ -128,10 +135,9 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                 const SizedBox(height: 40),
                                 ElevatedButton(
                                   onPressed: () async {
-                                    controller.addGroup(
-                                      confirmed:
-                                          await _showAlertDialog(controller),
-                                    );
+                                    final bool? confirmed =
+                                        await _showAlertDialog();
+                                    controller.addGroup(confirmed: confirmed);
                                   },
                                   child: const Text("New Group"),
                                 ),
@@ -145,7 +151,9 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
     );
   }
 
-  Future<bool?> _showAlertDialog(GroupSelectionController controller) async {
+  Future<bool?> _showAlertDialog() async {
+    final controller =
+        ref.read(providers.groupSelectionControllerProvider.notifier);
     controller.createNewGroup();
     return showDialog<bool>(
       context: context,
@@ -180,5 +188,11 @@ abstract class GroupSelectionController
 
   void setGroupImage(XFile? file);
 
-  void inviteGroupMember({String? groupId});
+  void setupMemberInvitation({required String groupId});
+
+  String? validateAndAddEmail(String? email);
+
+  void removeMailFromInvitations(String email);
+
+  void inviteGroupMembers(bool? confirmed);
 }

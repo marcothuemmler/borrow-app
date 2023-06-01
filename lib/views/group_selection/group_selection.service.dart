@@ -6,8 +6,10 @@ abstract class GroupSelectionService {
 
   Future<GroupModel> postGroup(GroupModel group);
 
-  Future<void> postGroupImage({
+  Future<void> putGroupImage({
     required String groupId,
     required XFile? groupImage,
   });
+
+  Future<void> inviteGroupMembers({required InvitationModel payload});
 }

@@ -53,3 +53,17 @@ Map<String, dynamic> _$$_CreateGroupDTOToJson(_$_CreateGroupDTO instance) =>
       'description': instance.description,
       'creatorId': instance.creatorId,
     };
+
+_$_InvitationModel _$$_InvitationModelFromJson(Map<String, dynamic> json) =>
+    _$_InvitationModel(
+      groupId: json['groupId'] as String,
+      emails:
+          (json['emails'] as List<dynamic>?)?.map((e) => e as String).toSet() ??
+              const {},
+    );
+
+Map<String, dynamic> _$$_InvitationModelToJson(_$_InvitationModel instance) =>
+    <String, dynamic>{
+      'groupId': instance.groupId,
+      'emails': instance.emails.toList(),
+    };

@@ -126,7 +126,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<void> postGroupImage({
+  Future<void> putGroupImage({
     required String groupId,
     required XFile? groupImage,
   }) async {
@@ -153,5 +153,12 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     } catch (error) {
       throw Exception("Failed to upload project image: $error");
     }
+  }
+
+  @override
+  Future<void> inviteGroupMembers({
+    required group_selection_model.InvitationModel payload,
+  }) async {
+    // TODO: implement inviteMembers
   }
 }

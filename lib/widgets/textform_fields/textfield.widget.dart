@@ -7,6 +7,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool autocorrect;
   final Iterable<String>? autofillHints;
   final TextInputType? keyboardType;
+  final TextEditingController? controller;
 
   const TextFieldWidget({
     super.key,
@@ -16,6 +17,7 @@ class TextFieldWidget extends StatelessWidget {
     required this.autocorrect,
     this.autofillHints,
     this.keyboardType,
+    this.controller,
   });
 
   @override
@@ -29,6 +31,7 @@ class TextFieldWidget extends StatelessWidget {
         const SizedBox(height: 10),
         Flexible(
           child: TextFormField(
+            controller: controller,
             keyboardType: keyboardType,
             textInputAction: TextInputAction.next,
             autofillHints: autofillHints,

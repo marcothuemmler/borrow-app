@@ -32,7 +32,7 @@ final routerProviderDef = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     refreshListenable: storageService,
-    debugLogDiagnostics: true,
+    debugLogDiagnostics: false,
     redirect: (context, state) async {
       final isLoggedIn = await storageService.containsKey(key: "refreshToken");
       final isLoginIn = state.matchedLocation == "/login";
