@@ -22,19 +22,22 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: 16),
         Text(text),
         const SizedBox(height: 10),
-        TextFormField(
-          keyboardType: keyboardType,
-          textInputAction: TextInputAction.next,
-          autofillHints: autofillHints,
-          autocorrect: autocorrect,
-          maxLines: 1,
-          validator: validator,
-          decoration: const InputDecoration(border: OutlineInputBorder()),
-          onChanged: onChanged,
+        Flexible(
+          child: TextFormField(
+            keyboardType: keyboardType,
+            textInputAction: TextInputAction.next,
+            autofillHints: autofillHints,
+            autocorrect: autocorrect,
+            maxLines: 1,
+            validator: validator,
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+            onChanged: onChanged,
+          ),
         ),
       ],
     );
