@@ -161,10 +161,10 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     }
   }
   @override
-  Future<CategoryModel> postCategory (CategoryModel model) async {
+  Future<item_list_model.CategoryModel> postCategory (item_list_model.CategoryModel model) async {
     try {
       final userID = (await _storageService.read(key: "user-id"))!;
-      final modelDTO = CreateCategoryDTO(
+      final modelDTO = item_list_model.CreateCategoryDTO(
           name: model.name,
           description: model.description,
           groupId: model.groupId,);
