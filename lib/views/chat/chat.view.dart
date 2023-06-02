@@ -1,4 +1,5 @@
 import 'package:borrow_app/common/providers.dart';
+import 'package:borrow_app/views/chat/chat.model.dart';
 import 'package:borrow_app/widgets/various_components/chat_bubble.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,15 +7,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ChatView extends ConsumerWidget {
   final String itemId;
   final String userId;
-  final textController = TextEditingController();
+  final _textController = TextEditingController();
+  final _scrollController = ScrollController();
 
-  ChatView({super.key, required this.itemId, required this.userId});
+  ChatView({
+    super.key,
+    required this.itemId,
+    required this.userId,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller =
         ref.read(providers.chatControllerProvider(userId).notifier);
     final model = ref.watch(providers.chatControllerProvider(userId));
+    WidgetsBinding.instance.addPostFrameCallback(_scrollDown);
     return Scaffold(
       appBar: AppBar(title: const Text("Title")),
       body: ColoredBox(
@@ -30,15 +37,22 @@ class ChatView extends ConsumerWidget {
                   children: [
                     Expanded(
                       child: SingleChildScrollView(
+                        controller: _scrollController,
                         physics: const AlwaysScrollableScrollPhysics(),
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          top: 15,
-                          right: 20,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 15,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: model,
+                          children: [
+                            ...model.messages.map((message) {
+                              return ChatBubble(
+                                isOwnMessage: message.isOwnMessage,
+                                content: message.content,
+                              );
+                            }),
+                          ],
                         ),
                       ),
                     ),
@@ -52,8 +66,9 @@ class ChatView extends ConsumerWidget {
                         children: [
                           Flexible(
                             child: TextField(
-                              controller: textController,
-                              minLines: 1,
+                              autofocus: true,
+                              keyboardType: TextInputType.multiline,
+                              controller: _textController,
                               maxLines: null,
                               decoration: const InputDecoration(
                                 filled: true,
@@ -66,9 +81,9 @@ class ChatView extends ConsumerWidget {
                           IconButton(
                             onPressed: () {
                               controller.sendMessage(
-                                message: textController.text,
+                                message: _textController.text.trim(),
                               );
-                              textController.clear();
+                              _textController.clear();
                             },
                             icon: const Icon(Icons.send_outlined),
                           )
@@ -84,9 +99,17 @@ class ChatView extends ConsumerWidget {
       ),
     );
   }
+
+  void _scrollDown(Duration timeStamp) {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 150),
+      curve: Curves.bounceInOut,
+    );
+  }
 }
 
-abstract class ChatController extends StateNotifier<List<ChatBubble>> {
+abstract class ChatController extends StateNotifier<ChatModel> {
   ChatController(super.state);
 
   void sendMessage({required String message});

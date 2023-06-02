@@ -1,23 +1,53 @@
+import 'package:borrow_app/views/chat/chat.model.dart';
+import 'package:borrow_app/views/chat/chat.service.dart';
 import 'package:borrow_app/views/chat/chat.view.dart';
-import 'package:borrow_app/widgets/various_components/chat_bubble.widget.dart';
 
 class ChatControllerImplementation extends ChatController {
-  final String userId;
+  final String _userId;
+  final ChatService _chatService;
 
-  // TODO: proper model
-  ChatControllerImplementation({List<ChatBubble>? model, required this.userId})
-      : super(
+  ChatControllerImplementation({
+    ChatModel? model,
+    required String userId,
+    required ChatService chatService,
+  })  : _userId = userId,
+        _chatService = chatService,
+        super(
           model ??
-              [
-                const ChatBubble(isOwnMessage: false, message: "hallo"),
-              ],
-        );
+              ChatModel(
+                isLoading: false,
+                hasError: false,
+                messages: List<MessageModel>.empty(),
+              ),
+        ) {
+    _init();
+  }
+
+  void _init() {
+    _loadMessages();
+  }
+
+  void _loadMessages() async {
+    try {
+      state = state.copyWith(isLoading: true, hasError: false);
+      final List<MessageModel> messages =
+          await _chatService.loadMessages(userId: _userId);
+      state = state.copyWith(messages: messages, isLoading: false);
+    } catch (error) {
+      state = state.copyWith(hasError: true, isLoading: false);
+    }
+  }
 
   @override
-  void sendMessage({required String message}) {
-    // TODO: backend call
+  void sendMessage({required String message}) async {
     if (message.isNotEmpty) {
-      state = [...state, ChatBubble(isOwnMessage: true, message: message)];
+      final sentMessage = await _chatService.sendMessage(
+        message: message,
+        recipientId: _userId,
+      );
+      state = state.copyWith(
+        messages: [...state.messages, sentMessage],
+      );
     }
   }
 }

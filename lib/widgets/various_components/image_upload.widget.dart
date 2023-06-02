@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 class ImageUpload extends StatefulWidget {
   final void Function(XFile? image)? onImageChanged;
 
-  const ImageUpload({Key? key, required this.onImageChanged}) : super(key: key);
+  const ImageUpload({super.key, required this.onImageChanged});
 
   @override
   State<ImageUpload> createState() => _ImageUploadState();
@@ -104,7 +104,7 @@ class _ImageUploadState extends State<ImageUpload> {
       final XFile? input =
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (input is XFile) {
-        Uint8List bytes = await input.readAsBytes();
+        final Uint8List bytes = await input.readAsBytes();
         setState(() => _image = Image.memory(bytes));
       }
       _onImageChanged?.call(input);

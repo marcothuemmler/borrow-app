@@ -9,6 +9,7 @@ import 'package:borrow_app/views/authentication/login/login.view.dart';
 import 'package:borrow_app/views/authentication/signup/signup.controller.dart';
 import 'package:borrow_app/views/authentication/signup/signup.view.dart';
 import 'package:borrow_app/views/chat/chat.controller.dart';
+import 'package:borrow_app/views/chat/chat.model.dart';
 import 'package:borrow_app/views/chat/chat.view.dart';
 import 'package:borrow_app/views/dashboard/dashboard.controller.dart';
 import 'package:borrow_app/views/dashboard/dashboard.model.dart';
@@ -22,7 +23,6 @@ import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
-import 'package:borrow_app/widgets/various_components/chat_bubble.widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -111,9 +111,13 @@ class Providers {
     ),
   );
 
-  final StateNotifierProviderFamily<ChatController, List<ChatBubble>, String>
-      chatControllerProvider =
-      StateNotifierProvider.family<ChatController, List<ChatBubble>, String>(
-    (ref, userId) => ChatControllerImplementation(userId: userId),
+  final AutoDisposeStateNotifierProviderFamily<ChatController, ChatModel,
+          String> chatControllerProvider =
+      AutoDisposeStateNotifierProvider.family<ChatController, ChatModel,
+          String>(
+    (ref, userId) => ChatControllerImplementation(
+      userId: userId,
+      chatService: ref.read(providers.backendServiceProvider),
+    ),
   );
 }

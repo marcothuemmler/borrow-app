@@ -38,7 +38,6 @@ class CreateGroupDialog extends StatelessWidget {
           key: _formKey,
           child: Flex(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             direction: isPortrait ? Axis.vertical : Axis.horizontal,
             children: <Widget>[
@@ -47,7 +46,6 @@ class CreateGroupDialog extends StatelessWidget {
                 child: ImageUpload(onImageChanged: onImageChanged),
               ),
               Flexible(
-                fit: FlexFit.loose,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

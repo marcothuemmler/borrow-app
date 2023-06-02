@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class ChatBubble extends StatelessWidget {
   final bool isOwnMessage;
-  final String message;
+  final String content;
 
   const ChatBubble({
     super.key,
     required this.isOwnMessage,
-    required this.message,
+    required this.content,
   });
 
   @override
@@ -41,7 +41,7 @@ class ChatBubble extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    message,
+                    content,
                     style: TextStyle(
                       color: isOwnMessage ? Colors.white : Colors.black,
                       fontSize: 16,

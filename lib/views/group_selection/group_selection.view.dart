@@ -75,10 +75,8 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                   : 400,
                               enlargeCenterPage: true,
                               onPageChanged: (val, _) {
-                                setState(() {
-                                  _currentIndex = val;
-                                  _carouselController.animateToPage(val);
-                                });
+                                setState(() => _currentIndex = val);
+                                _carouselController.animateToPage(val);
                               },
                             ),
                             itemCount: user.groups.length,
