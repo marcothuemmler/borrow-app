@@ -1,3 +1,4 @@
+import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/widgets/various_components/chat_bubble.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,11 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class ChatView extends ConsumerWidget {
   final String itemId;
   final String userId;
+  final textController = TextEditingController();
 
-  const ChatView({super.key, required this.itemId, required this.userId});
+  ChatView({super.key, required this.itemId, required this.userId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final controller =
+        ref.read(providers.chatControllerProvider(userId).notifier);
+    final model = ref.watch(providers.chatControllerProvider(userId));
     return Scaffold(
       appBar: AppBar(title: const Text("Title")),
       body: ColoredBox(
@@ -21,57 +26,57 @@ class ChatView extends ConsumerWidget {
             children: [
               ColoredBox(
                 color: Theme.of(context).scaffoldBackgroundColor,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.only(left: 20, top: 15, right: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: const [
-                      ChatBubble(isOwnMessage: true, message: "hallo"),
-                      ChatBubble(isOwnMessage: false, message: "hallo"),
-                      ChatBubble(
-                          isOwnMessage: false,
-                          message:
-                              "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."),
-                      ChatBubble(
-                        isOwnMessage: true,
-                        message: "Was letzte Preis?",
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          top: 15,
+                          right: 20,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: model,
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 16,
                     ),
-                    color: const Color.fromRGBO(240, 240, 240, 1),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Flexible(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              border: OutlineInputBorder(),
-                              fillColor: Colors.white,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 16,
+                      ),
+                      color: const Color.fromRGBO(240, 240, 240, 1),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: TextField(
+                              controller: textController,
+                              minLines: 1,
+                              maxLines: null,
+                              decoration: const InputDecoration(
+                                filled: true,
+                                border: OutlineInputBorder(),
+                                fillColor: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 10),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.send_outlined),
-                        )
-                      ],
+                          const SizedBox(width: 10),
+                          IconButton(
+                            onPressed: () {
+                              controller.sendMessage(
+                                message: textController.text,
+                              );
+                              textController.clear();
+                            },
+                            icon: const Icon(Icons.send_outlined),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -81,8 +86,8 @@ class ChatView extends ConsumerWidget {
   }
 }
 
-abstract class ChatController extends StateNotifier<int> {
+abstract class ChatController extends StateNotifier<List<ChatBubble>> {
   ChatController(super.state);
 
-  void sendMessage();
+  void sendMessage({required String message});
 }

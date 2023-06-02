@@ -8,6 +8,8 @@ import 'package:borrow_app/views/authentication/login/login.controller.dart';
 import 'package:borrow_app/views/authentication/login/login.view.dart';
 import 'package:borrow_app/views/authentication/signup/signup.controller.dart';
 import 'package:borrow_app/views/authentication/signup/signup.view.dart';
+import 'package:borrow_app/views/chat/chat.controller.dart';
+import 'package:borrow_app/views/chat/chat.view.dart';
 import 'package:borrow_app/views/dashboard/dashboard.controller.dart';
 import 'package:borrow_app/views/dashboard/dashboard.model.dart';
 import 'package:borrow_app/views/dashboard/dashboard_wrapper.view.dart';
@@ -20,6 +22,7 @@ import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
+import 'package:borrow_app/widgets/various_components/chat_bubble.widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -106,5 +109,11 @@ class Providers {
       itemDetailService: ref.read(providers.backendServiceProvider),
       router: ref.read(providers.routerProvider),
     ),
+  );
+
+  final StateNotifierProviderFamily<ChatController, List<ChatBubble>, String>
+      chatControllerProvider =
+      StateNotifierProvider.family<ChatController, List<ChatBubble>, String>(
+    (ref, userId) => ChatControllerImplementation(userId: userId),
   );
 }
