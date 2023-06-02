@@ -1,12 +1,9 @@
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../common/providers.dart';
-import '../../widgets/buttons/dotted_border_button.widget.dart';
+import 'package:borrow_app/common/providers.dart';
+import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
 
 class CategorySettingsView extends ConsumerWidget {
   final String groupId;
@@ -19,13 +16,38 @@ class CategorySettingsView extends ConsumerWidget {
       providers.categoriesListProvider(groupId).notifier,
     );
     final model = ref.watch(providers.categoriesListProvider(groupId));
-    // TODO: implement build
+
+    Future<bool?> _showNewCategoryDialog(CategorySettingsController controller) async {
+      return showDialog<bool>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return NewCategoryDialog(
+            nameValidator: null,
+            descriptionValidator: null,
+            setCategoryValidator: (String ) {  },
+            setName: controller.setNewCategoryName,
+            setDescription: controller.setNewCategoryDescription,
+          );
+        },
+      );
+    }
+
+    void onNewCategory() {
+      Future<bool?> res = _showNewCategoryDialog(controller);
+      res.then((value) => {
+        if(value is bool && value) {
+          controller.addCategory()
+        }
+      });
+    }
+
+
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (model.isNotEmpty)
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 20),
@@ -36,29 +58,13 @@ class CategorySettingsView extends ConsumerWidget {
                   return SettingsCardView(text: item.name, function: () {});
                 },
               ),
-            )
-          else
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Center(
-                    child: Text(
-                      "It's empty in here",
-                      style:
-                      TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  DottedBorderButton(
-                    title: "Create a new category",
-                    icon: const Icon(Icons.add),
-                    width: 200, onTap: () {  },
-                  ),
-                ],
-              ),
             ),
+          Center(
+            child: ElevatedButton(
+              onPressed: onNewCategory,
+              child: const Text("Neue Kategorie"),
+            ),
+          )
         ],
       ),
     );
@@ -69,4 +75,7 @@ class CategorySettingsView extends ConsumerWidget {
 abstract class CategorySettingsController extends StateNotifier<List<CategoryModel>> {
   CategorySettingsController(super.state);
   Future<void> loadCategories();
+  void setNewCategoryName(String name);
+  void setNewCategoryDescription(String description);
+  void addCategory();
 }

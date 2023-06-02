@@ -36,4 +36,25 @@ class CategorySettingsControllerImplementation extends CategorySettingsControlle
       throw Exception("Could not get group categories: $error");
     }
   }
+
+  @override
+  Future<void> addCategory() async {
+    CategoryModel model = CategoryModel(
+      name: newCategoryName,
+      description: newCategoryDescription == "" ? null : newCategoryDescription,
+      groupId: _groupId,
+    );
+    await _categorySettingsService.postCategory(model);
+    _init();
+  }
+
+  @override
+  void setNewCategoryDescription(String description) {
+    newCategoryDescription = description;
+  }
+
+  @override
+  void setNewCategoryName(String name) {
+    newCategoryName = name;
+  }
 }

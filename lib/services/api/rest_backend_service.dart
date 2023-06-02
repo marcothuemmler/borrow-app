@@ -161,7 +161,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     }
   }
   @override
-  Future<item_list_model.CategoryModel> postCategory (item_list_model.CategoryModel model) async {
+  Future<void> postCategory (item_list_model.CategoryModel model) async {
     try {
       final userID = (await _storageService.read(key: "user-id"))!;
       final modelDTO = item_list_model.CreateCategoryDTO(
@@ -169,7 +169,6 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
           description: model.description,
           groupId: model.groupId,);
       final response = await _client.post("/categories", data: modelDTO);
-      return model;
     } catch (error) {
       print(error.toString());
       throw Exception("Could not set group $error");
