@@ -28,7 +28,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
     final model = ref.watch(providers.loginControllerProvider);
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(),
         title: const Text("Log In"),
       ),
       body: Container(
@@ -39,7 +38,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
               children: [
                 TextFieldWidget(
                   text: 'Email',
@@ -94,7 +92,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
 }
 
 abstract class LoginController extends StateNotifier<LoginModel> {
-  LoginController(LoginModel model) : super(model);
+  LoginController(super.model);
 
   Future<void> login();
 

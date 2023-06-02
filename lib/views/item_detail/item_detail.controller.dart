@@ -1,18 +1,23 @@
+import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.service.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
 import 'package:dartz/dartz.dart';
+import 'package:go_router/go_router.dart';
 
 class ItemDetailControllerImplementation extends ItemDetailController {
   final String _itemId;
   final ItemDetailService _itemDetailService;
+  final GoRouter _router;
 
   ItemDetailControllerImplementation({
     ItemDetailModel? model,
     required String itemId,
     required ItemDetailService itemDetailService,
+    required GoRouter router,
   })  : _itemDetailService = itemDetailService,
         _itemId = itemId,
+        _router = router,
         super(
           model ??
               ItemDetailModel(
@@ -40,7 +45,11 @@ class ItemDetailControllerImplementation extends ItemDetailController {
 
   @override
   void contactOwner({required String ownerId}) {
-    // TODO: implement contactOwner
+    _router.pushNamed(
+      chatRoute.name,
+      pathParameters: {'userId': ownerId},
+      queryParameters: {"itemId": _itemId},
+    );
   }
 
   @override

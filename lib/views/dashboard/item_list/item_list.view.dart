@@ -24,7 +24,6 @@ class ItemListView extends ConsumerWidget {
     }
     return SafeArea(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (model.items.isNotEmpty)
@@ -79,7 +78,7 @@ class ItemListView extends ConsumerWidget {
 }
 
 abstract class ItemListController extends StateNotifier<ItemListModel> {
-  ItemListController(ItemListModel model) : super(model);
+  ItemListController(super.model);
 
   void navigateToItem({required String itemId});
 

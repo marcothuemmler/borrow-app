@@ -104,6 +104,7 @@ class Providers {
     (ref, itemId) => ItemDetailControllerImplementation(
       itemId: itemId,
       itemDetailService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
     ),
   );
 }

@@ -51,7 +51,7 @@ class ItemListControllerImplementation extends ItemListController {
   void navigateToItem({required String itemId}) {
     _router.pushNamed(
       itemDetailRoute.name,
-      pathParameters: {"itemId": itemId, "groupId": _groupId},
+      pathParameters: {"itemId": itemId},
     );
   }
 
