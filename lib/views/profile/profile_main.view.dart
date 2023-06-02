@@ -12,10 +12,6 @@ class ProfileMain extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef widgetRef) {
-    final List<String> items = ["Gruppe verwalten", "Meine Einstellungen"];
-    final List<void Function()> functions = [
-      () => {context.goNamed("groupSettings", pathParameters: {"groupId": groupId})},
-      () => {}];
     return MaterialApp(
       home: Scaffold(
         body: SafeArea(

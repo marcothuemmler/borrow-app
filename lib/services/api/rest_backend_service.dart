@@ -175,4 +175,23 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       throw Exception("Could not set group $error");
     }
   }
+
+  @override
+  Future<List<item_list_model.CategoryModel>> getCategories({
+    required String groupId,
+  }) async {
+    try {
+      final response = await _client.get(
+        "/categories/",
+        queryParameters: {
+          'join': ['group'],
+          'filter': ["group.id||\$eq||$groupId"]
+        },
+      );
+      //return item_list_model.CategoryModel.fromJson(response.data);
+      return List.from(response.data.map((data) => item_list_model.CategoryModel.fromJson(data)));
+    } catch (error) {
+      throw Exception("Could not get group categories: $error");
+    }
+  }
 }

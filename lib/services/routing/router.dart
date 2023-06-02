@@ -8,6 +8,7 @@ import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
 import "package:borrow_app/views/welcome/welcome.view.dart";
+import "package:borrow_app/views/profile/category_settings.view.dart";
 import "package:borrow_app/views/profile/group_settings.view.dart";
 import "package:borrow_app/views/profile/profile_main.view.dart";
 import "package:flutter/material.dart";
@@ -123,6 +124,12 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                         name: groupSettingsRoute.name,
                         path: groupSettingsRoute.path,
                         builder: (context, state) => GroupSettingsView(groupId: state.pathParameters['groupId']!,),
+                      ),
+                      GoRoute(
+                        parentNavigatorKey: _shellNavigatorKey,
+                        name: categorySettingsRoute.name,
+                        path: categorySettingsRoute.path,
+                        builder: (context, state) => CategorySettingsView(groupId: state.pathParameters['groupId']!,),
                       ),
                       GoRoute(
                         parentNavigatorKey: _rootNavigatorKey,

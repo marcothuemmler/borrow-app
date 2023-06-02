@@ -12,7 +12,8 @@ import 'package:borrow_app/views/dashboard/dashboard.controller.dart';
 import 'package:borrow_app/views/dashboard/dashboard.model.dart';
 import 'package:borrow_app/views/dashboard/dashboard_wrapper.view.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.controller.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import '../views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart' as item_list_model;
 import 'package:borrow_app/views/dashboard/item_list/item_list.view.dart';
 import 'package:borrow_app/views/group_selection/group_selection.controller.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
@@ -20,6 +21,8 @@ import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
+import 'package:borrow_app/views/profile/category_settings.controller.dart';
+import 'package:borrow_app/views/profile/category_settings.view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -104,6 +107,15 @@ class Providers {
     (ref, itemId) => ItemDetailControllerImplementation(
       itemId: itemId,
       itemDetailService: ref.read(providers.backendServiceProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<CategorySettingsController, List<item_list_model.CategoryModel>, String> categoriesListProvider =
+  AutoDisposeStateNotifierProvider.family<CategorySettingsController, List<item_list_model.CategoryModel>, String>(
+        (ref, groupId) => CategorySettingsControllerImplementation(
+      groupId: groupId,
+      categorySettingsService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
     ),
   );
 }
