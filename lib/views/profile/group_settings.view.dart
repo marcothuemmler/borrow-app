@@ -1,3 +1,4 @@
+import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
 import 'package:borrow_app/widgets/list_views/settings_list_view.widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +9,20 @@ class GroupSettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> items = ["Kategorien", "Gegenstände", "Balance"];
     return MaterialApp(
       home: Scaffold(
         body: SettingsListView(
-          itemList: items,
-          functions: [() => {}, () => {}, () => {}],
+          itemList: [
+            SettingsCardView(
+                text: "Kategorien",
+                function: () { },),
+            SettingsCardView(
+                text: "Gegenstände",
+                function: () { },),
+            SettingsCardView(
+                text: "Balance",
+                function: () { },),
+          ],
         ),
       ),
     );

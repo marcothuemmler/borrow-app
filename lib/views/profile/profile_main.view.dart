@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:borrow_app/widgets/list_views/settings_list_view.widget.dart';
 
+import '../../widgets/cards/settings_card.widget.dart';
+
 class ProfileMain extends ConsumerWidget {
   final String groupId;
   const ProfileMain({super.key, required this.groupId});
@@ -22,8 +24,14 @@ class ProfileMain extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SettingsListView(
-                    itemList: items,
-                    functions: functions,
+                    itemList: [
+                      SettingsCardView(
+                        text: "Gruppe verwalten",
+                        function: () {context.goNamed("groupSettings", pathParameters: {"groupId": groupId});},),
+                      SettingsCardView(
+                        text: "Meine Einstellungen",
+                        function: () {  },),
+                    ],
                   ),
                   const Spacer(),
                   Center(
