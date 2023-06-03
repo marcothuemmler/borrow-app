@@ -1,19 +1,19 @@
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
-import 'package:borrow_app/views/profile/category_settings.service.dart';
+import 'package:borrow_app/views/profile/categories_settings.service.dart';
 import 'package:dartz/dartz.dart';
 import 'package:go_router/go_router.dart';
-import 'package:borrow_app/views/profile/category_settings.view.dart';
+import 'package:borrow_app/views/profile/categories_settings.view.dart';
 
-class CategorySettingsControllerImplementation extends CategorySettingsController {
-  final CategorySettingsService _categorySettingsService;
+class CategoriesSettingsControllerImplementation extends CategoriesSettingsController {
+  final CategoriesSettingsService _categorySettingsService;
   final String _groupId;
 
   String newCategoryName = "";
   String newCategoryDescription = "";
 
-  CategorySettingsControllerImplementation({
+  CategoriesSettingsControllerImplementation({
     List<CategoryModel>? model,
-    required CategorySettingsService categorySettingsService,
+    required CategoriesSettingsService categorySettingsService,
     required String groupId,
     required GoRouter router,
   })

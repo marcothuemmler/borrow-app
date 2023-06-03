@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
 
-class CategorySettingsView extends ConsumerWidget {
+class CategoriesSettingsView extends ConsumerWidget {
   final String groupId;
-  const CategorySettingsView({
+  const CategoriesSettingsView({
     super.key, required this.groupId,});
 
   @override
@@ -17,7 +17,7 @@ class CategorySettingsView extends ConsumerWidget {
     );
     final model = ref.watch(providers.categoriesListProvider(groupId));
 
-    Future<bool?> _showNewCategoryDialog(CategorySettingsController controller) async {
+    Future<bool?> _showNewCategoryDialog(CategoriesSettingsController controller) async {
       return showDialog<bool>(
         context: context,
         barrierDismissible: false, // user must tap button!
@@ -41,7 +41,6 @@ class CategorySettingsView extends ConsumerWidget {
         }
       });
     }
-
 
     return SafeArea(
       child: Column(
@@ -72,8 +71,8 @@ class CategorySettingsView extends ConsumerWidget {
 }
 
 
-abstract class CategorySettingsController extends StateNotifier<List<CategoryModel>> {
-  CategorySettingsController(super.state);
+abstract class CategoriesSettingsController extends StateNotifier<List<CategoryModel>> {
+  CategoriesSettingsController(super.state);
   Future<void> loadCategories();
   void setNewCategoryName(String name);
   void setNewCategoryDescription(String description);

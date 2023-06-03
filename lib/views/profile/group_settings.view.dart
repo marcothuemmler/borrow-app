@@ -1,5 +1,5 @@
 import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
-import 'package:borrow_app/widgets/list_views/settings_list_view.widget.dart';
+import 'package:borrow_app/widgets/list_views/list_view.widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +13,7 @@ class GroupSettingsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef widgetRef) {
     return MaterialApp(
       home: Scaffold(
-        body: SettingsListView(
+        body: ListViewWidget(
           itemList: [
             SettingsCardView(
                 text: "Kategorien",

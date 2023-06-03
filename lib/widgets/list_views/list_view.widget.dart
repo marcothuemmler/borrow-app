@@ -2,9 +2,9 @@ import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SettingsListView extends StatelessWidget {
+class ListViewWidget extends StatelessWidget {
   final List<SettingsCardView> itemList;
-  const SettingsListView({super.key, required this.itemList});
+  const ListViewWidget({super.key, required this.itemList});
 
   @override
   Widget build(BuildContext context) {
