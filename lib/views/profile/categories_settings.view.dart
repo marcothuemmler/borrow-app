@@ -33,6 +33,15 @@ class CategoriesSettingsView extends ConsumerWidget {
       );
     }
 
+    if (model.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (model.hasError || model.items is! CategoryListModel) {
+      return const Center(child: Text("something went wrong"));
+    }
+
+    final list = model.items.categories;
+
     void onNewCategory() {
       Future<bool?> res = _showNewCategoryDialog(controller);
       res.then((value) => {
@@ -50,10 +59,10 @@ class CategoriesSettingsView extends ConsumerWidget {
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 20),
-                itemCount: model.length,
+                itemCount: list.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  final item = model[index];
+                  final item = list[index];
                   return SettingsCardView(text: item.name, function: () {});
                 },
               ),
@@ -71,7 +80,7 @@ class CategoriesSettingsView extends ConsumerWidget {
 }
 
 
-abstract class CategoriesSettingsController extends StateNotifier<List<CategoryModel>> {
+abstract class CategoriesSettingsController extends StateNotifier<CategoryListDetailModel> {
   CategoriesSettingsController(super.state);
   Future<void> loadCategories();
   void setNewCategoryName(String name);

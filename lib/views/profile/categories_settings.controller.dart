@@ -1,6 +1,5 @@
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/profile/categories_settings.service.dart';
-import 'package:dartz/dartz.dart';
 import 'package:go_router/go_router.dart';
 import 'package:borrow_app/views/profile/categories_settings.view.dart';
 
@@ -19,7 +18,7 @@ class CategoriesSettingsControllerImplementation extends CategoriesSettingsContr
   })
       : _categorySettingsService = categorySettingsService,
         _groupId = groupId,
-        super([CategoryModel(name: "")]) {
+        super(CategoryListDetailModel(isLoading: false, hasError: false, items: CategoryListModel(groupId: '', categories: []),)) {
     _init();
   }
 
@@ -29,11 +28,12 @@ class CategoriesSettingsControllerImplementation extends CategoriesSettingsContr
 
   @override
   Future<void> loadCategories() async {
+    state = state.copyWith(isLoading: true, hasError: false);
     try {
       final response = await _categorySettingsService.getCategories(groupId: _groupId);
-      state = response;
+      state = state.copyWith(isLoading: false, items: response);
     } catch (error) {
-      throw Exception("Could not get group categories: $error");
+      state = state.copyWith(hasError: true, isLoading: false);
     }
   }
 

@@ -11,21 +11,19 @@ class GroupSettingsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef widgetRef) {
-    return MaterialApp(
-      home: Scaffold(
-        body: ListViewWidget(
-          itemList: [
-            SettingsCardView(
-                text: "Kategorien",
-              function: () {context.goNamed("categorySettings", pathParameters: {"groupId": groupId});},),
-            SettingsCardView(
-                text: "Gegenstände",
+    return Scaffold(
+      body: ListViewWidget(
+        itemList: [
+          SettingsCardView(
+            text: "Kategorien",
+            function: () {context.goNamed("categorySettings", pathParameters: {"groupId": groupId});},),
+          SettingsCardView(
+            text: "Gegenstände",
+            function: () { },),
+          SettingsCardView(
+            text: "Balance",
                 function: () { },),
-            SettingsCardView(
-                text: "Balance",
-                function: () { },),
-          ],
-        ),
+        ],
       ),
     );
   }

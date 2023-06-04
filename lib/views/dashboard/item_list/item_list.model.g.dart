@@ -78,6 +78,21 @@ Map<String, dynamic> _$$_ItemsModelToJson(_$_ItemsModel instance) =>
       'owner': instance.owner,
     };
 
+_$_CategoryListModel _$$_CategoryListModelFromJson(Map<String, dynamic> json) =>
+    _$_CategoryListModel(
+      groupId: json['groupId'] as String?,
+      categories: (json['categories'] as List<dynamic>)
+          .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_CategoryListModelToJson(
+        _$_CategoryListModel instance) =>
+    <String, dynamic>{
+      'groupId': instance.groupId,
+      'categories': instance.categories,
+    };
+
 _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       id: json['id'] as String,
       username: json['username'] as String,

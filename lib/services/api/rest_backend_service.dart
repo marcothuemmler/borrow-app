@@ -176,19 +176,19 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<List<item_list_model.CategoryModel>> getCategories({
+  Future<item_list_model.CategoryListModel> getCategories({
     required String groupId,
   }) async {
     try {
       final response = await _client.get(
-        "/categories/",
+        "/groups/$groupId",
         queryParameters: {
-          'join': ['group'],
-          'filter': ["group.id||\$eq||$groupId"]
+          "fields": ['id'],
+          "join": ['categories']
         },
       );
       //return item_list_model.CategoryModel.fromJson(response.data);
-      return List.from(response.data.map((data) => item_list_model.CategoryModel.fromJson(data)));
+      return item_list_model.CategoryListModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get group categories: $error");
     }

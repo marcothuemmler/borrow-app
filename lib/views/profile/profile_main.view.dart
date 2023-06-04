@@ -12,34 +12,32 @@ class ProfileMain extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef widgetRef) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListViewWidget(
-                    itemList: [
-                      SettingsCardView(
-                        text: "Gruppe verwalten",
-                        function: () {context.goNamed("groupSettings", pathParameters: {"groupId": groupId});},),
-                      SettingsCardView(
-                        text: "Meine Einstellungen",
-                        function: () {  },),
-                    ],
-                  ),
-                  const Spacer(),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () => {},
-                      child: const Text("Logout"),
-                    ),
-                  )
-                ],
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListViewWidget(
+              itemList: [
+                SettingsCardView(
+                  text: "Gruppe verwalten",
+                  function: () {context.goNamed("groupSettings", pathParameters: {"groupId": groupId});},),
+                SettingsCardView(
+                  text: "Meine Einstellungen",
+                  function: () {  },),
+              ],
+            ),
+            const Spacer(),
+            Center(
+              child: ElevatedButton(
+                onPressed: () => {},
+                child: const Text("Logout"),
               ),
-          ),
+            )
+          ],
         ),
+      ),
     );
   }
 }

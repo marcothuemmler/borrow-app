@@ -110,8 +110,8 @@ class Providers {
     ),
   );
 
-  final AutoDisposeStateNotifierProviderFamily<CategoriesSettingsController, List<item_list_model.CategoryModel>, String> categoriesListProvider =
-  AutoDisposeStateNotifierProvider.family<CategoriesSettingsController, List<item_list_model.CategoryModel>, String>(
+  final AutoDisposeStateNotifierProviderFamily<CategoriesSettingsController, CategoryListDetailModel, String> categoriesListProvider =
+  AutoDisposeStateNotifierProvider.family<CategoriesSettingsController, CategoryListDetailModel, String>(
         (ref, groupId) => CategoriesSettingsControllerImplementation(
       groupId: groupId,
       categorySettingsService: ref.read(providers.backendServiceProvider),
