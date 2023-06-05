@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
+import 'package:borrow_app/widgets/list_views/list_view.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:borrow_app/widgets/list_views/list_view.widget.dart';
-
-import '../../widgets/cards/settings_card.widget.dart';
 
 class ProfileMain extends ConsumerWidget {
   final String groupId;
+
   const ProfileMain({super.key, required this.groupId});
 
   @override
-  Widget build(BuildContext context, WidgetRef widgetRef) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -22,16 +21,23 @@ class ProfileMain extends ConsumerWidget {
               itemList: [
                 SettingsCardView(
                   text: "Gruppe verwalten",
-                  function: () {context.goNamed("groupSettings", pathParameters: {"groupId": groupId});},),
+                  function: () {
+                    context.goNamed(
+                      "groupSettings",
+                      pathParameters: {"groupId": groupId},
+                    );
+                  },
+                ),
                 SettingsCardView(
                   text: "Meine Einstellungen",
-                  function: () {  },),
+                  function: () {},
+                ),
               ],
             ),
             const Spacer(),
             Center(
               child: ElevatedButton(
-                onPressed: () => {},
+                onPressed: () {},
                 child: const Text("Logout"),
               ),
             )

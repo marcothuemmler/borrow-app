@@ -1,36 +1,40 @@
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/profile/categories_settings.service.dart';
-import 'package:go_router/go_router.dart';
 import 'package:borrow_app/views/profile/categories_settings.view.dart';
 
-class CategoriesSettingsControllerImplementation extends CategoriesSettingsController {
+class CategoriesSettingsControllerImplementation
+    extends CategoriesSettingsController {
   final CategoriesSettingsService _categorySettingsService;
   final String _groupId;
 
-  String newCategoryName = "";
-  String newCategoryDescription = "";
-
   CategoriesSettingsControllerImplementation({
-    List<CategoryModel>? model,
+    CategoryListDetailModel? model,
     required CategoriesSettingsService categorySettingsService,
     required String groupId,
-    required GoRouter router,
-  })
-      : _categorySettingsService = categorySettingsService,
+  })  : _categorySettingsService = categorySettingsService,
         _groupId = groupId,
-        super(CategoryListDetailModel(isLoading: false, hasError: false, items: CategoryListModel(groupId: '', categories: []),)) {
+        super(
+          model ??
+              CategoryListDetailModel(
+                isLoading: false,
+                hasError: false,
+                items: null,
+                newCategory: null,
+              ),
+        ) {
     _init();
   }
 
-  void _init() async {
-    await loadCategories();
+  void _init() {
+    loadCategories();
   }
 
   @override
   Future<void> loadCategories() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await _categorySettingsService.getCategories(groupId: _groupId);
+      final response =
+          await _categorySettingsService.getCategories(groupId: _groupId);
       state = state.copyWith(isLoading: false, items: response);
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
@@ -39,22 +43,38 @@ class CategoriesSettingsControllerImplementation extends CategoriesSettingsContr
 
   @override
   Future<void> addCategory() async {
-    CategoryModel model = CategoryModel(
-      name: newCategoryName,
-      description: newCategoryDescription == "" ? null : newCategoryDescription,
+    await _categorySettingsService.postCategory(
       groupId: _groupId,
+      model: state.newCategory!,
     );
-    await _categorySettingsService.postCategory(model);
-    _init();
+    loadCategories();
   }
 
   @override
   void setNewCategoryDescription(String description) {
-    newCategoryDescription = description;
+    state = state.copyWith.newCategory!(description: description);
   }
 
   @override
   void setNewCategoryName(String name) {
-    newCategoryName = name;
+    state = state.copyWith.newCategory!(name: name);
+  }
+
+  @override
+  void createNewCategory() {
+    state = state.copyWith(
+      newCategory: CategoryModel(name: "", description: null),
+    );
+  }
+
+  @override
+  String? validateFormField({required String fieldName}) {
+    switch (fieldName) {
+      case "categoryName":
+        return state.newCategory!.name.length < 3
+            ? "Gruppennamen müssen mindestens 3 Zeichen beinhalten"
+            : null;
+    }
+    return null;
   }
 }

@@ -9,9 +9,6 @@ class ItemListControllerImplementation extends ItemListController {
   final String _groupId;
   final GoRouter _router;
 
-  String newCategoryName = "";
-  String newCategoryDescription = "";
-
   ItemListControllerImplementation({
     ItemListModel? model,
     required ItemListService itemListService,
@@ -24,6 +21,7 @@ class ItemListControllerImplementation extends ItemListController {
           model ??
               ItemListModel(
                 selectedCategory: null,
+                newCategory: null,
                 hasError: false,
                 isLoading: false,
                 group: null,
@@ -81,22 +79,38 @@ class ItemListControllerImplementation extends ItemListController {
 
   @override
   void setNewCategoryDescription(String description) {
-    newCategoryDescription = description;
+    state = state.copyWith.newCategory!(description: description);
   }
 
   @override
   void setNewCategoryName(String name) {
-    newCategoryName = name;
+    state = state.copyWith.newCategory!(name: name);
   }
 
   @override
   Future<void> addCategory() async {
-    CategoryModel model = CategoryModel(
-        name: newCategoryName,
-        description: newCategoryDescription == "" ? null : newCategoryDescription,
-        groupId: _groupId,
+    await _itemListService.postCategory(
+      groupId: _groupId,
+      model: state.newCategory!,
     );
-    await _itemListService.postCategory(model);
     _init();
+  }
+
+  @override
+  void createNewCategory() {
+    state = state.copyWith(
+      newCategory: CategoryModel(name: "", description: null),
+    );
+  }
+
+  @override
+  String? validateFormField({required String fieldName}) {
+    switch (fieldName) {
+      case "categoryName":
+        return state.newCategory!.name.length < 3
+            ? "Gruppennamen müssen mindestens 3 Zeichen beinhalten"
+            : null;
+    }
+    return null;
   }
 }

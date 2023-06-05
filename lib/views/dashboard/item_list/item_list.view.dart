@@ -11,39 +11,12 @@ class ItemListView extends ConsumerWidget {
 
   const ItemListView({super.key, required this.groupId});
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.read(
       providers.itemListControllerProvider(groupId).notifier,
     );
     final model = ref.watch(providers.itemListControllerProvider(groupId));
-
-    Future<bool?> _showNewCategoryDialog(ItemListController controller) async {
-      return showDialog<bool>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-          return NewCategoryDialog(
-            nameValidator: null,
-            descriptionValidator: null,
-            setCategoryValidator: (String ) {  },
-            setName: controller.setNewCategoryName,
-            setDescription: controller.setNewCategoryDescription,
-          );
-        },
-      );
-    }
-
-    void onNewCategory() {
-      Future<bool?> res = _showNewCategoryDialog(controller);
-      res.then((value) => {
-        if(value is bool && value) {
-          controller.addCategory()
-        }
-      });
-    }
-
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -87,7 +60,7 @@ class ItemListView extends ConsumerWidget {
                   DottedBorderButton(
                     title: "Create a new category",
                     icon: const Icon(Icons.add),
-                    onTap: onNewCategory,
+                    onTap: () => _onNewCategory(controller, context),
                     width: 200,
                   ),
                   const SizedBox(height: 10),
@@ -102,6 +75,34 @@ class ItemListView extends ConsumerWidget {
             ),
         ],
       ),
+    );
+  }
+
+  Future<void> _onNewCategory(
+    ItemListController controller,
+    BuildContext context,
+  ) async {
+    bool? value = await _showNewCategoryDialog(controller, context);
+    if (value ?? false) {
+      controller.addCategory();
+    }
+  }
+
+  Future<bool?> _showNewCategoryDialog(
+    ItemListController controller,
+    BuildContext context,
+  ) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return NewCategoryDialog(
+          nameValidator: (_) =>
+              controller.validateFormField(fieldName: "categoryName"),
+          setName: controller.setNewCategoryName,
+          setDescription: controller.setNewCategoryDescription,
+          createCategoryCallback: controller.createNewCategory,
+        );
+      },
     );
   }
 }
@@ -119,4 +120,8 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
   void createItem();
 
   void addCategory();
+
+  void createNewCategory();
+
+  String? validateFormField({required String fieldName});
 }

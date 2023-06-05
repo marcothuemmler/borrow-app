@@ -12,8 +12,7 @@ import 'package:borrow_app/views/dashboard/dashboard.controller.dart';
 import 'package:borrow_app/views/dashboard/dashboard.model.dart';
 import 'package:borrow_app/views/dashboard/dashboard_wrapper.view.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.controller.dart';
-import '../views/dashboard/item_list/item_list.model.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart' as item_list_model;
+import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.view.dart';
 import 'package:borrow_app/views/group_selection/group_selection.controller.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
@@ -110,12 +109,13 @@ class Providers {
     ),
   );
 
-  final AutoDisposeStateNotifierProviderFamily<CategoriesSettingsController, CategoryListDetailModel, String> categoriesListProvider =
-  AutoDisposeStateNotifierProvider.family<CategoriesSettingsController, CategoryListDetailModel, String>(
-        (ref, groupId) => CategoriesSettingsControllerImplementation(
+  final AutoDisposeStateNotifierProviderFamily<CategoriesSettingsController,
+          CategoryListDetailModel, String> categoriesListProvider =
+      AutoDisposeStateNotifierProvider.family<CategoriesSettingsController,
+          CategoryListDetailModel, String>(
+    (ref, groupId) => CategoriesSettingsControllerImplementation(
       groupId: groupId,
       categorySettingsService: ref.read(providers.backendServiceProvider),
-      router: ref.read(providers.routerProvider),
     ),
   );
 }

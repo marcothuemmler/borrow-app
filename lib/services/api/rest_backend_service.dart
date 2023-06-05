@@ -160,17 +160,20 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       throw Exception("Failed to upload project image: $error");
     }
   }
+
   @override
-  Future<void> postCategory (item_list_model.CategoryModel model) async {
+  Future<void> postCategory({
+    required String groupId,
+    required item_list_model.CategoryModel model,
+  }) async {
     try {
-      final userID = (await _storageService.read(key: "user-id"))!;
       final modelDTO = item_list_model.CreateCategoryDTO(
-          name: model.name,
-          description: model.description,
-          groupId: model.groupId,);
-      final response = await _client.post("/categories", data: modelDTO);
+        name: model.name,
+        description: model.description,
+        groupId: groupId,
+      );
+      await _client.post("/categories", data: modelDTO);
     } catch (error) {
-      print(error.toString());
       throw Exception("Could not set group $error");
     }
   }

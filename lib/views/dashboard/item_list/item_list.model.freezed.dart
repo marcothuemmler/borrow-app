@@ -20,6 +20,7 @@ mixin _$ItemListModel {
   bool get hasError => throw _privateConstructorUsedError;
   CategoryModel? get selectedCategory => throw _privateConstructorUsedError;
   GroupModel? get group => throw _privateConstructorUsedError;
+  CategoryModel? get newCategory => throw _privateConstructorUsedError;
   List<ItemModel> get items => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -38,10 +39,12 @@ abstract class $ItemListModelCopyWith<$Res> {
       bool hasError,
       CategoryModel? selectedCategory,
       GroupModel? group,
+      CategoryModel? newCategory,
       List<ItemModel> items});
 
   $CategoryModelCopyWith<$Res>? get selectedCategory;
   $GroupModelCopyWith<$Res>? get group;
+  $CategoryModelCopyWith<$Res>? get newCategory;
 }
 
 /// @nodoc
@@ -61,6 +64,7 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
     Object? hasError = null,
     Object? selectedCategory = freezed,
     Object? group = freezed,
+    Object? newCategory = freezed,
     Object? items = null,
   }) {
     return _then(_value.copyWith(
@@ -80,6 +84,10 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as GroupModel?,
+      newCategory: freezed == newCategory
+          ? _value.newCategory
+          : newCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -110,6 +118,18 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
       return _then(_value.copyWith(group: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get newCategory {
+    if (_value.newCategory == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.newCategory!, (value) {
+      return _then(_value.copyWith(newCategory: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -125,12 +145,15 @@ abstract class _$$_ItemListModelCopyWith<$Res>
       bool hasError,
       CategoryModel? selectedCategory,
       GroupModel? group,
+      CategoryModel? newCategory,
       List<ItemModel> items});
 
   @override
   $CategoryModelCopyWith<$Res>? get selectedCategory;
   @override
   $GroupModelCopyWith<$Res>? get group;
+  @override
+  $CategoryModelCopyWith<$Res>? get newCategory;
 }
 
 /// @nodoc
@@ -148,6 +171,7 @@ class __$$_ItemListModelCopyWithImpl<$Res>
     Object? hasError = null,
     Object? selectedCategory = freezed,
     Object? group = freezed,
+    Object? newCategory = freezed,
     Object? items = null,
   }) {
     return _then(_$_ItemListModel(
@@ -167,6 +191,10 @@ class __$$_ItemListModelCopyWithImpl<$Res>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as GroupModel?,
+      newCategory: freezed == newCategory
+          ? _value.newCategory
+          : newCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -183,6 +211,7 @@ class _$_ItemListModel implements _ItemListModel {
       required this.hasError,
       required this.selectedCategory,
       required this.group,
+      required this.newCategory,
       required final List<ItemModel> items})
       : _items = items;
 
@@ -194,6 +223,8 @@ class _$_ItemListModel implements _ItemListModel {
   final CategoryModel? selectedCategory;
   @override
   final GroupModel? group;
+  @override
+  final CategoryModel? newCategory;
   final List<ItemModel> _items;
   @override
   List<ItemModel> get items {
@@ -204,7 +235,7 @@ class _$_ItemListModel implements _ItemListModel {
 
   @override
   String toString() {
-    return 'ItemListModel(isLoading: $isLoading, hasError: $hasError, selectedCategory: $selectedCategory, group: $group, items: $items)';
+    return 'ItemListModel(isLoading: $isLoading, hasError: $hasError, selectedCategory: $selectedCategory, group: $group, newCategory: $newCategory, items: $items)';
   }
 
   @override
@@ -219,12 +250,20 @@ class _$_ItemListModel implements _ItemListModel {
             (identical(other.selectedCategory, selectedCategory) ||
                 other.selectedCategory == selectedCategory) &&
             (identical(other.group, group) || other.group == group) &&
+            (identical(other.newCategory, newCategory) ||
+                other.newCategory == newCategory) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, hasError,
-      selectedCategory, group, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      hasError,
+      selectedCategory,
+      group,
+      newCategory,
+      const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
@@ -239,6 +278,7 @@ abstract class _ItemListModel implements ItemListModel {
       required final bool hasError,
       required final CategoryModel? selectedCategory,
       required final GroupModel? group,
+      required final CategoryModel? newCategory,
       required final List<ItemModel> items}) = _$_ItemListModel;
 
   @override
@@ -249,6 +289,8 @@ abstract class _ItemListModel implements ItemListModel {
   CategoryModel? get selectedCategory;
   @override
   GroupModel? get group;
+  @override
+  CategoryModel? get newCategory;
   @override
   List<ItemModel> get items;
   @override
@@ -1276,7 +1318,8 @@ abstract class _CategoryListModel implements CategoryListModel {
 mixin _$CategoryListDetailModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-  CategoryListModel get items => throw _privateConstructorUsedError;
+  CategoryListModel? get items => throw _privateConstructorUsedError;
+  CategoryModel? get newCategory => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CategoryListDetailModelCopyWith<CategoryListDetailModel> get copyWith =>
@@ -1289,9 +1332,14 @@ abstract class $CategoryListDetailModelCopyWith<$Res> {
           $Res Function(CategoryListDetailModel) then) =
       _$CategoryListDetailModelCopyWithImpl<$Res, CategoryListDetailModel>;
   @useResult
-  $Res call({bool isLoading, bool hasError, CategoryListModel items});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      CategoryListModel? items,
+      CategoryModel? newCategory});
 
-  $CategoryListModelCopyWith<$Res> get items;
+  $CategoryListModelCopyWith<$Res>? get items;
+  $CategoryModelCopyWith<$Res>? get newCategory;
 }
 
 /// @nodoc
@@ -1310,7 +1358,8 @@ class _$CategoryListDetailModelCopyWithImpl<$Res,
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? items = null,
+    Object? items = freezed,
+    Object? newCategory = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -1321,18 +1370,38 @@ class _$CategoryListDetailModelCopyWithImpl<$Res,
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      items: null == items
+      items: freezed == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
-              as CategoryListModel,
+              as CategoryListModel?,
+      newCategory: freezed == newCategory
+          ? _value.newCategory
+          : newCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $CategoryListModelCopyWith<$Res> get items {
-    return $CategoryListModelCopyWith<$Res>(_value.items, (value) {
+  $CategoryListModelCopyWith<$Res>? get items {
+    if (_value.items == null) {
+      return null;
+    }
+
+    return $CategoryListModelCopyWith<$Res>(_value.items!, (value) {
       return _then(_value.copyWith(items: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get newCategory {
+    if (_value.newCategory == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.newCategory!, (value) {
+      return _then(_value.copyWith(newCategory: value) as $Val);
     });
   }
 }
@@ -1345,10 +1414,16 @@ abstract class _$$_CategoryListDetailModelCopyWith<$Res>
       __$$_CategoryListDetailModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, bool hasError, CategoryListModel items});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      CategoryListModel? items,
+      CategoryModel? newCategory});
 
   @override
-  $CategoryListModelCopyWith<$Res> get items;
+  $CategoryListModelCopyWith<$Res>? get items;
+  @override
+  $CategoryModelCopyWith<$Res>? get newCategory;
 }
 
 /// @nodoc
@@ -1365,7 +1440,8 @@ class __$$_CategoryListDetailModelCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? items = null,
+    Object? items = freezed,
+    Object? newCategory = freezed,
   }) {
     return _then(_$_CategoryListDetailModel(
       isLoading: null == isLoading
@@ -1376,10 +1452,14 @@ class __$$_CategoryListDetailModelCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      items: null == items
+      items: freezed == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
-              as CategoryListModel,
+              as CategoryListModel?,
+      newCategory: freezed == newCategory
+          ? _value.newCategory
+          : newCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ));
   }
 }
@@ -1388,18 +1468,23 @@ class __$$_CategoryListDetailModelCopyWithImpl<$Res>
 
 class _$_CategoryListDetailModel implements _CategoryListDetailModel {
   _$_CategoryListDetailModel(
-      {required this.isLoading, required this.hasError, required this.items});
+      {required this.isLoading,
+      required this.hasError,
+      required this.items,
+      required this.newCategory});
 
   @override
   final bool isLoading;
   @override
   final bool hasError;
   @override
-  final CategoryListModel items;
+  final CategoryListModel? items;
+  @override
+  final CategoryModel? newCategory;
 
   @override
   String toString() {
-    return 'CategoryListDetailModel(isLoading: $isLoading, hasError: $hasError, items: $items)';
+    return 'CategoryListDetailModel(isLoading: $isLoading, hasError: $hasError, items: $items, newCategory: $newCategory)';
   }
 
   @override
@@ -1411,11 +1496,14 @@ class _$_CategoryListDetailModel implements _CategoryListDetailModel {
                 other.isLoading == isLoading) &&
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
-            (identical(other.items, items) || other.items == items));
+            (identical(other.items, items) || other.items == items) &&
+            (identical(other.newCategory, newCategory) ||
+                other.newCategory == newCategory));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, hasError, items);
+  int get hashCode =>
+      Object.hash(runtimeType, isLoading, hasError, items, newCategory);
 
   @JsonKey(ignore: true)
   @override
@@ -1430,14 +1518,17 @@ abstract class _CategoryListDetailModel implements CategoryListDetailModel {
   factory _CategoryListDetailModel(
       {required final bool isLoading,
       required final bool hasError,
-      required final CategoryListModel items}) = _$_CategoryListDetailModel;
+      required final CategoryListModel? items,
+      required final CategoryModel? newCategory}) = _$_CategoryListDetailModel;
 
   @override
   bool get isLoading;
   @override
   bool get hasError;
   @override
-  CategoryListModel get items;
+  CategoryListModel? get items;
+  @override
+  CategoryModel? get newCategory;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryListDetailModelCopyWith<_$_CategoryListDetailModel>

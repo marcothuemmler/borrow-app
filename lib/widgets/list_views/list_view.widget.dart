@@ -1,5 +1,4 @@
 import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ListViewWidget extends StatelessWidget {

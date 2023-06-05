@@ -1,30 +1,35 @@
-import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
+import 'package:flutter/material.dart';
 
 class NewCategoryDialog extends StatelessWidget {
-  const NewCategoryDialog({
+  NewCategoryDialog({
     super.key,
     this.nameValidator,
-    required this.setCategoryValidator,
-    required descriptionValidator,
     required this.setName,
     required this.setDescription,
+    required this.createCategoryCallback,
   });
 
   final String? Function(String?)? nameValidator;
-  final Function(String) setCategoryValidator;
   final Function(String) setName;
   final Function(String) setDescription;
+  final void Function() createCategoryCallback;
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    setDescription("");
-    setName("");
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => createCategoryCallback());
     return AlertDialog(
-      // <-- SEE HERE
-      title: const Text('Neue Gruppe'),
+      actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      title: const Text('Neue Kategorie'),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -38,7 +43,7 @@ class NewCategoryDialog extends StatelessWidget {
               ),
               TextFieldWidget(
                 text: "Beschreibung",
-                validator: nameValidator,
+                validator: null,
                 onChanged: setDescription,
                 autocorrect: false,
               ),
@@ -47,22 +52,38 @@ class NewCategoryDialog extends StatelessWidget {
         ),
       ),
       actions: <Widget>[
-        TextButton(
-          child: const Text('Einfügen'),
-          onPressed: () {
-            _formKey.currentState!.save();
-            if (_formKey.currentState!.validate()) {
-              Navigator.of(context).pop(true);
-            }
-          },
-        ),
-        TextButton(
-          child: const Text('Abbrechen'),
-          onPressed: () {
-            Navigator.of(context).pop(false);
-          },
+        FocusTraversalGroup(
+          policy: _ReversedTraversalPolicy(),
+          child: Row(
+            children: [
+              TextButton(
+                child: const Text('Abbrechen'),
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+              ElevatedButton(
+                child: const Text('Einfügen'),
+                onPressed: () {
+                  _formKey.currentState!.save();
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.of(context).pop(true);
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );
+  }
+}
+
+class _ReversedTraversalPolicy extends FocusTraversalPolicy
+    with DirectionalFocusTraversalPolicyMixin {
+  @override
+  Iterable<FocusNode> sortDescendants(
+    Iterable<FocusNode> descendants,
+    FocusNode currentNode,
+  ) {
+    return descendants.toList().reversed;
   }
 }

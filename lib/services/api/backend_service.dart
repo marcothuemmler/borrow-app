@@ -5,4 +5,9 @@ import 'package:borrow_app/views/item_detail/item_detail.service.dart';
 import 'package:borrow_app/views/profile/categories_settings.service.dart';
 
 abstract class BackendServiceAggregator
-    implements AuthService, ItemListService, CategoriesSettingsService, GroupSelectionService, ItemDetailService {}
+    implements
+        AuthService,
+        ItemListService,
+        CategoriesSettingsService,
+        GroupSelectionService,
+        ItemDetailService {}
