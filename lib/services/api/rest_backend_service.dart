@@ -163,6 +163,42 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
+  Future<void> postCategory({
+    required String groupId,
+    required item_list_model.CategoryModel model,
+  }) async {
+    try {
+      final modelDTO = item_list_model.CreateCategoryDTO(
+        name: model.name,
+        description: model.description,
+        groupId: groupId,
+      );
+      await _client.post("/categories", data: modelDTO);
+    } catch (error) {
+      throw Exception("Could not set group $error");
+    }
+  }
+
+  @override
+  Future<item_list_model.CategoryListModel> getCategories({
+    required String groupId,
+  }) async {
+    try {
+      final response = await _client.get(
+        "/groups/$groupId",
+        queryParameters: {
+          "fields": ['id'],
+          "join": ['categories']
+        },
+      );
+      //return item_list_model.CategoryModel.fromJson(response.data);
+      return item_list_model.CategoryListModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception("Could not get group categories: $error");
+    }
+  }
+
+  @override
   Future<List<MessageModel>> loadMessages({required String userId}) async {
     final userId = await _storageService.read(key: "user-id");
     final messages = [

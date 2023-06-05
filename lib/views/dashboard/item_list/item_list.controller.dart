@@ -21,6 +21,7 @@ class ItemListControllerImplementation extends ItemListController {
           model ??
               ItemListModel(
                 selectedCategory: null,
+                newCategory: null,
                 hasError: false,
                 isLoading: false,
                 group: null,
@@ -72,12 +73,44 @@ class ItemListControllerImplementation extends ItemListController {
   }
 
   @override
-  void createCategory() {
-    // TODO: implement createCategory
+  void createItem() {
+    // TODO: implement createItem
   }
 
   @override
-  void createItem() {
-    // TODO: implement createItem
+  void setNewCategoryDescription(String description) {
+    state = state.copyWith.newCategory!(description: description);
+  }
+
+  @override
+  void setNewCategoryName(String name) {
+    state = state.copyWith.newCategory!(name: name);
+  }
+
+  @override
+  Future<void> addCategory() async {
+    await _itemListService.postCategory(
+      groupId: _groupId,
+      model: state.newCategory!,
+    );
+    _init();
+  }
+
+  @override
+  void createNewCategory() {
+    state = state.copyWith(
+      newCategory: CategoryModel(name: ""),
+    );
+  }
+
+  @override
+  String? validateFormField({required String fieldName}) {
+    switch (fieldName) {
+      case "categoryName":
+        return state.newCategory!.name.length < 3
+            ? "Gruppennamen müssen mindestens 3 Zeichen beinhalten"
+            : null;
+    }
+    return null;
   }
 }

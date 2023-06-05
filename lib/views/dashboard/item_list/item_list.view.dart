@@ -2,6 +2,7 @@ import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
+import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -58,7 +59,7 @@ class ItemListView extends ConsumerWidget {
                   DottedBorderButton(
                     title: "Create a new category",
                     icon: const Icon(Icons.add),
-                    onTap: controller.createCategory,
+                    onTap: () => _onNewCategory(controller, context),
                     width: 200,
                   ),
                   const SizedBox(height: 10),
@@ -75,6 +76,34 @@ class ItemListView extends ConsumerWidget {
       ),
     );
   }
+
+  Future<void> _onNewCategory(
+    ItemListController controller,
+    BuildContext context,
+  ) async {
+    final bool? value = await _showNewCategoryDialog(controller, context);
+    if (value ?? false) {
+      controller.addCategory();
+    }
+  }
+
+  Future<bool?> _showNewCategoryDialog(
+    ItemListController controller,
+    BuildContext context,
+  ) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return NewCategoryDialog(
+          nameValidator: (_) =>
+              controller.validateFormField(fieldName: "categoryName"),
+          setName: controller.setNewCategoryName,
+          setDescription: controller.setNewCategoryDescription,
+          createCategoryCallback: controller.createNewCategory,
+        );
+      },
+    );
+  }
 }
 
 abstract class ItemListController extends StateNotifier<ItemListModel> {
@@ -84,7 +113,14 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
 
   void selectCategory(CategoryModel? category);
 
-  void createCategory();
+  void setNewCategoryName(String name);
+  void setNewCategoryDescription(String description);
 
   void createItem();
+
+  void addCategory();
+
+  void createNewCategory();
+
+  String? validateFormField({required String fieldName});
 }
