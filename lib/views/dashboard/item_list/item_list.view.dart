@@ -1,13 +1,13 @@
+import 'package:borrow_app/common/mixins/DialogMixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/profile/categories_settings.view.dart';
 import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
-import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ItemListView extends ConsumerWidget {
+class ItemListView extends ConsumerWidget with CategoryDialogMixin {
   final String groupId;
 
   const ItemListView({super.key, required this.groupId});
@@ -89,28 +89,10 @@ class ItemListView extends ConsumerWidget {
     CategoriesSettingsController controller,
     BuildContext context,
   ) async {
-    final bool? value = await _showNewCategoryDialog(controller, context);
+    final bool? value = await showNewCategoryDialog(controller, context);
     if (value ?? false) {
       controller.addCategory();
     }
-  }
-
-  Future<bool?> _showNewCategoryDialog(
-    CategoriesSettingsController controller,
-    BuildContext context,
-  ) async {
-    return showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return NewCategoryDialog(
-          nameValidator: (_) =>
-              controller.validateFormField(fieldName: "categoryName"),
-          setName: controller.setNewCategoryName,
-          setDescription: controller.setNewCategoryDescription,
-          createCategoryCallback: controller.createNewCategory,
-        );
-      },
-    );
   }
 }
 

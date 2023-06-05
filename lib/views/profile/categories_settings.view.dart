@@ -1,11 +1,11 @@
+import 'package:borrow_app/common/mixins/DialogMixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/profile/category_settings.model.dart';
 import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
-import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CategoriesSettingsView extends ConsumerWidget {
+class CategoriesSettingsView extends ConsumerWidget with CategoryDialogMixin {
   final String groupId;
 
   const CategoriesSettingsView({
@@ -57,31 +57,13 @@ class CategoriesSettingsView extends ConsumerWidget {
     BuildContext context,
     CategoriesSettingsController controller,
   ) async {
-    final bool? value = await _showNewCategoryDialog(
-      context,
+    final bool? value = await showNewCategoryDialog(
       controller,
+      context,
     );
     if (value ?? false) {
       controller.addCategory();
     }
-  }
-
-  Future<bool?> _showNewCategoryDialog(
-    BuildContext context,
-    CategoriesSettingsController controller,
-  ) async {
-    return showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return NewCategoryDialog(
-          nameValidator: (_) =>
-              controller.validateFormField(fieldName: "categoryName"),
-          setName: controller.setNewCategoryName,
-          setDescription: controller.setNewCategoryDescription,
-          createCategoryCallback: controller.createNewCategory,
-        );
-      },
-    );
   }
 }
 
