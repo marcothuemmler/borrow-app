@@ -19,6 +19,7 @@ class SignupView extends ConsumerStatefulWidget {
 class _SignupViewState extends ConsumerState<SignupView> {
   bool _obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
+
   void _toggleObscurePassword() {
     setState(() {
       _obscurePassword = !_obscurePassword;
@@ -30,10 +31,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
     final controller = ref.read(providers.signupControllerProvider.notifier);
     final model = ref.watch(providers.signupControllerProvider);
     return Scaffold(
-      appBar: AppBar(
-        leading: const BackButton(),
-        title: const Text("Register"),
-      ),
+      appBar: AppBar(title: const Text("Register")),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Form(
@@ -41,7 +39,6 @@ class _SignupViewState extends ConsumerState<SignupView> {
           child: AutofillGroup(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
               children: [
                 TextFieldWidget(
                   keyboardType: TextInputType.emailAddress,
@@ -110,7 +107,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
 }
 
 abstract class SignupController extends StateNotifier<SignupModel> {
-  SignupController(SignupModel model) : super(model);
+  SignupController(super.model);
 
   Future<bool> signup();
 

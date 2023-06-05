@@ -8,6 +8,9 @@ import 'package:borrow_app/views/authentication/login/login.controller.dart';
 import 'package:borrow_app/views/authentication/login/login.view.dart';
 import 'package:borrow_app/views/authentication/signup/signup.controller.dart';
 import 'package:borrow_app/views/authentication/signup/signup.view.dart';
+import 'package:borrow_app/views/chat/chat.controller.dart';
+import 'package:borrow_app/views/chat/chat.model.dart';
+import 'package:borrow_app/views/chat/chat.view.dart';
 import 'package:borrow_app/views/dashboard/dashboard.controller.dart';
 import 'package:borrow_app/views/dashboard/dashboard.model.dart';
 import 'package:borrow_app/views/dashboard/dashboard_wrapper.view.dart';
@@ -107,6 +110,17 @@ class Providers {
     (ref, itemId) => ItemDetailControllerImplementation(
       itemId: itemId,
       itemDetailService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<ChatController, ChatModel,
+          String> chatControllerProvider =
+      AutoDisposeStateNotifierProvider.family<ChatController, ChatModel,
+          String>(
+    (ref, userId) => ChatControllerImplementation(
+      userId: userId,
+      chatService: ref.read(providers.backendServiceProvider),
     ),
   );
 

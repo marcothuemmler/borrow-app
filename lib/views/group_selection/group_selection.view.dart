@@ -35,15 +35,12 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Groups"),
-        leading: const BackButton(),
         actions: [
           if (!isPortrait)
             Row(
               children: [
                 TextButton(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                  ),
+                  style: TextButton.styleFrom(padding: EdgeInsets.zero),
                   onPressed: () async {
                     controller.addGroup(
                       confirmed: await _showAlertDialog(controller),
@@ -65,7 +62,6 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                   (user) => SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(height: isPortrait ? 70 : 10),
                         if (user.groups.isNotEmpty)
@@ -79,10 +75,8 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                   : 400,
                               enlargeCenterPage: true,
                               onPageChanged: (val, _) {
-                                setState(() {
-                                  _currentIndex = val;
-                                  _carouselController.animateToPage(val);
-                                });
+                                setState(() => _currentIndex = val);
+                                _carouselController.animateToPage(val);
                               },
                             ),
                             itemCount: user.groups.length,
@@ -163,7 +157,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
 
 abstract class GroupSelectionController
     extends StateNotifier<GroupSelectionModel> {
-  GroupSelectionController(GroupSelectionModel model) : super(model);
+  GroupSelectionController(super.model);
 
   void addGroup({required bool? confirmed});
 
