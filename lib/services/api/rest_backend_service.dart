@@ -1,6 +1,7 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
+import 'package:borrow_app/views/chat/chat.model.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
@@ -130,7 +131,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<void> putGroupImage({
+  Future<void> postGroupImage({
     required String groupId,
     required XFile? groupImage,
   }) async {
@@ -199,5 +200,38 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     } catch (error) {
       throw Exception("Could not get group categories: $error");
     }
+  }
+
+  @override
+  Future<List<MessageModel>> loadMessages({required String userId}) async {
+    final userId = await _storageService.read(key: "user-id");
+    final messages = [
+      {"senderId": "$userId", "recipientId": "", "content": "Hi"},
+      {"senderId": "", "recipientId": "$userId", "content": "Hallo"},
+    ];
+    // TODO: load messages from backend
+    return List<MessageModel>.from(
+      messages.map((json) {
+        final MessageModel messageModel = MessageModel.fromJson(json);
+        return messageModel.copyWith(
+          isOwnMessage: messageModel.senderId == userId,
+        );
+      }),
+    );
+  }
+
+  @override
+  Future<MessageModel> sendMessage({
+    required String message,
+    required String recipientId,
+  }) async {
+    final String? senderId = await _storageService.read(key: "user-id");
+    // TODO: proper backend call
+    return MessageModel(
+      senderId: senderId!,
+      recipientId: recipientId,
+      content: message,
+      isOwnMessage: true,
+    );
   }
 }

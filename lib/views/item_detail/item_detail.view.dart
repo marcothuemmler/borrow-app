@@ -17,24 +17,23 @@ class ItemDetailView extends ConsumerWidget {
     final model = ref.watch(providers.itemDetailControllerProvider(itemId));
     if (model.isLoading) {
       return Scaffold(
-        appBar: AppBar(leading: const BackButton()),
+        appBar: AppBar(),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
     if (model.hasError) {
       return Scaffold(
-        appBar: AppBar(leading: const BackButton()),
+        appBar: AppBar(),
         body: const Center(child: Text("Something went wrong")),
       );
     }
     return model.item.fold(
       () => Scaffold(
-        appBar: AppBar(leading: const BackButton()),
+        appBar: AppBar(),
         body: const Center(child: Text("Something went wrong")),
       ),
       (item) => Scaffold(
         appBar: AppBar(
-          leading: const BackButton(),
           title: Text(item.name),
         ),
         body: SafeArea(
@@ -48,7 +47,6 @@ class ItemDetailView extends ConsumerWidget {
                       constraints: const BoxConstraints(maxWidth: 600),
                       padding: const EdgeInsets.all(30),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
@@ -83,7 +81,6 @@ class ItemDetailView extends ConsumerWidget {
                           ),
                           const SizedBox(height: 20),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               const SizedBox(width: 5),
                               const CircleAvatar(
@@ -149,7 +146,7 @@ class ItemDetailView extends ConsumerWidget {
                                 ),
                               ),
                               const SizedBox(height: 40),
-                              Container(
+                              DecoratedBox(
                                 decoration: const BoxDecoration(
                                   color: Color.fromARGB(255, 230, 230, 230),
                                   borderRadius: BorderRadius.all(
@@ -195,7 +192,7 @@ class ItemDetailView extends ConsumerWidget {
 }
 
 abstract class ItemDetailController extends StateNotifier<ItemDetailModel> {
-  ItemDetailController(ItemDetailModel model) : super(model);
+  ItemDetailController(super.model);
 
   void contactOwner({required String ownerId});
 

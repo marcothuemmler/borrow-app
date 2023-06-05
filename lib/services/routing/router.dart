@@ -2,6 +2,7 @@ import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/services/routing/routes.dart";
 import "package:borrow_app/views/authentication/login/login.view.dart";
 import "package:borrow_app/views/authentication/signup/signup.view.dart";
+import "package:borrow_app/views/chat/chat.view.dart";
 import "package:borrow_app/views/dashboard/dashboard_wrapper.view.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
@@ -35,7 +36,6 @@ final routerProviderDef = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     refreshListenable: storageService,
-    debugLogDiagnostics: false,
     redirect: (context, state) async {
       final isLoggedIn = await storageService.containsKey(key: "refreshToken");
       final isLoginIn = state.matchedLocation == "/login";
@@ -137,35 +137,59 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                           groupId: state.pathParameters['groupId']!,
                         ),
                       ),
-                      GoRoute(
-                        parentNavigatorKey: _rootNavigatorKey,
-                        name: itemDetailRoute.name,
-                        path: itemDetailRoute.path,
-                        pageBuilder: (context, state) {
-                          final String itemId = state.pathParameters['itemId']!;
-                          return CustomTransitionPage(
-                            barrierColor: Colors.black26,
-                            child: ItemDetailView(itemId: itemId),
-                            transitionsBuilder: (
-                              BuildContext context,
-                              Animation<double> animation,
-                              Animation<double> secondaryAnimation,
-                              Widget child,
-                            ) {
-                              return ScaleTransition(
-                                scale: animation,
-                                child: child,
-                              );
-                            },
-                          );
-                        },
-                      )
                     ],
                   ),
                 ],
               ),
             ],
           ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: chatRoute.name,
+            path: chatRoute.path,
+            pageBuilder: (context, state) {
+              final String? userId = state.pathParameters['userId'];
+              final String? itemId = state.queryParameters['itemId'];
+              if (userId is! String || itemId is! String) {
+                return _errorPage(state: state, error: "No ID provided");
+              }
+              return MaterialPage(
+                child: ChatView(
+                  itemId: itemId,
+                  userId: userId,
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: itemDetailRoute.name,
+            path: itemDetailRoute.path,
+            pageBuilder: (context, state) {
+              final String? itemId = state.pathParameters['itemId'];
+              if (itemId is! String) {
+                return _errorPage(
+                  state: state,
+                  error: "No ID provided",
+                );
+              }
+              return CustomTransitionPage(
+                barrierColor: Colors.black26,
+                child: ItemDetailView(itemId: itemId),
+                transitionsBuilder: (
+                  BuildContext context,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  Widget child,
+                ) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  );
+                },
+              );
+            },
+          )
         ],
       ),
     ],

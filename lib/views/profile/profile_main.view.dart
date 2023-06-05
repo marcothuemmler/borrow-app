@@ -14,7 +14,6 @@ class ProfileMain extends ConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListViewWidget(

@@ -28,7 +28,6 @@ class PasswordFieldWidget extends StatelessWidget {
           keyboardType: TextInputType.visiblePassword,
           textInputAction: TextInputAction.next,
           autofillHints: const [AutofillHints.password],
-          maxLines: 1,
           autocorrect: false,
           validator: validator,
           decoration: InputDecoration(

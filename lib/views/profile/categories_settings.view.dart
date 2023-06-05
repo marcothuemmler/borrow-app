@@ -29,7 +29,6 @@ class CategoriesSettingsView extends ConsumerWidget {
     final categories = model.items!.categories;
     return SafeArea(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(

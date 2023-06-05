@@ -36,7 +36,6 @@ class TextFieldWidget extends StatelessWidget {
             textInputAction: TextInputAction.next,
             autofillHints: autofillHints,
             autocorrect: autocorrect,
-            maxLines: 1,
             validator: validator,
             decoration: const InputDecoration(border: OutlineInputBorder()),
             onChanged: onChanged,

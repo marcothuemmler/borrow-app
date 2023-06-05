@@ -33,7 +33,7 @@ class DropdownWidget<T> extends StatelessWidget {
             borderRadius: BorderRadius.circular(7),
             hint: hint,
             value: value,
-            items: [...items.map((item) => mapFunction(item))],
+            items: [...items.map(mapFunction)],
             onChanged: onChanged,
           ),
         ),

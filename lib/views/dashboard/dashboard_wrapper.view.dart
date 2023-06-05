@@ -31,7 +31,6 @@ class DashboardWrapperView extends ConsumerWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -73,7 +72,7 @@ class DashboardWrapperView extends ConsumerWidget {
 }
 
 abstract class DashboardController extends StateNotifier<DashboardModel> {
-  DashboardController(DashboardModel model) : super(model);
+  DashboardController(super.model);
 
   void setCurrentIndex(int index);
 }
