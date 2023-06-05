@@ -12,7 +12,7 @@ _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       groups: (json['groups'] as List<dynamic>?)
               ?.map((e) => GroupModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
-          const [],
+          const <GroupModel>[],
     );
 
 Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>
@@ -59,7 +59,7 @@ _$_InvitationModel _$$_InvitationModelFromJson(Map<String, dynamic> json) =>
       groupId: json['groupId'] as String,
       emails:
           (json['emails'] as List<dynamic>?)?.map((e) => e as String).toSet() ??
-              const {},
+              const <String>{},
     );
 
 Map<String, dynamic> _$$_InvitationModelToJson(_$_InvitationModel instance) =>

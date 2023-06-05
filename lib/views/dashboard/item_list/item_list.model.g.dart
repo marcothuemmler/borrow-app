@@ -33,6 +33,7 @@ _$_CategoryModel _$$_CategoryModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
+      groupId: json['groupId'] as String?,
     );
 
 Map<String, dynamic> _$$_CategoryModelToJson(_$_CategoryModel instance) =>
@@ -40,6 +41,22 @@ Map<String, dynamic> _$$_CategoryModelToJson(_$_CategoryModel instance) =>
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
+      'groupId': instance.groupId,
+    };
+
+_$_CreateCategoryDTO _$$_CreateCategoryDTOFromJson(Map<String, dynamic> json) =>
+    _$_CreateCategoryDTO(
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      groupId: json['groupId'] as String?,
+    );
+
+Map<String, dynamic> _$$_CreateCategoryDTOToJson(
+        _$_CreateCategoryDTO instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'description': instance.description,
+      'groupId': instance.groupId,
     };
 
 _$_ItemsModel _$$_ItemsModelFromJson(Map<String, dynamic> json) =>
@@ -59,6 +76,21 @@ Map<String, dynamic> _$$_ItemsModelToJson(_$_ItemsModel instance) =>
       'description': instance.description,
       'category': instance.category,
       'owner': instance.owner,
+    };
+
+_$_CategoryListModel _$$_CategoryListModelFromJson(Map<String, dynamic> json) =>
+    _$_CategoryListModel(
+      groupId: json['groupId'] as String?,
+      categories: (json['categories'] as List<dynamic>)
+          .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_CategoryListModelToJson(
+        _$_CategoryListModel instance) =>
+    <String, dynamic>{
+      'groupId': instance.groupId,
+      'categories': instance.categories,
     };
 
 _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(

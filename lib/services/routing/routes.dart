@@ -12,3 +12,5 @@ const groupSelectionRoute = RouteDefinition(name: "group-selection", path: "grou
 const groupRoute = RouteDefinition(name: "group", path: "group/:groupId");
 const itemDetailRoute = RouteDefinition(name: "item", path: "item/:itemId");
 const profileRoute = RouteDefinition(name: "profile", path: "profile");
+const groupSettingsRoute = RouteDefinition(name: "groupSettings", path: "groupSettings");
+const categorySettingsRoute = RouteDefinition(name: "categorySettings", path: "categorySettings");

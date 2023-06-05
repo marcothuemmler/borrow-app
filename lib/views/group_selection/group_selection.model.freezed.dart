@@ -380,7 +380,7 @@ class _$_UserModel implements _UserModel {
   _$_UserModel(
       {required this.id,
       required this.username,
-      final List<GroupModel> groups = const []})
+      final List<GroupModel> groups = const <GroupModel>[]})
       : _groups = groups;
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
@@ -948,7 +948,7 @@ class __$$_InvitationModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_InvitationModel implements _InvitationModel {
   _$_InvitationModel(
-      {required this.groupId, final Set<String> emails = const {}})
+      {required this.groupId, final Set<String> emails = const <String>{}})
       : _emails = emails;
 
   factory _$_InvitationModel.fromJson(Map<String, dynamic> json) =>

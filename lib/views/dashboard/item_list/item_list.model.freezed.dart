@@ -20,6 +20,7 @@ mixin _$ItemListModel {
   bool get hasError => throw _privateConstructorUsedError;
   CategoryModel? get selectedCategory => throw _privateConstructorUsedError;
   GroupModel? get group => throw _privateConstructorUsedError;
+  CategoryModel? get newCategory => throw _privateConstructorUsedError;
   List<ItemModel> get items => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -38,10 +39,12 @@ abstract class $ItemListModelCopyWith<$Res> {
       bool hasError,
       CategoryModel? selectedCategory,
       GroupModel? group,
+      CategoryModel? newCategory,
       List<ItemModel> items});
 
   $CategoryModelCopyWith<$Res>? get selectedCategory;
   $GroupModelCopyWith<$Res>? get group;
+  $CategoryModelCopyWith<$Res>? get newCategory;
 }
 
 /// @nodoc
@@ -61,6 +64,7 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
     Object? hasError = null,
     Object? selectedCategory = freezed,
     Object? group = freezed,
+    Object? newCategory = freezed,
     Object? items = null,
   }) {
     return _then(_value.copyWith(
@@ -80,6 +84,10 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as GroupModel?,
+      newCategory: freezed == newCategory
+          ? _value.newCategory
+          : newCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -110,6 +118,18 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
       return _then(_value.copyWith(group: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get newCategory {
+    if (_value.newCategory == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.newCategory!, (value) {
+      return _then(_value.copyWith(newCategory: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -125,12 +145,15 @@ abstract class _$$_ItemListModelCopyWith<$Res>
       bool hasError,
       CategoryModel? selectedCategory,
       GroupModel? group,
+      CategoryModel? newCategory,
       List<ItemModel> items});
 
   @override
   $CategoryModelCopyWith<$Res>? get selectedCategory;
   @override
   $GroupModelCopyWith<$Res>? get group;
+  @override
+  $CategoryModelCopyWith<$Res>? get newCategory;
 }
 
 /// @nodoc
@@ -148,6 +171,7 @@ class __$$_ItemListModelCopyWithImpl<$Res>
     Object? hasError = null,
     Object? selectedCategory = freezed,
     Object? group = freezed,
+    Object? newCategory = freezed,
     Object? items = null,
   }) {
     return _then(_$_ItemListModel(
@@ -167,6 +191,10 @@ class __$$_ItemListModelCopyWithImpl<$Res>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as GroupModel?,
+      newCategory: freezed == newCategory
+          ? _value.newCategory
+          : newCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -183,6 +211,7 @@ class _$_ItemListModel implements _ItemListModel {
       required this.hasError,
       required this.selectedCategory,
       required this.group,
+      required this.newCategory,
       required final List<ItemModel> items})
       : _items = items;
 
@@ -194,6 +223,8 @@ class _$_ItemListModel implements _ItemListModel {
   final CategoryModel? selectedCategory;
   @override
   final GroupModel? group;
+  @override
+  final CategoryModel? newCategory;
   final List<ItemModel> _items;
   @override
   List<ItemModel> get items {
@@ -204,7 +235,7 @@ class _$_ItemListModel implements _ItemListModel {
 
   @override
   String toString() {
-    return 'ItemListModel(isLoading: $isLoading, hasError: $hasError, selectedCategory: $selectedCategory, group: $group, items: $items)';
+    return 'ItemListModel(isLoading: $isLoading, hasError: $hasError, selectedCategory: $selectedCategory, group: $group, newCategory: $newCategory, items: $items)';
   }
 
   @override
@@ -219,12 +250,20 @@ class _$_ItemListModel implements _ItemListModel {
             (identical(other.selectedCategory, selectedCategory) ||
                 other.selectedCategory == selectedCategory) &&
             (identical(other.group, group) || other.group == group) &&
+            (identical(other.newCategory, newCategory) ||
+                other.newCategory == newCategory) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, hasError,
-      selectedCategory, group, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      hasError,
+      selectedCategory,
+      group,
+      newCategory,
+      const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
@@ -239,6 +278,7 @@ abstract class _ItemListModel implements ItemListModel {
       required final bool hasError,
       required final CategoryModel? selectedCategory,
       required final GroupModel? group,
+      required final CategoryModel? newCategory,
       required final List<ItemModel> items}) = _$_ItemListModel;
 
   @override
@@ -249,6 +289,8 @@ abstract class _ItemListModel implements ItemListModel {
   CategoryModel? get selectedCategory;
   @override
   GroupModel? get group;
+  @override
+  CategoryModel? get newCategory;
   @override
   List<ItemModel> get items;
   @override
@@ -507,6 +549,7 @@ mixin _$CategoryModel {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  String? get groupId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -520,7 +563,7 @@ abstract class $CategoryModelCopyWith<$Res> {
           CategoryModel value, $Res Function(CategoryModel) then) =
       _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
   @useResult
-  $Res call({String? id, String name, String? description});
+  $Res call({String? id, String name, String? description, String? groupId});
 }
 
 /// @nodoc
@@ -539,6 +582,7 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
     Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? groupId = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -553,6 +597,10 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -565,7 +613,7 @@ abstract class _$$_CategoryModelCopyWith<$Res>
       __$$_CategoryModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String name, String? description});
+  $Res call({String? id, String name, String? description, String? groupId});
 }
 
 /// @nodoc
@@ -582,6 +630,7 @@ class __$$_CategoryModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? groupId = freezed,
   }) {
     return _then(_$_CategoryModel(
       id: freezed == id
@@ -596,6 +645,10 @@ class __$$_CategoryModelCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -603,7 +656,8 @@ class __$$_CategoryModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CategoryModel implements _CategoryModel {
-  _$_CategoryModel({this.id, required this.name, this.description});
+  _$_CategoryModel(
+      {this.id, required this.name, this.description, this.groupId});
 
   factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$$_CategoryModelFromJson(json);
@@ -614,10 +668,12 @@ class _$_CategoryModel implements _CategoryModel {
   final String name;
   @override
   final String? description;
+  @override
+  final String? groupId;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, description: $description)';
+    return 'CategoryModel(id: $id, name: $name, description: $description, groupId: $groupId)';
   }
 
   @override
@@ -628,12 +684,13 @@ class _$_CategoryModel implements _CategoryModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, description);
+  int get hashCode => Object.hash(runtimeType, id, name, description, groupId);
 
   @JsonKey(ignore: true)
   @override
@@ -653,7 +710,8 @@ abstract class _CategoryModel implements CategoryModel {
   factory _CategoryModel(
       {final String? id,
       required final String name,
-      final String? description}) = _$_CategoryModel;
+      final String? description,
+      final String? groupId}) = _$_CategoryModel;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$_CategoryModel.fromJson;
@@ -665,8 +723,184 @@ abstract class _CategoryModel implements CategoryModel {
   @override
   String? get description;
   @override
+  String? get groupId;
+  @override
   @JsonKey(ignore: true)
   _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+CreateCategoryDTO _$CreateCategoryDTOFromJson(Map<String, dynamic> json) {
+  return _CreateCategoryDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CreateCategoryDTO {
+  String get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get groupId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CreateCategoryDTOCopyWith<CreateCategoryDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateCategoryDTOCopyWith<$Res> {
+  factory $CreateCategoryDTOCopyWith(
+          CreateCategoryDTO value, $Res Function(CreateCategoryDTO) then) =
+      _$CreateCategoryDTOCopyWithImpl<$Res, CreateCategoryDTO>;
+  @useResult
+  $Res call({String name, String? description, String? groupId});
+}
+
+/// @nodoc
+class _$CreateCategoryDTOCopyWithImpl<$Res, $Val extends CreateCategoryDTO>
+    implements $CreateCategoryDTOCopyWith<$Res> {
+  _$CreateCategoryDTOCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? description = freezed,
+    Object? groupId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateCategoryDTOCopyWith<$Res>
+    implements $CreateCategoryDTOCopyWith<$Res> {
+  factory _$$_CreateCategoryDTOCopyWith(_$_CreateCategoryDTO value,
+          $Res Function(_$_CreateCategoryDTO) then) =
+      __$$_CreateCategoryDTOCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, String? description, String? groupId});
+}
+
+/// @nodoc
+class __$$_CreateCategoryDTOCopyWithImpl<$Res>
+    extends _$CreateCategoryDTOCopyWithImpl<$Res, _$_CreateCategoryDTO>
+    implements _$$_CreateCategoryDTOCopyWith<$Res> {
+  __$$_CreateCategoryDTOCopyWithImpl(
+      _$_CreateCategoryDTO _value, $Res Function(_$_CreateCategoryDTO) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? description = freezed,
+    Object? groupId = freezed,
+  }) {
+    return _then(_$_CreateCategoryDTO(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_CreateCategoryDTO implements _CreateCategoryDTO {
+  _$_CreateCategoryDTO(
+      {required this.name, required this.description, required this.groupId});
+
+  factory _$_CreateCategoryDTO.fromJson(Map<String, dynamic> json) =>
+      _$$_CreateCategoryDTOFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String? description;
+  @override
+  final String? groupId;
+
+  @override
+  String toString() {
+    return 'CreateCategoryDTO(name: $name, description: $description, groupId: $groupId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreateCategoryDTO &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, description, groupId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateCategoryDTOCopyWith<_$_CreateCategoryDTO> get copyWith =>
+      __$$_CreateCategoryDTOCopyWithImpl<_$_CreateCategoryDTO>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CreateCategoryDTOToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CreateCategoryDTO implements CreateCategoryDTO {
+  factory _CreateCategoryDTO(
+      {required final String name,
+      required final String? description,
+      required final String? groupId}) = _$_CreateCategoryDTO;
+
+  factory _CreateCategoryDTO.fromJson(Map<String, dynamic> json) =
+      _$_CreateCategoryDTO.fromJson;
+
+  @override
+  String get name;
+  @override
+  String? get description;
+  @override
+  String? get groupId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateCategoryDTOCopyWith<_$_CreateCategoryDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -914,6 +1148,391 @@ abstract class _ItemsModel implements ItemModel {
   @JsonKey(ignore: true)
   _$$_ItemsModelCopyWith<_$_ItemsModel> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+CategoryListModel _$CategoryListModelFromJson(Map<String, dynamic> json) {
+  return _CategoryListModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CategoryListModel {
+  String? get groupId => throw _privateConstructorUsedError;
+  List<CategoryModel> get categories => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CategoryListModelCopyWith<CategoryListModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CategoryListModelCopyWith<$Res> {
+  factory $CategoryListModelCopyWith(
+          CategoryListModel value, $Res Function(CategoryListModel) then) =
+      _$CategoryListModelCopyWithImpl<$Res, CategoryListModel>;
+  @useResult
+  $Res call({String? groupId, List<CategoryModel> categories});
+}
+
+/// @nodoc
+class _$CategoryListModelCopyWithImpl<$Res, $Val extends CategoryListModel>
+    implements $CategoryListModelCopyWith<$Res> {
+  _$CategoryListModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? groupId = freezed,
+    Object? categories = null,
+  }) {
+    return _then(_value.copyWith(
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categories: null == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryModel>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CategoryListModelCopyWith<$Res>
+    implements $CategoryListModelCopyWith<$Res> {
+  factory _$$_CategoryListModelCopyWith(_$_CategoryListModel value,
+          $Res Function(_$_CategoryListModel) then) =
+      __$$_CategoryListModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? groupId, List<CategoryModel> categories});
+}
+
+/// @nodoc
+class __$$_CategoryListModelCopyWithImpl<$Res>
+    extends _$CategoryListModelCopyWithImpl<$Res, _$_CategoryListModel>
+    implements _$$_CategoryListModelCopyWith<$Res> {
+  __$$_CategoryListModelCopyWithImpl(
+      _$_CategoryListModel _value, $Res Function(_$_CategoryListModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? groupId = freezed,
+    Object? categories = null,
+  }) {
+    return _then(_$_CategoryListModel(
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<CategoryModel>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_CategoryListModel implements _CategoryListModel {
+  _$_CategoryListModel(
+      {required this.groupId, required final List<CategoryModel> categories})
+      : _categories = categories;
+
+  factory _$_CategoryListModel.fromJson(Map<String, dynamic> json) =>
+      _$$_CategoryListModelFromJson(json);
+
+  @override
+  final String? groupId;
+  final List<CategoryModel> _categories;
+  @override
+  List<CategoryModel> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
+  @override
+  String toString() {
+    return 'CategoryListModel(groupId: $groupId, categories: $categories)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CategoryListModel &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, groupId, const DeepCollectionEquality().hash(_categories));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CategoryListModelCopyWith<_$_CategoryListModel> get copyWith =>
+      __$$_CategoryListModelCopyWithImpl<_$_CategoryListModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CategoryListModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CategoryListModel implements CategoryListModel {
+  factory _CategoryListModel(
+      {required final String? groupId,
+      required final List<CategoryModel> categories}) = _$_CategoryListModel;
+
+  factory _CategoryListModel.fromJson(Map<String, dynamic> json) =
+      _$_CategoryListModel.fromJson;
+
+  @override
+  String? get groupId;
+  @override
+  List<CategoryModel> get categories;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CategoryListModelCopyWith<_$_CategoryListModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$CategoryListDetailModel {
+  bool get isLoading => throw _privateConstructorUsedError;
+  bool get hasError => throw _privateConstructorUsedError;
+  CategoryListModel? get items => throw _privateConstructorUsedError;
+  CategoryModel? get newCategory => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CategoryListDetailModelCopyWith<CategoryListDetailModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CategoryListDetailModelCopyWith<$Res> {
+  factory $CategoryListDetailModelCopyWith(CategoryListDetailModel value,
+          $Res Function(CategoryListDetailModel) then) =
+      _$CategoryListDetailModelCopyWithImpl<$Res, CategoryListDetailModel>;
+  @useResult
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      CategoryListModel? items,
+      CategoryModel? newCategory});
+
+  $CategoryListModelCopyWith<$Res>? get items;
+  $CategoryModelCopyWith<$Res>? get newCategory;
+}
+
+/// @nodoc
+class _$CategoryListDetailModelCopyWithImpl<$Res,
+        $Val extends CategoryListDetailModel>
+    implements $CategoryListDetailModelCopyWith<$Res> {
+  _$CategoryListDetailModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isLoading = null,
+    Object? hasError = null,
+    Object? items = freezed,
+    Object? newCategory = freezed,
+  }) {
+    return _then(_value.copyWith(
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      items: freezed == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as CategoryListModel?,
+      newCategory: freezed == newCategory
+          ? _value.newCategory
+          : newCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryListModelCopyWith<$Res>? get items {
+    if (_value.items == null) {
+      return null;
+    }
+
+    return $CategoryListModelCopyWith<$Res>(_value.items!, (value) {
+      return _then(_value.copyWith(items: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get newCategory {
+    if (_value.newCategory == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.newCategory!, (value) {
+      return _then(_value.copyWith(newCategory: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_CategoryListDetailModelCopyWith<$Res>
+    implements $CategoryListDetailModelCopyWith<$Res> {
+  factory _$$_CategoryListDetailModelCopyWith(_$_CategoryListDetailModel value,
+          $Res Function(_$_CategoryListDetailModel) then) =
+      __$$_CategoryListDetailModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      CategoryListModel? items,
+      CategoryModel? newCategory});
+
+  @override
+  $CategoryListModelCopyWith<$Res>? get items;
+  @override
+  $CategoryModelCopyWith<$Res>? get newCategory;
+}
+
+/// @nodoc
+class __$$_CategoryListDetailModelCopyWithImpl<$Res>
+    extends _$CategoryListDetailModelCopyWithImpl<$Res,
+        _$_CategoryListDetailModel>
+    implements _$$_CategoryListDetailModelCopyWith<$Res> {
+  __$$_CategoryListDetailModelCopyWithImpl(_$_CategoryListDetailModel _value,
+      $Res Function(_$_CategoryListDetailModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isLoading = null,
+    Object? hasError = null,
+    Object? items = freezed,
+    Object? newCategory = freezed,
+  }) {
+    return _then(_$_CategoryListDetailModel(
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      items: freezed == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as CategoryListModel?,
+      newCategory: freezed == newCategory
+          ? _value.newCategory
+          : newCategory // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CategoryListDetailModel implements _CategoryListDetailModel {
+  _$_CategoryListDetailModel(
+      {required this.isLoading,
+      required this.hasError,
+      required this.items,
+      required this.newCategory});
+
+  @override
+  final bool isLoading;
+  @override
+  final bool hasError;
+  @override
+  final CategoryListModel? items;
+  @override
+  final CategoryModel? newCategory;
+
+  @override
+  String toString() {
+    return 'CategoryListDetailModel(isLoading: $isLoading, hasError: $hasError, items: $items, newCategory: $newCategory)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CategoryListDetailModel &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.hasError, hasError) ||
+                other.hasError == hasError) &&
+            (identical(other.items, items) || other.items == items) &&
+            (identical(other.newCategory, newCategory) ||
+                other.newCategory == newCategory));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, isLoading, hasError, items, newCategory);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CategoryListDetailModelCopyWith<_$_CategoryListDetailModel>
+      get copyWith =>
+          __$$_CategoryListDetailModelCopyWithImpl<_$_CategoryListDetailModel>(
+              this, _$identity);
+}
+
+abstract class _CategoryListDetailModel implements CategoryListDetailModel {
+  factory _CategoryListDetailModel(
+      {required final bool isLoading,
+      required final bool hasError,
+      required final CategoryListModel? items,
+      required final CategoryModel? newCategory}) = _$_CategoryListDetailModel;
+
+  @override
+  bool get isLoading;
+  @override
+  bool get hasError;
+  @override
+  CategoryListModel? get items;
+  @override
+  CategoryModel? get newCategory;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CategoryListDetailModelCopyWith<_$_CategoryListDetailModel>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 UserModel _$UserModelFromJson(Map<String, dynamic> json) {
