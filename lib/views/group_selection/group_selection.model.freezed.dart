@@ -18,8 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GroupSelectionModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-  Option<UserModel> get user => throw _privateConstructorUsedError;
-  GroupModel? get newGroup => throw _privateConstructorUsedError;
+  Option<GroupSelectionUserModel> get user =>
+      throw _privateConstructorUsedError;
+  GroupSelectionGroupModel? get newGroup => throw _privateConstructorUsedError;
   XFile? get groupImage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,11 +37,11 @@ abstract class $GroupSelectionModelCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool hasError,
-      Option<UserModel> user,
-      GroupModel? newGroup,
+      Option<GroupSelectionUserModel> user,
+      GroupSelectionGroupModel? newGroup,
       XFile? groupImage});
 
-  $GroupModelCopyWith<$Res>? get newGroup;
+  $GroupSelectionGroupModelCopyWith<$Res>? get newGroup;
 }
 
 /// @nodoc
@@ -74,11 +75,11 @@ class _$GroupSelectionModelCopyWithImpl<$Res, $Val extends GroupSelectionModel>
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as Option<UserModel>,
+              as Option<GroupSelectionUserModel>,
       newGroup: freezed == newGroup
           ? _value.newGroup
           : newGroup // ignore: cast_nullable_to_non_nullable
-              as GroupModel?,
+              as GroupSelectionGroupModel?,
       groupImage: freezed == groupImage
           ? _value.groupImage
           : groupImage // ignore: cast_nullable_to_non_nullable
@@ -88,12 +89,12 @@ class _$GroupSelectionModelCopyWithImpl<$Res, $Val extends GroupSelectionModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $GroupModelCopyWith<$Res>? get newGroup {
+  $GroupSelectionGroupModelCopyWith<$Res>? get newGroup {
     if (_value.newGroup == null) {
       return null;
     }
 
-    return $GroupModelCopyWith<$Res>(_value.newGroup!, (value) {
+    return $GroupSelectionGroupModelCopyWith<$Res>(_value.newGroup!, (value) {
       return _then(_value.copyWith(newGroup: value) as $Val);
     });
   }
@@ -110,12 +111,12 @@ abstract class _$$_GroupSelectionModelCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool hasError,
-      Option<UserModel> user,
-      GroupModel? newGroup,
+      Option<GroupSelectionUserModel> user,
+      GroupSelectionGroupModel? newGroup,
       XFile? groupImage});
 
   @override
-  $GroupModelCopyWith<$Res>? get newGroup;
+  $GroupSelectionGroupModelCopyWith<$Res>? get newGroup;
 }
 
 /// @nodoc
@@ -147,11 +148,11 @@ class __$$_GroupSelectionModelCopyWithImpl<$Res>
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as Option<UserModel>,
+              as Option<GroupSelectionUserModel>,
       newGroup: freezed == newGroup
           ? _value.newGroup
           : newGroup // ignore: cast_nullable_to_non_nullable
-              as GroupModel?,
+              as GroupSelectionGroupModel?,
       groupImage: freezed == groupImage
           ? _value.groupImage
           : groupImage // ignore: cast_nullable_to_non_nullable
@@ -175,9 +176,9 @@ class _$_GroupSelectionModel implements _GroupSelectionModel {
   @override
   final bool hasError;
   @override
-  final Option<UserModel> user;
+  final Option<GroupSelectionUserModel> user;
   @override
-  final GroupModel? newGroup;
+  final GroupSelectionGroupModel? newGroup;
   @override
   final XFile? groupImage;
 
@@ -218,8 +219,8 @@ abstract class _GroupSelectionModel implements GroupSelectionModel {
   factory _GroupSelectionModel(
       {required final bool isLoading,
       required final bool hasError,
-      required final Option<UserModel> user,
-      required final GroupModel? newGroup,
+      required final Option<GroupSelectionUserModel> user,
+      required final GroupSelectionGroupModel? newGroup,
       required final XFile? groupImage}) = _$_GroupSelectionModel;
 
   @override
@@ -227,9 +228,9 @@ abstract class _GroupSelectionModel implements GroupSelectionModel {
   @override
   bool get hasError;
   @override
-  Option<UserModel> get user;
+  Option<GroupSelectionUserModel> get user;
   @override
-  GroupModel? get newGroup;
+  GroupSelectionGroupModel? get newGroup;
   @override
   XFile? get groupImage;
   @override
@@ -238,34 +239,39 @@ abstract class _GroupSelectionModel implements GroupSelectionModel {
       throw _privateConstructorUsedError;
 }
 
-UserModel _$UserModelFromJson(Map<String, dynamic> json) {
+GroupSelectionUserModel _$GroupSelectionUserModelFromJson(
+    Map<String, dynamic> json) {
   return _UserModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$UserModel {
+mixin _$GroupSelectionUserModel {
   String get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
-  List<GroupModel> get groups => throw _privateConstructorUsedError;
+  List<GroupSelectionGroupModel> get groups =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserModelCopyWith<UserModel> get copyWith =>
+  $GroupSelectionUserModelCopyWith<GroupSelectionUserModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserModelCopyWith<$Res> {
-  factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
-      _$UserModelCopyWithImpl<$Res, UserModel>;
+abstract class $GroupSelectionUserModelCopyWith<$Res> {
+  factory $GroupSelectionUserModelCopyWith(GroupSelectionUserModel value,
+          $Res Function(GroupSelectionUserModel) then) =
+      _$GroupSelectionUserModelCopyWithImpl<$Res, GroupSelectionUserModel>;
   @useResult
-  $Res call({String id, String username, List<GroupModel> groups});
+  $Res call(
+      {String id, String username, List<GroupSelectionGroupModel> groups});
 }
 
 /// @nodoc
-class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
-    implements $UserModelCopyWith<$Res> {
-  _$UserModelCopyWithImpl(this._value, this._then);
+class _$GroupSelectionUserModelCopyWithImpl<$Res,
+        $Val extends GroupSelectionUserModel>
+    implements $GroupSelectionUserModelCopyWith<$Res> {
+  _$GroupSelectionUserModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -291,24 +297,26 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       groups: null == groups
           ? _value.groups
           : groups // ignore: cast_nullable_to_non_nullable
-              as List<GroupModel>,
+              as List<GroupSelectionGroupModel>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
+abstract class _$$_UserModelCopyWith<$Res>
+    implements $GroupSelectionUserModelCopyWith<$Res> {
   factory _$$_UserModelCopyWith(
           _$_UserModel value, $Res Function(_$_UserModel) then) =
       __$$_UserModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String username, List<GroupModel> groups});
+  $Res call(
+      {String id, String username, List<GroupSelectionGroupModel> groups});
 }
 
 /// @nodoc
 class __$$_UserModelCopyWithImpl<$Res>
-    extends _$UserModelCopyWithImpl<$Res, _$_UserModel>
+    extends _$GroupSelectionUserModelCopyWithImpl<$Res, _$_UserModel>
     implements _$$_UserModelCopyWith<$Res> {
   __$$_UserModelCopyWithImpl(
       _$_UserModel _value, $Res Function(_$_UserModel) _then)
@@ -333,7 +341,7 @@ class __$$_UserModelCopyWithImpl<$Res>
       groups: null == groups
           ? _value._groups
           : groups // ignore: cast_nullable_to_non_nullable
-              as List<GroupModel>,
+              as List<GroupSelectionGroupModel>,
     ));
   }
 }
@@ -344,7 +352,7 @@ class _$_UserModel implements _UserModel {
   _$_UserModel(
       {required this.id,
       required this.username,
-      final List<GroupModel> groups = const []})
+      final List<GroupSelectionGroupModel> groups = const []})
       : _groups = groups;
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
@@ -354,10 +362,10 @@ class _$_UserModel implements _UserModel {
   final String id;
   @override
   final String username;
-  final List<GroupModel> _groups;
+  final List<GroupSelectionGroupModel> _groups;
   @override
   @JsonKey()
-  List<GroupModel> get groups {
+  List<GroupSelectionGroupModel> get groups {
     if (_groups is EqualUnmodifiableListView) return _groups;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_groups);
@@ -365,7 +373,7 @@ class _$_UserModel implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username, groups: $groups)';
+    return 'GroupSelectionUserModel(id: $id, username: $username, groups: $groups)';
   }
 
   @override
@@ -398,11 +406,11 @@ class _$_UserModel implements _UserModel {
   }
 }
 
-abstract class _UserModel implements UserModel {
+abstract class _UserModel implements GroupSelectionUserModel {
   factory _UserModel(
       {required final String id,
       required final String username,
-      final List<GroupModel> groups}) = _$_UserModel;
+      final List<GroupSelectionGroupModel> groups}) = _$_UserModel;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$_UserModel.fromJson;
@@ -412,19 +420,20 @@ abstract class _UserModel implements UserModel {
   @override
   String get username;
   @override
-  List<GroupModel> get groups;
+  List<GroupSelectionGroupModel> get groups;
   @override
   @JsonKey(ignore: true)
   _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-GroupModel _$GroupModelFromJson(Map<String, dynamic> json) {
-  return _GroupModel.fromJson(json);
+GroupSelectionGroupModel _$GroupSelectionGroupModelFromJson(
+    Map<String, dynamic> json) {
+  return _GroupSelectionGroupModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$GroupModel {
+mixin _$GroupSelectionGroupModel {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
@@ -433,15 +442,15 @@ mixin _$GroupModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $GroupModelCopyWith<GroupModel> get copyWith =>
+  $GroupSelectionGroupModelCopyWith<GroupSelectionGroupModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GroupModelCopyWith<$Res> {
-  factory $GroupModelCopyWith(
-          GroupModel value, $Res Function(GroupModel) then) =
-      _$GroupModelCopyWithImpl<$Res, GroupModel>;
+abstract class $GroupSelectionGroupModelCopyWith<$Res> {
+  factory $GroupSelectionGroupModelCopyWith(GroupSelectionGroupModel value,
+          $Res Function(GroupSelectionGroupModel) then) =
+      _$GroupSelectionGroupModelCopyWithImpl<$Res, GroupSelectionGroupModel>;
   @useResult
   $Res call(
       {String? id,
@@ -452,9 +461,10 @@ abstract class $GroupModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GroupModelCopyWithImpl<$Res, $Val extends GroupModel>
-    implements $GroupModelCopyWith<$Res> {
-  _$GroupModelCopyWithImpl(this._value, this._then);
+class _$GroupSelectionGroupModelCopyWithImpl<$Res,
+        $Val extends GroupSelectionGroupModel>
+    implements $GroupSelectionGroupModelCopyWith<$Res> {
+  _$GroupSelectionGroupModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -496,11 +506,12 @@ class _$GroupModelCopyWithImpl<$Res, $Val extends GroupModel>
 }
 
 /// @nodoc
-abstract class _$$_GroupModelCopyWith<$Res>
-    implements $GroupModelCopyWith<$Res> {
-  factory _$$_GroupModelCopyWith(
-          _$_GroupModel value, $Res Function(_$_GroupModel) then) =
-      __$$_GroupModelCopyWithImpl<$Res>;
+abstract class _$$_GroupSelectionGroupModelCopyWith<$Res>
+    implements $GroupSelectionGroupModelCopyWith<$Res> {
+  factory _$$_GroupSelectionGroupModelCopyWith(
+          _$_GroupSelectionGroupModel value,
+          $Res Function(_$_GroupSelectionGroupModel) then) =
+      __$$_GroupSelectionGroupModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -512,11 +523,12 @@ abstract class _$$_GroupModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_GroupModelCopyWithImpl<$Res>
-    extends _$GroupModelCopyWithImpl<$Res, _$_GroupModel>
-    implements _$$_GroupModelCopyWith<$Res> {
-  __$$_GroupModelCopyWithImpl(
-      _$_GroupModel _value, $Res Function(_$_GroupModel) _then)
+class __$$_GroupSelectionGroupModelCopyWithImpl<$Res>
+    extends _$GroupSelectionGroupModelCopyWithImpl<$Res,
+        _$_GroupSelectionGroupModel>
+    implements _$$_GroupSelectionGroupModelCopyWith<$Res> {
+  __$$_GroupSelectionGroupModelCopyWithImpl(_$_GroupSelectionGroupModel _value,
+      $Res Function(_$_GroupSelectionGroupModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -528,7 +540,7 @@ class __$$_GroupModelCopyWithImpl<$Res>
     Object? imageUrl = freezed,
     Object? creatorId = freezed,
   }) {
-    return _then(_$_GroupModel(
+    return _then(_$_GroupSelectionGroupModel(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -555,16 +567,16 @@ class __$$_GroupModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_GroupModel implements _GroupModel {
-  _$_GroupModel(
+class _$_GroupSelectionGroupModel implements _GroupSelectionGroupModel {
+  _$_GroupSelectionGroupModel(
       {this.id,
       required this.name,
       required this.description,
       this.imageUrl,
       this.creatorId});
 
-  factory _$_GroupModel.fromJson(Map<String, dynamic> json) =>
-      _$$_GroupModelFromJson(json);
+  factory _$_GroupSelectionGroupModel.fromJson(Map<String, dynamic> json) =>
+      _$$_GroupSelectionGroupModelFromJson(json);
 
   @override
   final String? id;
@@ -579,14 +591,14 @@ class _$_GroupModel implements _GroupModel {
 
   @override
   String toString() {
-    return 'GroupModel(id: $id, name: $name, description: $description, imageUrl: $imageUrl, creatorId: $creatorId)';
+    return 'GroupSelectionGroupModel(id: $id, name: $name, description: $description, imageUrl: $imageUrl, creatorId: $creatorId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GroupModel &&
+            other is _$_GroupSelectionGroupModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -605,27 +617,28 @@ class _$_GroupModel implements _GroupModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_GroupModelCopyWith<_$_GroupModel> get copyWith =>
-      __$$_GroupModelCopyWithImpl<_$_GroupModel>(this, _$identity);
+  _$$_GroupSelectionGroupModelCopyWith<_$_GroupSelectionGroupModel>
+      get copyWith => __$$_GroupSelectionGroupModelCopyWithImpl<
+          _$_GroupSelectionGroupModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GroupModelToJson(
+    return _$$_GroupSelectionGroupModelToJson(
       this,
     );
   }
 }
 
-abstract class _GroupModel implements GroupModel {
-  factory _GroupModel(
+abstract class _GroupSelectionGroupModel implements GroupSelectionGroupModel {
+  factory _GroupSelectionGroupModel(
       {final String? id,
       required final String name,
       required final String? description,
       final String? imageUrl,
-      final String? creatorId}) = _$_GroupModel;
+      final String? creatorId}) = _$_GroupSelectionGroupModel;
 
-  factory _GroupModel.fromJson(Map<String, dynamic> json) =
-      _$_GroupModel.fromJson;
+  factory _GroupSelectionGroupModel.fromJson(Map<String, dynamic> json) =
+      _$_GroupSelectionGroupModel.fromJson;
 
   @override
   String? get id;
@@ -639,8 +652,8 @@ abstract class _GroupModel implements GroupModel {
   String? get creatorId;
   @override
   @JsonKey(ignore: true)
-  _$$_GroupModelCopyWith<_$_GroupModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_GroupSelectionGroupModelCopyWith<_$_GroupSelectionGroupModel>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 CreateGroupDTO _$CreateGroupDTOFromJson(Map<String, dynamic> json) {

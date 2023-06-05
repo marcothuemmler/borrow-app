@@ -21,7 +21,6 @@ class ItemListControllerImplementation extends ItemListController {
           model ??
               ItemListModel(
                 selectedCategory: null,
-                newCategory: null,
                 hasError: false,
                 isLoading: false,
                 group: null,
@@ -52,65 +51,24 @@ class ItemListControllerImplementation extends ItemListController {
   void navigateToItem({required String itemId}) {
     _router.pushNamed(
       itemDetailRoute.name,
-      pathParameters: {"itemId": itemId, "groupId": _groupId},
+      pathParameters: {"itemId": itemId},
     );
   }
 
   @override
-  void selectCategory(CategoryModel? category) {
+  void selectCategory(ItemListCategoryModel? category) {
     final selectedCategory = category?.id is! String ? null : category;
     state = state.copyWith(selectedCategory: selectedCategory);
     filterItemsByCategory(category: selectedCategory);
   }
 
-  void filterItemsByCategory({CategoryModel? category}) {
-    if (state.group is GroupModel) {
+  void filterItemsByCategory({ItemListCategoryModel? category}) {
+    if (state.group is ItemListGroupModel) {
       final filteredItems = state.group!.items.where((item) {
-        return category is! CategoryModel || item.category.id == category.id;
+        return category is! ItemListCategoryModel ||
+            item.category.id == category.id;
       }).toList();
       state = state.copyWith(items: filteredItems);
     }
-  }
-
-  @override
-  void createItem() {
-    // TODO: implement createItem
-  }
-
-  @override
-  void setNewCategoryDescription(String description) {
-    state = state.copyWith.newCategory!(description: description);
-  }
-
-  @override
-  void setNewCategoryName(String name) {
-    state = state.copyWith.newCategory!(name: name);
-  }
-
-  @override
-  Future<void> addCategory() async {
-    await _itemListService.postCategory(
-      groupId: _groupId,
-      model: state.newCategory!,
-    );
-    _init();
-  }
-
-  @override
-  void createNewCategory() {
-    state = state.copyWith(
-      newCategory: CategoryModel(name: "", description: null),
-    );
-  }
-
-  @override
-  String? validateFormField({required String fieldName}) {
-    switch (fieldName) {
-      case "categoryName":
-        return state.newCategory!.name.length < 3
-            ? "Gruppennamen müssen mindestens 3 Zeichen beinhalten"
-            : null;
-    }
-    return null;
   }
 }

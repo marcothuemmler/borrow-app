@@ -10,7 +10,8 @@ _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
       id: json['id'] as String,
       username: json['username'] as String,
       groups: (json['groups'] as List<dynamic>?)
-              ?.map((e) => GroupModel.fromJson(e as Map<String, dynamic>))
+              ?.map((e) =>
+                  GroupSelectionGroupModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
     );
@@ -22,8 +23,9 @@ Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>
       'groups': instance.groups,
     };
 
-_$_GroupModel _$$_GroupModelFromJson(Map<String, dynamic> json) =>
-    _$_GroupModel(
+_$_GroupSelectionGroupModel _$$_GroupSelectionGroupModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_GroupSelectionGroupModel(
       id: json['id'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
@@ -31,7 +33,8 @@ _$_GroupModel _$$_GroupModelFromJson(Map<String, dynamic> json) =>
       creatorId: json['creatorId'] as String?,
     );
 
-Map<String, dynamic> _$$_GroupModelToJson(_$_GroupModel instance) =>
+Map<String, dynamic> _$$_GroupSelectionGroupModelToJson(
+        _$_GroupSelectionGroupModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
