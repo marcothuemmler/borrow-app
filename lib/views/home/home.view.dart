@@ -7,23 +7,21 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(
-    //   const SystemUiOverlayStyle(
-    //     statusBarBrightness: Brightness.dark,
-    //   ),
-    // );
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
           ShaderMask(
-            shaderCallback: (rect) {
-              return const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.black, Colors.black87, Colors.black26, Colors.transparent],
-              ).createShader(Rect.fromLTRB(0, 0, rect.width, MediaQuery.of(context).size.height));
-            },
+            shaderCallback: (rect) => const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.black,
+                Colors.black87,
+                Colors.black26,
+                Colors.transparent,
+              ],
+            ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height)),
             blendMode: BlendMode.dstIn,
             child: Image.asset(
               'assets/images/mess.jpg',

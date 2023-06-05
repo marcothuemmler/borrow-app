@@ -1,10 +1,18 @@
-extension IsStrongPassword on String {
-  bool _isStrongPassword() {
-    //
-    // final strongPasswordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-    final strongPasswordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
-    return strongPasswordRegex.hasMatch(this);
-  }
+import 'package:email_validator/email_validator.dart';
 
-  bool get isStrongPassword => _isStrongPassword();
+extension IsStrongPassword on String? {
+  bool get isStrongPassword {
+    // final strongPasswordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    final strongPasswordRegex =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+    return this is String && strongPasswordRegex.hasMatch(this!);
+  }
+}
+
+extension IsEmail on String? {
+  bool get isEmail => this is String && EmailValidator.validate(this!);
+}
+
+extension IsValidUsername on String? {
+  bool get isValidUsername => this is String && this!.length > 2;
 }

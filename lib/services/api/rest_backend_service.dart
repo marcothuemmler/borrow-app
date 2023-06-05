@@ -1,10 +1,14 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart' as item_list_model;
-import 'package:borrow_app/views/group_selection/group_selection.model.dart' as group_selection_model;
-import 'package:borrow_app/views/item_detail/item_detail.model.dart' as item_detail_model;
+import 'package:borrow_app/views/chat/chat.model.dart';
+import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/group_selection/group_selection.model.dart';
+import 'package:borrow_app/views/item_detail/item_detail.model.dart';
+import 'package:borrow_app/views/profile/category_settings.model.dart';
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RestBackendServiceImplementation implements BackendServiceAggregator {
   final Dio _client;
@@ -19,6 +23,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   @override
   Future<void> signup({required SignupDto payload}) async {
     try {
+      await _storageService.deleteAll();
       await _client.post("/auth/signup", data: payload);
     } catch (error) {
       throw Exception("Failed to sign in: $error");
@@ -28,6 +33,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   @override
   Future<void> login({required LoginDto payload}) async {
     try {
+      await _storageService.deleteAll();
       final response = await _client.post("/auth/login", data: payload);
       await _storageService.writeTokenData(data: response.data);
     } catch (error) {
@@ -47,15 +53,16 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<group_selection_model.UserModel> getGroups() async {
+  Future<GroupSelectionUserModel> getGroups() async {
     try {
+      final userId = await _storageService.read(key: "user-id");
       final response = await _client.get(
-        "/user/auth/current-user",
+        "/users/$userId",
         queryParameters: {
-          "relations": ['groups']
+          "join": ['groups']
         },
       );
-      return group_selection_model.UserModel.fromJson(response.data);
+      return GroupSelectionUserModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get group items: $error");
     }
@@ -72,27 +79,159 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<item_list_model.GroupModel> getGroupItemsAndCategories({required String groupId}) async {
+  Future<ItemListGroupModel> getGroupItemsAndCategories({
+    required String groupId,
+  }) async {
     try {
       final response = await _client.get(
-        "/group/$groupId",
+        "/groups/$groupId",
         queryParameters: {
-          "relations": ["categories", "items.category", "items.owner"]
+          "join": ["categories", "items", "items.category", "items.owner"]
         },
       );
-      return item_list_model.GroupModel.fromJson(response.data);
+      return ItemListGroupModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get group items: $error");
     }
   }
 
   @override
-  Future<item_detail_model.ItemModel> getItemDetails({required String itemId}) async {
+  Future<GroupSelectionGroupModel> postGroup(
+    GroupSelectionGroupModel group,
+  ) async {
     try {
-      final response = await _client.get("/item/$itemId");
-      return item_detail_model.ItemModel.fromJson(response.data);
+      final userId = await _storageService.read(key: "user-id");
+      final groupWithCreatorId = CreateGroupDTO(
+        name: group.name,
+        description: group.description,
+        creatorId: userId!,
+      );
+      final response = await _client.post("/groups", data: groupWithCreatorId);
+      return GroupSelectionGroupModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception("Could not create group: $error");
+    }
+  }
+
+  @override
+  Future<ItemDetailItemModel> getItemDetails({
+    required String itemId,
+  }) async {
+    try {
+      final response = await _client.get(
+        "/items/$itemId",
+        queryParameters: {
+          'join': ['category', 'owner']
+        },
+      );
+      return ItemDetailItemModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get item detail: $error");
     }
+  }
+
+  @override
+  Future<void> putGroupImage({
+    required String groupId,
+    required XFile? groupImage,
+  }) async {
+    if (groupImage is! XFile) {
+      return;
+    }
+    try {
+      final bytes = await groupImage.readAsBytes();
+      final type = groupImage.name.split(".").last;
+
+      final formData = FormData.fromMap({
+        "file": MultipartFile.fromBytes(
+          bytes,
+          filename: groupImage.name,
+          contentType: MediaType("image", type),
+        ),
+        "type": "image/$type",
+      });
+      await _client.put(
+        "/groups/cover/$groupId",
+        data: formData,
+        options: Options(contentType: "multipart/form-data"),
+      );
+    } catch (error) {
+      throw Exception("Failed to upload project image: $error");
+    }
+  }
+
+  @override
+  Future<void> inviteGroupMembers({
+    required InvitationModel payload,
+  }) async {
+    // TODO: implement inviteMembers
+  }
+
+  @override
+  Future<void> postCategory({
+    required String groupId,
+    required CategorySettingsCategoryModel model,
+  }) async {
+    try {
+      final modelDTO = CreateCategoryDTO(
+        name: model.name,
+        description: model.description,
+        groupId: groupId,
+      );
+      await _client.post("/categories", data: modelDTO);
+    } catch (error) {
+      throw Exception("Could not set group $error");
+    }
+  }
+
+  @override
+  Future<CategorySettingsCategoryListModel> getCategories({
+    required String groupId,
+  }) async {
+    try {
+      final response = await _client.get(
+        "/groups/$groupId",
+        queryParameters: {
+          "fields": ['id'],
+          "join": ['categories']
+        },
+      );
+      return CategorySettingsCategoryListModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception("Could not get group categories: $error");
+    }
+  }
+
+  @override
+  Future<List<MessageModel>> loadMessages({required String userId}) async {
+    final userId = await _storageService.read(key: "user-id");
+    final messages = [
+      {"senderId": "$userId", "recipientId": "", "content": "Hi"},
+      {"senderId": "", "recipientId": "$userId", "content": "Hallo"},
+    ];
+    // TODO: load messages from backend
+    return List<MessageModel>.from(
+      messages.map((json) {
+        final MessageModel messageModel = MessageModel.fromJson(json);
+        return messageModel.copyWith(
+          isOwnMessage: messageModel.senderId == userId,
+        );
+      }),
+    );
+  }
+
+  @override
+  Future<MessageModel> sendMessage({
+    required String message,
+    required String recipientId,
+  }) async {
+    final String? senderId = await _storageService.read(key: "user-id");
+    // TODO: proper backend call
+    return MessageModel(
+      senderId: senderId!,
+      recipientId: recipientId,
+      content: message,
+      isOwnMessage: true,
+    );
   }
 }

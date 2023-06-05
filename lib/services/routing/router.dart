@@ -2,11 +2,16 @@ import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/services/routing/routes.dart";
 import "package:borrow_app/views/authentication/login/login.view.dart";
 import "package:borrow_app/views/authentication/signup/signup.view.dart";
+import "package:borrow_app/views/chat/chat.view.dart";
 import "package:borrow_app/views/dashboard/dashboard_wrapper.view.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
+import "package:borrow_app/views/profile/categories_settings.view.dart";
+import "package:borrow_app/views/profile/group_settings.view.dart";
+import "package:borrow_app/views/profile/profile_main.view.dart";
+import "package:borrow_app/views/welcome/welcome.view.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
@@ -27,12 +32,24 @@ MaterialPage _errorPage({
 }
 
 final routerProviderDef = Provider<GoRouter>((ref) {
+  final storageService = ref.read(providers.secureStorageServiceProvider);
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
+    refreshListenable: storageService,
     redirect: (context, state) async {
-      final secureStorage = ref.watch(providers.secureStorageProvider);
-      final isLoggedIn = await secureStorage.containsKey(key: "refreshToken");
-      final isLoginIn = RegExp(r"^/(login)*$").hasMatch(state.location);
+      final isLoggedIn = await storageService.containsKey(key: "refreshToken");
+      final isLoginIn = state.matchedLocation == "/login";
+      final isSigningUp = state.matchedLocation == "/signup";
+      final signedUp = state.matchedLocation == "/welcome";
+      if (isSigningUp || signedUp) {
+        return null;
+      }
+      if (!isLoggedIn && !isLoginIn) {
+        return state.namedLocation(homeRoute.name);
+      }
+      if (!isLoggedIn && isLoginIn) {
+        return state.namedLocation(loginRoute.name);
+      }
       if (isLoggedIn && isLoginIn) {
         return state.namedLocation(groupSelectionRoute.name);
       }
@@ -48,40 +65,32 @@ final routerProviderDef = Provider<GoRouter>((ref) {
         ),
         routes: [
           GoRoute(
-            redirect: (context, state) => _redirect(
-              context: context,
-              state: state,
-              ref: ref,
-              location: loginRoute.name,
-            ),
             parentNavigatorKey: _rootNavigatorKey,
             name: loginRoute.name,
             path: loginRoute.path,
-            pageBuilder: (context, state) => const MaterialPage(child: LoginView()),
+            pageBuilder: (context, state) =>
+                const MaterialPage(child: LoginView()),
           ),
           GoRoute(
-            redirect: (context, state) => _redirect(
-              context: context,
-              state: state,
-              ref: ref,
-              location: signupRoute.name,
-            ),
             parentNavigatorKey: _rootNavigatorKey,
             name: signupRoute.name,
             path: signupRoute.path,
-            pageBuilder: (context, state) => const MaterialPage(child: SignupView()),
+            pageBuilder: (context, state) =>
+                const MaterialPage(child: SignupView()),
           ),
           GoRoute(
-            redirect: (context, state) => _redirect(
-              context: context,
-              state: state,
-              ref: ref,
-              location: loginRoute.name,
-            ),
+            parentNavigatorKey: _rootNavigatorKey,
+            name: welcomeRoute.name,
+            path: welcomeRoute.path,
+            builder: (context, state) => const WelcomeView(),
+          ),
+          GoRoute(
             parentNavigatorKey: _rootNavigatorKey,
             name: groupSelectionRoute.name,
             path: groupSelectionRoute.path,
-            pageBuilder: (context, state) => const MaterialPage(child: GroupSelectionView()),
+            pageBuilder: (context, state) => const MaterialPage(
+              child: GroupSelectionView(),
+            ),
             routes: [
               ShellRoute(
                 navigatorKey: _shellNavigatorKey,
@@ -96,7 +105,6 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                 },
                 routes: [
                   GoRoute(
-                    redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
                     parentNavigatorKey: _shellNavigatorKey,
                     name: groupRoute.name,
                     path: groupRoute.path,
@@ -106,39 +114,82 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                     },
                     routes: [
                       GoRoute(
-                        redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
-                        parentNavigatorKey: _rootNavigatorKey,
-                        name: itemDetailRoute.name,
-                        path: itemDetailRoute.path,
-                        pageBuilder: (context, state) {
-                          final String itemId = state.pathParameters['itemId']!;
-                          return CustomTransitionPage(
-                            barrierColor: Colors.black26,
-                            child: ItemDetailView(itemId: itemId),
-                            transitionsBuilder: (
-                              BuildContext context,
-                              Animation<double> animation,
-                              Animation<double> secondaryAnimation,
-                              Widget child,
-                            ) {
-                              return ScaleTransition(scale: animation, child: child);
-                            },
-                          );
-                        },
-                      )
+                        parentNavigatorKey: _shellNavigatorKey,
+                        name: profileRoute.name,
+                        path: profileRoute.path,
+                        builder: (context, state) => ProfileMain(
+                          groupId: state.pathParameters['groupId']!,
+                        ),
+                      ),
+                      GoRoute(
+                        parentNavigatorKey: _shellNavigatorKey,
+                        name: groupSettingsRoute.name,
+                        path: groupSettingsRoute.path,
+                        builder: (context, state) => GroupSettingsView(
+                          groupId: state.pathParameters['groupId']!,
+                        ),
+                      ),
+                      GoRoute(
+                        parentNavigatorKey: _shellNavigatorKey,
+                        name: categorySettingsRoute.name,
+                        path: categorySettingsRoute.path,
+                        builder: (context, state) => CategoriesSettingsView(
+                          groupId: state.pathParameters['groupId']!,
+                        ),
+                      ),
                     ],
                   ),
-                  GoRoute(
-                    redirect: (context, state) => _redirect(context: context, state: state, ref: ref),
-                    parentNavigatorKey: _shellNavigatorKey,
-                    name: profileRoute.name,
-                    path: profileRoute.path,
-                    builder: (context, state) => Container(),
-                  )
                 ],
               ),
             ],
           ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: chatRoute.name,
+            path: chatRoute.path,
+            pageBuilder: (context, state) {
+              final String? userId = state.pathParameters['userId'];
+              final String? itemId = state.queryParameters['itemId'];
+              if (userId is! String || itemId is! String) {
+                return _errorPage(state: state, error: "No ID provided");
+              }
+              return MaterialPage(
+                child: ChatView(
+                  itemId: itemId,
+                  userId: userId,
+                ),
+              );
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: itemDetailRoute.name,
+            path: itemDetailRoute.path,
+            pageBuilder: (context, state) {
+              final String? itemId = state.pathParameters['itemId'];
+              if (itemId is! String) {
+                return _errorPage(
+                  state: state,
+                  error: "No ID provided",
+                );
+              }
+              return CustomTransitionPage(
+                barrierColor: Colors.black26,
+                child: ItemDetailView(itemId: itemId),
+                transitionsBuilder: (
+                  BuildContext context,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  Widget child,
+                ) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  );
+                },
+              );
+            },
+          )
         ],
       ),
     ],
@@ -148,15 +199,3 @@ final routerProviderDef = Provider<GoRouter>((ref) {
     ),
   );
 });
-
-Future<String?> _redirect({
-  required BuildContext context,
-  required GoRouterState state,
-  required ProviderRef ref,
-  String? location,
-}) async {
-  final returnLocation = location ?? homeRoute.name;
-  final secureStorage = ref.watch(providers.secureStorageProvider);
-  final isLoggedIn = await secureStorage.containsKey(key: "refreshToken");
-  return isLoggedIn ? null : state.namedLocation(returnLocation);
-}

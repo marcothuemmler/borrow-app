@@ -13,6 +13,15 @@ class LoginModel with _$LoginModel {
 }
 
 @freezed
+class SignupModel with _$SignupModel {
+  const factory SignupModel({
+    required bool hasError,
+    required bool isLoading,
+    required SignupDto signupDto,
+  }) = _SignupModel;
+}
+
+@freezed
 class SignupDto with _$SignupDto {
   const factory SignupDto({
     required String? email,
@@ -20,7 +29,8 @@ class SignupDto with _$SignupDto {
     required String? password,
   }) = _SignupDto;
 
-  factory SignupDto.fromJson(Map<String, Object?> json) => _$SignupDtoFromJson(json);
+  factory SignupDto.fromJson(Map<String, Object?> json) =>
+      _$SignupDtoFromJson(json);
 }
 
 @freezed
@@ -30,5 +40,6 @@ class LoginDto with _$LoginDto {
     required String? password,
   }) = _LoginDto;
 
-  factory LoginDto.fromJson(Map<String, Object?> json) => _$LoginDtoFromJson(json);
+  factory LoginDto.fromJson(Map<String, Object?> json) =>
+      _$LoginDtoFromJson(json);
 }

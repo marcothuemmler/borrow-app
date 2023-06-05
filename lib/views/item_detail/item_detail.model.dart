@@ -9,41 +9,44 @@ class ItemDetailModel with _$ItemDetailModel {
   factory ItemDetailModel({
     required bool isLoading,
     required bool hasError,
-    required Option<ItemModel> item,
+    required Option<ItemDetailItemModel> item,
   }) = _ItemDetailModel;
 }
 
 @freezed
-class ItemModel with _$ItemModel {
-  factory ItemModel({
+class ItemDetailItemModel with _$ItemDetailItemModel {
+  factory ItemDetailItemModel({
     required String id,
     required String name,
     String? description,
-    required UserModel owner,
-    required CategoryModel category,
-  }) = _ItemModel;
+    required ItemDetailUserModel owner,
+    required ItemDetailCategoryModel category,
+  }) = _ItemDetailItemModel;
 
-  factory ItemModel.fromJson(Map<String, dynamic> json) => _$ItemModelFromJson(json);
+  factory ItemDetailItemModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemDetailItemModelFromJson(json);
 }
 
 @freezed
-class CategoryModel with _$CategoryModel {
-  factory CategoryModel({
+class ItemDetailCategoryModel with _$ItemDetailCategoryModel {
+  factory ItemDetailCategoryModel({
     required String id,
     required String name,
     String? description,
-    CategoryModel? parent,
-  }) = _CategoryModel;
+    ItemDetailCategoryModel? parent,
+  }) = _ItemDetailCategoryModel;
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) => _$CategoryModelFromJson(json);
+  factory ItemDetailCategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemDetailCategoryModelFromJson(json);
 }
 
 @freezed
-class UserModel with _$UserModel {
-  factory UserModel({
+class ItemDetailUserModel with _$ItemDetailUserModel {
+  factory ItemDetailUserModel({
     required String id,
     required String username,
-  }) = _UserModel;
+  }) = _ItemDetailUserModel;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+  factory ItemDetailUserModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemDetailUserModelFromJson(json);
 }

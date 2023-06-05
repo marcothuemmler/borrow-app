@@ -8,6 +8,9 @@ import 'package:borrow_app/views/authentication/login/login.controller.dart';
 import 'package:borrow_app/views/authentication/login/login.view.dart';
 import 'package:borrow_app/views/authentication/signup/signup.controller.dart';
 import 'package:borrow_app/views/authentication/signup/signup.view.dart';
+import 'package:borrow_app/views/chat/chat.controller.dart';
+import 'package:borrow_app/views/chat/chat.model.dart';
+import 'package:borrow_app/views/chat/chat.view.dart';
 import 'package:borrow_app/views/dashboard/dashboard.controller.dart';
 import 'package:borrow_app/views/dashboard/dashboard.model.dart';
 import 'package:borrow_app/views/dashboard/dashboard_wrapper.view.dart';
@@ -20,6 +23,9 @@ import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
+import 'package:borrow_app/views/profile/categories_settings.controller.dart';
+import 'package:borrow_app/views/profile/categories_settings.view.dart';
+import 'package:borrow_app/views/profile/category_settings.model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -36,64 +42,95 @@ class Providers {
     (ProviderRef ref) => const FlutterSecureStorage(),
   );
 
-  final Provider<SecureStorageService> secureStorageServiceProvider = Provider<SecureStorageService>(
+  final ChangeNotifierProvider<SecureStorageService>
+      secureStorageServiceProvider =
+      ChangeNotifierProvider<SecureStorageService>(
     (ref) => SecureStorageService(
-      storage: ref.watch(providers.secureStorageProvider),
+      storage: ref.read(providers.secureStorageProvider),
     ),
   );
 
-  final Provider<BackendServiceAggregator> backendServiceProvider = Provider<BackendServiceAggregator>(
+  final Provider<BackendServiceAggregator> backendServiceProvider =
+      Provider<BackendServiceAggregator>(
     (ProviderRef ref) => RestBackendServiceImplementation(
-      dioClient: ref.watch(providers.dioProvider),
-      storageService: ref.watch(providers.secureStorageServiceProvider),
+      dioClient: ref.read(providers.dioProvider),
+      storageService: ref.read(providers.secureStorageServiceProvider),
     ),
   );
 
-  final AutoDisposeStateNotifierProvider<SignupController, SignupDto> signupControllerProvider =
-      AutoDisposeStateNotifierProvider<SignupController, SignupDto>(
+  final StateNotifierProvider<SignupController, SignupModel>
+      signupControllerProvider =
+      StateNotifierProvider<SignupController, SignupModel>(
     (ref) => SignupControllerImplementation(
-      authService: ref.watch(providers.backendServiceProvider),
+      authService: ref.read(providers.backendServiceProvider),
     ),
   );
 
-  final AutoDisposeStateNotifierProvider<LoginController, LoginModel> loginControllerProvider =
-      AutoDisposeStateNotifierProvider<LoginController, LoginModel>(
+  final StateNotifierProvider<LoginController, LoginModel>
+      loginControllerProvider =
+      StateNotifierProvider<LoginController, LoginModel>(
     (ref) => LoginControllerImplementation(
-      authService: ref.watch(providers.backendServiceProvider),
+      authService: ref.read(providers.backendServiceProvider),
     ),
   );
 
-  final StateNotifierProviderFamily<DashboardController, DashboardModel, String> dashboardControllerProvider =
-      StateNotifierProviderFamily<DashboardController, DashboardModel, String>(
+  final StateNotifierProviderFamily<DashboardController, DashboardModel, String>
+      dashboardControllerProvider =
+      StateNotifierProvider.family<DashboardController, DashboardModel, String>(
     (ref, groupId) => DashboardControllerImplementation(
-      router: ref.watch(providers.routerProvider),
+      router: ref.read(providers.routerProvider),
       groupId: groupId,
     ),
   );
 
-  final AutoDisposeStateNotifierProviderFamily<ItemListController, ItemListModel, String> itemListControllerProvider =
-      AutoDisposeStateNotifierProviderFamily<ItemListController, ItemListModel, String>(
+  final AutoDisposeStateNotifierProviderFamily<ItemListController,
+          ItemListModel, String> itemListControllerProvider =
+      AutoDisposeStateNotifierProvider.family<ItemListController, ItemListModel,
+          String>(
     (ref, groupId) => ItemListControllerImplementation(
-      itemListService: ref.watch(providers.backendServiceProvider),
-      router: ref.watch(providers.routerProvider),
+      itemListService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
       groupId: groupId,
     ),
   );
 
-  final AutoDisposeStateNotifierProvider<GroupSelectionController, GroupSelectionModel> groupControllerProvider =
-      AutoDisposeStateNotifierProvider<GroupSelectionController, GroupSelectionModel>(
+  final AutoDisposeStateNotifierProvider<GroupSelectionController,
+          GroupSelectionModel> groupSelectionControllerProvider =
+      AutoDisposeStateNotifierProvider<GroupSelectionController,
+          GroupSelectionModel>(
     (ref) => GroupSelectionControllerImplementation(
-      itemListService: ref.watch(providers.backendServiceProvider),
-      groupSelectionService: ref.watch(providers.backendServiceProvider),
+      groupSelectionService: ref.read(providers.backendServiceProvider),
     ),
   );
 
-  final AutoDisposeStateNotifierProviderFamily<ItemDetailController, ItemDetailModel, String>
-      itemDetailControllerProvider =
-      AutoDisposeStateNotifierProviderFamily<ItemDetailController, ItemDetailModel, String>(
+  final AutoDisposeStateNotifierProviderFamily<ItemDetailController,
+          ItemDetailModel, String> itemDetailControllerProvider =
+      AutoDisposeStateNotifierProvider.family<ItemDetailController,
+          ItemDetailModel, String>(
     (ref, itemId) => ItemDetailControllerImplementation(
       itemId: itemId,
-      itemDetailService: ref.watch(providers.backendServiceProvider),
+      itemDetailService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<ChatController, ChatModel,
+          String> chatControllerProvider =
+      AutoDisposeStateNotifierProvider.family<ChatController, ChatModel,
+          String>(
+    (ref, userId) => ChatControllerImplementation(
+      userId: userId,
+      chatService: ref.read(providers.backendServiceProvider),
+    ),
+  );
+
+  final StateNotifierProviderFamily<CategoriesSettingsController,
+          CategoryListDetailModel, String> categoriesListProvider =
+      StateNotifierProvider.family<CategoriesSettingsController,
+          CategoryListDetailModel, String>(
+    (ref, groupId) => CategoriesSettingsControllerImplementation(
+      groupId: groupId,
+      categorySettingsService: ref.read(providers.backendServiceProvider),
     ),
   );
 }

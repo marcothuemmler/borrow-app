@@ -18,9 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ItemListModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-  CategoryModel? get selectedCategory => throw _privateConstructorUsedError;
-  GroupModel? get group => throw _privateConstructorUsedError;
-  List<ItemModel> get items => throw _privateConstructorUsedError;
+  ItemListCategoryModel? get selectedCategory =>
+      throw _privateConstructorUsedError;
+  ItemListGroupModel? get group => throw _privateConstructorUsedError;
+  List<ItemListItemModel> get items => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ItemListModelCopyWith<ItemListModel> get copyWith =>
@@ -36,12 +37,12 @@ abstract class $ItemListModelCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool hasError,
-      CategoryModel? selectedCategory,
-      GroupModel? group,
-      List<ItemModel> items});
+      ItemListCategoryModel? selectedCategory,
+      ItemListGroupModel? group,
+      List<ItemListItemModel> items});
 
-  $CategoryModelCopyWith<$Res>? get selectedCategory;
-  $GroupModelCopyWith<$Res>? get group;
+  $ItemListCategoryModelCopyWith<$Res>? get selectedCategory;
+  $ItemListGroupModelCopyWith<$Res>? get group;
 }
 
 /// @nodoc
@@ -75,38 +76,39 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
       selectedCategory: freezed == selectedCategory
           ? _value.selectedCategory
           : selectedCategory // ignore: cast_nullable_to_non_nullable
-              as CategoryModel?,
+              as ItemListCategoryModel?,
       group: freezed == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
-              as GroupModel?,
+              as ItemListGroupModel?,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<ItemModel>,
+              as List<ItemListItemModel>,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $CategoryModelCopyWith<$Res>? get selectedCategory {
+  $ItemListCategoryModelCopyWith<$Res>? get selectedCategory {
     if (_value.selectedCategory == null) {
       return null;
     }
 
-    return $CategoryModelCopyWith<$Res>(_value.selectedCategory!, (value) {
+    return $ItemListCategoryModelCopyWith<$Res>(_value.selectedCategory!,
+        (value) {
       return _then(_value.copyWith(selectedCategory: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $GroupModelCopyWith<$Res>? get group {
+  $ItemListGroupModelCopyWith<$Res>? get group {
     if (_value.group == null) {
       return null;
     }
 
-    return $GroupModelCopyWith<$Res>(_value.group!, (value) {
+    return $ItemListGroupModelCopyWith<$Res>(_value.group!, (value) {
       return _then(_value.copyWith(group: value) as $Val);
     });
   }
@@ -123,14 +125,14 @@ abstract class _$$_ItemListModelCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool hasError,
-      CategoryModel? selectedCategory,
-      GroupModel? group,
-      List<ItemModel> items});
+      ItemListCategoryModel? selectedCategory,
+      ItemListGroupModel? group,
+      List<ItemListItemModel> items});
 
   @override
-  $CategoryModelCopyWith<$Res>? get selectedCategory;
+  $ItemListCategoryModelCopyWith<$Res>? get selectedCategory;
   @override
-  $GroupModelCopyWith<$Res>? get group;
+  $ItemListGroupModelCopyWith<$Res>? get group;
 }
 
 /// @nodoc
@@ -162,15 +164,15 @@ class __$$_ItemListModelCopyWithImpl<$Res>
       selectedCategory: freezed == selectedCategory
           ? _value.selectedCategory
           : selectedCategory // ignore: cast_nullable_to_non_nullable
-              as CategoryModel?,
+              as ItemListCategoryModel?,
       group: freezed == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
-              as GroupModel?,
+              as ItemListGroupModel?,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<ItemModel>,
+              as List<ItemListItemModel>,
     ));
   }
 }
@@ -183,7 +185,7 @@ class _$_ItemListModel implements _ItemListModel {
       required this.hasError,
       required this.selectedCategory,
       required this.group,
-      required final List<ItemModel> items})
+      required final List<ItemListItemModel> items})
       : _items = items;
 
   @override
@@ -191,12 +193,12 @@ class _$_ItemListModel implements _ItemListModel {
   @override
   final bool hasError;
   @override
-  final CategoryModel? selectedCategory;
+  final ItemListCategoryModel? selectedCategory;
   @override
-  final GroupModel? group;
-  final List<ItemModel> _items;
+  final ItemListGroupModel? group;
+  final List<ItemListItemModel> _items;
   @override
-  List<ItemModel> get items {
+  List<ItemListItemModel> get items {
     if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
@@ -237,62 +239,63 @@ abstract class _ItemListModel implements ItemListModel {
   factory _ItemListModel(
       {required final bool isLoading,
       required final bool hasError,
-      required final CategoryModel? selectedCategory,
-      required final GroupModel? group,
-      required final List<ItemModel> items}) = _$_ItemListModel;
+      required final ItemListCategoryModel? selectedCategory,
+      required final ItemListGroupModel? group,
+      required final List<ItemListItemModel> items}) = _$_ItemListModel;
 
   @override
   bool get isLoading;
   @override
   bool get hasError;
   @override
-  CategoryModel? get selectedCategory;
+  ItemListCategoryModel? get selectedCategory;
   @override
-  GroupModel? get group;
+  ItemListGroupModel? get group;
   @override
-  List<ItemModel> get items;
+  List<ItemListItemModel> get items;
   @override
   @JsonKey(ignore: true)
   _$$_ItemListModelCopyWith<_$_ItemListModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-GroupModel _$GroupModelFromJson(Map<String, dynamic> json) {
-  return _GroupModel.fromJson(json);
+ItemListGroupModel _$ItemListGroupModelFromJson(Map<String, dynamic> json) {
+  return _ItemListGroupModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$GroupModel {
+mixin _$ItemListGroupModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  List<CategoryModel> get categories => throw _privateConstructorUsedError;
-  List<ItemModel> get items => throw _privateConstructorUsedError;
+  List<ItemListCategoryModel> get categories =>
+      throw _privateConstructorUsedError;
+  List<ItemListItemModel> get items => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $GroupModelCopyWith<GroupModel> get copyWith =>
+  $ItemListGroupModelCopyWith<ItemListGroupModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GroupModelCopyWith<$Res> {
-  factory $GroupModelCopyWith(
-          GroupModel value, $Res Function(GroupModel) then) =
-      _$GroupModelCopyWithImpl<$Res, GroupModel>;
+abstract class $ItemListGroupModelCopyWith<$Res> {
+  factory $ItemListGroupModelCopyWith(
+          ItemListGroupModel value, $Res Function(ItemListGroupModel) then) =
+      _$ItemListGroupModelCopyWithImpl<$Res, ItemListGroupModel>;
   @useResult
   $Res call(
       {String id,
       String name,
       String? description,
-      List<CategoryModel> categories,
-      List<ItemModel> items});
+      List<ItemListCategoryModel> categories,
+      List<ItemListItemModel> items});
 }
 
 /// @nodoc
-class _$GroupModelCopyWithImpl<$Res, $Val extends GroupModel>
-    implements $GroupModelCopyWith<$Res> {
-  _$GroupModelCopyWithImpl(this._value, this._then);
+class _$ItemListGroupModelCopyWithImpl<$Res, $Val extends ItemListGroupModel>
+    implements $ItemListGroupModelCopyWith<$Res> {
+  _$ItemListGroupModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -324,37 +327,37 @@ class _$GroupModelCopyWithImpl<$Res, $Val extends GroupModel>
       categories: null == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<CategoryModel>,
+              as List<ItemListCategoryModel>,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<ItemModel>,
+              as List<ItemListItemModel>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_GroupModelCopyWith<$Res>
-    implements $GroupModelCopyWith<$Res> {
-  factory _$$_GroupModelCopyWith(
-          _$_GroupModel value, $Res Function(_$_GroupModel) then) =
-      __$$_GroupModelCopyWithImpl<$Res>;
+abstract class _$$_ItemListGroupModelCopyWith<$Res>
+    implements $ItemListGroupModelCopyWith<$Res> {
+  factory _$$_ItemListGroupModelCopyWith(_$_ItemListGroupModel value,
+          $Res Function(_$_ItemListGroupModel) then) =
+      __$$_ItemListGroupModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String id,
       String name,
       String? description,
-      List<CategoryModel> categories,
-      List<ItemModel> items});
+      List<ItemListCategoryModel> categories,
+      List<ItemListItemModel> items});
 }
 
 /// @nodoc
-class __$$_GroupModelCopyWithImpl<$Res>
-    extends _$GroupModelCopyWithImpl<$Res, _$_GroupModel>
-    implements _$$_GroupModelCopyWith<$Res> {
-  __$$_GroupModelCopyWithImpl(
-      _$_GroupModel _value, $Res Function(_$_GroupModel) _then)
+class __$$_ItemListGroupModelCopyWithImpl<$Res>
+    extends _$ItemListGroupModelCopyWithImpl<$Res, _$_ItemListGroupModel>
+    implements _$$_ItemListGroupModelCopyWith<$Res> {
+  __$$_ItemListGroupModelCopyWithImpl(
+      _$_ItemListGroupModel _value, $Res Function(_$_ItemListGroupModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -366,7 +369,7 @@ class __$$_GroupModelCopyWithImpl<$Res>
     Object? categories = null,
     Object? items = null,
   }) {
-    return _then(_$_GroupModel(
+    return _then(_$_ItemListGroupModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -382,29 +385,29 @@ class __$$_GroupModelCopyWithImpl<$Res>
       categories: null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<CategoryModel>,
+              as List<ItemListCategoryModel>,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<ItemModel>,
+              as List<ItemListItemModel>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_GroupModel implements _GroupModel {
-  _$_GroupModel(
+class _$_ItemListGroupModel implements _ItemListGroupModel {
+  _$_ItemListGroupModel(
       {required this.id,
       required this.name,
       required this.description,
-      required final List<CategoryModel> categories,
-      required final List<ItemModel> items})
+      required final List<ItemListCategoryModel> categories,
+      required final List<ItemListItemModel> items})
       : _categories = categories,
         _items = items;
 
-  factory _$_GroupModel.fromJson(Map<String, dynamic> json) =>
-      _$$_GroupModelFromJson(json);
+  factory _$_ItemListGroupModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemListGroupModelFromJson(json);
 
   @override
   final String id;
@@ -412,17 +415,17 @@ class _$_GroupModel implements _GroupModel {
   final String name;
   @override
   final String? description;
-  final List<CategoryModel> _categories;
+  final List<ItemListCategoryModel> _categories;
   @override
-  List<CategoryModel> get categories {
+  List<ItemListCategoryModel> get categories {
     if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_categories);
   }
 
-  final List<ItemModel> _items;
+  final List<ItemListItemModel> _items;
   @override
-  List<ItemModel> get items {
+  List<ItemListItemModel> get items {
     if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
@@ -430,14 +433,14 @@ class _$_GroupModel implements _GroupModel {
 
   @override
   String toString() {
-    return 'GroupModel(id: $id, name: $name, description: $description, categories: $categories, items: $items)';
+    return 'ItemListGroupModel(id: $id, name: $name, description: $description, categories: $categories, items: $items)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GroupModel &&
+            other is _$_ItemListGroupModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -460,27 +463,28 @@ class _$_GroupModel implements _GroupModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_GroupModelCopyWith<_$_GroupModel> get copyWith =>
-      __$$_GroupModelCopyWithImpl<_$_GroupModel>(this, _$identity);
+  _$$_ItemListGroupModelCopyWith<_$_ItemListGroupModel> get copyWith =>
+      __$$_ItemListGroupModelCopyWithImpl<_$_ItemListGroupModel>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GroupModelToJson(
+    return _$$_ItemListGroupModelToJson(
       this,
     );
   }
 }
 
-abstract class _GroupModel implements GroupModel {
-  factory _GroupModel(
+abstract class _ItemListGroupModel implements ItemListGroupModel {
+  factory _ItemListGroupModel(
       {required final String id,
       required final String name,
       required final String? description,
-      required final List<CategoryModel> categories,
-      required final List<ItemModel> items}) = _$_GroupModel;
+      required final List<ItemListCategoryModel> categories,
+      required final List<ItemListItemModel> items}) = _$_ItemListGroupModel;
 
-  factory _GroupModel.fromJson(Map<String, dynamic> json) =
-      _$_GroupModel.fromJson;
+  factory _ItemListGroupModel.fromJson(Map<String, dynamic> json) =
+      _$_ItemListGroupModel.fromJson;
 
   @override
   String get id;
@@ -489,44 +493,46 @@ abstract class _GroupModel implements GroupModel {
   @override
   String? get description;
   @override
-  List<CategoryModel> get categories;
+  List<ItemListCategoryModel> get categories;
   @override
-  List<ItemModel> get items;
+  List<ItemListItemModel> get items;
   @override
   @JsonKey(ignore: true)
-  _$$_GroupModelCopyWith<_$_GroupModel> get copyWith =>
+  _$$_ItemListGroupModelCopyWith<_$_ItemListGroupModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
-  return _CategoryModel.fromJson(json);
+ItemListCategoryModel _$ItemListCategoryModelFromJson(
+    Map<String, dynamic> json) {
+  return _ItemListCategoryModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CategoryModel {
+mixin _$ItemListCategoryModel {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CategoryModelCopyWith<CategoryModel> get copyWith =>
+  $ItemListCategoryModelCopyWith<ItemListCategoryModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CategoryModelCopyWith<$Res> {
-  factory $CategoryModelCopyWith(
-          CategoryModel value, $Res Function(CategoryModel) then) =
-      _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
+abstract class $ItemListCategoryModelCopyWith<$Res> {
+  factory $ItemListCategoryModelCopyWith(ItemListCategoryModel value,
+          $Res Function(ItemListCategoryModel) then) =
+      _$ItemListCategoryModelCopyWithImpl<$Res, ItemListCategoryModel>;
   @useResult
   $Res call({String? id, String name, String? description});
 }
 
 /// @nodoc
-class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
-    implements $CategoryModelCopyWith<$Res> {
-  _$CategoryModelCopyWithImpl(this._value, this._then);
+class _$ItemListCategoryModelCopyWithImpl<$Res,
+        $Val extends ItemListCategoryModel>
+    implements $ItemListCategoryModelCopyWith<$Res> {
+  _$ItemListCategoryModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -558,22 +564,22 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
 }
 
 /// @nodoc
-abstract class _$$_CategoryModelCopyWith<$Res>
-    implements $CategoryModelCopyWith<$Res> {
-  factory _$$_CategoryModelCopyWith(
-          _$_CategoryModel value, $Res Function(_$_CategoryModel) then) =
-      __$$_CategoryModelCopyWithImpl<$Res>;
+abstract class _$$_ItemListCategoryModelCopyWith<$Res>
+    implements $ItemListCategoryModelCopyWith<$Res> {
+  factory _$$_ItemListCategoryModelCopyWith(_$_ItemListCategoryModel value,
+          $Res Function(_$_ItemListCategoryModel) then) =
+      __$$_ItemListCategoryModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String? id, String name, String? description});
 }
 
 /// @nodoc
-class __$$_CategoryModelCopyWithImpl<$Res>
-    extends _$CategoryModelCopyWithImpl<$Res, _$_CategoryModel>
-    implements _$$_CategoryModelCopyWith<$Res> {
-  __$$_CategoryModelCopyWithImpl(
-      _$_CategoryModel _value, $Res Function(_$_CategoryModel) _then)
+class __$$_ItemListCategoryModelCopyWithImpl<$Res>
+    extends _$ItemListCategoryModelCopyWithImpl<$Res, _$_ItemListCategoryModel>
+    implements _$$_ItemListCategoryModelCopyWith<$Res> {
+  __$$_ItemListCategoryModelCopyWithImpl(_$_ItemListCategoryModel _value,
+      $Res Function(_$_ItemListCategoryModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -583,7 +589,7 @@ class __$$_CategoryModelCopyWithImpl<$Res>
     Object? name = null,
     Object? description = freezed,
   }) {
-    return _then(_$_CategoryModel(
+    return _then(_$_ItemListCategoryModel(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -602,11 +608,11 @@ class __$$_CategoryModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CategoryModel implements _CategoryModel {
-  _$_CategoryModel({this.id, required this.name, this.description});
+class _$_ItemListCategoryModel implements _ItemListCategoryModel {
+  _$_ItemListCategoryModel({this.id, required this.name, this.description});
 
-  factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
-      _$$_CategoryModelFromJson(json);
+  factory _$_ItemListCategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemListCategoryModelFromJson(json);
 
   @override
   final String? id;
@@ -617,14 +623,14 @@ class _$_CategoryModel implements _CategoryModel {
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, description: $description)';
+    return 'ItemListCategoryModel(id: $id, name: $name, description: $description)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CategoryModel &&
+            other is _$_ItemListCategoryModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -638,25 +644,26 @@ class _$_CategoryModel implements _CategoryModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>
-      __$$_CategoryModelCopyWithImpl<_$_CategoryModel>(this, _$identity);
+  _$$_ItemListCategoryModelCopyWith<_$_ItemListCategoryModel> get copyWith =>
+      __$$_ItemListCategoryModelCopyWithImpl<_$_ItemListCategoryModel>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CategoryModelToJson(
+    return _$$_ItemListCategoryModelToJson(
       this,
     );
   }
 }
 
-abstract class _CategoryModel implements CategoryModel {
-  factory _CategoryModel(
+abstract class _ItemListCategoryModel implements ItemListCategoryModel {
+  factory _ItemListCategoryModel(
       {final String? id,
       required final String name,
-      final String? description}) = _$_CategoryModel;
+      final String? description}) = _$_ItemListCategoryModel;
 
-  factory _CategoryModel.fromJson(Map<String, dynamic> json) =
-      _$_CategoryModel.fromJson;
+  factory _ItemListCategoryModel.fromJson(Map<String, dynamic> json) =
+      _$_ItemListCategoryModel.fromJson;
 
   @override
   String? get id;
@@ -666,48 +673,49 @@ abstract class _CategoryModel implements CategoryModel {
   String? get description;
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>
+  _$$_ItemListCategoryModelCopyWith<_$_ItemListCategoryModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-ItemModel _$ItemModelFromJson(Map<String, dynamic> json) {
-  return _ItemsModel.fromJson(json);
+ItemListItemModel _$ItemListItemModelFromJson(Map<String, dynamic> json) {
+  return _ItemListItemModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ItemModel {
+mixin _$ItemListItemModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  CategoryModel get category => throw _privateConstructorUsedError;
-  UserModel get owner => throw _privateConstructorUsedError;
+  ItemListCategoryModel get category => throw _privateConstructorUsedError;
+  ItemListUserModel get owner => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ItemModelCopyWith<ItemModel> get copyWith =>
+  $ItemListItemModelCopyWith<ItemListItemModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ItemModelCopyWith<$Res> {
-  factory $ItemModelCopyWith(ItemModel value, $Res Function(ItemModel) then) =
-      _$ItemModelCopyWithImpl<$Res, ItemModel>;
+abstract class $ItemListItemModelCopyWith<$Res> {
+  factory $ItemListItemModelCopyWith(
+          ItemListItemModel value, $Res Function(ItemListItemModel) then) =
+      _$ItemListItemModelCopyWithImpl<$Res, ItemListItemModel>;
   @useResult
   $Res call(
       {String id,
       String name,
       String? description,
-      CategoryModel category,
-      UserModel owner});
+      ItemListCategoryModel category,
+      ItemListUserModel owner});
 
-  $CategoryModelCopyWith<$Res> get category;
-  $UserModelCopyWith<$Res> get owner;
+  $ItemListCategoryModelCopyWith<$Res> get category;
+  $ItemListUserModelCopyWith<$Res> get owner;
 }
 
 /// @nodoc
-class _$ItemModelCopyWithImpl<$Res, $Val extends ItemModel>
-    implements $ItemModelCopyWith<$Res> {
-  _$ItemModelCopyWithImpl(this._value, this._then);
+class _$ItemListItemModelCopyWithImpl<$Res, $Val extends ItemListItemModel>
+    implements $ItemListItemModelCopyWith<$Res> {
+  _$ItemListItemModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -739,58 +747,58 @@ class _$ItemModelCopyWithImpl<$Res, $Val extends ItemModel>
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
+              as ItemListCategoryModel,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+              as ItemListUserModel,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $CategoryModelCopyWith<$Res> get category {
-    return $CategoryModelCopyWith<$Res>(_value.category, (value) {
+  $ItemListCategoryModelCopyWith<$Res> get category {
+    return $ItemListCategoryModelCopyWith<$Res>(_value.category, (value) {
       return _then(_value.copyWith(category: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res> get owner {
-    return $UserModelCopyWith<$Res>(_value.owner, (value) {
+  $ItemListUserModelCopyWith<$Res> get owner {
+    return $ItemListUserModelCopyWith<$Res>(_value.owner, (value) {
       return _then(_value.copyWith(owner: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_ItemsModelCopyWith<$Res>
-    implements $ItemModelCopyWith<$Res> {
-  factory _$$_ItemsModelCopyWith(
-          _$_ItemsModel value, $Res Function(_$_ItemsModel) then) =
-      __$$_ItemsModelCopyWithImpl<$Res>;
+abstract class _$$_ItemListItemModelCopyWith<$Res>
+    implements $ItemListItemModelCopyWith<$Res> {
+  factory _$$_ItemListItemModelCopyWith(_$_ItemListItemModel value,
+          $Res Function(_$_ItemListItemModel) then) =
+      __$$_ItemListItemModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String id,
       String name,
       String? description,
-      CategoryModel category,
-      UserModel owner});
+      ItemListCategoryModel category,
+      ItemListUserModel owner});
 
   @override
-  $CategoryModelCopyWith<$Res> get category;
+  $ItemListCategoryModelCopyWith<$Res> get category;
   @override
-  $UserModelCopyWith<$Res> get owner;
+  $ItemListUserModelCopyWith<$Res> get owner;
 }
 
 /// @nodoc
-class __$$_ItemsModelCopyWithImpl<$Res>
-    extends _$ItemModelCopyWithImpl<$Res, _$_ItemsModel>
-    implements _$$_ItemsModelCopyWith<$Res> {
-  __$$_ItemsModelCopyWithImpl(
-      _$_ItemsModel _value, $Res Function(_$_ItemsModel) _then)
+class __$$_ItemListItemModelCopyWithImpl<$Res>
+    extends _$ItemListItemModelCopyWithImpl<$Res, _$_ItemListItemModel>
+    implements _$$_ItemListItemModelCopyWith<$Res> {
+  __$$_ItemListItemModelCopyWithImpl(
+      _$_ItemListItemModel _value, $Res Function(_$_ItemListItemModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -802,7 +810,7 @@ class __$$_ItemsModelCopyWithImpl<$Res>
     Object? category = null,
     Object? owner = null,
   }) {
-    return _then(_$_ItemsModel(
+    return _then(_$_ItemListItemModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -818,27 +826,27 @@ class __$$_ItemsModelCopyWithImpl<$Res>
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
+              as ItemListCategoryModel,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+              as ItemListUserModel,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_ItemsModel implements _ItemsModel {
-  _$_ItemsModel(
+class _$_ItemListItemModel implements _ItemListItemModel {
+  _$_ItemListItemModel(
       {required this.id,
       required this.name,
       required this.description,
       required this.category,
       required this.owner});
 
-  factory _$_ItemsModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ItemsModelFromJson(json);
+  factory _$_ItemListItemModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemListItemModelFromJson(json);
 
   @override
   final String id;
@@ -847,20 +855,20 @@ class _$_ItemsModel implements _ItemsModel {
   @override
   final String? description;
   @override
-  final CategoryModel category;
+  final ItemListCategoryModel category;
   @override
-  final UserModel owner;
+  final ItemListUserModel owner;
 
   @override
   String toString() {
-    return 'ItemModel(id: $id, name: $name, description: $description, category: $category, owner: $owner)';
+    return 'ItemListItemModel(id: $id, name: $name, description: $description, category: $category, owner: $owner)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ItemsModel &&
+            other is _$_ItemListItemModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -878,27 +886,28 @@ class _$_ItemsModel implements _ItemsModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ItemsModelCopyWith<_$_ItemsModel> get copyWith =>
-      __$$_ItemsModelCopyWithImpl<_$_ItemsModel>(this, _$identity);
+  _$$_ItemListItemModelCopyWith<_$_ItemListItemModel> get copyWith =>
+      __$$_ItemListItemModelCopyWithImpl<_$_ItemListItemModel>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ItemsModelToJson(
+    return _$$_ItemListItemModelToJson(
       this,
     );
   }
 }
 
-abstract class _ItemsModel implements ItemModel {
-  factory _ItemsModel(
+abstract class _ItemListItemModel implements ItemListItemModel {
+  factory _ItemListItemModel(
       {required final String id,
       required final String name,
       required final String? description,
-      required final CategoryModel category,
-      required final UserModel owner}) = _$_ItemsModel;
+      required final ItemListCategoryModel category,
+      required final ItemListUserModel owner}) = _$_ItemListItemModel;
 
-  factory _ItemsModel.fromJson(Map<String, dynamic> json) =
-      _$_ItemsModel.fromJson;
+  factory _ItemListItemModel.fromJson(Map<String, dynamic> json) =
+      _$_ItemListItemModel.fromJson;
 
   @override
   String get id;
@@ -907,42 +916,43 @@ abstract class _ItemsModel implements ItemModel {
   @override
   String? get description;
   @override
-  CategoryModel get category;
+  ItemListCategoryModel get category;
   @override
-  UserModel get owner;
+  ItemListUserModel get owner;
   @override
   @JsonKey(ignore: true)
-  _$$_ItemsModelCopyWith<_$_ItemsModel> get copyWith =>
+  _$$_ItemListItemModelCopyWith<_$_ItemListItemModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-UserModel _$UserModelFromJson(Map<String, dynamic> json) {
-  return _UserModel.fromJson(json);
+ItemListUserModel _$ItemListUserModelFromJson(Map<String, dynamic> json) {
+  return _ItemListUserModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$UserModel {
+mixin _$ItemListUserModel {
   String get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserModelCopyWith<UserModel> get copyWith =>
+  $ItemListUserModelCopyWith<ItemListUserModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserModelCopyWith<$Res> {
-  factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
-      _$UserModelCopyWithImpl<$Res, UserModel>;
+abstract class $ItemListUserModelCopyWith<$Res> {
+  factory $ItemListUserModelCopyWith(
+          ItemListUserModel value, $Res Function(ItemListUserModel) then) =
+      _$ItemListUserModelCopyWithImpl<$Res, ItemListUserModel>;
   @useResult
   $Res call({String id, String username});
 }
 
 /// @nodoc
-class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
-    implements $UserModelCopyWith<$Res> {
-  _$UserModelCopyWithImpl(this._value, this._then);
+class _$ItemListUserModelCopyWithImpl<$Res, $Val extends ItemListUserModel>
+    implements $ItemListUserModelCopyWith<$Res> {
+  _$ItemListUserModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -969,21 +979,22 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
 }
 
 /// @nodoc
-abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
-  factory _$$_UserModelCopyWith(
-          _$_UserModel value, $Res Function(_$_UserModel) then) =
-      __$$_UserModelCopyWithImpl<$Res>;
+abstract class _$$_ItemListUserModelCopyWith<$Res>
+    implements $ItemListUserModelCopyWith<$Res> {
+  factory _$$_ItemListUserModelCopyWith(_$_ItemListUserModel value,
+          $Res Function(_$_ItemListUserModel) then) =
+      __$$_ItemListUserModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String username});
 }
 
 /// @nodoc
-class __$$_UserModelCopyWithImpl<$Res>
-    extends _$UserModelCopyWithImpl<$Res, _$_UserModel>
-    implements _$$_UserModelCopyWith<$Res> {
-  __$$_UserModelCopyWithImpl(
-      _$_UserModel _value, $Res Function(_$_UserModel) _then)
+class __$$_ItemListUserModelCopyWithImpl<$Res>
+    extends _$ItemListUserModelCopyWithImpl<$Res, _$_ItemListUserModel>
+    implements _$$_ItemListUserModelCopyWith<$Res> {
+  __$$_ItemListUserModelCopyWithImpl(
+      _$_ItemListUserModel _value, $Res Function(_$_ItemListUserModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -992,7 +1003,7 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? id = null,
     Object? username = null,
   }) {
-    return _then(_$_UserModel(
+    return _then(_$_ItemListUserModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1007,11 +1018,11 @@ class __$$_UserModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserModel implements _UserModel {
-  _$_UserModel({required this.id, required this.username});
+class _$_ItemListUserModel implements _ItemListUserModel {
+  _$_ItemListUserModel({required this.id, required this.username});
 
-  factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
-      _$$_UserModelFromJson(json);
+  factory _$_ItemListUserModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemListUserModelFromJson(json);
 
   @override
   final String id;
@@ -1020,14 +1031,14 @@ class _$_UserModel implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username)';
+    return 'ItemListUserModel(id: $id, username: $username)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserModel &&
+            other is _$_ItemListUserModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
                 other.username == username));
@@ -1040,24 +1051,25 @@ class _$_UserModel implements _UserModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
-      __$$_UserModelCopyWithImpl<_$_UserModel>(this, _$identity);
+  _$$_ItemListUserModelCopyWith<_$_ItemListUserModel> get copyWith =>
+      __$$_ItemListUserModelCopyWithImpl<_$_ItemListUserModel>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserModelToJson(
+    return _$$_ItemListUserModelToJson(
       this,
     );
   }
 }
 
-abstract class _UserModel implements UserModel {
-  factory _UserModel(
+abstract class _ItemListUserModel implements ItemListUserModel {
+  factory _ItemListUserModel(
       {required final String id,
-      required final String username}) = _$_UserModel;
+      required final String username}) = _$_ItemListUserModel;
 
-  factory _UserModel.fromJson(Map<String, dynamic> json) =
-      _$_UserModel.fromJson;
+  factory _ItemListUserModel.fromJson(Map<String, dynamic> json) =
+      _$_ItemListUserModel.fromJson;
 
   @override
   String get id;
@@ -1065,6 +1077,6 @@ abstract class _UserModel implements UserModel {
   String get username;
   @override
   @JsonKey(ignore: true)
-  _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
+  _$$_ItemListUserModelCopyWith<_$_ItemListUserModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

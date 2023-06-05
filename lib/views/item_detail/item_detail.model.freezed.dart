@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ItemDetailModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-  Option<ItemModel> get item => throw _privateConstructorUsedError;
+  Option<ItemDetailItemModel> get item => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ItemDetailModelCopyWith<ItemDetailModel> get copyWith =>
@@ -31,7 +31,7 @@ abstract class $ItemDetailModelCopyWith<$Res> {
           ItemDetailModel value, $Res Function(ItemDetailModel) then) =
       _$ItemDetailModelCopyWithImpl<$Res, ItemDetailModel>;
   @useResult
-  $Res call({bool isLoading, bool hasError, Option<ItemModel> item});
+  $Res call({bool isLoading, bool hasError, Option<ItemDetailItemModel> item});
 }
 
 /// @nodoc
@@ -63,7 +63,7 @@ class _$ItemDetailModelCopyWithImpl<$Res, $Val extends ItemDetailModel>
       item: null == item
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
-              as Option<ItemModel>,
+              as Option<ItemDetailItemModel>,
     ) as $Val);
   }
 }
@@ -76,7 +76,7 @@ abstract class _$$_ItemDetailModelCopyWith<$Res>
       __$$_ItemDetailModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, bool hasError, Option<ItemModel> item});
+  $Res call({bool isLoading, bool hasError, Option<ItemDetailItemModel> item});
 }
 
 /// @nodoc
@@ -106,7 +106,7 @@ class __$$_ItemDetailModelCopyWithImpl<$Res>
       item: null == item
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
-              as Option<ItemModel>,
+              as Option<ItemDetailItemModel>,
     ));
   }
 }
@@ -122,7 +122,7 @@ class _$_ItemDetailModel implements _ItemDetailModel {
   @override
   final bool hasError;
   @override
-  final Option<ItemModel> item;
+  final Option<ItemDetailItemModel> item;
 
   @override
   String toString() {
@@ -155,58 +155,59 @@ abstract class _ItemDetailModel implements ItemDetailModel {
   factory _ItemDetailModel(
       {required final bool isLoading,
       required final bool hasError,
-      required final Option<ItemModel> item}) = _$_ItemDetailModel;
+      required final Option<ItemDetailItemModel> item}) = _$_ItemDetailModel;
 
   @override
   bool get isLoading;
   @override
   bool get hasError;
   @override
-  Option<ItemModel> get item;
+  Option<ItemDetailItemModel> get item;
   @override
   @JsonKey(ignore: true)
   _$$_ItemDetailModelCopyWith<_$_ItemDetailModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-ItemModel _$ItemModelFromJson(Map<String, dynamic> json) {
-  return _ItemModel.fromJson(json);
+ItemDetailItemModel _$ItemDetailItemModelFromJson(Map<String, dynamic> json) {
+  return _ItemDetailItemModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ItemModel {
+mixin _$ItemDetailItemModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  UserModel get owner => throw _privateConstructorUsedError;
-  CategoryModel get category => throw _privateConstructorUsedError;
+  ItemDetailUserModel get owner => throw _privateConstructorUsedError;
+  ItemDetailCategoryModel get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ItemModelCopyWith<ItemModel> get copyWith =>
+  $ItemDetailItemModelCopyWith<ItemDetailItemModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ItemModelCopyWith<$Res> {
-  factory $ItemModelCopyWith(ItemModel value, $Res Function(ItemModel) then) =
-      _$ItemModelCopyWithImpl<$Res, ItemModel>;
+abstract class $ItemDetailItemModelCopyWith<$Res> {
+  factory $ItemDetailItemModelCopyWith(
+          ItemDetailItemModel value, $Res Function(ItemDetailItemModel) then) =
+      _$ItemDetailItemModelCopyWithImpl<$Res, ItemDetailItemModel>;
   @useResult
   $Res call(
       {String id,
       String name,
       String? description,
-      UserModel owner,
-      CategoryModel category});
+      ItemDetailUserModel owner,
+      ItemDetailCategoryModel category});
 
-  $UserModelCopyWith<$Res> get owner;
-  $CategoryModelCopyWith<$Res> get category;
+  $ItemDetailUserModelCopyWith<$Res> get owner;
+  $ItemDetailCategoryModelCopyWith<$Res> get category;
 }
 
 /// @nodoc
-class _$ItemModelCopyWithImpl<$Res, $Val extends ItemModel>
-    implements $ItemModelCopyWith<$Res> {
-  _$ItemModelCopyWithImpl(this._value, this._then);
+class _$ItemDetailItemModelCopyWithImpl<$Res, $Val extends ItemDetailItemModel>
+    implements $ItemDetailItemModelCopyWith<$Res> {
+  _$ItemDetailItemModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -238,57 +239,58 @@ class _$ItemModelCopyWithImpl<$Res, $Val extends ItemModel>
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+              as ItemDetailUserModel,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
+              as ItemDetailCategoryModel,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $UserModelCopyWith<$Res> get owner {
-    return $UserModelCopyWith<$Res>(_value.owner, (value) {
+  $ItemDetailUserModelCopyWith<$Res> get owner {
+    return $ItemDetailUserModelCopyWith<$Res>(_value.owner, (value) {
       return _then(_value.copyWith(owner: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $CategoryModelCopyWith<$Res> get category {
-    return $CategoryModelCopyWith<$Res>(_value.category, (value) {
+  $ItemDetailCategoryModelCopyWith<$Res> get category {
+    return $ItemDetailCategoryModelCopyWith<$Res>(_value.category, (value) {
       return _then(_value.copyWith(category: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_ItemModelCopyWith<$Res> implements $ItemModelCopyWith<$Res> {
-  factory _$$_ItemModelCopyWith(
-          _$_ItemModel value, $Res Function(_$_ItemModel) then) =
-      __$$_ItemModelCopyWithImpl<$Res>;
+abstract class _$$_ItemDetailItemModelCopyWith<$Res>
+    implements $ItemDetailItemModelCopyWith<$Res> {
+  factory _$$_ItemDetailItemModelCopyWith(_$_ItemDetailItemModel value,
+          $Res Function(_$_ItemDetailItemModel) then) =
+      __$$_ItemDetailItemModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String id,
       String name,
       String? description,
-      UserModel owner,
-      CategoryModel category});
+      ItemDetailUserModel owner,
+      ItemDetailCategoryModel category});
 
   @override
-  $UserModelCopyWith<$Res> get owner;
+  $ItemDetailUserModelCopyWith<$Res> get owner;
   @override
-  $CategoryModelCopyWith<$Res> get category;
+  $ItemDetailCategoryModelCopyWith<$Res> get category;
 }
 
 /// @nodoc
-class __$$_ItemModelCopyWithImpl<$Res>
-    extends _$ItemModelCopyWithImpl<$Res, _$_ItemModel>
-    implements _$$_ItemModelCopyWith<$Res> {
-  __$$_ItemModelCopyWithImpl(
-      _$_ItemModel _value, $Res Function(_$_ItemModel) _then)
+class __$$_ItemDetailItemModelCopyWithImpl<$Res>
+    extends _$ItemDetailItemModelCopyWithImpl<$Res, _$_ItemDetailItemModel>
+    implements _$$_ItemDetailItemModelCopyWith<$Res> {
+  __$$_ItemDetailItemModelCopyWithImpl(_$_ItemDetailItemModel _value,
+      $Res Function(_$_ItemDetailItemModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -300,7 +302,7 @@ class __$$_ItemModelCopyWithImpl<$Res>
     Object? owner = null,
     Object? category = null,
   }) {
-    return _then(_$_ItemModel(
+    return _then(_$_ItemDetailItemModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -316,27 +318,27 @@ class __$$_ItemModelCopyWithImpl<$Res>
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
-              as UserModel,
+              as ItemDetailUserModel,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
+              as ItemDetailCategoryModel,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_ItemModel implements _ItemModel {
-  _$_ItemModel(
+class _$_ItemDetailItemModel implements _ItemDetailItemModel {
+  _$_ItemDetailItemModel(
       {required this.id,
       required this.name,
       this.description,
       required this.owner,
       required this.category});
 
-  factory _$_ItemModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ItemModelFromJson(json);
+  factory _$_ItemDetailItemModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemDetailItemModelFromJson(json);
 
   @override
   final String id;
@@ -345,20 +347,20 @@ class _$_ItemModel implements _ItemModel {
   @override
   final String? description;
   @override
-  final UserModel owner;
+  final ItemDetailUserModel owner;
   @override
-  final CategoryModel category;
+  final ItemDetailCategoryModel category;
 
   @override
   String toString() {
-    return 'ItemModel(id: $id, name: $name, description: $description, owner: $owner, category: $category)';
+    return 'ItemDetailItemModel(id: $id, name: $name, description: $description, owner: $owner, category: $category)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ItemModel &&
+            other is _$_ItemDetailItemModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -376,27 +378,29 @@ class _$_ItemModel implements _ItemModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ItemModelCopyWith<_$_ItemModel> get copyWith =>
-      __$$_ItemModelCopyWithImpl<_$_ItemModel>(this, _$identity);
+  _$$_ItemDetailItemModelCopyWith<_$_ItemDetailItemModel> get copyWith =>
+      __$$_ItemDetailItemModelCopyWithImpl<_$_ItemDetailItemModel>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ItemModelToJson(
+    return _$$_ItemDetailItemModelToJson(
       this,
     );
   }
 }
 
-abstract class _ItemModel implements ItemModel {
-  factory _ItemModel(
-      {required final String id,
-      required final String name,
-      final String? description,
-      required final UserModel owner,
-      required final CategoryModel category}) = _$_ItemModel;
+abstract class _ItemDetailItemModel implements ItemDetailItemModel {
+  factory _ItemDetailItemModel(
+          {required final String id,
+          required final String name,
+          final String? description,
+          required final ItemDetailUserModel owner,
+          required final ItemDetailCategoryModel category}) =
+      _$_ItemDetailItemModel;
 
-  factory _ItemModel.fromJson(Map<String, dynamic> json) =
-      _$_ItemModel.fromJson;
+  factory _ItemDetailItemModel.fromJson(Map<String, dynamic> json) =
+      _$_ItemDetailItemModel.fromJson;
 
   @override
   String get id;
@@ -405,48 +409,53 @@ abstract class _ItemModel implements ItemModel {
   @override
   String? get description;
   @override
-  UserModel get owner;
+  ItemDetailUserModel get owner;
   @override
-  CategoryModel get category;
+  ItemDetailCategoryModel get category;
   @override
   @JsonKey(ignore: true)
-  _$$_ItemModelCopyWith<_$_ItemModel> get copyWith =>
+  _$$_ItemDetailItemModelCopyWith<_$_ItemDetailItemModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
-  return _CategoryModel.fromJson(json);
+ItemDetailCategoryModel _$ItemDetailCategoryModelFromJson(
+    Map<String, dynamic> json) {
+  return _ItemDetailCategoryModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CategoryModel {
+mixin _$ItemDetailCategoryModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  CategoryModel? get parent => throw _privateConstructorUsedError;
+  ItemDetailCategoryModel? get parent => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CategoryModelCopyWith<CategoryModel> get copyWith =>
+  $ItemDetailCategoryModelCopyWith<ItemDetailCategoryModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CategoryModelCopyWith<$Res> {
-  factory $CategoryModelCopyWith(
-          CategoryModel value, $Res Function(CategoryModel) then) =
-      _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
+abstract class $ItemDetailCategoryModelCopyWith<$Res> {
+  factory $ItemDetailCategoryModelCopyWith(ItemDetailCategoryModel value,
+          $Res Function(ItemDetailCategoryModel) then) =
+      _$ItemDetailCategoryModelCopyWithImpl<$Res, ItemDetailCategoryModel>;
   @useResult
   $Res call(
-      {String id, String name, String? description, CategoryModel? parent});
+      {String id,
+      String name,
+      String? description,
+      ItemDetailCategoryModel? parent});
 
-  $CategoryModelCopyWith<$Res>? get parent;
+  $ItemDetailCategoryModelCopyWith<$Res>? get parent;
 }
 
 /// @nodoc
-class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
-    implements $CategoryModelCopyWith<$Res> {
-  _$CategoryModelCopyWithImpl(this._value, this._then);
+class _$ItemDetailCategoryModelCopyWithImpl<$Res,
+        $Val extends ItemDetailCategoryModel>
+    implements $ItemDetailCategoryModelCopyWith<$Res> {
+  _$ItemDetailCategoryModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -477,44 +486,48 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
       parent: freezed == parent
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
-              as CategoryModel?,
+              as ItemDetailCategoryModel?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $CategoryModelCopyWith<$Res>? get parent {
+  $ItemDetailCategoryModelCopyWith<$Res>? get parent {
     if (_value.parent == null) {
       return null;
     }
 
-    return $CategoryModelCopyWith<$Res>(_value.parent!, (value) {
+    return $ItemDetailCategoryModelCopyWith<$Res>(_value.parent!, (value) {
       return _then(_value.copyWith(parent: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_CategoryModelCopyWith<$Res>
-    implements $CategoryModelCopyWith<$Res> {
-  factory _$$_CategoryModelCopyWith(
-          _$_CategoryModel value, $Res Function(_$_CategoryModel) then) =
-      __$$_CategoryModelCopyWithImpl<$Res>;
+abstract class _$$_ItemDetailCategoryModelCopyWith<$Res>
+    implements $ItemDetailCategoryModelCopyWith<$Res> {
+  factory _$$_ItemDetailCategoryModelCopyWith(_$_ItemDetailCategoryModel value,
+          $Res Function(_$_ItemDetailCategoryModel) then) =
+      __$$_ItemDetailCategoryModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String id, String name, String? description, CategoryModel? parent});
+      {String id,
+      String name,
+      String? description,
+      ItemDetailCategoryModel? parent});
 
   @override
-  $CategoryModelCopyWith<$Res>? get parent;
+  $ItemDetailCategoryModelCopyWith<$Res>? get parent;
 }
 
 /// @nodoc
-class __$$_CategoryModelCopyWithImpl<$Res>
-    extends _$CategoryModelCopyWithImpl<$Res, _$_CategoryModel>
-    implements _$$_CategoryModelCopyWith<$Res> {
-  __$$_CategoryModelCopyWithImpl(
-      _$_CategoryModel _value, $Res Function(_$_CategoryModel) _then)
+class __$$_ItemDetailCategoryModelCopyWithImpl<$Res>
+    extends _$ItemDetailCategoryModelCopyWithImpl<$Res,
+        _$_ItemDetailCategoryModel>
+    implements _$$_ItemDetailCategoryModelCopyWith<$Res> {
+  __$$_ItemDetailCategoryModelCopyWithImpl(_$_ItemDetailCategoryModel _value,
+      $Res Function(_$_ItemDetailCategoryModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -525,7 +538,7 @@ class __$$_CategoryModelCopyWithImpl<$Res>
     Object? description = freezed,
     Object? parent = freezed,
   }) {
-    return _then(_$_CategoryModel(
+    return _then(_$_ItemDetailCategoryModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -541,19 +554,19 @@ class __$$_CategoryModelCopyWithImpl<$Res>
       parent: freezed == parent
           ? _value.parent
           : parent // ignore: cast_nullable_to_non_nullable
-              as CategoryModel?,
+              as ItemDetailCategoryModel?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_CategoryModel implements _CategoryModel {
-  _$_CategoryModel(
+class _$_ItemDetailCategoryModel implements _ItemDetailCategoryModel {
+  _$_ItemDetailCategoryModel(
       {required this.id, required this.name, this.description, this.parent});
 
-  factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
-      _$$_CategoryModelFromJson(json);
+  factory _$_ItemDetailCategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemDetailCategoryModelFromJson(json);
 
   @override
   final String id;
@@ -562,18 +575,18 @@ class _$_CategoryModel implements _CategoryModel {
   @override
   final String? description;
   @override
-  final CategoryModel? parent;
+  final ItemDetailCategoryModel? parent;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, description: $description, parent: $parent)';
+    return 'ItemDetailCategoryModel(id: $id, name: $name, description: $description, parent: $parent)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CategoryModel &&
+            other is _$_ItemDetailCategoryModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
@@ -588,26 +601,28 @@ class _$_CategoryModel implements _CategoryModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>
-      __$$_CategoryModelCopyWithImpl<_$_CategoryModel>(this, _$identity);
+  _$$_ItemDetailCategoryModelCopyWith<_$_ItemDetailCategoryModel>
+      get copyWith =>
+          __$$_ItemDetailCategoryModelCopyWithImpl<_$_ItemDetailCategoryModel>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CategoryModelToJson(
+    return _$$_ItemDetailCategoryModelToJson(
       this,
     );
   }
 }
 
-abstract class _CategoryModel implements CategoryModel {
-  factory _CategoryModel(
+abstract class _ItemDetailCategoryModel implements ItemDetailCategoryModel {
+  factory _ItemDetailCategoryModel(
       {required final String id,
       required final String name,
       final String? description,
-      final CategoryModel? parent}) = _$_CategoryModel;
+      final ItemDetailCategoryModel? parent}) = _$_ItemDetailCategoryModel;
 
-  factory _CategoryModel.fromJson(Map<String, dynamic> json) =
-      _$_CategoryModel.fromJson;
+  factory _ItemDetailCategoryModel.fromJson(Map<String, dynamic> json) =
+      _$_ItemDetailCategoryModel.fromJson;
 
   @override
   String get id;
@@ -616,40 +631,41 @@ abstract class _CategoryModel implements CategoryModel {
   @override
   String? get description;
   @override
-  CategoryModel? get parent;
+  ItemDetailCategoryModel? get parent;
   @override
   @JsonKey(ignore: true)
-  _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_ItemDetailCategoryModelCopyWith<_$_ItemDetailCategoryModel>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
-UserModel _$UserModelFromJson(Map<String, dynamic> json) {
-  return _UserModel.fromJson(json);
+ItemDetailUserModel _$ItemDetailUserModelFromJson(Map<String, dynamic> json) {
+  return _ItemDetailUserModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$UserModel {
+mixin _$ItemDetailUserModel {
   String get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserModelCopyWith<UserModel> get copyWith =>
+  $ItemDetailUserModelCopyWith<ItemDetailUserModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserModelCopyWith<$Res> {
-  factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
-      _$UserModelCopyWithImpl<$Res, UserModel>;
+abstract class $ItemDetailUserModelCopyWith<$Res> {
+  factory $ItemDetailUserModelCopyWith(
+          ItemDetailUserModel value, $Res Function(ItemDetailUserModel) then) =
+      _$ItemDetailUserModelCopyWithImpl<$Res, ItemDetailUserModel>;
   @useResult
   $Res call({String id, String username});
 }
 
 /// @nodoc
-class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
-    implements $UserModelCopyWith<$Res> {
-  _$UserModelCopyWithImpl(this._value, this._then);
+class _$ItemDetailUserModelCopyWithImpl<$Res, $Val extends ItemDetailUserModel>
+    implements $ItemDetailUserModelCopyWith<$Res> {
+  _$ItemDetailUserModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -676,21 +692,22 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
 }
 
 /// @nodoc
-abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
-  factory _$$_UserModelCopyWith(
-          _$_UserModel value, $Res Function(_$_UserModel) then) =
-      __$$_UserModelCopyWithImpl<$Res>;
+abstract class _$$_ItemDetailUserModelCopyWith<$Res>
+    implements $ItemDetailUserModelCopyWith<$Res> {
+  factory _$$_ItemDetailUserModelCopyWith(_$_ItemDetailUserModel value,
+          $Res Function(_$_ItemDetailUserModel) then) =
+      __$$_ItemDetailUserModelCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String username});
 }
 
 /// @nodoc
-class __$$_UserModelCopyWithImpl<$Res>
-    extends _$UserModelCopyWithImpl<$Res, _$_UserModel>
-    implements _$$_UserModelCopyWith<$Res> {
-  __$$_UserModelCopyWithImpl(
-      _$_UserModel _value, $Res Function(_$_UserModel) _then)
+class __$$_ItemDetailUserModelCopyWithImpl<$Res>
+    extends _$ItemDetailUserModelCopyWithImpl<$Res, _$_ItemDetailUserModel>
+    implements _$$_ItemDetailUserModelCopyWith<$Res> {
+  __$$_ItemDetailUserModelCopyWithImpl(_$_ItemDetailUserModel _value,
+      $Res Function(_$_ItemDetailUserModel) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -699,7 +716,7 @@ class __$$_UserModelCopyWithImpl<$Res>
     Object? id = null,
     Object? username = null,
   }) {
-    return _then(_$_UserModel(
+    return _then(_$_ItemDetailUserModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -714,11 +731,11 @@ class __$$_UserModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserModel implements _UserModel {
-  _$_UserModel({required this.id, required this.username});
+class _$_ItemDetailUserModel implements _ItemDetailUserModel {
+  _$_ItemDetailUserModel({required this.id, required this.username});
 
-  factory _$_UserModel.fromJson(Map<String, dynamic> json) =>
-      _$$_UserModelFromJson(json);
+  factory _$_ItemDetailUserModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemDetailUserModelFromJson(json);
 
   @override
   final String id;
@@ -727,14 +744,14 @@ class _$_UserModel implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, username: $username)';
+    return 'ItemDetailUserModel(id: $id, username: $username)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserModel &&
+            other is _$_ItemDetailUserModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
                 other.username == username));
@@ -747,24 +764,25 @@ class _$_UserModel implements _UserModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
-      __$$_UserModelCopyWithImpl<_$_UserModel>(this, _$identity);
+  _$$_ItemDetailUserModelCopyWith<_$_ItemDetailUserModel> get copyWith =>
+      __$$_ItemDetailUserModelCopyWithImpl<_$_ItemDetailUserModel>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserModelToJson(
+    return _$$_ItemDetailUserModelToJson(
       this,
     );
   }
 }
 
-abstract class _UserModel implements UserModel {
-  factory _UserModel(
+abstract class _ItemDetailUserModel implements ItemDetailUserModel {
+  factory _ItemDetailUserModel(
       {required final String id,
-      required final String username}) = _$_UserModel;
+      required final String username}) = _$_ItemDetailUserModel;
 
-  factory _UserModel.fromJson(Map<String, dynamic> json) =
-      _$_UserModel.fromJson;
+  factory _ItemDetailUserModel.fromJson(Map<String, dynamic> json) =
+      _$_ItemDetailUserModel.fromJson;
 
   @override
   String get id;
@@ -772,6 +790,6 @@ abstract class _UserModel implements UserModel {
   String get username;
   @override
   @JsonKey(ignore: true)
-  _$$_UserModelCopyWith<_$_UserModel> get copyWith =>
+  _$$_ItemDetailUserModelCopyWith<_$_ItemDetailUserModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

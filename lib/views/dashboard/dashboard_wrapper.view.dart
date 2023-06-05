@@ -5,7 +5,7 @@ import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class DashboardWrapperView extends ConsumerStatefulWidget {
+class DashboardWrapperView extends ConsumerWidget {
   final Widget child;
   final String groupId;
 
@@ -16,31 +16,32 @@ class DashboardWrapperView extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<DashboardWrapperView> createState() => _DashboardWrapperViewState();
-}
-
-class _DashboardWrapperViewState extends ConsumerState<DashboardWrapperView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final dashboardController = ref.read(
-      providers.dashboardControllerProvider(widget.groupId).notifier,
+      providers.dashboardControllerProvider(groupId).notifier,
     );
     final groupController = ref.read(
-      providers.itemListControllerProvider(widget.groupId).notifier,
+      providers.itemListControllerProvider(groupId).notifier,
     );
-    final dashboardModel = ref.watch(providers.dashboardControllerProvider(widget.groupId));
-    final groupModel = ref.watch(providers.itemListControllerProvider(widget.groupId));
+    final dashboardModel = ref.watch(
+      providers.dashboardControllerProvider(groupId),
+    );
+    final groupModel = ref.watch(
+      providers.itemListControllerProvider(groupId),
+    );
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(dashboardModel.currentTitle ?? ""),
             if (dashboardModel.currentIndex == 0)
-              DropdownWidget<CategoryModel>(
+              DropdownWidget<ItemListCategoryModel>(
                 hint: const Text("Category"),
-                items: [...?groupModel.group?.categories, CategoryModel(name: "All")],
+                items: [
+                  ...?groupModel.group?.categories,
+                  ItemListCategoryModel(name: "All"),
+                ],
                 onChanged: groupController.selectCategory,
                 value: groupModel.selectedCategory,
                 mapFunction: (category) => DropdownMenuItem(
@@ -51,7 +52,7 @@ class _DashboardWrapperViewState extends ConsumerState<DashboardWrapperView> {
           ],
         ),
       ),
-      body: widget.child,
+      body: child,
       bottomNavigationBar: BottomNavigationBar(
         onTap: dashboardController.setCurrentIndex,
         currentIndex: dashboardModel.currentIndex,
@@ -71,7 +72,7 @@ class _DashboardWrapperViewState extends ConsumerState<DashboardWrapperView> {
 }
 
 abstract class DashboardController extends StateNotifier<DashboardModel> {
-  DashboardController(DashboardModel model) : super(model);
+  DashboardController(super.model);
 
   void setCurrentIndex(int index);
 }

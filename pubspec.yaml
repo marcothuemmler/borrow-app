@@ -50,6 +50,9 @@ dependencies:
   dio_smart_retry: ^5.0.0
   calendar_date_picker2: ^0.5.2
   jwt_decoder: ^2.0.1
+  dotted_border: ^2.0.0+3
+  image_picker: ^0.8.7+5
+  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:

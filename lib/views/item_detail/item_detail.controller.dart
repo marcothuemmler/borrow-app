@@ -1,17 +1,24 @@
+import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.service.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
 import 'package:dartz/dartz.dart';
+import 'package:go_router/go_router.dart';
 
 class ItemDetailControllerImplementation extends ItemDetailController {
-  final String itemId;
-  final ItemDetailService itemDetailService;
+  final String _itemId;
+  final ItemDetailService _itemDetailService;
+  final GoRouter _router;
 
   ItemDetailControllerImplementation({
     ItemDetailModel? model,
-    required this.itemId,
-    required this.itemDetailService,
-  }) : super(
+    required String itemId,
+    required ItemDetailService itemDetailService,
+    required GoRouter router,
+  })  : _itemDetailService = itemDetailService,
+        _itemId = itemId,
+        _router = router,
+        super(
           model ??
               ItemDetailModel(
                 isLoading: false,
@@ -23,14 +30,14 @@ class ItemDetailControllerImplementation extends ItemDetailController {
   }
 
   void _init() {
-    getItemDetails(itemId: itemId);
+    getItemDetails(itemId: _itemId);
   }
 
   Future<void> getItemDetails({required String itemId}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await itemDetailService.getItemDetails(itemId: itemId);
-      state = state.copyWith(item: optionOf(response), isLoading: false, hasError: false);
+      final response = await _itemDetailService.getItemDetails(itemId: itemId);
+      state = state.copyWith(item: optionOf(response), isLoading: false);
     } catch (error) {
       state = state.copyWith(isLoading: false, hasError: true);
     }
@@ -38,7 +45,11 @@ class ItemDetailControllerImplementation extends ItemDetailController {
 
   @override
   void contactOwner({required String ownerId}) {
-    // TODO: implement contactOwner
+    _router.pushNamed(
+      chatRoute.name,
+      pathParameters: {'userId': ownerId},
+      queryParameters: {"itemId": _itemId},
+    );
   }
 
   @override

@@ -185,6 +185,177 @@ abstract class _LoginModel implements LoginModel {
       throw _privateConstructorUsedError;
 }
 
+/// @nodoc
+mixin _$SignupModel {
+  bool get hasError => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  SignupDto get signupDto => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $SignupModelCopyWith<SignupModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SignupModelCopyWith<$Res> {
+  factory $SignupModelCopyWith(
+          SignupModel value, $Res Function(SignupModel) then) =
+      _$SignupModelCopyWithImpl<$Res, SignupModel>;
+  @useResult
+  $Res call({bool hasError, bool isLoading, SignupDto signupDto});
+
+  $SignupDtoCopyWith<$Res> get signupDto;
+}
+
+/// @nodoc
+class _$SignupModelCopyWithImpl<$Res, $Val extends SignupModel>
+    implements $SignupModelCopyWith<$Res> {
+  _$SignupModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? hasError = null,
+    Object? isLoading = null,
+    Object? signupDto = null,
+  }) {
+    return _then(_value.copyWith(
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      signupDto: null == signupDto
+          ? _value.signupDto
+          : signupDto // ignore: cast_nullable_to_non_nullable
+              as SignupDto,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SignupDtoCopyWith<$Res> get signupDto {
+    return $SignupDtoCopyWith<$Res>(_value.signupDto, (value) {
+      return _then(_value.copyWith(signupDto: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_SignupModelCopyWith<$Res>
+    implements $SignupModelCopyWith<$Res> {
+  factory _$$_SignupModelCopyWith(
+          _$_SignupModel value, $Res Function(_$_SignupModel) then) =
+      __$$_SignupModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool hasError, bool isLoading, SignupDto signupDto});
+
+  @override
+  $SignupDtoCopyWith<$Res> get signupDto;
+}
+
+/// @nodoc
+class __$$_SignupModelCopyWithImpl<$Res>
+    extends _$SignupModelCopyWithImpl<$Res, _$_SignupModel>
+    implements _$$_SignupModelCopyWith<$Res> {
+  __$$_SignupModelCopyWithImpl(
+      _$_SignupModel _value, $Res Function(_$_SignupModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? hasError = null,
+    Object? isLoading = null,
+    Object? signupDto = null,
+  }) {
+    return _then(_$_SignupModel(
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      signupDto: null == signupDto
+          ? _value.signupDto
+          : signupDto // ignore: cast_nullable_to_non_nullable
+              as SignupDto,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SignupModel implements _SignupModel {
+  const _$_SignupModel(
+      {required this.hasError,
+      required this.isLoading,
+      required this.signupDto});
+
+  @override
+  final bool hasError;
+  @override
+  final bool isLoading;
+  @override
+  final SignupDto signupDto;
+
+  @override
+  String toString() {
+    return 'SignupModel(hasError: $hasError, isLoading: $isLoading, signupDto: $signupDto)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SignupModel &&
+            (identical(other.hasError, hasError) ||
+                other.hasError == hasError) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.signupDto, signupDto) ||
+                other.signupDto == signupDto));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, hasError, isLoading, signupDto);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SignupModelCopyWith<_$_SignupModel> get copyWith =>
+      __$$_SignupModelCopyWithImpl<_$_SignupModel>(this, _$identity);
+}
+
+abstract class _SignupModel implements SignupModel {
+  const factory _SignupModel(
+      {required final bool hasError,
+      required final bool isLoading,
+      required final SignupDto signupDto}) = _$_SignupModel;
+
+  @override
+  bool get hasError;
+  @override
+  bool get isLoading;
+  @override
+  SignupDto get signupDto;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SignupModelCopyWith<_$_SignupModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 SignupDto _$SignupDtoFromJson(Map<String, dynamic> json) {
   return _SignupDto.fromJson(json);
 }

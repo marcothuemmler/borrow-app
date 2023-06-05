@@ -25,7 +25,9 @@ class PasswordFieldWidget extends StatelessWidget {
         const Text('Password'),
         const SizedBox(height: 10),
         TextFormField(
-          maxLines: 1,
+          keyboardType: TextInputType.visiblePassword,
+          textInputAction: TextInputAction.next,
+          autofillHints: const [AutofillHints.password],
           autocorrect: false,
           validator: validator,
           decoration: InputDecoration(
@@ -34,7 +36,9 @@ class PasswordFieldWidget extends StatelessWidget {
             suffixIcon: GestureDetector(
               onTap: onTapIcon,
               child: Icon(
-                obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                obscureText
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
               ),
             ),
           ),

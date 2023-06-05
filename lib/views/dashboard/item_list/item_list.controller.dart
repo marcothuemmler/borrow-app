@@ -5,16 +5,18 @@ import 'package:borrow_app/views/dashboard/item_list/item_list.view.dart';
 import 'package:go_router/go_router.dart';
 
 class ItemListControllerImplementation extends ItemListController {
-  final ItemListService itemListService;
-  final String groupId;
+  final ItemListService _itemListService;
+  final String _groupId;
   final GoRouter _router;
 
   ItemListControllerImplementation({
     ItemListModel? model,
-    required this.itemListService,
-    required this.groupId,
+    required ItemListService itemListService,
+    required String groupId,
     required GoRouter router,
-  })  : _router = router,
+  })  : _itemListService = itemListService,
+        _groupId = groupId,
+        _router = router,
         super(
           model ??
               ItemListModel(
@@ -29,18 +31,16 @@ class ItemListControllerImplementation extends ItemListController {
   }
 
   void _init() {
-    getGroupItemsAndCategories(id: groupId);
+    getGroupItemsAndCategories(id: _groupId);
   }
 
   Future<void> getGroupItemsAndCategories({required String id}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await itemListService.getGroupItemsAndCategories(groupId: id);
-      state = state.copyWith(
-        group: response,
-        isLoading: false,
-        hasError: false,
+      final response = await _itemListService.getGroupItemsAndCategories(
+        groupId: id,
       );
+      state = state.copyWith(group: response, isLoading: false);
       filterItemsByCategory(category: state.selectedCategory);
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
@@ -51,21 +51,22 @@ class ItemListControllerImplementation extends ItemListController {
   void navigateToItem({required String itemId}) {
     _router.pushNamed(
       itemDetailRoute.name,
-      pathParameters: {"itemId": itemId, "groupId": groupId},
+      pathParameters: {"itemId": itemId},
     );
   }
 
   @override
-  void selectCategory(CategoryModel? category) {
+  void selectCategory(ItemListCategoryModel? category) {
     final selectedCategory = category?.id is! String ? null : category;
     state = state.copyWith(selectedCategory: selectedCategory);
     filterItemsByCategory(category: selectedCategory);
   }
 
-  void filterItemsByCategory({CategoryModel? category}) {
-    if (state.group is GroupModel) {
+  void filterItemsByCategory({ItemListCategoryModel? category}) {
+    if (state.group is ItemListGroupModel) {
       final filteredItems = state.group!.items.where((item) {
-        return category is! CategoryModel || item.category.id == category.id;
+        return category is! ItemListCategoryModel ||
+            item.category.id == category.id;
       }).toList();
       state = state.copyWith(items: filteredItems);
     }

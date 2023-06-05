@@ -8,55 +8,59 @@ class ItemListModel with _$ItemListModel {
   factory ItemListModel({
     required bool isLoading,
     required bool hasError,
-    required CategoryModel? selectedCategory,
-    required GroupModel? group,
-    required List<ItemModel> items,
+    required ItemListCategoryModel? selectedCategory,
+    required ItemListGroupModel? group,
+    required List<ItemListItemModel> items,
   }) = _ItemListModel;
 }
 
 @freezed
-class GroupModel with _$GroupModel {
-  factory GroupModel({
+class ItemListGroupModel with _$ItemListGroupModel {
+  factory ItemListGroupModel({
     required String id,
     required String name,
     required String? description,
-    required List<CategoryModel> categories,
-    required List<ItemModel> items,
-  }) = _GroupModel;
+    required List<ItemListCategoryModel> categories,
+    required List<ItemListItemModel> items,
+  }) = _ItemListGroupModel;
 
-  factory GroupModel.fromJson(Map<String, dynamic> json) => _$GroupModelFromJson(json);
+  factory ItemListGroupModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemListGroupModelFromJson(json);
 }
 
 @freezed
-class CategoryModel with _$CategoryModel {
-  factory CategoryModel({
+class ItemListCategoryModel with _$ItemListCategoryModel {
+  factory ItemListCategoryModel({
     String? id,
     required String name,
     String? description,
-  }) = _CategoryModel;
+  }) = _ItemListCategoryModel;
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) => _$CategoryModelFromJson(json);
+  factory ItemListCategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemListCategoryModelFromJson(json);
 }
 
 @freezed
-class ItemModel with _$ItemModel {
-  factory ItemModel({
+class ItemListItemModel with _$ItemListItemModel {
+  factory ItemListItemModel({
     required String id,
     required String name,
     required String? description,
-    required CategoryModel category,
-    required UserModel owner,
-  }) = _ItemsModel;
+    required ItemListCategoryModel category,
+    required ItemListUserModel owner,
+  }) = _ItemListItemModel;
 
-  factory ItemModel.fromJson(Map<String, dynamic> json) => _$ItemModelFromJson(json);
+  factory ItemListItemModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemListItemModelFromJson(json);
 }
 
 @freezed
-class UserModel with _$UserModel {
-  factory UserModel({
+class ItemListUserModel with _$ItemListUserModel {
+  factory ItemListUserModel({
     required String id,
     required String username,
-  }) = _UserModel;
+  }) = _ItemListUserModel;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+  factory ItemListUserModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemListUserModelFromJson(json);
 }
