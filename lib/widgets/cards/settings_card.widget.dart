@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class SettingsCardView extends StatelessWidget {
   final String text;
   final Function() function;
-
   const SettingsCardView({
     super.key,
     required this.text,

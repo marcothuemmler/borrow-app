@@ -1,5 +1,6 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/profile/categories_settings.view.dart';
 import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
 import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
@@ -20,7 +21,7 @@ class ItemListView extends ConsumerWidget {
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    if (model.hasError || model.group is! GroupModel) {
+    if (model.hasError || model.group is! ItemListGroupModel) {
       return const Center(child: Text("something went wrong"));
     }
     return SafeArea(
@@ -51,22 +52,29 @@ class ItemListView extends ConsumerWidget {
                   const Center(
                     child: Text(
                       "It's empty in here",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 24,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 25),
                   DottedBorderButton(
                     title: "Create a new category",
                     icon: const Icon(Icons.add),
-                    onTap: () => _onNewCategory(controller, context),
+                    onTap: () => _onNewCategory(
+                      ref.read(
+                        providers.categoriesListProvider(groupId).notifier,
+                      ),
+                      context,
+                    ),
                     width: 200,
                   ),
                   const SizedBox(height: 10),
                   DottedBorderButton(
                     title: "Add a new item",
                     icon: const Icon(Icons.add),
-                    onTap: controller.createItem,
+                    onTap: () {},
                     width: 200,
                   ),
                 ],
@@ -78,7 +86,7 @@ class ItemListView extends ConsumerWidget {
   }
 
   Future<void> _onNewCategory(
-    ItemListController controller,
+    CategoriesSettingsController controller,
     BuildContext context,
   ) async {
     final bool? value = await _showNewCategoryDialog(controller, context);
@@ -88,7 +96,7 @@ class ItemListView extends ConsumerWidget {
   }
 
   Future<bool?> _showNewCategoryDialog(
-    ItemListController controller,
+    CategoriesSettingsController controller,
     BuildContext context,
   ) async {
     return showDialog<bool>(
@@ -111,16 +119,5 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
 
   void navigateToItem({required String itemId});
 
-  void selectCategory(CategoryModel? category);
-
-  void setNewCategoryName(String name);
-  void setNewCategoryDescription(String description);
-
-  void createItem();
-
-  void addCategory();
-
-  void createNewCategory();
-
-  String? validateFormField({required String fieldName});
+  void selectCategory(ItemListCategoryModel? category);
 }

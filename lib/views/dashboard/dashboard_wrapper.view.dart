@@ -36,11 +36,11 @@ class DashboardWrapperView extends ConsumerWidget {
           children: [
             Text(dashboardModel.currentTitle ?? ""),
             if (dashboardModel.currentIndex == 0)
-              DropdownWidget<CategoryModel>(
+              DropdownWidget<ItemListCategoryModel>(
                 hint: const Text("Category"),
                 items: [
                   ...?groupModel.group?.categories,
-                  CategoryModel(name: "All"),
+                  ItemListCategoryModel(name: "All"),
                 ],
                 onChanged: groupController.selectCategory,
                 value: groupModel.selectedCategory,

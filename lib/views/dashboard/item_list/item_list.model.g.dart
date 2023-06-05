@@ -6,20 +6,22 @@ part of 'item_list.model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_GroupModel _$$_GroupModelFromJson(Map<String, dynamic> json) =>
-    _$_GroupModel(
+_$_ItemListGroupModel _$$_ItemListGroupModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_ItemListGroupModel(
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String?,
       categories: (json['categories'] as List<dynamic>)
-          .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ItemListCategoryModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       items: (json['items'] as List<dynamic>)
-          .map((e) => ItemModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => ItemListItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_GroupModelToJson(_$_GroupModel instance) =>
+Map<String, dynamic> _$$_ItemListGroupModelToJson(
+        _$_ItemListGroupModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -28,48 +30,34 @@ Map<String, dynamic> _$$_GroupModelToJson(_$_GroupModel instance) =>
       'items': instance.items,
     };
 
-_$_CategoryModel _$$_CategoryModelFromJson(Map<String, dynamic> json) =>
-    _$_CategoryModel(
+_$_ItemListCategoryModel _$$_ItemListCategoryModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_ItemListCategoryModel(
       id: json['id'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
-      groupId: json['groupId'] as String?,
     );
 
-Map<String, dynamic> _$$_CategoryModelToJson(_$_CategoryModel instance) =>
+Map<String, dynamic> _$$_ItemListCategoryModelToJson(
+        _$_ItemListCategoryModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
-      'groupId': instance.groupId,
     };
 
-_$_CreateCategoryDTO _$$_CreateCategoryDTOFromJson(Map<String, dynamic> json) =>
-    _$_CreateCategoryDTO(
-      name: json['name'] as String,
-      description: json['description'] as String?,
-      groupId: json['groupId'] as String?,
-    );
-
-Map<String, dynamic> _$$_CreateCategoryDTOToJson(
-        _$_CreateCategoryDTO instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'description': instance.description,
-      'groupId': instance.groupId,
-    };
-
-_$_ItemsModel _$$_ItemsModelFromJson(Map<String, dynamic> json) =>
-    _$_ItemsModel(
+_$_ItemListItemModel _$$_ItemListItemModelFromJson(Map<String, dynamic> json) =>
+    _$_ItemListItemModel(
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String?,
-      category:
-          CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
-      owner: UserModel.fromJson(json['owner'] as Map<String, dynamic>),
+      category: ItemListCategoryModel.fromJson(
+          json['category'] as Map<String, dynamic>),
+      owner: ItemListUserModel.fromJson(json['owner'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_ItemsModelToJson(_$_ItemsModel instance) =>
+Map<String, dynamic> _$$_ItemListItemModelToJson(
+        _$_ItemListItemModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -78,27 +66,14 @@ Map<String, dynamic> _$$_ItemsModelToJson(_$_ItemsModel instance) =>
       'owner': instance.owner,
     };
 
-_$_CategoryListModel _$$_CategoryListModelFromJson(Map<String, dynamic> json) =>
-    _$_CategoryListModel(
-      groupId: json['groupId'] as String?,
-      categories: (json['categories'] as List<dynamic>)
-          .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$$_CategoryListModelToJson(
-        _$_CategoryListModel instance) =>
-    <String, dynamic>{
-      'groupId': instance.groupId,
-      'categories': instance.categories,
-    };
-
-_$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
+_$_ItemListUserModel _$$_ItemListUserModelFromJson(Map<String, dynamic> json) =>
+    _$_ItemListUserModel(
       id: json['id'] as String,
       username: json['username'] as String,
     );
 
-Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>
+Map<String, dynamic> _$$_ItemListUserModelToJson(
+        _$_ItemListUserModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'username': instance.username,

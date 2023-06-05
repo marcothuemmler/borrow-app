@@ -25,6 +25,7 @@ import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
 import 'package:borrow_app/views/profile/categories_settings.controller.dart';
 import 'package:borrow_app/views/profile/categories_settings.view.dart';
+import 'package:borrow_app/views/profile/category_settings.model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -123,9 +124,9 @@ class Providers {
     ),
   );
 
-  final AutoDisposeStateNotifierProviderFamily<CategoriesSettingsController,
+  final StateNotifierProviderFamily<CategoriesSettingsController,
           CategoryListDetailModel, String> categoriesListProvider =
-      AutoDisposeStateNotifierProvider.family<CategoriesSettingsController,
+      StateNotifierProvider.family<CategoriesSettingsController,
           CategoryListDetailModel, String>(
     (ref, groupId) => CategoriesSettingsControllerImplementation(
       groupId: groupId,
