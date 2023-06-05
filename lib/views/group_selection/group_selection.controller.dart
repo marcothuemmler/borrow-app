@@ -80,7 +80,9 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
 
   @override
   void createNewGroup() {
-    state = state.copyWith(newGroup: GroupModel(name: "", description: null));
+    state = state.copyWith(
+      newGroup: GroupSelectionGroupModel(name: "", description: null),
+    );
   }
 
   @override

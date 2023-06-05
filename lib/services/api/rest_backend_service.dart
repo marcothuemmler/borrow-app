@@ -1,12 +1,10 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart'
-    as item_list_model;
-import 'package:borrow_app/views/group_selection/group_selection.model.dart'
-    as group_selection_model;
-import 'package:borrow_app/views/item_detail/item_detail.model.dart'
-    as item_detail_model;
+import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/group_selection/group_selection.model.dart';
+import 'package:borrow_app/views/item_detail/item_detail.model.dart';
+import 'package:borrow_app/views/profile/category_settings.model.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -54,7 +52,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<group_selection_model.UserModel> getGroups() async {
+  Future<GroupSelectionUserModel> getGroups() async {
     try {
       final userId = await _storageService.read(key: "user-id");
       final response = await _client.get(
@@ -63,7 +61,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
           "join": ['groups']
         },
       );
-      return group_selection_model.UserModel.fromJson(response.data);
+      return GroupSelectionUserModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get group items: $error");
     }
@@ -80,7 +78,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<item_list_model.GroupModel> getGroupItemsAndCategories({
+  Future<ItemListGroupModel> getGroupItemsAndCategories({
     required String groupId,
   }) async {
     try {
@@ -90,32 +88,32 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
           "join": ["categories", "items", "items.category", "items.owner"]
         },
       );
-      return item_list_model.GroupModel.fromJson(response.data);
+      return ItemListGroupModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get group items: $error");
     }
   }
 
   @override
-  Future<group_selection_model.GroupModel> postGroup(
-    group_selection_model.GroupModel group,
+  Future<GroupSelectionGroupModel> postGroup(
+    GroupSelectionGroupModel group,
   ) async {
     try {
       final userId = await _storageService.read(key: "user-id");
-      final groupWithCreatorId = group_selection_model.CreateGroupDTO(
+      final groupWithCreatorId = CreateGroupDTO(
         name: group.name,
         description: group.description,
         creatorId: userId!,
       );
       final response = await _client.post("/groups", data: groupWithCreatorId);
-      return group_selection_model.GroupModel.fromJson(response.data);
+      return GroupSelectionGroupModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not create group: $error");
     }
   }
 
   @override
-  Future<item_detail_model.ItemModel> getItemDetails({
+  Future<ItemDetailItemModel> getItemDetails({
     required String itemId,
   }) async {
     try {
@@ -125,7 +123,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
           'join': ['category', 'owner']
         },
       );
-      return item_detail_model.ItemModel.fromJson(response.data);
+      return ItemDetailItemModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get item detail: $error");
     }
@@ -163,7 +161,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
 
   @override
   Future<void> inviteGroupMembers({
-    required group_selection_model.InvitationModel payload,
+    required InvitationModel payload,
   }) async {
     // TODO: implement inviteMembers
   }
@@ -171,10 +169,10 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   @override
   Future<void> postCategory({
     required String groupId,
-    required item_list_model.CategoryModel model,
+    required CategorySettingsCategoryModel model,
   }) async {
     try {
-      final modelDTO = item_list_model.CreateCategoryDTO(
+      final modelDTO = CreateCategoryDTO(
         name: model.name,
         description: model.description,
         groupId: groupId,
@@ -186,7 +184,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<item_list_model.CategoryListModel> getCategories({
+  Future<CategorySettingsCategoryListModel> getCategories({
     required String groupId,
   }) async {
     try {
@@ -197,8 +195,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
           "join": ['categories']
         },
       );
-      //return item_list_model.CategoryModel.fromJson(response.data);
-      return item_list_model.CategoryListModel.fromJson(response.data);
+      return CategorySettingsCategoryListModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get group categories: $error");
     }

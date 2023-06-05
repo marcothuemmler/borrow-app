@@ -1,6 +1,6 @@
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/profile/categories_settings.service.dart';
 import 'package:borrow_app/views/profile/categories_settings.view.dart';
+import 'package:borrow_app/views/profile/category_settings.model.dart';
 
 class CategoriesSettingsControllerImplementation
     extends CategoriesSettingsController {
@@ -63,7 +63,7 @@ class CategoriesSettingsControllerImplementation
   @override
   void createNewCategory() {
     state = state.copyWith(
-      newCategory: CategoryModel(name: "", description: null),
+      newCategory: CategorySettingsCategoryModel(name: "", description: null),
     );
   }
 

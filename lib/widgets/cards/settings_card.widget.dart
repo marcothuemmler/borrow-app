@@ -1,10 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SettingsCardView extends StatelessWidget {
   final String text;
   final Function() function;
-  const SettingsCardView({super.key, required this.text, required this.function});
+  const SettingsCardView({
+    super.key,
+    required this.text,
+    required this.function,
+  });
 
   @override
   Widget build(BuildContext context) {

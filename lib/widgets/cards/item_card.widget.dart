@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
   final void Function()? onTap;
-  final ItemModel item;
+  final ItemListItemModel item;
 
   const ItemCard({super.key, required this.onTap, required this.item});
 

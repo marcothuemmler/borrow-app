@@ -1,9 +1,11 @@
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/profile/category_settings.model.dart';
 
 abstract class CategoriesSettingsService {
-  Future<CategoryListModel> getCategories({required String groupId});
+  Future<CategorySettingsCategoryListModel> getCategories({
+    required String groupId,
+  });
   Future<void> postCategory({
     required String groupId,
-    required CategoryModel model,
+    required CategorySettingsCategoryModel model,
   });
 }

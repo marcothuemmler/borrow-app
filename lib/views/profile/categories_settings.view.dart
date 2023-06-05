@@ -1,5 +1,5 @@
 import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/profile/category_settings.model.dart';
 import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
 import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class CategoriesSettingsView extends ConsumerWidget {
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    if (model.hasError || model.items is! CategoryListModel) {
+    if (model.hasError || model.items is! CategorySettingsCategoryListModel) {
       return const Center(child: Text("something went wrong"));
     }
     final categories = model.items!.categories;

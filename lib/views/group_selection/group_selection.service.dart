@@ -2,9 +2,9 @@ import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class GroupSelectionService {
-  Future<UserModel> getGroups();
+  Future<GroupSelectionUserModel> getGroups();
 
-  Future<GroupModel> postGroup(GroupModel group);
+  Future<GroupSelectionGroupModel> postGroup(GroupSelectionGroupModel group);
 
   Future<void> putGroupImage({
     required String groupId,

@@ -10,37 +10,37 @@ class GroupSelectionModel with _$GroupSelectionModel {
   factory GroupSelectionModel({
     required bool isLoading,
     required bool hasError,
-    required Option<UserModel> user,
-    required GroupModel? newGroup,
+    required Option<GroupSelectionUserModel> user,
+    required GroupSelectionGroupModel? newGroup,
     required XFile? groupImage,
     required InvitationModel? invitations,
   }) = _GroupSelectionModel;
 }
 
 @freezed
-class UserModel with _$UserModel {
-  factory UserModel({
+class GroupSelectionUserModel with _$GroupSelectionUserModel {
+  factory GroupSelectionUserModel({
     required String id,
     required String username,
-    @Default(<GroupModel>[]) List<GroupModel> groups,
+    @Default([]) List<GroupSelectionGroupModel> groups,
   }) = _UserModel;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) =>
-      _$UserModelFromJson(json);
+  factory GroupSelectionUserModel.fromJson(Map<String, dynamic> json) =>
+      _$GroupSelectionUserModelFromJson(json);
 }
 
 @freezed
-class GroupModel with _$GroupModel {
-  factory GroupModel({
+class GroupSelectionGroupModel with _$GroupSelectionGroupModel {
+  factory GroupSelectionGroupModel({
     String? id,
     required String name,
     required String? description,
     String? imageUrl,
     String? creatorId,
-  }) = _GroupModel;
+  }) = _GroupSelectionGroupModel;
 
-  factory GroupModel.fromJson(Map<String, dynamic> json) =>
-      _$GroupModelFromJson(json);
+  factory GroupSelectionGroupModel.fromJson(Map<String, dynamic> json) =>
+      _$GroupSelectionGroupModelFromJson(json);
 }
 
 @freezed
