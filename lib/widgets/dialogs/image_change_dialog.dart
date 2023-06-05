@@ -25,7 +25,7 @@ class ImageChangeDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: <Widget>[
             ElevatedButton(
               onPressed: onSetImagePressed,
               child: const Text("Upload Image"),
@@ -33,7 +33,7 @@ class ImageChangeDialog extends StatelessWidget {
             if (showRemoveOption)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
+                children: <Widget>[
                   const SizedBox(height: 10),
                   TextButton(
                     style: TextButton.styleFrom(foregroundColor: Colors.red),

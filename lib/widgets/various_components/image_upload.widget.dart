@@ -34,10 +34,10 @@ class _ImageUploadState extends State<ImageUpload> {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: _selectFile,
-            onHover: (hovered) => setState(() => _hovered = hovered),
+            onHover: (bool hovered) => setState(() => _hovered = hovered),
             child: Stack(
               fit: StackFit.expand,
-              children: [
+              children: <Widget>[
                 if (_image is! Image)
                   const Image(
                     image: AssetImage("assets/images/default.jpg"),
@@ -50,11 +50,11 @@ class _ImageUploadState extends State<ImageUpload> {
                   duration: const Duration(milliseconds: 150),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
+                    children: <Widget>[
                       Container(
                         decoration: const BoxDecoration(
                           color: Color.fromRGBO(255, 255, 255, 0.7),
-                          boxShadow: [
+                          boxShadow: <BoxShadow>[
                             BoxShadow(
                               color: Colors.black12,
                               blurRadius: 2,
@@ -130,7 +130,7 @@ class _ImageUploadState extends State<ImageUpload> {
   Future<bool?> _showImageChangeDialog() async {
     return await showDialog(
       context: context,
-      builder: (context) => ImageChangeDialog(
+      builder: (BuildContext context) => ImageChangeDialog(
         onSetImagePressed: () => context.pop(true),
         onRemoveImagePressed: () => context.pop(false),
         onCancelPressed: () => context.pop(),

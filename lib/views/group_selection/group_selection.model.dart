@@ -13,6 +13,7 @@ class GroupSelectionModel with _$GroupSelectionModel {
     required Option<GroupSelectionUserModel> user,
     required GroupSelectionGroupModel? newGroup,
     required XFile? groupImage,
+    required InvitationModel? invitations,
   }) = _GroupSelectionModel;
 }
 
@@ -52,4 +53,15 @@ class CreateGroupDTO with _$CreateGroupDTO {
 
   factory CreateGroupDTO.fromJson(Map<String, dynamic> json) =>
       _$CreateGroupDTOFromJson(json);
+}
+
+@freezed
+class InvitationModel with _$InvitationModel {
+  factory InvitationModel({
+    required String groupId,
+    @Default(<String>{}) Set<String> emails,
+  }) = _InvitationModel;
+
+  factory InvitationModel.fromJson(Map<String, dynamic> json) =>
+      _$InvitationModelFromJson(json);
 }

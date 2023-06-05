@@ -3,6 +3,7 @@ import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/widgets/cards/group_selection_card.widget.dart';
 import 'package:borrow_app/widgets/dialogs/create_group_dialog.dart';
+import 'package:borrow_app/widgets/dialogs/invitation_dialog.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -42,9 +43,8 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                 TextButton(
                   style: TextButton.styleFrom(padding: EdgeInsets.zero),
                   onPressed: () async {
-                    controller.addGroup(
-                      confirmed: await _showAlertDialog(controller),
-                    );
+                    final bool confirmed = await _showAlertDialog() ?? false;
+                    controller.addGroup(confirmed: confirmed);
                   },
                   child: const Text("New Group"),
                 ),
@@ -86,17 +86,35 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                 groupName: group.name,
                                 groupDescription: group.description,
                                 groupImage: group.imageUrl,
-                                onTap: () => context.goNamed(
-                                  groupRoute.name,
-                                  pathParameters: {"groupId": group.id!},
-                                ),
+                                onTap: () {
+                                  context.goNamed(
+                                    groupRoute.name,
+                                    pathParameters: {"groupId": group.id!},
+                                  );
+                                },
+                                onTapInviteButton: () async {
+                                  controller.setupMemberInvitation(
+                                    groupId: group.id!,
+                                  );
+                                  final bool? result = await showDialog(
+                                    context: context,
+                                    builder: (context) => InviteMembersDialog(
+                                      groupId: group.id!,
+                                      groupName: group.name,
+                                    ),
+                                  );
+                                  controller.inviteGroupMembers(
+                                    confirmed: result ?? false,
+                                  );
+                                },
+                                inviteButtonHidden: index != _currentIndex,
                               );
                             },
                           ),
                         if (isPortrait)
                           IntrinsicWidth(
                             child: Column(
-                              children: [
+                              children: <Widget>[
                                 const SizedBox(height: 20),
                                 if (user.groups.isNotEmpty)
                                   Center(
@@ -114,18 +132,12 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                 const SizedBox(height: 40),
                                 ElevatedButton(
                                   onPressed: () async {
-                                    controller.addGroup(
-                                      confirmed:
-                                          await _showAlertDialog(controller),
-                                    );
+                                    final bool confirmed =
+                                        await _showAlertDialog() ?? false;
+                                    controller.addGroup(confirmed: confirmed);
                                   },
                                   child: const Text("New Group"),
                                 ),
-                                const SizedBox(height: 10),
-                                TextButton(
-                                  onPressed: () {},
-                                  child: const Text("Invite Members"),
-                                )
                               ],
                             ),
                           ),
@@ -136,7 +148,9 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
     );
   }
 
-  Future<bool?> _showAlertDialog(GroupSelectionController controller) async {
+  Future<bool?> _showAlertDialog() async {
+    final GroupSelectionController controller =
+        ref.read(providers.groupSelectionControllerProvider.notifier);
     controller.createNewGroup();
     return showDialog<bool>(
       context: context,
@@ -159,7 +173,7 @@ abstract class GroupSelectionController
     extends StateNotifier<GroupSelectionModel> {
   GroupSelectionController(super.model);
 
-  void addGroup({required bool? confirmed});
+  void addGroup({required bool confirmed});
 
   String? validateFormField({required String fieldName});
 
@@ -170,4 +184,12 @@ abstract class GroupSelectionController
   void setNewGroupDescription(String value);
 
   void setGroupImage(XFile? file);
+
+  void setupMemberInvitation({required String groupId});
+
+  String? validateAndAddEmailToInvitations(String? email);
+
+  void removeMailFromInvitations(String email);
+
+  void inviteGroupMembers({required bool confirmed});
 }
