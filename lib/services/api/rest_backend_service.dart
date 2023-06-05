@@ -131,7 +131,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<void> postGroupImage({
+  Future<void> putGroupImage({
     required String groupId,
     required XFile? groupImage,
   }) async {
