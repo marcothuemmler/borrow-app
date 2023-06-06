@@ -6,7 +6,7 @@
   "password": "Password",
   "loginFailed": "Beim Einloggen ist etwas schiefgelaufen",
   "enterValidEmail": "Bitte geben Sie eine gültige Email ein",
-  "enterValidUsername": "Username must contain at least 3 characters",
+  "enterValidUsername": "Username muss mindestens 3 Zeichen lang sein",
   "enterValidPassword": "Passwort muss mindestens 8 Zeichen lang sein und mindestens eine Zahl, einen Großbuchstaben und einen Kleinbuchstaben enthalten",
   "enterValidGroupName": "Der Gruppenname muss mindestens 3 Zeichen lang sein",
   "enterValidCategoryName": "Der Kategoriename muss mindestens 3 Zeichen lang sein",
@@ -34,6 +34,7 @@
   "description": "Beschreibung",
   "allCategories": "Alle",
   "category": "Kategorie",
+  "categories": "Kategorien",
   "browse": "Stöbern",
   "profile": "Profil",
   "contactOwner": "Besitzer kontaktieren",
@@ -41,5 +42,7 @@
   "available": "Verfügbar",
   "manageGroup": "Gruppe verwalten",
   "profileSettings": "Profileinstellungen",
-  "logout": "Abmelden"
+  "logout": "Abmelden",
+  "items": "Gegenstände",
+  "balance": "Balance"
 }

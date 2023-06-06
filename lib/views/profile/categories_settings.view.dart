@@ -40,14 +40,14 @@ class CategoriesSettingsView extends ConsumerWidget {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 final item = categories[index];
-                return SettingsCardView(text: item.name, function: () {});
+                return SettingsCardView(text: item.name, onTap: () {});
               },
             ),
           ),
           Center(
             child: ElevatedButton(
               onPressed: () => _onNewCategory(context, controller),
-              child: Text(AppLocalizations.of(context).newGroup),
+              child: Text(AppLocalizations.of(context).newCategory),
             ),
           )
         ],

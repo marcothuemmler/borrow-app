@@ -24,7 +24,7 @@ class ProfileMain extends ConsumerWidget {
               itemList: [
                 SettingsCardView(
                   text: AppLocalizations.of(context).manageGroup,
-                  function: () {
+                  onTap: () {
                     context.goNamed(
                       groupSettingsRoute.name,
                       pathParameters: {"groupId": groupId},
@@ -33,7 +33,7 @@ class ProfileMain extends ConsumerWidget {
                 ),
                 SettingsCardView(
                   text: AppLocalizations.of(context).profileSettings,
-                  function: () {},
+                  onTap: () {},
                 ),
               ],
             ),

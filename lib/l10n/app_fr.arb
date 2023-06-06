@@ -33,6 +33,7 @@
   "name": "Nom",
   "description": "Description",
   "category": "Categorie",
+  "categories": "Cetegories",
   "allCategories": "Toutes",
   "browse": "Parcourir",
   "profile": "Profil",
@@ -41,5 +42,7 @@
   "available": "Disponible",
   "manageGroup": "Gestion du groupe",
   "profileSettings": "Paramètres du profil",
-  "logout": "Déconnexion"
+  "logout": "Déconnexion",
+  "items": "Objets",
+  "balance": "Balance"
 }

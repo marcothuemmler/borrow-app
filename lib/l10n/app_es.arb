@@ -11,7 +11,7 @@
   "enterValidGroupName": "El nombre de grupo debe contener al menos 3 caracteres",
   "enterValidCategoryName": "El nombre de categoría debe contener al menos 3 caracteres",
   "submit": "Enviar",
-  "welcome": "Bienvenido",
+  "welcome": "¡Bienvenido!",
   "goToLogin": "Ir al inicio de sesión",
   "myGroups": "Mis grupos",
   "newGroup": "Nuevo grupo",
@@ -33,6 +33,7 @@
   "name": "Nombre",
   "description": "Descripción",
   "category": "Categoría",
+  "categories": "Categorías",
   "allCategories": "Todas",
   "browse": "Explorar",
   "profile": "Perfil",
@@ -41,5 +42,7 @@
   "available": "Disponible",
   "manageGroup": "Gestionar grupo",
   "profileSettings": "Configuración del perfil",
-  "logout": "Cerrar sesión"
+  "logout": "Cerrar sesión",
+  "items": "Objetos",
+  "balance": "Balance"
 }

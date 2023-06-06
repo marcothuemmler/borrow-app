@@ -33,6 +33,7 @@
   "name": "Name",
   "description": "Description",
   "category": "Category",
+  "categories": "Categories",
   "allCategories": "All",
   "browse": "Browse",
   "profile": "Profile",
@@ -41,5 +42,7 @@
   "available": "Available",
   "manageGroup": "Manage group",
   "profileSettings": "Profile settings",
-  "logout": "Logout"
+  "logout": "Logout",
+  "items": "Items",
+  "balance": "Balance"
 }
