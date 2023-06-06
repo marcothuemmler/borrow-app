@@ -1,8 +1,10 @@
+import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/profile/category_settings.model.dart';
 import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
 import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CategoriesSettingsView extends ConsumerWidget {
@@ -24,7 +26,7 @@ class CategoriesSettingsView extends ConsumerWidget {
       return const Center(child: CircularProgressIndicator());
     }
     if (model.hasError || model.items is! CategorySettingsCategoryListModel) {
-      return const Center(child: Text("something went wrong"));
+      return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
     final categories = model.items!.categories;
     return SafeArea(
@@ -45,7 +47,7 @@ class CategoriesSettingsView extends ConsumerWidget {
           Center(
             child: ElevatedButton(
               onPressed: () => _onNewCategory(context, controller),
-              child: const Text("Neue Kategorie"),
+              child: Text(AppLocalizations.of(context).newGroup),
             ),
           )
         ],
@@ -74,8 +76,11 @@ class CategoriesSettingsView extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return NewCategoryDialog(
-          nameValidator: (_) =>
-              controller.validateFormField(fieldName: "categoryName"),
+          nameValidator: (value) => controller.validateFormField(
+            fieldName: "categoryName",
+            context: context,
+            value: value,
+          ),
           setName: controller.setNewCategoryName,
           setDescription: controller.setNewCategoryDescription,
           createCategoryCallback: controller.createNewCategory,
@@ -86,7 +91,7 @@ class CategoriesSettingsView extends ConsumerWidget {
 }
 
 abstract class CategoriesSettingsController
-    extends StateNotifier<CategoryListDetailModel> {
+    extends StateNotifier<CategoryListDetailModel> with FormValidator {
   CategoriesSettingsController(super.state);
 
   Future<void> loadCategories();
@@ -98,6 +103,4 @@ abstract class CategoriesSettingsController
   void addCategory();
 
   void createNewCategory();
-
-  String? validateFormField({required String fieldName});
 }

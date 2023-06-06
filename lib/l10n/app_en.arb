@@ -9,6 +9,7 @@
   "enterValidUsername": "Username must contain at least 3 characters",
   "enterValidPassword": "Password must be at least 8 characters long and contain a number, an uppercase character and a lowercase character",
   "enterValidGroupName": "Group name must contain at least 3 characters",
+  "enterValidCategoryName": "Category name must contain at least 3 characters",
   "submit": "Submit",
   "welcome": "Welcome!",
   "goToLogin": "To Login",
@@ -20,5 +21,19 @@
   "cancel": "Cancel",
   "createGroup": "Create group",
   "uploadImage": "Upload image",
-  "removeImage": "Remove image"
+  "removeImage": "Remove image",
+  "setGroupImage": "Set group image",
+  "imageSelectionFailed": "Could not select image. Please try again",
+  "invite": "Invite members",
+  "enterEmail": "Enter email:",
+  "add": "Add",
+  "emptyGroupMessage": "It's empty in here",
+  "newCategory": "New category",
+  "addNewItem": "Add new item",
+  "name": "Name",
+  "description": "Description",
+  "category": "Category",
+  "allCategories": "All",
+  "browse": "Browse",
+  "profile": "Profile"
 }

@@ -63,18 +63,7 @@ class CategoriesSettingsControllerImplementation
   @override
   void createNewCategory() {
     state = state.copyWith(
-      newCategory: CategorySettingsCategoryModel(name: "", description: null),
+      newCategory: CategorySettingsCategoryModel(name: ""),
     );
-  }
-
-  @override
-  String? validateFormField({required String fieldName}) {
-    switch (fieldName) {
-      case "categoryName":
-        return state.newCategory!.name.length < 3
-            ? "Gruppennamen müssen mindestens 3 Zeichen beinhalten"
-            : null;
-    }
-    return null;
   }
 }

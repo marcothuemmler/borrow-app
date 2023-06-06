@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:borrow_app/widgets/dialogs/image_change_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -63,10 +64,10 @@ class _ImageUploadState extends State<ImageUpload> {
                         ),
                         width: size,
                         height: 40,
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            "Set group image",
-                            style: TextStyle(
+                            AppLocalizations.of(context).setGroupImage,
+                            style: const TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -115,12 +116,12 @@ class _ImageUploadState extends State<ImageUpload> {
 
   void _showErrorSnackBar() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         backgroundColor: Colors.red,
         content: Center(
           child: Text(
-            "Could not select image. Please try again",
-            style: TextStyle(fontSize: 16),
+            AppLocalizations.of(context).imageSelectionFailed,
+            style: const TextStyle(fontSize: 16),
           ),
         ),
       ),

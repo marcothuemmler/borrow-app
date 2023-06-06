@@ -194,7 +194,10 @@ abstract class GroupSelectionController
 
   void setupMemberInvitation({required String groupId});
 
-  String? validateAndAddEmailToInvitations(String? email);
+  String? validateAndAddEmailToInvitations({
+    required String? email,
+    required BuildContext context,
+  });
 
   void removeMailFromInvitations(String email);
 

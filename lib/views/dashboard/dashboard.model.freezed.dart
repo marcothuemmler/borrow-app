@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$DashboardModel {
   int get currentIndex => throw _privateConstructorUsedError;
-  String? get currentTitle => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DashboardModelCopyWith<DashboardModel> get copyWith =>
@@ -30,7 +29,7 @@ abstract class $DashboardModelCopyWith<$Res> {
           DashboardModel value, $Res Function(DashboardModel) then) =
       _$DashboardModelCopyWithImpl<$Res, DashboardModel>;
   @useResult
-  $Res call({int currentIndex, String? currentTitle});
+  $Res call({int currentIndex});
 }
 
 /// @nodoc
@@ -47,17 +46,12 @@ class _$DashboardModelCopyWithImpl<$Res, $Val extends DashboardModel>
   @override
   $Res call({
     Object? currentIndex = null,
-    Object? currentTitle = freezed,
   }) {
     return _then(_value.copyWith(
       currentIndex: null == currentIndex
           ? _value.currentIndex
           : currentIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      currentTitle: freezed == currentTitle
-          ? _value.currentTitle
-          : currentTitle // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -70,7 +64,7 @@ abstract class _$$_DashboardModelCopyWith<$Res>
       __$$_DashboardModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int currentIndex, String? currentTitle});
+  $Res call({int currentIndex});
 }
 
 /// @nodoc
@@ -85,17 +79,12 @@ class __$$_DashboardModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currentIndex = null,
-    Object? currentTitle = freezed,
   }) {
     return _then(_$_DashboardModel(
       currentIndex: null == currentIndex
           ? _value.currentIndex
           : currentIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      currentTitle: freezed == currentTitle
-          ? _value.currentTitle
-          : currentTitle // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -103,16 +92,14 @@ class __$$_DashboardModelCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_DashboardModel implements _DashboardModel {
-  _$_DashboardModel({required this.currentIndex, required this.currentTitle});
+  _$_DashboardModel({required this.currentIndex});
 
   @override
   final int currentIndex;
-  @override
-  final String? currentTitle;
 
   @override
   String toString() {
-    return 'DashboardModel(currentIndex: $currentIndex, currentTitle: $currentTitle)';
+    return 'DashboardModel(currentIndex: $currentIndex)';
   }
 
   @override
@@ -121,13 +108,11 @@ class _$_DashboardModel implements _DashboardModel {
         (other.runtimeType == runtimeType &&
             other is _$_DashboardModel &&
             (identical(other.currentIndex, currentIndex) ||
-                other.currentIndex == currentIndex) &&
-            (identical(other.currentTitle, currentTitle) ||
-                other.currentTitle == currentTitle));
+                other.currentIndex == currentIndex));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, currentIndex, currentTitle);
+  int get hashCode => Object.hash(runtimeType, currentIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -137,14 +122,11 @@ class _$_DashboardModel implements _DashboardModel {
 }
 
 abstract class _DashboardModel implements DashboardModel {
-  factory _DashboardModel(
-      {required final int currentIndex,
-      required final String? currentTitle}) = _$_DashboardModel;
+  factory _DashboardModel({required final int currentIndex}) =
+      _$_DashboardModel;
 
   @override
   int get currentIndex;
-  @override
-  String? get currentTitle;
   @override
   @JsonKey(ignore: true)
   _$$_DashboardModelCopyWith<_$_DashboardModel> get copyWith =>

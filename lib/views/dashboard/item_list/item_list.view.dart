@@ -5,6 +5,7 @@ import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
 import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ItemListView extends ConsumerWidget {
@@ -22,7 +23,7 @@ class ItemListView extends ConsumerWidget {
       return const Center(child: CircularProgressIndicator());
     }
     if (model.hasError || model.group is! ItemListGroupModel) {
-      return const Center(child: Text("something went wrong"));
+      return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
     return SafeArea(
       child: Column(
@@ -49,10 +50,10 @@ class ItemListView extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Center(
+                  Center(
                     child: Text(
-                      "It's empty in here",
-                      style: TextStyle(
+                      AppLocalizations.of(context).emptyGroupMessage,
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 24,
                       ),
@@ -60,7 +61,7 @@ class ItemListView extends ConsumerWidget {
                   ),
                   const SizedBox(height: 25),
                   DottedBorderButton(
-                    title: "Create a new category",
+                    title: AppLocalizations.of(context).createGroup,
                     icon: const Icon(Icons.add),
                     onTap: () => _onNewCategory(
                       ref.read(
@@ -68,14 +69,14 @@ class ItemListView extends ConsumerWidget {
                       ),
                       context,
                     ),
-                    width: 200,
+                    width: 220,
                   ),
                   const SizedBox(height: 10),
                   DottedBorderButton(
-                    title: "Add a new item",
+                    title: AppLocalizations.of(context).addNewItem,
                     icon: const Icon(Icons.add),
                     onTap: () {},
-                    width: 200,
+                    width: 220,
                   ),
                 ],
               ),
@@ -103,8 +104,11 @@ class ItemListView extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return NewCategoryDialog(
-          nameValidator: (_) =>
-              controller.validateFormField(fieldName: "categoryName"),
+          nameValidator: (value) => controller.validateFormField(
+            fieldName: "categoryName",
+            context: context,
+            value: value,
+          ),
           setName: controller.setNewCategoryName,
           setDescription: controller.setNewCategoryDescription,
           createCategoryCallback: controller.createNewCategory,

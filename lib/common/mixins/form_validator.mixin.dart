@@ -1,4 +1,4 @@
-import 'package:borrow_app/util/extensions.dart';
+import 'package:borrow_app/common/extensions/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -25,6 +25,10 @@ mixin FormValidator {
         return value is String && value.length > 2
             ? null
             : AppLocalizations.of(context).enterValidGroupName;
+      case 'categoryName':
+        return value is String && value.length > 2
+            ? null
+            : AppLocalizations.of(context).enterValidCategoryName;
     }
     return null;
   }
