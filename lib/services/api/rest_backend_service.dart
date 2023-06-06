@@ -74,7 +74,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       await _client.post("/auth/logout");
       await _storageService.deleteAll();
     } catch (error) {
-      throw Exception("Failed to sign in: $error");
+      throw Exception("Failed to log out: $error");
     }
   }
 

@@ -41,4 +41,15 @@ class LoginControllerImplementation extends LoginController {
       state = state.copyWith(isLoading: false, hasError: true);
     }
   }
+
+  @override
+  Future<void> logout() async {
+    state = state.copyWith(isLoading: true, hasError: false);
+    try {
+      await _loginService.logout();
+      state = state.copyWith(isLoading: false);
+    } catch (error) {
+      state = state.copyWith(isLoading: false, hasError: true);
+    }
+  }
 }

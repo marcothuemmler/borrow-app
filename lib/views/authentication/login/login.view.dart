@@ -103,6 +103,8 @@ abstract class LoginController extends StateNotifier<LoginModel>
 
   Future<void> login();
 
+  Future<void> logout();
+
   void setEmail(String value);
 
   void setPassword(String value);
