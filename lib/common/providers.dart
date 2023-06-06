@@ -30,6 +30,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:borrow_app/views/profile/profile_item_list.controller.dart';
+import 'package:borrow_app/views/profile/profile_item_list.view.dart';
 
 final providers = Providers();
 
@@ -89,6 +91,17 @@ class Providers {
           String>(
     (ref, groupId) => ItemListControllerImplementation(
       itemListService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
+      groupId: groupId,
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<ProfileItemListController,
+      ItemListModel, String> profileItemListControllerProvider =
+  AutoDisposeStateNotifierProvider.family<ProfileItemListController, ItemListModel,
+      String>(
+        (ref, groupId) => ProfileItemListControllerImplementation(
+      profileItemListService: ref.read(providers.backendServiceProvider),
       router: ref.read(providers.routerProvider),
       groupId: groupId,
     ),

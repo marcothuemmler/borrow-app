@@ -6,6 +6,7 @@ import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
 
 class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   final String groupId;
@@ -15,9 +16,9 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.read(
-      providers.itemListControllerProvider(groupId).notifier,
+      providers.profileItemListControllerProvider(groupId).notifier,
     );
-    final model = ref.watch(providers.itemListControllerProvider(groupId));
+    final model = ref.watch(providers.profileItemListControllerProvider(groupId));
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -32,6 +33,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
             Expanded(
               child: Column(
                 children: [
+                  getDropDownMenu(controller, model),
                   ListView.builder(
                     padding: const EdgeInsets.only(top: 20),
                     itemCount: model.items.length,
@@ -57,9 +59,8 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
           else
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  getDropDownMenu(controller, model),
                   const Center(
                     child: Text(
                       "It's empty in here",
@@ -84,6 +85,22 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
     );
   }
 
+  Widget getDropDownMenu(ProfileItemListController controller, ItemListModel model) {
+    return DropdownWidget<ItemListCategoryModel>(
+      hint: const Text("Category"),
+      items: [
+        ...?model.group?.categories,
+        ItemListCategoryModel(name: "All"),
+      ],
+      onChanged: controller.selectCategory,
+      value: model.selectedCategory,
+      mapFunction: (category) => DropdownMenuItem(
+        value: category,
+        child: Text(category.name),
+      ),
+    );
+  }
+
   Future<void> _onNewCategory(
       CategoriesSettingsController controller,
       BuildContext context,
@@ -95,8 +112,8 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   }
 }
 
-abstract class ItemListController extends StateNotifier<ItemListModel> {
-  ItemListController(super.model);
+abstract class ProfileItemListController extends StateNotifier<ItemListModel> {
+  ProfileItemListController(super.model);
 
   void navigateToItem({required String itemId});
 
