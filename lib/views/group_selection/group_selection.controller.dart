@@ -1,3 +1,4 @@
+import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/util/extensions.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.service.dart';
@@ -5,7 +6,8 @@ import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 
-class GroupSelectionControllerImplementation extends GroupSelectionController {
+class GroupSelectionControllerImplementation extends GroupSelectionController
+    with FormValidator {
   final GroupSelectionService _groupSelectionService;
 
   GroupSelectionControllerImplementation({
@@ -61,20 +63,6 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
       _getGroups();
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
-    }
-  }
-
-  @override
-  String? validateFormField({required String fieldName}) {
-    switch (fieldName) {
-      case 'groupName':
-        return state.newGroup!.name.length > 2
-            ? null
-            : "Der Gruppenname muss größer als 2 sein";
-      case 'groupDescription':
-        return null;
-      default:
-        return null;
     }
   }
 

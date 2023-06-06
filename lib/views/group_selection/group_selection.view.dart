@@ -1,3 +1,4 @@
+import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
@@ -7,6 +8,7 @@ import 'package:borrow_app/widgets/dialogs/invitation_dialog.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,7 +37,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
         MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Groups"),
+        title: Text(AppLocalizations.of(context).myGroups),
         actions: [
           if (!isPortrait)
             Row(
@@ -46,7 +48,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                     final bool confirmed = await _showAlertDialog() ?? false;
                     controller.addGroup(confirmed: confirmed);
                   },
-                  child: const Text("New Group"),
+                  child: Text(AppLocalizations.of(context).newGroup),
                 ),
                 const SizedBox(width: 20),
               ],
@@ -56,9 +58,13 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
       body: model.isLoading
           ? const Center(child: CircularProgressIndicator())
           : model.hasError
-              ? const Center(child: Text("Something went wrong"))
+              ? Center(
+                  child: Text(AppLocalizations.of(context).unspecifiedError),
+                )
               : model.user.fold(
-                  () => const Center(child: Text("Something went wrong")),
+                  () => Center(
+                    child: Text(AppLocalizations.of(context).unspecifiedError),
+                  ),
                   (user) => SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -136,7 +142,9 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                         await _showAlertDialog() ?? false;
                                     controller.addGroup(confirmed: confirmed);
                                   },
-                                  child: const Text("New Group"),
+                                  child: Text(
+                                    AppLocalizations.of(context).newGroup,
+                                  ),
                                 ),
                               ],
                             ),
@@ -156,13 +164,14 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
       context: context,
       builder: (BuildContext context) {
         return CreateGroupDialog(
-          nameValidator: (_) =>
-              controller.validateFormField(fieldName: "groupName"),
-          descriptionValidator: (_) =>
-              controller.validateFormField(fieldName: "groupDescription"),
+          nameValidator: (value) => controller.validateFormField(
+            fieldName: "groupName",
+            context: context,
+            value: value,
+          ),
           onGroupNameChanged: controller.setNewGroupName,
           onGroupDescriptionChanged: controller.setNewGroupDescription,
-          onImageChanged: (XFile? file) => controller.setGroupImage(file),
+          onImageChanged: controller.setGroupImage,
         );
       },
     );
@@ -170,12 +179,10 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
 }
 
 abstract class GroupSelectionController
-    extends StateNotifier<GroupSelectionModel> {
+    extends StateNotifier<GroupSelectionModel> with FormValidator {
   GroupSelectionController(super.model);
 
   void addGroup({required bool confirmed});
-
-  String? validateFormField({required String fieldName});
 
   void createNewGroup();
 
