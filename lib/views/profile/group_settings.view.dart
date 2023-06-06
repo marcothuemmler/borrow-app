@@ -24,7 +24,12 @@ class GroupSettingsView extends StatelessWidget {
           ),
           SettingsCardView(
             text: "Gegenstände",
-            function: () {},
+            function: () {
+              context.goNamed(
+                "profileItemList",
+                pathParameters: {"groupId": groupId},
+              );
+            },
           ),
           SettingsCardView(
             text: "Balance",

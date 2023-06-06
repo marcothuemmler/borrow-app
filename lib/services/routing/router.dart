@@ -8,6 +8,7 @@ import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
+import "package:borrow_app/views/profile/ProfileItemListView.dart";
 import "package:borrow_app/views/profile/categories_settings.view.dart";
 import "package:borrow_app/views/profile/group_settings.view.dart";
 import "package:borrow_app/views/profile/profile_main.view.dart";
@@ -134,6 +135,14 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                         name: categorySettingsRoute.name,
                         path: categorySettingsRoute.path,
                         builder: (context, state) => CategoriesSettingsView(
+                          groupId: state.pathParameters['groupId']!,
+                        ),
+                      ),
+                      GoRoute(
+                        parentNavigatorKey: _shellNavigatorKey,
+                        name: profileItemListRoute.name,
+                        path: profileItemListRoute.path,
+                        builder: (context, state) => ProfileItemListView(
                           groupId: state.pathParameters['groupId']!,
                         ),
                       ),
