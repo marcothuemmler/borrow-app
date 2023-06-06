@@ -35,5 +35,8 @@
   "category": "Categorie",
   "allCategories": "Toutes",
   "browse": "Parcourir",
-  "profile": "Profil"
+  "profile": "Profil",
+  "contactOwner": "Contacter le propriétaire",
+  "noDescription": "Aucune description n'a été fournie",
+  "available": "Disponible"
 }

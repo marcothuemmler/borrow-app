@@ -35,5 +35,8 @@
   "category": "Category",
   "allCategories": "All",
   "browse": "Browse",
-  "profile": "Profile"
+  "profile": "Profile",
+  "contactOwner": "Contact owner",
+  "noDescription": "No description provided",
+  "available": "Available"
 }

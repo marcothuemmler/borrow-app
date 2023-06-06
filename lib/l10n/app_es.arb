@@ -35,5 +35,8 @@
   "category": "Categoría",
   "allCategories": "Todas",
   "browse": "Explorar",
-  "profile": "Perfil"
+  "profile": "Perfil",
+  "contactOwner": "Contactar con el dueño",
+  "noDescription": "Sin descripción",
+  "available": "Disponible"
 }

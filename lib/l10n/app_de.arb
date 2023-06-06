@@ -35,5 +35,8 @@
   "allCategories": "Alle",
   "category": "Kategorie",
   "browse": "Stöbern",
-  "profile": "Profil"
+  "profile": "Profil",
+  "contactOwner": "Besitzer kontaktieren",
+  "noDescription": "Keine Beschreibung angegeben",
+  "available": "Verfügbar"
 }
