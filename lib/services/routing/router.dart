@@ -8,7 +8,7 @@ import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
-import "package:borrow_app/views/profile/ProfileItemListView.dart";
+import "package:borrow_app/views/profile/profile_item_list.view.dart";
 import "package:borrow_app/views/profile/categories_settings.view.dart";
 import "package:borrow_app/views/profile/group_settings.view.dart";
 import "package:borrow_app/views/profile/profile_main.view.dart";
