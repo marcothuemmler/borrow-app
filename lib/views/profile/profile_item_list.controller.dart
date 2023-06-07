@@ -1,5 +1,6 @@
 import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/profile/profile_item_list.service.dart';
 import 'package:borrow_app/views/profile/profile_item_list.view.dart';
 import 'package:go_router/go_router.dart';
@@ -37,10 +38,13 @@ class ProfileItemListControllerImplementation extends ProfileItemListController 
   Future<void> getGroupItemsAndCategories({required String id}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await _profileItemListService.getGroupItemsAndCategories(
+      final items = await _profileItemListService.getItemsFromOwner(
         groupId: id,
       );
-      state = state.copyWith(group: response, isLoading: false);
+      final categories = await _profileItemListService.getCategories(
+          groupId: _groupId,
+      );
+      state = state.copyWith(isLoading: false, items: items);
       filterItemsByCategory(category: state.selectedCategory);
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
@@ -66,7 +70,7 @@ class ProfileItemListControllerImplementation extends ProfileItemListController 
     if (state.group is ItemListGroupModel) {
       final filteredItems = state.group!.items.where((item) {
         return category is! ItemListCategoryModel ||
-            item.category.id == category.id;
+            item.category?.id == category.id;
       }).toList();
       state = state.copyWith(items: filteredItems);
     }

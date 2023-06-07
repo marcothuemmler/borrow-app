@@ -12,6 +12,9 @@ class ItemListModel with _$ItemListModel {
     required ItemListGroupModel? group,
     required List<ItemListItemModel> items,
   }) = _ItemListModel;
+
+  factory ItemListModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemListModelFromJson(json);
 }
 
 @freezed
@@ -46,7 +49,7 @@ class ItemListItemModel with _$ItemListItemModel {
     required String id,
     required String name,
     required String? description,
-    required ItemListCategoryModel category,
+    required ItemListCategoryModel? category,
     required ItemListUserModel owner,
   }) = _ItemListItemModel;
 

@@ -1,7 +1,6 @@
 import 'package:borrow_app/common/mixins/DialogMixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
-import 'package:borrow_app/views/profile/categories_settings.view.dart';
 import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +15,16 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.read(
-      providers.profileItemListControllerProvider(groupId).notifier,
+      providers
+          .profileItemListControllerProvider(groupId)
+          .notifier,
     );
-    final model = ref.watch(providers.profileItemListControllerProvider(groupId));
+    final model = ref.watch(
+        providers.profileItemListControllerProvider(groupId));
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    if (model.hasError || model.group is! ItemListGroupModel) {
+    if (model.hasError) {
       return const Center(child: Text("something went wrong"));
     }
     return SafeArea(
@@ -31,30 +33,31 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
         children: [
           if (model.items.isNotEmpty)
             Expanded(
-              child: Column(
-                children: [
-                  getDropDownMenu(controller, model),
-                  ListView.builder(
-                    padding: const EdgeInsets.only(top: 20),
-                    itemCount: model.items.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final item = model.items.elementAt(index);
-                      return ItemCard(
-                        item: item,
-                        onTap: () => controller.navigateToItem(itemId: item.id),
-                      );
-                    },
-                  ),
-                  const Spacer(),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () => {},
-                      child: const Text("Neuer Gegenstand"),
+                child: Column(
+                  children: [
+                    getDropDownMenu(controller, model),
+                    ListView.builder(
+                      padding: const EdgeInsets.only(top: 20),
+                      itemCount: model.items.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final item = model.items.elementAt(index);
+                        return ItemCard(
+                          item: item,
+                          onTap: () =>
+                              controller.navigateToItem(itemId: item.id),
+                        );
+                      },
                     ),
-                  )
-                ],
-              )
+                    const Spacer(),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () => {},
+                        child: const Text("Neuer Gegenstand"),
+                      ),
+                    )
+                  ],
+                )
             )
           else
             Expanded(
@@ -85,7 +88,8 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
     );
   }
 
-  Widget getDropDownMenu(ProfileItemListController controller, ItemListModel model) {
+  Widget getDropDownMenu(ProfileItemListController controller,
+      ItemListModel model) {
     return DropdownWidget<ItemListCategoryModel>(
       hint: const Text("Category"),
       items: [
@@ -94,21 +98,12 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
       ],
       onChanged: controller.selectCategory,
       value: model.selectedCategory,
-      mapFunction: (category) => DropdownMenuItem(
-        value: category,
-        child: Text(category.name),
-      ),
+      mapFunction: (category) =>
+          DropdownMenuItem(
+            value: category,
+            child: Text(category.name),
+          ),
     );
-  }
-
-  Future<void> _onNewCategory(
-      CategoriesSettingsController controller,
-      BuildContext context,
-      ) async {
-    final bool? value = await showNewCategoryDialog(controller, context);
-    if (value ?? false) {
-      controller.addCategory();
-    }
   }
 }
 

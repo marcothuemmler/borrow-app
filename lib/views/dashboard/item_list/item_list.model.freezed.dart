@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+ItemListModel _$ItemListModelFromJson(Map<String, dynamic> json) {
+  return _ItemListModel.fromJson(json);
+}
+
 /// @nodoc
 mixin _$ItemListModel {
   bool get isLoading => throw _privateConstructorUsedError;
@@ -23,6 +27,7 @@ mixin _$ItemListModel {
   ItemListGroupModel? get group => throw _privateConstructorUsedError;
   List<ItemListItemModel> get items => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ItemListModelCopyWith<ItemListModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -178,7 +183,7 @@ class __$$_ItemListModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_ItemListModel implements _ItemListModel {
   _$_ItemListModel(
       {required this.isLoading,
@@ -187,6 +192,9 @@ class _$_ItemListModel implements _ItemListModel {
       required this.group,
       required final List<ItemListItemModel> items})
       : _items = items;
+
+  factory _$_ItemListModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemListModelFromJson(json);
 
   @override
   final bool isLoading;
@@ -224,6 +232,7 @@ class _$_ItemListModel implements _ItemListModel {
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, isLoading, hasError,
       selectedCategory, group, const DeepCollectionEquality().hash(_items));
@@ -233,6 +242,13 @@ class _$_ItemListModel implements _ItemListModel {
   @pragma('vm:prefer-inline')
   _$$_ItemListModelCopyWith<_$_ItemListModel> get copyWith =>
       __$$_ItemListModelCopyWithImpl<_$_ItemListModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ItemListModelToJson(
+      this,
+    );
+  }
 }
 
 abstract class _ItemListModel implements ItemListModel {
@@ -242,6 +258,9 @@ abstract class _ItemListModel implements ItemListModel {
       required final ItemListCategoryModel? selectedCategory,
       required final ItemListGroupModel? group,
       required final List<ItemListItemModel> items}) = _$_ItemListModel;
+
+  factory _ItemListModel.fromJson(Map<String, dynamic> json) =
+      _$_ItemListModel.fromJson;
 
   @override
   bool get isLoading;
@@ -686,7 +705,7 @@ mixin _$ItemListItemModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  ItemListCategoryModel get category => throw _privateConstructorUsedError;
+  ItemListCategoryModel? get category => throw _privateConstructorUsedError;
   ItemListUserModel get owner => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -705,10 +724,10 @@ abstract class $ItemListItemModelCopyWith<$Res> {
       {String id,
       String name,
       String? description,
-      ItemListCategoryModel category,
+      ItemListCategoryModel? category,
       ItemListUserModel owner});
 
-  $ItemListCategoryModelCopyWith<$Res> get category;
+  $ItemListCategoryModelCopyWith<$Res>? get category;
   $ItemListUserModelCopyWith<$Res> get owner;
 }
 
@@ -728,7 +747,7 @@ class _$ItemListItemModelCopyWithImpl<$Res, $Val extends ItemListItemModel>
     Object? id = null,
     Object? name = null,
     Object? description = freezed,
-    Object? category = null,
+    Object? category = freezed,
     Object? owner = null,
   }) {
     return _then(_value.copyWith(
@@ -744,10 +763,10 @@ class _$ItemListItemModelCopyWithImpl<$Res, $Val extends ItemListItemModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as ItemListCategoryModel,
+              as ItemListCategoryModel?,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
@@ -757,8 +776,12 @@ class _$ItemListItemModelCopyWithImpl<$Res, $Val extends ItemListItemModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $ItemListCategoryModelCopyWith<$Res> get category {
-    return $ItemListCategoryModelCopyWith<$Res>(_value.category, (value) {
+  $ItemListCategoryModelCopyWith<$Res>? get category {
+    if (_value.category == null) {
+      return null;
+    }
+
+    return $ItemListCategoryModelCopyWith<$Res>(_value.category!, (value) {
       return _then(_value.copyWith(category: value) as $Val);
     });
   }
@@ -784,11 +807,11 @@ abstract class _$$_ItemListItemModelCopyWith<$Res>
       {String id,
       String name,
       String? description,
-      ItemListCategoryModel category,
+      ItemListCategoryModel? category,
       ItemListUserModel owner});
 
   @override
-  $ItemListCategoryModelCopyWith<$Res> get category;
+  $ItemListCategoryModelCopyWith<$Res>? get category;
   @override
   $ItemListUserModelCopyWith<$Res> get owner;
 }
@@ -807,7 +830,7 @@ class __$$_ItemListItemModelCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? description = freezed,
-    Object? category = null,
+    Object? category = freezed,
     Object? owner = null,
   }) {
     return _then(_$_ItemListItemModel(
@@ -823,10 +846,10 @@ class __$$_ItemListItemModelCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      category: null == category
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as ItemListCategoryModel,
+              as ItemListCategoryModel?,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
@@ -855,7 +878,7 @@ class _$_ItemListItemModel implements _ItemListItemModel {
   @override
   final String? description;
   @override
-  final ItemListCategoryModel category;
+  final ItemListCategoryModel? category;
   @override
   final ItemListUserModel owner;
 
@@ -903,7 +926,7 @@ abstract class _ItemListItemModel implements ItemListItemModel {
       {required final String id,
       required final String name,
       required final String? description,
-      required final ItemListCategoryModel category,
+      required final ItemListCategoryModel? category,
       required final ItemListUserModel owner}) = _$_ItemListItemModel;
 
   factory _ItemListItemModel.fromJson(Map<String, dynamic> json) =
@@ -916,7 +939,7 @@ abstract class _ItemListItemModel implements ItemListItemModel {
   @override
   String? get description;
   @override
-  ItemListCategoryModel get category;
+  ItemListCategoryModel? get category;
   @override
   ItemListUserModel get owner;
   @override

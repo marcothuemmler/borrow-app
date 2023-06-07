@@ -96,6 +96,26 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
+  Future<List<ItemListItemModel>> getItemsFromOwner({
+    required String groupId,
+  }) async {
+    try {
+      final userId = await _storageService.read(key: "user-id");
+      final response = await _client.get(
+        "/items",
+        queryParameters: {
+          "join": ["group", "owner", "category"],
+          "filter": ["group.id||\$eq||$groupId", "owner.id||\$eq||$userId"],
+        },
+      );
+      final res = List<ItemListItemModel>.from(response.data.map((item) => ItemListItemModel.fromJson(item)));
+      return res;
+    } catch (error) {
+      throw Exception("Could not get group items: $error");
+    }
+  }
+
+  @override
   Future<GroupSelectionGroupModel> postGroup(
     GroupSelectionGroupModel group,
   ) async {

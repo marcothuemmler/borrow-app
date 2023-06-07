@@ -66,7 +66,7 @@ class ItemListControllerImplementation extends ItemListController {
     if (state.group is ItemListGroupModel) {
       final filteredItems = state.group!.items.where((item) {
         return category is! ItemListCategoryModel ||
-            item.category.id == category.id;
+            item.category?.id == category.id;
       }).toList();
       state = state.copyWith(items: filteredItems);
     }

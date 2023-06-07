@@ -1,7 +1,11 @@
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/profile/category_settings.model.dart';
 
 abstract class ProfileItemListService {
-  Future<ItemListGroupModel> getGroupItemsAndCategories({
+  Future<List<ItemListItemModel>> getItemsFromOwner({
+    required String groupId,
+  });
+  Future<CategorySettingsCategoryListModel> getCategories({
     required String groupId,
   });
 }

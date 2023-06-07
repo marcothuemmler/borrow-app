@@ -6,6 +6,31 @@ part of 'item_list.model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$_ItemListModel _$$_ItemListModelFromJson(Map<String, dynamic> json) =>
+    _$_ItemListModel(
+      isLoading: json['isLoading'] as bool,
+      hasError: json['hasError'] as bool,
+      selectedCategory: json['selectedCategory'] == null
+          ? null
+          : ItemListCategoryModel.fromJson(
+              json['selectedCategory'] as Map<String, dynamic>),
+      group: json['group'] == null
+          ? null
+          : ItemListGroupModel.fromJson(json['group'] as Map<String, dynamic>),
+      items: (json['items'] as List<dynamic>)
+          .map((e) => ItemListItemModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_ItemListModelToJson(_$_ItemListModel instance) =>
+    <String, dynamic>{
+      'isLoading': instance.isLoading,
+      'hasError': instance.hasError,
+      'selectedCategory': instance.selectedCategory,
+      'group': instance.group,
+      'items': instance.items,
+    };
+
 _$_ItemListGroupModel _$$_ItemListGroupModelFromJson(
         Map<String, dynamic> json) =>
     _$_ItemListGroupModel(
@@ -51,8 +76,10 @@ _$_ItemListItemModel _$$_ItemListItemModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String?,
-      category: ItemListCategoryModel.fromJson(
-          json['category'] as Map<String, dynamic>),
+      category: json['category'] == null
+          ? null
+          : ItemListCategoryModel.fromJson(
+              json['category'] as Map<String, dynamic>),
       owner: ItemListUserModel.fromJson(json['owner'] as Map<String, dynamic>),
     );
 
