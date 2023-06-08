@@ -1,6 +1,6 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
-import 'package:borrow_app/views/profile/categories_settings.view.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart';
 import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
 import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
@@ -61,7 +61,7 @@ class ItemListView extends ConsumerWidget {
                   ),
                   const SizedBox(height: 25),
                   DottedBorderButton(
-                    title: AppLocalizations.of(context).createGroup,
+                    title: AppLocalizations.of(context).newCategory,
                     icon: const Icon(Icons.add),
                     onTap: () => _onNewCategory(
                       ref.read(

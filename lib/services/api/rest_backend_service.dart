@@ -3,9 +3,9 @@ import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/chat/chat.model.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
-import 'package:borrow_app/views/profile/category_settings.model.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -233,5 +233,14 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       content: message,
       isOwnMessage: true,
     );
+  }
+
+  @override
+  Future<void> deleteCategory({required String id}) async {
+    try {
+      await _client.delete("/categories/$id");
+    } catch (error) {
+      throw Exception("Could not delete category: $error");
+    }
   }
 }

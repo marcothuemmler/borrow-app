@@ -1,8 +1,8 @@
 import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/profile/category_settings.model.dart';
-import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
 import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
+import 'package:borrow_app/widgets/items/dismissible_item.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,32 +25,39 @@ class CategoriesSettingsView extends ConsumerWidget {
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    if (model.hasError || model.items is! CategorySettingsCategoryListModel) {
+    if (model.hasError) {
       return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
     final categories = model.items!.categories;
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.only(top: 20),
-              itemCount: categories.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final item = categories[index];
-                return SettingsCardView(text: item.name, onTap: () {});
-              },
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.only(top: 20),
+                itemCount: categories.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  final category = categories.elementAt(index);
+                  return DismissibleItem(
+                    item: category,
+                    onDismissed: (_) => controller.deleteCategory(category.id!),
+                  );
+                },
+              ),
             ),
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () => _onNewCategory(context, controller),
-              child: Text(AppLocalizations.of(context).newCategory),
-            ),
-          )
-        ],
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.add, size: 26),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        onPressed: () => _onNewCategory(context, controller),
+        label: Text(AppLocalizations.of(context).newCategory),
       ),
     );
   }
@@ -94,8 +101,6 @@ abstract class CategoriesSettingsController
     extends StateNotifier<CategoryListDetailModel> with FormValidator {
   CategoriesSettingsController(super.state);
 
-  Future<void> loadCategories();
-
   void setNewCategoryName(String name);
 
   void setNewCategoryDescription(String description);
@@ -103,4 +108,6 @@ abstract class CategoriesSettingsController
   void addCategory();
 
   void createNewCategory();
+
+  Future<void> deleteCategory(String id);
 }

@@ -44,5 +44,7 @@
   "profileSettings": "Profileinstellungen",
   "logout": "Abmelden",
   "items": "Gegenstände",
-  "balance": "Balance"
+  "balance": "Balance",
+  "deleteCategory": "Kategorie löschen?",
+  "delete": "Löschen"
 }

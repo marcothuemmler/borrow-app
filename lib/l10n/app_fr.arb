@@ -1,5 +1,5 @@
 {
-  "login": "Ouvrir session",
+  "login": "Connexion",
   "register": "Enregistrer",
   "email": "Courriel",
   "username": "Nom d'utilisateur",
@@ -33,7 +33,7 @@
   "name": "Nom",
   "description": "Description",
   "category": "Categorie",
-  "categories": "Cetegories",
+  "categories": "Categories",
   "allCategories": "Toutes",
   "browse": "Parcourir",
   "profile": "Profil",
@@ -44,5 +44,7 @@
   "profileSettings": "Paramètres du profil",
   "logout": "Déconnexion",
   "items": "Objets",
-  "balance": "Balance"
+  "balance": "Balance",
+  "deleteCategory": "Supprimer la catégorie?",
+  "delete": "Suprimer"
 }

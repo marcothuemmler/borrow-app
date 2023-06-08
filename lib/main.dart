@@ -25,7 +25,8 @@ class MyApp extends ConsumerWidget {
       QueuedInterceptorsWrapper(
         onRequest: (options, handler) async {
           final isRefreshPath = options.path == ("/auth/refresh");
-          options.disableRetry = options.path.startsWith("/auth");
+          options.disableRetry = options.path.startsWith("/auth") &&
+              !options.path.contains("logout");
           final key = isRefreshPath ? "refreshToken" : "accessToken";
           final authorizationToken = await storageService.read(key: key);
           options.headers['Authorization'] = 'Bearer $authorizationToken';

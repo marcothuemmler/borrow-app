@@ -5,6 +5,7 @@ import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
 import "package:flutter/material.dart";
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 
 class DashboardWrapperView extends ConsumerWidget {
   final Widget child;
@@ -30,8 +31,12 @@ class DashboardWrapperView extends ConsumerWidget {
     final groupModel = ref.watch(
       providers.itemListControllerProvider(groupId),
     );
+    final location = GoRouter.of(context).location.toLowerCase();
     return Scaffold(
       appBar: AppBar(
+        leading: location.contains("settings")
+            ? BackButton(onPressed: dashboardController.goBack)
+            : null,
         title: dashboardModel.currentIndex == 0
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,4 +84,6 @@ abstract class DashboardController extends StateNotifier<DashboardModel> {
   DashboardController(super.model);
 
   void setCurrentIndex(int index);
+
+  void goBack();
 }
