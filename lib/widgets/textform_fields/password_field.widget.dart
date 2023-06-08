@@ -22,7 +22,7 @@ class PasswordFieldWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 16),
-        const Text('Password'),
+        Text(text),
         const SizedBox(height: 10),
         TextFormField(
           keyboardType: TextInputType.visiblePassword,

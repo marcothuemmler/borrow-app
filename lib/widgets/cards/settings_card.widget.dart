@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class SettingsCardView extends StatelessWidget {
   final String text;
-  final Function() function;
+  final Function() onTap;
   const SettingsCardView({
     super.key,
     required this.text,
-    required this.function,
+    required this.onTap,
   });
 
   @override
@@ -16,7 +16,7 @@ class SettingsCardView extends StatelessWidget {
       elevation: 0,
       clipBehavior: Clip.hardEdge,
       child: InkWell(
-        onTap: function,
+        onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
           child: SizedBox(

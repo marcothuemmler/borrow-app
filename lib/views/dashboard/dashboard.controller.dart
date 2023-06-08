@@ -13,24 +13,12 @@ class DashboardControllerImplementation extends DashboardController {
     required String groupId,
   })  : _router = router,
         _groupId = groupId,
-        super(
-          model ??
-              DashboardModel(
-                currentIndex: 0,
-                currentTitle: "Browse",
-              ),
-        );
+        super(model ?? DashboardModel(currentIndex: 0));
 
   @override
   void setCurrentIndex(int index) {
+    final newRoute = index == 0 ? groupRoute.name : profileRoute.name;
     state = state.copyWith(currentIndex: index);
-    if (state.currentIndex == 0) {
-      state = state.copyWith(currentTitle: "Browse");
-      _router.pushNamed(groupRoute.name, pathParameters: {"groupId": _groupId});
-    }
-    if (state.currentIndex == 1) {
-      state = state.copyWith(currentTitle: "Profile");
-      _router.goNamed(profileRoute.name, pathParameters: {"groupId": _groupId});
-    }
+    _router.pushNamed(newRoute, pathParameters: {"groupId": _groupId});
   }
 }

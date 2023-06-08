@@ -1,8 +1,10 @@
+import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/widgets/textform_fields/password_field.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginView extends ConsumerStatefulWidget {
@@ -28,7 +30,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
     final model = ref.watch(providers.loginControllerProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Log In"),
+        title: Text(AppLocalizations.of(context).login),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -40,31 +42,35 @@ class _LoginViewState extends ConsumerState<LoginView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFieldWidget(
-                  text: 'Email',
+                  text: AppLocalizations.of(context).email,
                   keyboardType: TextInputType.emailAddress,
                   autofillHints: const [AutofillHints.email],
                   autocorrect: false,
-                  validator: (_) => controller.validateFormField(
+                  validator: (value) => controller.validateFormField(
                     fieldName: 'email',
+                    context: context,
+                    value: value,
                   ),
                   onChanged: controller.setEmail,
                 ),
                 PasswordFieldWidget(
-                  text: 'Password',
-                  validator: (_) => controller.validateFormField(
+                  text: AppLocalizations.of(context).password,
+                  validator: (value) => controller.validateFormField(
                     fieldName: 'password',
+                    context: context,
+                    value: value,
                   ),
                   onTapIcon: _toggleObscurePassword,
                   onChanged: controller.setPassword,
                   obscureText: _obscurePassword,
                 ),
                 if (model.hasError)
-                  const Center(
+                  Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 5),
+                      padding: const EdgeInsets.only(top: 5),
                       child: Text(
-                        "Beim Einloggen ist etwas schiefgelaufen",
-                        style: TextStyle(color: Colors.red),
+                        AppLocalizations.of(context).loginFailed,
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
                   ),
@@ -73,7 +79,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      child: const Text("Submit"),
+                      child: Text(AppLocalizations.of(context).submit),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           controller.login();
@@ -91,14 +97,22 @@ class _LoginViewState extends ConsumerState<LoginView> {
   }
 }
 
-abstract class LoginController extends StateNotifier<LoginModel> {
+abstract class LoginController extends StateNotifier<LoginModel>
+    with FormValidator {
   LoginController(super.model);
 
   Future<void> login();
+
+  Future<void> logout();
 
   void setEmail(String value);
 
   void setPassword(String value);
 
-  String? validateFormField({required String fieldName});
+  @override
+  String? validateFormField({
+    required String fieldName,
+    required BuildContext context,
+    required String? value,
+  });
 }

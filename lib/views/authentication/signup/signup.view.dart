@@ -1,9 +1,11 @@
+import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/widgets/textform_fields/password_field.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,7 +33,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
     final controller = ref.read(providers.signupControllerProvider.notifier);
     final model = ref.watch(providers.signupControllerProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text("Register")),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).register)),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Form(
@@ -43,39 +45,45 @@ class _SignupViewState extends ConsumerState<SignupView> {
                 TextFieldWidget(
                   keyboardType: TextInputType.emailAddress,
                   autofillHints: const [AutofillHints.email],
-                  text: 'Email',
+                  text: AppLocalizations.of(context).email,
                   autocorrect: false,
-                  validator: (_) => controller.validateFormField(
+                  validator: (value) => controller.validateFormField(
                     fieldName: 'email',
+                    context: context,
+                    value: value,
                   ),
                   onChanged: controller.setEmail,
                 ),
                 TextFieldWidget(
                   keyboardType: TextInputType.name,
                   autofillHints: const [AutofillHints.username],
-                  text: 'Username',
+                  text: AppLocalizations.of(context).username,
                   autocorrect: false,
-                  validator: (_) => controller.validateFormField(
+                  validator: (value) => controller.validateFormField(
                     fieldName: 'username',
+                    context: context,
+                    value: value,
                   ),
                   onChanged: controller.setUsername,
                 ),
                 PasswordFieldWidget(
-                  text: 'Password',
-                  validator: (_) => controller.validateFormField(
+                  text: AppLocalizations.of(context).password,
+                  validator: (value) => controller.validateFormField(
                     fieldName: 'password',
+                    context: context,
+                    value: value,
                   ),
                   onTapIcon: _toggleObscurePassword,
                   onChanged: controller.setPassword,
                   obscureText: _obscurePassword,
                 ),
                 if (model.hasError)
-                  const Center(
+                  Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 5),
+                      padding: const EdgeInsets.only(top: 5),
                       child: Text(
-                        "Beim Einloggen ist etwas schiefgelaufen",
-                        style: TextStyle(color: Colors.red),
+                        AppLocalizations.of(context).loginFailed,
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
                   ),
@@ -84,7 +92,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      child: const Text("Submit"),
+                      child: Text(AppLocalizations.of(context).submit),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           controller.signup().then((success) {
@@ -106,12 +114,18 @@ class _SignupViewState extends ConsumerState<SignupView> {
   }
 }
 
-abstract class SignupController extends StateNotifier<SignupModel> {
+abstract class SignupController extends StateNotifier<SignupModel>
+    with FormValidator {
   SignupController(super.model);
 
   Future<bool> signup();
 
-  String? validateFormField({required String fieldName});
+  @override
+  String? validateFormField({
+    required String fieldName,
+    required BuildContext context,
+    required String? value,
+  });
 
   void setUsername(String value);
 

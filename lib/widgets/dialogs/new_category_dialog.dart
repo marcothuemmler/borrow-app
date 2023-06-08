@@ -1,5 +1,6 @@
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewCategoryDialog extends StatelessWidget {
   NewCategoryDialog({
@@ -29,20 +30,20 @@ class NewCategoryDialog extends StatelessWidget {
           Radius.circular(10),
         ),
       ),
-      title: const Text('Neue Kategorie'),
+      title: Text(AppLocalizations.of(context).newCategory),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: ListBody(
             children: <Widget>[
               TextFieldWidget(
-                text: "Name",
+                text: AppLocalizations.of(context).name,
                 validator: nameValidator,
                 onChanged: setName,
                 autocorrect: false,
               ),
               TextFieldWidget(
-                text: "Beschreibung",
+                text: AppLocalizations.of(context).description,
                 validator: null,
                 onChanged: setDescription,
                 autocorrect: false,
@@ -57,11 +58,11 @@ class NewCategoryDialog extends StatelessWidget {
           child: Row(
             children: [
               TextButton(
-                child: const Text('Abbrechen'),
+                child: Text(AppLocalizations.of(context).cancel),
                 onPressed: () => Navigator.of(context).pop(false),
               ),
               ElevatedButton(
-                child: const Text('Einfügen'),
+                child: Text(AppLocalizations.of(context).add),
                 onPressed: () {
                   _formKey.currentState!.save();
                   if (_formKey.currentState!.validate()) {

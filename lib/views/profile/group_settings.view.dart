@@ -1,6 +1,8 @@
+import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/widgets/cards/settings_card.widget.dart';
 import 'package:borrow_app/widgets/list_views/list_view.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 class GroupSettingsView extends StatelessWidget {
@@ -14,21 +16,21 @@ class GroupSettingsView extends StatelessWidget {
       body: ListViewWidget(
         itemList: [
           SettingsCardView(
-            text: "Kategorien",
-            function: () {
+            text: AppLocalizations.of(context).categories,
+            onTap: () {
               context.goNamed(
-                "categorySettings",
+                categorySettingsRoute.name,
                 pathParameters: {"groupId": groupId},
               );
             },
           ),
           SettingsCardView(
-            text: "Gegenstände",
-            function: () {},
+            text: AppLocalizations.of(context).items,
+            onTap: () {},
           ),
           SettingsCardView(
-            text: "Balance",
-            function: () {},
+            text: AppLocalizations.of(context).balance,
+            onTap: () {},
           ),
         ],
       ),

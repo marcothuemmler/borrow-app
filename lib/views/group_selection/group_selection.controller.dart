@@ -1,11 +1,13 @@
-import 'package:borrow_app/util/extensions.dart';
+import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.service.dart';
 import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class GroupSelectionControllerImplementation extends GroupSelectionController {
+class GroupSelectionControllerImplementation extends GroupSelectionController
+    with FormValidator {
   final GroupSelectionService _groupSelectionService;
 
   GroupSelectionControllerImplementation({
@@ -65,20 +67,6 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   }
 
   @override
-  String? validateFormField({required String fieldName}) {
-    switch (fieldName) {
-      case 'groupName':
-        return state.newGroup!.name.length > 2
-            ? null
-            : "Der Gruppenname muss größer als 2 sein";
-      case 'groupDescription':
-        return null;
-      default:
-        return null;
-    }
-  }
-
-  @override
   void createNewGroup() {
     state = state.copyWith(
       newGroup: GroupSelectionGroupModel(name: "", description: null),
@@ -108,9 +96,15 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   }
 
   @override
-  String? validateAndAddEmailToInvitations(String? email) {
-    final String? errorText =
-        email.isEmail ? null : "Bitte geben Sie eine gültige Email ein";
+  String? validateAndAddEmailToInvitations({
+    required String? email,
+    required BuildContext context,
+  }) {
+    final String? errorText = validateFormField(
+      fieldName: "email",
+      context: context,
+      value: email,
+    );
     if (errorText is! String) {
       state = state.copyWith.invitations!(
         emails: {...state.invitations!.emails, email!},
