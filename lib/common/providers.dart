@@ -74,9 +74,10 @@ class Providers {
     ),
   );
 
-  final StateNotifierProviderFamily<DashboardController, DashboardModel, String>
-      dashboardControllerProvider =
-      StateNotifierProvider.family<DashboardController, DashboardModel, String>(
+  final AutoDisposeStateNotifierProviderFamily<DashboardController,
+          DashboardModel, String> dashboardControllerProvider =
+      AutoDisposeStateNotifierProvider.family<DashboardController,
+          DashboardModel, String>(
     (ref, groupId) => DashboardControllerImplementation(
       router: ref.read(providers.routerProvider),
       groupId: groupId,
