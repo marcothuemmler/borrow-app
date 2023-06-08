@@ -1,4 +1,4 @@
-import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
+import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.service.dart';
 import 'package:borrow_app/views/group_selection/group_selection.view.dart';
@@ -6,8 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class GroupSelectionControllerImplementation extends GroupSelectionController
-    with FormValidator {
+class GroupSelectionControllerImplementation extends GroupSelectionController {
   final GroupSelectionService _groupSelectionService;
 
   GroupSelectionControllerImplementation({
@@ -101,7 +100,7 @@ class GroupSelectionControllerImplementation extends GroupSelectionController
     required BuildContext context,
   }) {
     final String? errorText = validateFormField(
-      fieldName: "email",
+      fieldType: FormValidationType.email,
       context: context,
       value: email,
     );

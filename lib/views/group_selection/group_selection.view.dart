@@ -1,3 +1,4 @@
+import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
 import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/services/routing/routes.dart';
@@ -165,7 +166,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
       builder: (BuildContext context) {
         return CreateGroupDialog(
           nameValidator: (value) => controller.validateFormField(
-            fieldName: "groupName",
+            fieldType: FormValidationType.groupName,
             context: context,
             value: value,
           ),

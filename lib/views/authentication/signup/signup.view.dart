@@ -1,3 +1,4 @@
+import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
 import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/services/routing/routes.dart';
@@ -48,7 +49,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
                   text: AppLocalizations.of(context).email,
                   autocorrect: false,
                   validator: (value) => controller.validateFormField(
-                    fieldName: 'email',
+                    fieldType: FormValidationType.email,
                     context: context,
                     value: value,
                   ),
@@ -60,7 +61,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
                   text: AppLocalizations.of(context).username,
                   autocorrect: false,
                   validator: (value) => controller.validateFormField(
-                    fieldName: 'username',
+                    fieldType: FormValidationType.username,
                     context: context,
                     value: value,
                   ),
@@ -69,7 +70,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
                 PasswordFieldWidget(
                   text: AppLocalizations.of(context).password,
                   validator: (value) => controller.validateFormField(
-                    fieldName: 'password',
+                    fieldType: FormValidationType.password,
                     context: context,
                     value: value,
                   ),
@@ -122,7 +123,7 @@ abstract class SignupController extends StateNotifier<SignupModel>
 
   @override
   String? validateFormField({
-    required String fieldName,
+    required FormValidationType fieldType,
     required BuildContext context,
     required String? value,
   });

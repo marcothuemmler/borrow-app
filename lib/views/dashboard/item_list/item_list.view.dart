@@ -1,3 +1,4 @@
+import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart';
@@ -105,7 +106,7 @@ class ItemListView extends ConsumerWidget {
       builder: (BuildContext context) {
         return NewCategoryDialog(
           nameValidator: (value) => controller.validateFormField(
-            fieldName: "categoryName",
+            fieldType: FormValidationType.categoryName,
             context: context,
             value: value,
           ),

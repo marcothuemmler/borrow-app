@@ -1,3 +1,4 @@
+import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
 import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
@@ -84,7 +85,7 @@ class CategoriesSettingsView extends ConsumerWidget {
       builder: (BuildContext context) {
         return NewCategoryDialog(
           nameValidator: (value) => controller.validateFormField(
-            fieldName: "categoryName",
+            fieldType: FormValidationType.categoryName,
             context: context,
             value: value,
           ),
