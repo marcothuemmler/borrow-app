@@ -186,7 +186,7 @@ final routerProviderDef = Provider<GoRouter>((ref) {
               }
               return CustomTransitionPage(
                 barrierColor: Colors.black26,
-                child: ItemEditorView(itemId: itemId),
+                child: ItemDetailView(itemId: itemId),
                 transitionsBuilder: (
                   BuildContext context,
                   Animation<double> animation,
