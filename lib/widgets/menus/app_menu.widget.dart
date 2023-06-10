@@ -26,7 +26,10 @@ class AppMenu extends ConsumerWidget {
               minLeadingWidth: 8,
               leading: const Icon(Icons.notifications_rounded),
               title: Text(AppLocalizations.of(context).messages),
-              onTap: () => context.pushNamed(chatListRoute.name),
+              onTap: () {
+                context.pop();
+                context.pushNamed(chatListRoute.name);
+              },
             ),
           ),
           PopupMenuItem(

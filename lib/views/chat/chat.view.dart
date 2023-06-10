@@ -5,22 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChatView extends ConsumerWidget {
-  final String itemId;
-  final String userId;
+  // ignore: unused_field
+  final MessageItemModel _item;
+  final String _otherUserId;
   final _textController = TextEditingController();
   final _scrollController = ScrollController();
 
   ChatView({
     super.key,
-    required this.itemId,
-    required this.userId,
-  });
+    required MessageItemModel item,
+    required String otherUserId,
+  })  : _item = item,
+        _otherUserId = otherUserId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller =
-        ref.read(providers.chatControllerProvider(userId).notifier);
-    final model = ref.watch(providers.chatControllerProvider(userId));
+    final chatParameters = ChatControllerParameters(
+      item: _item,
+      otherUserId: _otherUserId,
+    );
+    final controller = ref.read(
+      providers.chatControllerProvider(chatParameters).notifier,
+    );
+    final model = ref.watch(providers.chatControllerProvider(chatParameters));
     WidgetsBinding.instance.addPostFrameCallback(_scrollDown);
     return Scaffold(
       appBar: AppBar(title: const Text("Title")),
@@ -47,10 +54,7 @@ class ChatView extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             ...model.messages.map((message) {
-                              return ChatBubble(
-                                isOwnMessage: message.isOwnMessage,
-                                content: message.content,
-                              );
+                              return ChatBubble(message: message);
                             }),
                           ],
                         ),

@@ -19,3 +19,4 @@ const groupSettingsRoute =
 const categorySettingsRoute =
     RouteDefinition(name: "categorySettings", path: "categorySettings");
 const chatRoute = RouteDefinition(name: "chat", path: "chat/:userId");
+const chatListRoute = RouteDefinition(name: "chatList", path: "chats");
