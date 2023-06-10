@@ -124,7 +124,9 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
           'join': ['category', 'owner']
         },
       );
-      return ItemDetailItemModel.fromJson(response.data);
+      final item = ItemDetailItemModel.fromJson(response.data);
+      final myUserId = await _storageService.read(key: "user-id");
+      return item.copyWith(isMyItem: item.owner.id == myUserId);
     } catch (error) {
       throw Exception("Could not get item detail: $error");
     }
