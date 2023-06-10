@@ -6,6 +6,7 @@ import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/widgets/cards/group_selection_card.widget.dart';
 import 'package:borrow_app/widgets/dialogs/create_group_dialog.dart';
 import 'package:borrow_app/widgets/dialogs/invitation_dialog.dart';
+import 'package:borrow_app/widgets/menus/app_menu.widget.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class GroupSelectionView extends ConsumerStatefulWidget {
 }
 
 class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
-  final _carouselController = CarouselController();
   int _currentIndex = 0;
 
   @override
@@ -53,7 +53,8 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                 ),
                 const SizedBox(width: 20),
               ],
-            )
+            ),
+          const AppMenu(),
         ],
       ),
       body: model.isLoading
@@ -73,7 +74,6 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                         SizedBox(height: isPortrait ? 70 : 10),
                         if (user.groups.isNotEmpty)
                           CarouselSlider.builder(
-                            carouselController: _carouselController,
                             options: CarouselOptions(
                               enableInfiniteScroll: user.groups.length > 1,
                               viewportFraction: isPortrait ? .75 : .5,
@@ -83,7 +83,6 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                               enlargeCenterPage: true,
                               onPageChanged: (val, _) {
                                 setState(() => _currentIndex = val);
-                                _carouselController.animateToPage(val);
                               },
                             ),
                             itemCount: user.groups.length,

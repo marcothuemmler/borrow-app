@@ -46,5 +46,9 @@
   "items": "Objets",
   "balance": "Balance",
   "deleteCategory": "Supprimer la catégorie?",
-  "delete": "Suprimer"
+  "delete": "Suprimer",
+  "filterByCategory": "Filtrer par catégorie:",
+  "filterByDate": "Filtrer par date:",
+  "messages": "Messages",
+  "preferences": "Réglages"
 }
