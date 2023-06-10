@@ -33,6 +33,8 @@ import 'package:go_router/go_router.dart';
 import 'package:borrow_app/views/profile/profile_item_list.controller.dart';
 import 'package:borrow_app/views/profile/profile_item_list.view.dart';
 
+import '../views/profile/profile_item_list.model.dart';
+
 final providers = Providers();
 
 class Providers {
@@ -97,8 +99,8 @@ class Providers {
   );
 
   final AutoDisposeStateNotifierProviderFamily<ProfileItemListController,
-      ItemListModel, String> profileItemListControllerProvider =
-  AutoDisposeStateNotifierProvider.family<ProfileItemListController, ItemListModel,
+      ProfileItemListModel, String> profileItemListControllerProvider =
+  AutoDisposeStateNotifierProvider.family<ProfileItemListController, ProfileItemListModel,
       String>(
         (ref, groupId) => ProfileItemListControllerImplementation(
       profileItemListService: ref.read(providers.backendServiceProvider),

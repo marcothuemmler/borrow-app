@@ -22,9 +22,11 @@ ProfileItemListModel _$ProfileItemListModelFromJson(Map<String, dynamic> json) {
 mixin _$ProfileItemListModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-  CategorySettingsCategoryListModel get categories =>
+  CategorySettingsCategoryListModel? get categories =>
       throw _privateConstructorUsedError;
   List<ItemListItemModel> get items => throw _privateConstructorUsedError;
+  List<ItemListItemModel>? get filteredItems =>
+      throw _privateConstructorUsedError;
   String get groupId => throw _privateConstructorUsedError;
   CategorySettingsCategoryModel? get selectedCategory =>
       throw _privateConstructorUsedError;
@@ -44,12 +46,13 @@ abstract class $ProfileItemListModelCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool hasError,
-      CategorySettingsCategoryListModel categories,
+      CategorySettingsCategoryListModel? categories,
       List<ItemListItemModel> items,
+      List<ItemListItemModel>? filteredItems,
       String groupId,
       CategorySettingsCategoryModel? selectedCategory});
 
-  $CategorySettingsCategoryListModelCopyWith<$Res> get categories;
+  $CategorySettingsCategoryListModelCopyWith<$Res>? get categories;
   $CategorySettingsCategoryModelCopyWith<$Res>? get selectedCategory;
 }
 
@@ -69,8 +72,9 @@ class _$ProfileItemListModelCopyWithImpl<$Res,
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? categories = null,
+    Object? categories = freezed,
     Object? items = null,
+    Object? filteredItems = freezed,
     Object? groupId = null,
     Object? selectedCategory = freezed,
   }) {
@@ -83,14 +87,18 @@ class _$ProfileItemListModelCopyWithImpl<$Res,
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      categories: null == categories
+      categories: freezed == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as CategorySettingsCategoryListModel,
+              as CategorySettingsCategoryListModel?,
       items: null == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
               as List<ItemListItemModel>,
+      filteredItems: freezed == filteredItems
+          ? _value.filteredItems
+          : filteredItems // ignore: cast_nullable_to_non_nullable
+              as List<ItemListItemModel>?,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -104,8 +112,12 @@ class _$ProfileItemListModelCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $CategorySettingsCategoryListModelCopyWith<$Res> get categories {
-    return $CategorySettingsCategoryListModelCopyWith<$Res>(_value.categories,
+  $CategorySettingsCategoryListModelCopyWith<$Res>? get categories {
+    if (_value.categories == null) {
+      return null;
+    }
+
+    return $CategorySettingsCategoryListModelCopyWith<$Res>(_value.categories!,
         (value) {
       return _then(_value.copyWith(categories: value) as $Val);
     });
@@ -136,13 +148,14 @@ abstract class _$$_ProfileItemListModelCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool hasError,
-      CategorySettingsCategoryListModel categories,
+      CategorySettingsCategoryListModel? categories,
       List<ItemListItemModel> items,
+      List<ItemListItemModel>? filteredItems,
       String groupId,
       CategorySettingsCategoryModel? selectedCategory});
 
   @override
-  $CategorySettingsCategoryListModelCopyWith<$Res> get categories;
+  $CategorySettingsCategoryListModelCopyWith<$Res>? get categories;
   @override
   $CategorySettingsCategoryModelCopyWith<$Res>? get selectedCategory;
 }
@@ -160,8 +173,9 @@ class __$$_ProfileItemListModelCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? categories = null,
+    Object? categories = freezed,
     Object? items = null,
+    Object? filteredItems = freezed,
     Object? groupId = null,
     Object? selectedCategory = freezed,
   }) {
@@ -174,14 +188,18 @@ class __$$_ProfileItemListModelCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      categories: null == categories
+      categories: freezed == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as CategorySettingsCategoryListModel,
+              as CategorySettingsCategoryListModel?,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<ItemListItemModel>,
+      filteredItems: freezed == filteredItems
+          ? _value._filteredItems
+          : filteredItems // ignore: cast_nullable_to_non_nullable
+              as List<ItemListItemModel>?,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -202,9 +220,11 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
       required this.hasError,
       required this.categories,
       required final List<ItemListItemModel> items,
+      final List<ItemListItemModel>? filteredItems,
       required this.groupId,
       required this.selectedCategory})
-      : _items = items;
+      : _items = items,
+        _filteredItems = filteredItems;
 
   factory _$_ProfileItemListModel.fromJson(Map<String, dynamic> json) =>
       _$$_ProfileItemListModelFromJson(json);
@@ -214,13 +234,23 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
   @override
   final bool hasError;
   @override
-  final CategorySettingsCategoryListModel categories;
+  final CategorySettingsCategoryListModel? categories;
   final List<ItemListItemModel> _items;
   @override
   List<ItemListItemModel> get items {
     if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_items);
+  }
+
+  final List<ItemListItemModel>? _filteredItems;
+  @override
+  List<ItemListItemModel>? get filteredItems {
+    final value = _filteredItems;
+    if (value == null) return null;
+    if (_filteredItems is EqualUnmodifiableListView) return _filteredItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -230,7 +260,7 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
 
   @override
   String toString() {
-    return 'ProfileItemListModel(isLoading: $isLoading, hasError: $hasError, categories: $categories, items: $items, groupId: $groupId, selectedCategory: $selectedCategory)';
+    return 'ProfileItemListModel(isLoading: $isLoading, hasError: $hasError, categories: $categories, items: $items, filteredItems: $filteredItems, groupId: $groupId, selectedCategory: $selectedCategory)';
   }
 
   @override
@@ -245,6 +275,8 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
             (identical(other.categories, categories) ||
                 other.categories == categories) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
+            const DeepCollectionEquality()
+                .equals(other._filteredItems, _filteredItems) &&
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.selectedCategory, selectedCategory) ||
                 other.selectedCategory == selectedCategory));
@@ -252,8 +284,15 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, hasError, categories,
-      const DeepCollectionEquality().hash(_items), groupId, selectedCategory);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      hasError,
+      categories,
+      const DeepCollectionEquality().hash(_items),
+      const DeepCollectionEquality().hash(_filteredItems),
+      groupId,
+      selectedCategory);
 
   @JsonKey(ignore: true)
   @override
@@ -274,8 +313,9 @@ abstract class _ProfileItemListModel implements ProfileItemListModel {
   factory _ProfileItemListModel(
           {required final bool isLoading,
           required final bool hasError,
-          required final CategorySettingsCategoryListModel categories,
+          required final CategorySettingsCategoryListModel? categories,
           required final List<ItemListItemModel> items,
+          final List<ItemListItemModel>? filteredItems,
           required final String groupId,
           required final CategorySettingsCategoryModel? selectedCategory}) =
       _$_ProfileItemListModel;
@@ -288,9 +328,11 @@ abstract class _ProfileItemListModel implements ProfileItemListModel {
   @override
   bool get hasError;
   @override
-  CategorySettingsCategoryListModel get categories;
+  CategorySettingsCategoryListModel? get categories;
   @override
   List<ItemListItemModel> get items;
+  @override
+  List<ItemListItemModel>? get filteredItems;
   @override
   String get groupId;
   @override

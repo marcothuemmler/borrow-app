@@ -11,10 +11,15 @@ _$_ProfileItemListModel _$$_ProfileItemListModelFromJson(
     _$_ProfileItemListModel(
       isLoading: json['isLoading'] as bool,
       hasError: json['hasError'] as bool,
-      categories: CategorySettingsCategoryListModel.fromJson(
-          json['categories'] as Map<String, dynamic>),
+      categories: json['categories'] == null
+          ? null
+          : CategorySettingsCategoryListModel.fromJson(
+              json['categories'] as Map<String, dynamic>),
       items: (json['items'] as List<dynamic>)
           .map((e) => ItemListItemModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      filteredItems: (json['filteredItems'] as List<dynamic>?)
+          ?.map((e) => ItemListItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       groupId: json['groupId'] as String,
       selectedCategory: json['selectedCategory'] == null
@@ -30,6 +35,7 @@ Map<String, dynamic> _$$_ProfileItemListModelToJson(
       'hasError': instance.hasError,
       'categories': instance.categories,
       'items': instance.items,
+      'filteredItems': instance.filteredItems,
       'groupId': instance.groupId,
       'selectedCategory': instance.selectedCategory,
     };

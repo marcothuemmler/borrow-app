@@ -10,8 +10,9 @@ class ProfileItemListModel with _$ProfileItemListModel {
   factory ProfileItemListModel({
     required bool isLoading,
     required bool hasError,
-    required CategorySettingsCategoryListModel categories,
+    required CategorySettingsCategoryListModel? categories,
     required List<ItemListItemModel> items,
+    List<ItemListItemModel>? filteredItems,
     required String groupId,
     required CategorySettingsCategoryModel? selectedCategory,
   }) = _ProfileItemListModel;

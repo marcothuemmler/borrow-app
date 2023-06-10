@@ -1,11 +1,13 @@
 import 'package:borrow_app/common/mixins/DialogMixin.dart';
 import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/profile/profile_item_list.model.dart';
 import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
+
+import 'category_settings.model.dart';
 
 class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   final String groupId;
@@ -89,12 +91,12 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   }
 
   Widget getDropDownMenu(ProfileItemListController controller,
-      ItemListModel model) {
-    return DropdownWidget<ItemListCategoryModel>(
+      ProfileItemListModel model) {
+    return DropdownWidget<CategorySettingsCategoryModel>(
       hint: const Text("Category"),
       items: [
-        ...?model.group?.categories,
-        ItemListCategoryModel(name: "All"),
+        ...?model.categories?.categories,
+        CategorySettingsCategoryModel(name: "All"),
       ],
       onChanged: controller.selectCategory,
       value: model.selectedCategory,
@@ -107,10 +109,10 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   }
 }
 
-abstract class ProfileItemListController extends StateNotifier<ItemListModel> {
+abstract class ProfileItemListController extends StateNotifier<ProfileItemListModel> {
   ProfileItemListController(super.model);
 
   void navigateToItem({required String itemId});
 
-  void selectCategory(ItemListCategoryModel? category);
+  void selectCategory(CategorySettingsCategoryModel? category);
 }
