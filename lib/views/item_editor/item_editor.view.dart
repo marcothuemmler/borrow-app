@@ -1,5 +1,6 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
+import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +16,14 @@ class ItemEditorView extends ConsumerWidget {
       providers.itemDetailControllerProvider(itemId).notifier,
     );
     final model = ref.watch(providers.itemDetailControllerProvider(itemId));
+
+    TextEditingController itemNameController = TextEditingController();
+    TextEditingController itemDescriptionController = TextEditingController();
+    itemNameController.text = model.item.fold(() => "", (item) => item.name);
+    itemDescriptionController.text = model.item.fold(
+            () => "",
+            (item) => item.description is! String ? "": item.description!);
+
     if (model.isLoading) {
       return Scaffold(
         appBar: AppBar(),
@@ -83,14 +92,6 @@ class ItemEditorView extends ConsumerWidget {
                           Row(
                             children: const [
                               SizedBox(width: 5),
-                              CircleAvatar(
-                                radius: 14,
-                                backgroundColor:
-                                    Color.fromARGB(255, 220, 220, 220),
-                                foregroundColor: Colors.grey,
-                                child: Icon(Icons.person, size: 18),
-                              ),
-                              SizedBox(width: 10),
                               Spacer(),
                               SizedBox(width: 5)
                             ],
@@ -99,17 +100,19 @@ class ItemEditorView extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 30),
-                              const Text(
-                                "Description:",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              TextFieldWidget(
+                                  text: "Name",
+                                  validator: null,
+                                  onChanged: null,
+                                  autocorrect: false,
+                                  controller: itemNameController,),
                               const SizedBox(height: 30),
-                              Text(
-                                item.description ?? "No description provided",
-                              ),
+                              TextFieldWidget(
+                                  text: "Beschreibung",
+                                  validator: null,
+                                  onChanged: null,
+                                  autocorrect: false,
+                                  controller: itemDescriptionController,),
                             ],
                           ),
                         ],
@@ -118,6 +121,13 @@ class ItemEditorView extends ConsumerWidget {
                   ),
                 ),
               ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () => {},
+                  child: const Text("Speichern"),
+                ),
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -129,7 +139,9 @@ class ItemEditorView extends ConsumerWidget {
 abstract class ItemEditorController extends StateNotifier<ItemDetailModel> {
   ItemEditorController(super.model);
 
-  void contactOwner({required String ownerId});
+  void setName({required String value});
 
-  void selectDate();
+  void setDescription({required String value});
+
+  void save();
 }

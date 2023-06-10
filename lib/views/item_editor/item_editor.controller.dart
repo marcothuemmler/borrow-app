@@ -1,4 +1,5 @@
-import 'package:borrow_app/services/routing/routes.dart';
+import 'package:borrow_app/common/providers.dart';
+import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +10,8 @@ class ItemEditorImplementation extends ItemEditorController {
   final String _itemId;
   final ItemEditorService _itemEditorService;
   final GoRouter _router;
+  String name = "";
+  String description = "";
 
   ItemEditorImplementation({
     ItemDetailModel? model,
@@ -29,8 +32,15 @@ class ItemEditorImplementation extends ItemEditorController {
     _init();
   }
 
-  void _init() {
-    getItemDetails(itemId: _itemId);
+  Future<void> _init() async {
+    if(_itemId == null) {
+      //final category = ItemDetailCategoryModel(id: '', name: '');
+      //final userId = await _storageService.read(key: "user-id");
+      //final userModel = ItemDetailUserModel(id: userId, username: "");
+      //state = state.copyWith(item: Some(ItemDetailItemModel(id: '', name: '', owner: userModel, category: category)));
+    } else {
+      getItemDetails(itemId: _itemId!);
+    }
   }
 
   Future<void> getItemDetails({required String itemId}) async {
@@ -44,16 +54,17 @@ class ItemEditorImplementation extends ItemEditorController {
   }
 
   @override
-  void contactOwner({required String ownerId}) {
-    _router.pushNamed(
-      chatRoute.name,
-      pathParameters: {'userId': ownerId},
-      queryParameters: {"itemId": _itemId},
-    );
+  void save() {
+    // TODO: implement save
   }
 
   @override
-  void selectDate() {
-    // TODO: implement selectdate
+  void setDescription({required String value}) {
+    description = value;
+  }
+
+  @override
+  void setName({required String value}) {
+    name = value;
   }
 }
