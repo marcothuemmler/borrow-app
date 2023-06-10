@@ -17,6 +17,8 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
+import "../../views/item_editor/item_editor.view.dart";
+
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -184,7 +186,7 @@ final routerProviderDef = Provider<GoRouter>((ref) {
               }
               return CustomTransitionPage(
                 barrierColor: Colors.black26,
-                child: ItemDetailView(itemId: itemId),
+                child: ItemEditorView(itemId: itemId),
                 transitionsBuilder: (
                   BuildContext context,
                   Animation<double> animation,

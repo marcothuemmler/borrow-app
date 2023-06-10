@@ -20,3 +20,4 @@ const categorySettingsRoute =
     RouteDefinition(name: "categorySettings", path: "categorySettings");
 const chatRoute = RouteDefinition(name: "chat", path: "chat/:userId");
 const profileItemListRoute = RouteDefinition(name: "profileItemList", path: "profileItemList");
+const ItemEditorRoute = RouteDefinition(name: "itemEditor", path: "ItemEditor");

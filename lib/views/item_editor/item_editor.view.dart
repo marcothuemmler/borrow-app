@@ -1,7 +1,6 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,7 +12,7 @@ class ItemEditorView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.read(
-      providers.itemDetailControllerProvider(itemId).notifier,
+      providers.itemEditorProvider(itemId).notifier,
     );
     final model = ref.watch(providers.itemDetailControllerProvider(itemId));
 

@@ -23,6 +23,7 @@ import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
+import 'package:borrow_app/views/item_editor/item_editor.view.dart';
 import 'package:borrow_app/views/profile/categories_settings.controller.dart';
 import 'package:borrow_app/views/profile/categories_settings.view.dart';
 import 'package:borrow_app/views/profile/category_settings.model.dart';
@@ -33,6 +34,7 @@ import 'package:go_router/go_router.dart';
 import 'package:borrow_app/views/profile/profile_item_list.controller.dart';
 import 'package:borrow_app/views/profile/profile_item_list.view.dart';
 
+import '../views/item_editor/item_editor.controller.dart';
 import '../views/profile/profile_item_list.model.dart';
 
 final providers = Providers();
@@ -146,6 +148,17 @@ class Providers {
     (ref, groupId) => CategoriesSettingsControllerImplementation(
       groupId: groupId,
       categorySettingsService: ref.read(providers.backendServiceProvider),
+    ),
+  );
+
+  final StateNotifierProviderFamily<ItemEditorController,
+      ItemDetailModel, String> itemEditorProvider =
+  StateNotifierProvider.family<ItemEditorController,
+      ItemDetailModel, String>(
+        (ref, itemId) => ItemEditorControllerImplementation(
+            itemId: itemId,
+            itemEditorService: ref.read(providers.backendServiceProvider),
+            router: ref.read(providers.routerProvider),
     ),
   );
 }

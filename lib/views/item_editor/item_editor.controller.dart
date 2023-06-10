@@ -1,19 +1,17 @@
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:go_router/go_router.dart';
 import 'package:borrow_app/views/item_editor/item_editor.service.dart';
 import 'package:borrow_app/views/item_editor/item_editor.view.dart';
 
-class ItemEditorImplementation extends ItemEditorController {
+class ItemEditorControllerImplementation extends ItemEditorController {
   final String _itemId;
   final ItemEditorService _itemEditorService;
   final GoRouter _router;
   String name = "";
   String description = "";
 
-  ItemEditorImplementation({
+  ItemEditorControllerImplementation({
     ItemDetailModel? model,
     required String itemId,
     required ItemEditorService itemEditorService,
