@@ -62,17 +62,16 @@ class ProfileItemListControllerImplementation extends ProfileItemListController 
 
   @override
   void selectCategory(CategorySettingsCategoryModel? category) {
-    state = state.copyWith(selectedCategory: category);
-    filterItemsByCategory(category: category);
+    final selectedCategory = category?.id is! String ? null : category;
+    state = state.copyWith(selectedCategory: selectedCategory);
+    filterItemsByCategory(category: selectedCategory);
   }
 
   void filterItemsByCategory({CategorySettingsCategoryModel? category}) {
-    //if (state.group is ItemListGroupModel) {
-      final filteredItems = state.items.where((item) {
-        return category is! CategorySettingsCategoryModel ||
-            item.category?.id == category?.id;
-      }).toList();
-      state = state.copyWith(items: filteredItems);
-    //}
+    final filteredItems = state.items.where((item) {
+      return category is! CategorySettingsCategoryModel ||
+          item.category?.id == category?.id;
+    }).toList();
+    state = state.copyWith(filteredItems: filteredItems);
   }
 }

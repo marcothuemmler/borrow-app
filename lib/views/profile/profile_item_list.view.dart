@@ -29,23 +29,26 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
     if (model.hasError) {
       return const Center(child: Text("something went wrong"));
     }
+
+    final filteredItems = model.filteredItems;
+
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (model.items.isNotEmpty)
+          if (filteredItems != null && filteredItems.isNotEmpty)
             Expanded(
                 child: Column(
                   children: [
                     getDropDownMenu(controller, model),
                     ListView.builder(
                       padding: const EdgeInsets.only(top: 20),
-                      itemCount: model.items.length,
+                      itemCount: model.filteredItems?.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        final item = model.items.elementAt(index);
+                        final item = model.filteredItems?.elementAt(index);
                         return ItemCard(
-                          item: item,
+                          item: item!,
                           onTap: () =>
                               controller.navigateToItem(itemId: item.id),
                         );
