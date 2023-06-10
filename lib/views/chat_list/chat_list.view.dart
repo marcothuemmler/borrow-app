@@ -1,6 +1,6 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/chat_list/chat_list.model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:borrow_app/widgets/items/chat_list_item.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,37 +26,15 @@ class ChatListView extends ConsumerWidget {
                     child: Column(
                       children: [
                         ...model.chats.map(
-                          (chatRoom) => Row(
-                            children: [
-                              Expanded(
-                                child: InkWell(
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 15,
-                                    ),
-                                    child: ListTile(
-                                      leading: CircleAvatar(
-                                        radius: 19,
-                                        backgroundColor:
-                                            CupertinoColors.systemGrey5,
-                                        child: Icon(
-                                          Icons.person,
-                                          color: CupertinoColors.systemGrey,
-                                        ),
-                                      ),
-                                      title: Text(
-                                        "tap me",
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: () => controller.navigateToChat(
-                                    chatRoomId: chatRoom.id,
-                                  ),
-                                ),
+                          (chatRoom) {
+                            final message = chatRoom.messages.elementAt(0);
+                            return ChatListItem(
+                              message: message,
+                              onTap: () => controller.navigateToChat(
+                                chatRoomId: chatRoom.id,
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
                       ],
                     ),
