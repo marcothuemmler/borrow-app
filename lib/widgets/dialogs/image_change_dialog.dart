@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ImageChangeDialog extends StatelessWidget {
   final void Function()? onSetImagePressed;
@@ -28,7 +29,7 @@ class ImageChangeDialog extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
               onPressed: onSetImagePressed,
-              child: const Text("Upload Image"),
+              child: Text(AppLocalizations.of(context).uploadImage),
             ),
             if (showRemoveOption)
               Column(
@@ -38,14 +39,14 @@ class ImageChangeDialog extends StatelessWidget {
                   TextButton(
                     style: TextButton.styleFrom(foregroundColor: Colors.red),
                     onPressed: onRemoveImagePressed,
-                    child: const Text("Remove Image"),
+                    child: Text(AppLocalizations.of(context).removeImage),
                   ),
                 ],
               ),
             const SizedBox(height: 10),
             TextButton(
               onPressed: onCancelPressed,
-              child: const Text("Cancel"),
+              child: Text(AppLocalizations.of(context).cancel),
             )
           ],
         ),

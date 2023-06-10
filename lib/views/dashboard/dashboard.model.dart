@@ -6,6 +6,5 @@ part "dashboard.model.freezed.dart";
 class DashboardModel with _$DashboardModel {
   factory DashboardModel({
     required int currentIndex,
-    required String? currentTitle,
   }) = _DashboardModel;
 }

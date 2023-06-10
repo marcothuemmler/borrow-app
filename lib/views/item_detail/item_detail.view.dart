@@ -2,6 +2,7 @@ import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ItemDetailView extends ConsumerWidget {
@@ -24,13 +25,17 @@ class ItemDetailView extends ConsumerWidget {
     if (model.hasError) {
       return Scaffold(
         appBar: AppBar(),
-        body: const Center(child: Text("Something went wrong")),
+        body: Center(
+          child: Text(AppLocalizations.of(context).unspecifiedError),
+        ),
       );
     }
     return model.item.fold(
       () => Scaffold(
         appBar: AppBar(),
-        body: const Center(child: Text("Something went wrong")),
+        body: Center(
+          child: Text(AppLocalizations.of(context).unspecifiedError),
+        ),
       ),
       (item) => Scaffold(
         appBar: AppBar(
@@ -106,9 +111,9 @@ class ItemDetailView extends ConsumerWidget {
                                 onPressed: () => controller.contactOwner(
                                   ownerId: item.owner.id,
                                 ),
-                                child: const Text(
-                                  "Contact owner",
-                                  style: TextStyle(
+                                child: Text(
+                                  AppLocalizations.of(context).contactOwner,
+                                  style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -121,16 +126,17 @@ class ItemDetailView extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 30),
-                              const Text(
-                                "Description:",
-                                style: TextStyle(
+                              Text(
+                                "${AppLocalizations.of(context).description}:",
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               const SizedBox(height: 30),
                               Text(
-                                item.description ?? "No description provided",
+                                item.description ??
+                                    AppLocalizations.of(context).noDescription,
                               ),
                             ],
                           ),
@@ -138,9 +144,9 @@ class ItemDetailView extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 50),
-                              const Text(
-                                "Available:",
-                                style: TextStyle(
+                              Text(
+                                "${AppLocalizations.of(context).available}:",
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),

@@ -5,10 +5,10 @@ class InvitationChip extends StatelessWidget {
   final void Function(String) onDeleted;
 
   const InvitationChip({
-    Key? key,
+    super.key,
     required this.text,
     required this.onDeleted,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

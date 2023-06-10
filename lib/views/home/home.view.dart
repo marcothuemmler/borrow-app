@@ -1,5 +1,6 @@
 import "package:borrow_app/services/routing/routes.dart";
 import "package:flutter/material.dart";
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import "package:go_router/go_router.dart";
 
 class HomeView extends StatelessWidget {
@@ -23,24 +24,21 @@ class HomeView extends StatelessWidget {
               ],
             ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height)),
             blendMode: BlendMode.dstIn,
-            child: Image.asset(
-              'assets/images/mess.jpg',
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset('assets/images/mess.jpg', fit: BoxFit.cover),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               ElevatedButton(
                 onPressed: () => context.goNamed(loginRoute.name),
-                child: const Text("Login"),
+                child: Text(AppLocalizations.of(context).login),
               ),
               const SizedBox(
                 height: 20,
               ),
               TextButton(
                 onPressed: () => context.goNamed(signupRoute.name),
-                child: const Text("Register"),
+                child: Text(AppLocalizations.of(context).register),
               ),
               const SizedBox(
                 height: 120,

@@ -1,6 +1,7 @@
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:borrow_app/widgets/various_components/image_upload.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -30,7 +31,7 @@ class CreateGroupDialog extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      title: const Text('New Group'),
+      title: Text(AppLocalizations.of(context).newGroup),
       actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
       contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
       content: SingleChildScrollView(
@@ -50,14 +51,14 @@ class CreateGroupDialog extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: <TextFieldWidget>[
                     TextFieldWidget(
-                      text: "Name",
+                      text: AppLocalizations.of(context).groupName,
                       keyboardType: TextInputType.name,
                       validator: nameValidator,
                       onChanged: onGroupNameChanged,
                       autocorrect: false,
                     ),
                     TextFieldWidget(
-                      text: "Description",
+                      text: AppLocalizations.of(context).groupDescription,
                       keyboardType: TextInputType.text,
                       validator: descriptionValidator,
                       onChanged: onGroupDescriptionChanged,
@@ -78,13 +79,13 @@ class CreateGroupDialog extends StatelessWidget {
               SizedBox(width: isPortrait ? 0 : 200),
               Expanded(
                 child: TextButton(
-                  child: const Text('Cancel'),
+                  child: Text(AppLocalizations.of(context).cancel),
                   onPressed: () => context.pop(false),
                 ),
               ),
               Expanded(
                 child: ElevatedButton(
-                  child: const Text('Add Group'),
+                  child: Text(AppLocalizations.of(context).createGroup),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       context.pop(true);
