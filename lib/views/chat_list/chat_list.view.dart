@@ -1,5 +1,6 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/chat_list/chat_list.model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +22,7 @@ class ChatListView extends ConsumerWidget {
                 )
               : SafeArea(
                   child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Column(
                       children: [
                         ...model.chats.map(
@@ -30,10 +32,23 @@ class ChatListView extends ConsumerWidget {
                                 child: InkWell(
                                   child: const Padding(
                                     padding: EdgeInsets.symmetric(
-                                      vertical: 10,
-                                      horizontal: 30,
+                                      horizontal: 15,
                                     ),
-                                    child: Text("tap me"),
+                                    child: ListTile(
+                                      leading: CircleAvatar(
+                                        radius: 19,
+                                        backgroundColor:
+                                            CupertinoColors.systemGrey5,
+                                        child: Icon(
+                                          Icons.person,
+                                          color: CupertinoColors.systemGrey,
+                                        ),
+                                      ),
+                                      title: Text(
+                                        "tap me",
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ),
                                   ),
                                   onTap: () => controller.navigateToChat(
                                     chatRoomId: chatRoom.id,
