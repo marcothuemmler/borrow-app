@@ -42,15 +42,14 @@ class ChatListControllerImplementation extends ChatListController {
 
   @override
   void navigateToChat({required String chatRoomId}) async {
-    final userId = await _storageService.read(key: "user-id");
-    final ids = chatRoomId.split("|");
-    final itemId = ids.elementAt(0);
-    final ownerId = ids.elementAt(1);
-    final otherUserId = ownerId == userId ? ids.elementAt(2) : ownerId;
-    final item = MessageItemModel(id: itemId, ownerId: ownerId);
+    final String? userId = await _storageService.read(key: "user-id");
+    final List<String> ids = chatRoomId.split("|");
+    final String itemId = ids.first;
+    final String ownerId = ids.elementAt(1);
+    final String otherUserId = ownerId == userId ? ids.last : ownerId;
     _router.pushNamed(
       chatRoute.name,
-      extra: item,
+      extra: MessageItemModel(id: itemId, ownerId: ownerId),
       pathParameters: {"userId": otherUserId},
     );
   }

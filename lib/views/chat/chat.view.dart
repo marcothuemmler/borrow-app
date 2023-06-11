@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChatView extends ConsumerWidget {
-  // ignore: unused_field
   final MessageItemModel _item;
   final String _otherUserId;
   final _textController = TextEditingController();

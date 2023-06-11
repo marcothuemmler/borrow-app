@@ -63,7 +63,7 @@ class ChatListItem extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 DateFormat(
-                  "E H:m",
+                  "E H:mm",
                   AppLocalizations.of(context).localeName,
                 ).format(_message.createdAt.toLocal()),
                 style: const TextStyle(color: Colors.black54, fontSize: 13),

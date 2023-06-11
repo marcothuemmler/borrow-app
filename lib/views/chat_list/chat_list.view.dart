@@ -25,11 +25,13 @@ class ChatListView extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Column(
                       children: [
-                        ...model.chats.map(
-                          (chatRoom) {
-                            final message = chatRoom.messages.elementAt(0);
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: model.chats.length,
+                          itemBuilder: (context, index) {
+                            final chatRoom = model.chats.elementAt(index);
                             return ChatListItem(
-                              message: message,
+                              message: chatRoom.messages.first,
                               onTap: () => controller.navigateToChat(
                                 chatRoomId: chatRoom.id,
                               ),

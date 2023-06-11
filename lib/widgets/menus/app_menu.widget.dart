@@ -21,24 +21,21 @@ class AppMenu extends ConsumerWidget {
         icon: const Icon(Icons.menu),
         itemBuilder: (context) => [
           PopupMenuItem(
+            onTap: () => context.pushNamed(chatListRoute.name),
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 5),
               minLeadingWidth: 8,
               leading: const Icon(Icons.notifications_rounded),
               title: Text(AppLocalizations.of(context).messages),
-              onTap: () {
-                context.pop();
-                context.pushNamed(chatListRoute.name);
-              },
             ),
           ),
           PopupMenuItem(
+            onTap: () {},
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 5),
               minLeadingWidth: 8,
               leading: const Icon(Icons.settings),
               title: Text(AppLocalizations.of(context).preferences),
-              onTap: () {},
             ),
           ),
           PopupMenuItem(
@@ -49,15 +46,12 @@ class AppMenu extends ConsumerWidget {
             ),
           ),
           PopupMenuItem(
+            onTap: controller.logout,
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 5),
               minLeadingWidth: 8,
-              leading: const Icon(
-                Icons.logout,
-                color: Colors.red,
-              ),
+              leading: const Icon(Icons.logout, color: Colors.red),
               title: Text(AppLocalizations.of(context).logout),
-              onTap: controller.logout,
             ),
           ),
         ],
