@@ -1,11 +1,13 @@
 import 'package:borrow_app/common/mixins/DialogMixin.dart';
 import 'package:borrow_app/common/providers.dart';
+import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/profile/categories_settings.view.dart';
 import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ItemListView extends ConsumerWidget with CategoryDialogMixin {
   final String groupId;
@@ -74,7 +76,7 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
                   DottedBorderButton(
                     title: "Add a new item",
                     icon: const Icon(Icons.add),
-                    onTap: () {},
+                    onTap: () => controller.navigateToItemEditor(itemId: ""),
                     width: 200,
                   ),
                 ],
@@ -100,6 +102,8 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
   ItemListController(super.model);
 
   void navigateToItem({required String itemId});
+
+  void navigateToItemEditor({required String itemId});
 
   void selectCategory(ItemListCategoryModel? category);
 }

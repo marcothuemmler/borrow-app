@@ -200,6 +200,35 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                 },
               );
             },
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: itemEditorRoute.name,
+            path: itemEditorRoute.path,
+            pageBuilder: (context, state) {
+              final String? itemId = state.pathParameters['itemId'];
+              if (itemId is! String) {
+                return _errorPage(
+                  state: state,
+                  error: "No ID provided",
+                );
+              }
+              return CustomTransitionPage(
+                barrierColor: Colors.black26,
+                child: ItemEditorView(itemId: itemId),
+                transitionsBuilder: (
+                    BuildContext context,
+                    Animation<double> animation,
+                    Animation<double> secondaryAnimation,
+                    Widget child,
+                    ) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  );
+                },
+              );
+            },
           )
         ],
       ),

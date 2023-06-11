@@ -56,6 +56,14 @@ class ItemListControllerImplementation extends ItemListController {
   }
 
   @override
+  void navigateToItemEditor({required String itemId}) {
+    _router.pushNamed(
+      itemEditorRoute.name,
+      pathParameters: {"itemId": itemId},
+    );
+  }
+
+  @override
   void selectCategory(ItemListCategoryModel? category) {
     final selectedCategory = category?.id is! String ? null : category;
     state = state.copyWith(selectedCategory: selectedCategory);
