@@ -1,4 +1,3 @@
-import 'package:borrow_app/util/extensions.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/authentication/auth.service.dart';
 import 'package:borrow_app/views/authentication/signup/signup.view.dart';
@@ -48,28 +47,6 @@ class SignupControllerImplementation extends SignupController {
     } catch (error) {
       state = state.copyWith(isLoading: false, hasError: true);
       return false;
-    }
-  }
-
-  @override
-  String? validateFormField({required String fieldName}) {
-    switch (fieldName) {
-      case 'email':
-        return state.signupDto.email.isEmail
-            ? null
-            : "Bitte geben Sie eine gültige Email ein";
-      case 'username':
-        return state.signupDto.username.isValidUsername
-            ? null
-            : "Username muss mindestens 3 Zeichen haben";
-      case 'password':
-        return state.signupDto.password.isStrongPassword
-            ? null
-            : 'Passwort muss mindestens 8 Zeichen lang sein und mindestens eine'
-                ' Zahl, einen Großbuchstaben und einen Kleinbuchstaben'
-                ' enthalten';
-      default:
-        return null;
     }
   }
 }

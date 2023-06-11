@@ -25,7 +25,7 @@ mixin _$ProfileItemListModel {
   CategorySettingsCategoryListModel? get categories =>
       throw _privateConstructorUsedError;
   List<ItemListItemModel> get items => throw _privateConstructorUsedError;
-  List<ItemListItemModel>? get filteredItems =>
+  List<ItemListItemModel> get filteredItems =>
       throw _privateConstructorUsedError;
   String get groupId => throw _privateConstructorUsedError;
   CategorySettingsCategoryModel? get selectedCategory =>
@@ -48,7 +48,7 @@ abstract class $ProfileItemListModelCopyWith<$Res> {
       bool hasError,
       CategorySettingsCategoryListModel? categories,
       List<ItemListItemModel> items,
-      List<ItemListItemModel>? filteredItems,
+      List<ItemListItemModel> filteredItems,
       String groupId,
       CategorySettingsCategoryModel? selectedCategory});
 
@@ -74,7 +74,7 @@ class _$ProfileItemListModelCopyWithImpl<$Res,
     Object? hasError = null,
     Object? categories = freezed,
     Object? items = null,
-    Object? filteredItems = freezed,
+    Object? filteredItems = null,
     Object? groupId = null,
     Object? selectedCategory = freezed,
   }) {
@@ -95,10 +95,10 @@ class _$ProfileItemListModelCopyWithImpl<$Res,
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
               as List<ItemListItemModel>,
-      filteredItems: freezed == filteredItems
+      filteredItems: null == filteredItems
           ? _value.filteredItems
           : filteredItems // ignore: cast_nullable_to_non_nullable
-              as List<ItemListItemModel>?,
+              as List<ItemListItemModel>,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -150,7 +150,7 @@ abstract class _$$_ProfileItemListModelCopyWith<$Res>
       bool hasError,
       CategorySettingsCategoryListModel? categories,
       List<ItemListItemModel> items,
-      List<ItemListItemModel>? filteredItems,
+      List<ItemListItemModel> filteredItems,
       String groupId,
       CategorySettingsCategoryModel? selectedCategory});
 
@@ -175,7 +175,7 @@ class __$$_ProfileItemListModelCopyWithImpl<$Res>
     Object? hasError = null,
     Object? categories = freezed,
     Object? items = null,
-    Object? filteredItems = freezed,
+    Object? filteredItems = null,
     Object? groupId = null,
     Object? selectedCategory = freezed,
   }) {
@@ -196,10 +196,10 @@ class __$$_ProfileItemListModelCopyWithImpl<$Res>
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<ItemListItemModel>,
-      filteredItems: freezed == filteredItems
+      filteredItems: null == filteredItems
           ? _value._filteredItems
           : filteredItems // ignore: cast_nullable_to_non_nullable
-              as List<ItemListItemModel>?,
+              as List<ItemListItemModel>,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -220,7 +220,7 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
       required this.hasError,
       required this.categories,
       required final List<ItemListItemModel> items,
-      final List<ItemListItemModel>? filteredItems,
+      required final List<ItemListItemModel> filteredItems,
       required this.groupId,
       required this.selectedCategory})
       : _items = items,
@@ -243,14 +243,12 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
     return EqualUnmodifiableListView(_items);
   }
 
-  final List<ItemListItemModel>? _filteredItems;
+  final List<ItemListItemModel> _filteredItems;
   @override
-  List<ItemListItemModel>? get filteredItems {
-    final value = _filteredItems;
-    if (value == null) return null;
+  List<ItemListItemModel> get filteredItems {
     if (_filteredItems is EqualUnmodifiableListView) return _filteredItems;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_filteredItems);
   }
 
   @override
@@ -315,7 +313,7 @@ abstract class _ProfileItemListModel implements ProfileItemListModel {
           required final bool hasError,
           required final CategorySettingsCategoryListModel? categories,
           required final List<ItemListItemModel> items,
-          final List<ItemListItemModel>? filteredItems,
+          required final List<ItemListItemModel> filteredItems,
           required final String groupId,
           required final CategorySettingsCategoryModel? selectedCategory}) =
       _$_ProfileItemListModel;
@@ -332,7 +330,7 @@ abstract class _ProfileItemListModel implements ProfileItemListModel {
   @override
   List<ItemListItemModel> get items;
   @override
-  List<ItemListItemModel>? get filteredItems;
+  List<ItemListItemModel> get filteredItems;
   @override
   String get groupId;
   @override

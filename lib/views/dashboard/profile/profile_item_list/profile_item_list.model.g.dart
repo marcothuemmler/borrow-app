@@ -18,8 +18,8 @@ _$_ProfileItemListModel _$$_ProfileItemListModelFromJson(
       items: (json['items'] as List<dynamic>)
           .map((e) => ItemListItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      filteredItems: (json['filteredItems'] as List<dynamic>?)
-          ?.map((e) => ItemListItemModel.fromJson(e as Map<String, dynamic>))
+      filteredItems: (json['filteredItems'] as List<dynamic>)
+          .map((e) => ItemListItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       groupId: json['groupId'] as String,
       selectedCategory: json['selectedCategory'] == null

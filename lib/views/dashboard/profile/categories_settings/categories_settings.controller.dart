@@ -1,6 +1,6 @@
-import 'package:borrow_app/views/profile/categories_settings.service.dart';
-import 'package:borrow_app/views/profile/categories_settings.view.dart';
-import 'package:borrow_app/views/profile/category_settings.model.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.service.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
 
 class CategoriesSettingsControllerImplementation
     extends CategoriesSettingsController {
@@ -26,11 +26,10 @@ class CategoriesSettingsControllerImplementation
   }
 
   void _init() {
-    loadCategories();
+    _loadCategories();
   }
 
-  @override
-  Future<void> loadCategories() async {
+  Future<void> _loadCategories() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
       final response =
@@ -47,7 +46,7 @@ class CategoriesSettingsControllerImplementation
       groupId: _groupId,
       model: state.newCategory!,
     );
-    loadCategories();
+    _loadCategories();
   }
 
   @override
@@ -63,18 +62,18 @@ class CategoriesSettingsControllerImplementation
   @override
   void createNewCategory() {
     state = state.copyWith(
-      newCategory: CategorySettingsCategoryModel(name: "", description: null),
+      newCategory: CategorySettingsCategoryModel(name: ""),
     );
   }
 
   @override
-  String? validateFormField({required String fieldName}) {
-    switch (fieldName) {
-      case "categoryName":
-        return state.newCategory!.name.length < 3
-            ? "Gruppennamen müssen mindestens 3 Zeichen beinhalten"
-            : null;
+  Future<void> deleteCategory(String id) async {
+    state = state.copyWith(hasError: false);
+    try {
+      await _categorySettingsService.deleteCategory(id: id);
+      _loadCategories();
+    } catch (error) {
+      state = state.copyWith(hasError: true);
     }
-    return null;
   }
 }

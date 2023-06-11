@@ -3,9 +3,9 @@ import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/views/authentication/auth.model.dart';
 import 'package:borrow_app/views/chat/chat.model.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
-import 'package:borrow_app/views/profile/category_settings.model.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -74,7 +74,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       await _client.post("/auth/logout");
       await _storageService.deleteAll();
     } catch (error) {
-      throw Exception("Failed to sign in: $error");
+      throw Exception("Failed to log out: $error");
     }
   }
 
@@ -108,8 +108,10 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
           "filter": ["group.id||\$eq||$groupId", "owner.id||\$eq||$userId"],
         },
       );
-      final res = List<ItemListItemModel>.from(response.data.map((item) => ItemListItemModel.fromJson(item)));
-      return res;
+      return List<ItemListItemModel>.from(
+        // ignore: unnecessary_lambdas
+        response.data.map((json) => ItemListItemModel.fromJson(json)),
+      );
     } catch (error) {
       throw Exception("Could not get group items: $error");
     }
@@ -253,5 +255,14 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       content: message,
       isOwnMessage: true,
     );
+  }
+
+  @override
+  Future<void> deleteCategory({required String id}) async {
+    try {
+      await _client.delete("/categories/$id");
+    } catch (error) {
+      throw Exception("Could not delete category: $error");
+    }
   }
 }

@@ -5,19 +5,18 @@ import "package:borrow_app/views/authentication/signup/signup.view.dart";
 import "package:borrow_app/views/chat/chat.view.dart";
 import "package:borrow_app/views/dashboard/dashboard_wrapper.view.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
+import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart';
+import 'package:borrow_app/views/dashboard/profile/group_settings/group_settings.view.dart';
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.view.dart";
+import 'package:borrow_app/views/dashboard/profile/profile_main/profile_main.view.dart';
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
-import "package:borrow_app/views/profile/profile_item_list.view.dart";
-import "package:borrow_app/views/profile/categories_settings.view.dart";
-import "package:borrow_app/views/profile/group_settings.view.dart";
-import "package:borrow_app/views/profile/profile_main.view.dart";
+import 'package:borrow_app/views/item_editor/item_editor.view.dart';
 import "package:borrow_app/views/welcome/welcome.view.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
-
-import "../../views/item_editor/item_editor.view.dart";
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -207,21 +206,15 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             path: itemEditorRoute.path,
             pageBuilder: (context, state) {
               final String? itemId = state.pathParameters['itemId'];
-              if (itemId is! String) {
-                return _errorPage(
-                  state: state,
-                  error: "No ID provided",
-                );
-              }
               return CustomTransitionPage(
                 barrierColor: Colors.black26,
                 child: ItemEditorView(itemId: itemId),
                 transitionsBuilder: (
-                    BuildContext context,
-                    Animation<double> animation,
-                    Animation<double> secondaryAnimation,
-                    Widget child,
-                    ) {
+                  BuildContext context,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  Widget child,
+                ) {
                   return ScaleTransition(
                     scale: animation,
                     child: child,

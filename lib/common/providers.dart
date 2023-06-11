@@ -17,25 +17,24 @@ import 'package:borrow_app/views/dashboard/dashboard_wrapper.view.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.controller.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/dashboard/item_list/item_list.view.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.controller.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
+import 'package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.controller.dart';
+import 'package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart';
+import 'package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.view.dart';
 import 'package:borrow_app/views/group_selection/group_selection.controller.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
+import 'package:borrow_app/views/item_editor/item_editor.controller.dart';
 import 'package:borrow_app/views/item_editor/item_editor.view.dart';
-import 'package:borrow_app/views/profile/categories_settings.controller.dart';
-import 'package:borrow_app/views/profile/categories_settings.view.dart';
-import 'package:borrow_app/views/profile/category_settings.model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
-import 'package:borrow_app/views/profile/profile_item_list.controller.dart';
-import 'package:borrow_app/views/profile/profile_item_list.view.dart';
-
-import '../views/item_editor/item_editor.controller.dart';
-import '../views/profile/profile_item_list.model.dart';
 
 final providers = Providers();
 
@@ -80,9 +79,10 @@ class Providers {
     ),
   );
 
-  final StateNotifierProviderFamily<DashboardController, DashboardModel, String>
-      dashboardControllerProvider =
-      StateNotifierProvider.family<DashboardController, DashboardModel, String>(
+  final AutoDisposeStateNotifierProviderFamily<DashboardController,
+          DashboardModel, String> dashboardControllerProvider =
+      AutoDisposeStateNotifierProvider.family<DashboardController,
+          DashboardModel, String>(
     (ref, groupId) => DashboardControllerImplementation(
       router: ref.read(providers.routerProvider),
       groupId: groupId,
@@ -101,10 +101,10 @@ class Providers {
   );
 
   final AutoDisposeStateNotifierProviderFamily<ProfileItemListController,
-      ProfileItemListModel, String> profileItemListControllerProvider =
-  AutoDisposeStateNotifierProvider.family<ProfileItemListController, ProfileItemListModel,
-      String>(
-        (ref, groupId) => ProfileItemListControllerImplementation(
+          ProfileItemListModel, String> profileItemListControllerProvider =
+      AutoDisposeStateNotifierProvider.family<ProfileItemListController,
+          ProfileItemListModel, String>(
+    (ref, groupId) => ProfileItemListControllerImplementation(
       profileItemListService: ref.read(providers.backendServiceProvider),
       router: ref.read(providers.routerProvider),
       groupId: groupId,
@@ -151,14 +151,14 @@ class Providers {
     ),
   );
 
-  final StateNotifierProviderFamily<ItemEditorController,
-      ItemDetailModel, String> itemEditorProvider =
-  StateNotifierProvider.family<ItemEditorController,
-      ItemDetailModel, String>(
-        (ref, itemId) => ItemEditorControllerImplementation(
-            itemId: itemId,
-            itemEditorService: ref.read(providers.backendServiceProvider),
-            router: ref.read(providers.routerProvider),
+  final StateNotifierProviderFamily<ItemEditorController, ItemDetailModel,
+          String?> itemEditorProvider =
+      StateNotifierProvider.family<ItemEditorController, ItemDetailModel,
+          String?>(
+    (ref, itemId) => ItemEditorControllerImplementation(
+      itemId: itemId,
+      itemEditorService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
     ),
   );
 }

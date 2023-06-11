@@ -5,23 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ItemEditorView extends ConsumerWidget {
-  final String itemId;
+  final String? itemId;
 
-  const ItemEditorView({super.key, required this.itemId});
+  ItemEditorView({super.key, required this.itemId});
+
+  final TextEditingController itemNameController = TextEditingController();
+  final TextEditingController itemDescriptionController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // ignore: unused_local_variable
     final controller = ref.read(
       providers.itemEditorProvider(itemId).notifier,
     );
-    final model = ref.watch(providers.itemDetailControllerProvider(itemId));
-
-    TextEditingController itemNameController = TextEditingController();
-    TextEditingController itemDescriptionController = TextEditingController();
+    final model = ref.watch(providers.itemEditorProvider(itemId));
     itemNameController.text = model.item.fold(() => "", (item) => item.name);
     itemDescriptionController.text = model.item.fold(
-            () => "",
-            (item) => item.description is! String ? "": item.description!);
+      () => "",
+      (item) => item.description is! String ? "" : item.description!,
+    );
 
     if (model.isLoading) {
       return Scaffold(
@@ -100,18 +103,20 @@ class ItemEditorView extends ConsumerWidget {
                             children: [
                               const SizedBox(height: 30),
                               TextFieldWidget(
-                                  text: "Name",
-                                  validator: null,
-                                  onChanged: null,
-                                  autocorrect: false,
-                                  controller: itemNameController,),
+                                text: "Name",
+                                validator: null,
+                                onChanged: null,
+                                autocorrect: false,
+                                controller: itemNameController,
+                              ),
                               const SizedBox(height: 30),
                               TextFieldWidget(
-                                  text: "Beschreibung",
-                                  validator: null,
-                                  onChanged: null,
-                                  autocorrect: false,
-                                  controller: itemDescriptionController,),
+                                text: "Beschreibung",
+                                validator: null,
+                                onChanged: null,
+                                autocorrect: false,
+                                controller: itemDescriptionController,
+                              ),
                             ],
                           ),
                         ],

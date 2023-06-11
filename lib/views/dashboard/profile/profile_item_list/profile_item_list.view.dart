@@ -1,13 +1,14 @@
-import 'package:borrow_app/common/mixins/DialogMixin.dart';
+import 'package:borrow_app/common/mixins/category_dialog.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/profile/profile_item_list.model.dart';
+import 'package:borrow_app/services/routing/routes.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
+import 'package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart';
 import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
+import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
-
-import 'category_settings.model.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   final String groupId;
@@ -17,12 +18,10 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.read(
-      providers
-          .profileItemListControllerProvider(groupId)
-          .notifier,
+      providers.profileItemListControllerProvider(groupId).notifier,
     );
-    final model = ref.watch(
-        providers.profileItemListControllerProvider(groupId));
+    final model =
+        ref.watch(providers.profileItemListControllerProvider(groupId));
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -36,33 +35,32 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (filteredItems != null && filteredItems.isNotEmpty)
+          if (filteredItems.isNotEmpty)
             Expanded(
-                child: Column(
-                  children: [
-                    getDropDownMenu(controller, model),
-                    ListView.builder(
-                      padding: const EdgeInsets.only(top: 20),
-                      itemCount: model.filteredItems?.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        final item = model.filteredItems?.elementAt(index);
-                        return ItemCard(
-                          item: item!,
-                          onTap: () =>
-                              controller.navigateToItem(itemId: item.id),
-                        );
-                      },
+              child: Column(
+                children: [
+                  getDropDownMenu(controller, model),
+                  ListView.builder(
+                    padding: const EdgeInsets.only(top: 20),
+                    itemCount: model.filteredItems.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      final item = model.filteredItems.elementAt(index);
+                      return ItemCard(
+                        item: item,
+                        onTap: () => controller.navigateToItem(itemId: item.id),
+                      );
+                    },
+                  ),
+                  const Spacer(),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () => context.pushNamed(itemEditorRoute.name),
+                      child: const Text("Neuer Gegenstand"),
                     ),
-                    const Spacer(),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () => {},
-                        child: const Text("Neuer Gegenstand"),
-                      ),
-                    )
-                  ],
-                )
+                  )
+                ],
+              ),
             )
           else
             Expanded(
@@ -93,8 +91,10 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
     );
   }
 
-  Widget getDropDownMenu(ProfileItemListController controller,
-      ProfileItemListModel model) {
+  Widget getDropDownMenu(
+    ProfileItemListController controller,
+    ProfileItemListModel model,
+  ) {
     return DropdownWidget<CategorySettingsCategoryModel>(
       hint: const Text("Category"),
       items: [
@@ -103,16 +103,16 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
       ],
       onChanged: controller.selectCategory,
       value: model.selectedCategory,
-      mapFunction: (category) =>
-          DropdownMenuItem(
-            value: category,
-            child: Text(category.name),
-          ),
+      mapFunction: (category) => DropdownMenuItem(
+        value: category,
+        child: Text(category.name),
+      ),
     );
   }
 }
 
-abstract class ProfileItemListController extends StateNotifier<ProfileItemListModel> {
+abstract class ProfileItemListController
+    extends StateNotifier<ProfileItemListModel> {
   ProfileItemListController(super.model);
 
   void navigateToItem({required String itemId});

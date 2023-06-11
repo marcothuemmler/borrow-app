@@ -4,6 +4,7 @@ import 'package:borrow_app/util/dio.util.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
@@ -24,7 +25,8 @@ class MyApp extends ConsumerWidget {
       QueuedInterceptorsWrapper(
         onRequest: (options, handler) async {
           final isRefreshPath = options.path == ("/auth/refresh");
-          options.disableRetry = options.path.startsWith("/auth");
+          options.disableRetry = options.path.startsWith("/auth") &&
+              !options.path.contains("logout");
           final key = isRefreshPath ? "refreshToken" : "accessToken";
           final authorizationToken = await storageService.read(key: key);
           options.headers['Authorization'] = 'Bearer $authorizationToken';
@@ -50,6 +52,8 @@ class MyApp extends ConsumerWidget {
     );
 
     return MaterialApp.router(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: themeData,
       routerConfig: ref.read(providers.routerProvider),
       debugShowCheckedModeBanner: false,
