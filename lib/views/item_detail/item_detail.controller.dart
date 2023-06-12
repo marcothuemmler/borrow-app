@@ -1,4 +1,5 @@
 import 'package:borrow_app/services/routing/routes.dart';
+import 'package:borrow_app/views/chat/chat.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.service.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
@@ -45,10 +46,14 @@ class ItemDetailControllerImplementation extends ItemDetailController {
 
   @override
   void contactOwner({required String ownerId}) {
+    final item = state.item.toNullable();
+    if (item is! ItemDetailItemModel) {
+      return;
+    }
     _router.pushNamed(
       chatRoute.name,
       pathParameters: {'userId': ownerId},
-      queryParameters: {"itemId": _itemId},
+      extra: MessageItemModel(ownerId: ownerId, id: item.id),
     );
   }
 

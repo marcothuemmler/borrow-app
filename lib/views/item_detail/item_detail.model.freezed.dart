@@ -178,6 +178,7 @@ mixin _$ItemDetailItemModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  bool get isMyItem => throw _privateConstructorUsedError;
   ItemDetailUserModel get owner => throw _privateConstructorUsedError;
   ItemDetailCategoryModel get category => throw _privateConstructorUsedError;
 
@@ -197,6 +198,7 @@ abstract class $ItemDetailItemModelCopyWith<$Res> {
       {String id,
       String name,
       String? description,
+      bool isMyItem,
       ItemDetailUserModel owner,
       ItemDetailCategoryModel category});
 
@@ -220,6 +222,7 @@ class _$ItemDetailItemModelCopyWithImpl<$Res, $Val extends ItemDetailItemModel>
     Object? id = null,
     Object? name = null,
     Object? description = freezed,
+    Object? isMyItem = null,
     Object? owner = null,
     Object? category = null,
   }) {
@@ -236,6 +239,10 @@ class _$ItemDetailItemModelCopyWithImpl<$Res, $Val extends ItemDetailItemModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      isMyItem: null == isMyItem
+          ? _value.isMyItem
+          : isMyItem // ignore: cast_nullable_to_non_nullable
+              as bool,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
@@ -276,6 +283,7 @@ abstract class _$$_ItemDetailItemModelCopyWith<$Res>
       {String id,
       String name,
       String? description,
+      bool isMyItem,
       ItemDetailUserModel owner,
       ItemDetailCategoryModel category});
 
@@ -299,6 +307,7 @@ class __$$_ItemDetailItemModelCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? description = freezed,
+    Object? isMyItem = null,
     Object? owner = null,
     Object? category = null,
   }) {
@@ -315,6 +324,10 @@ class __$$_ItemDetailItemModelCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      isMyItem: null == isMyItem
+          ? _value.isMyItem
+          : isMyItem // ignore: cast_nullable_to_non_nullable
+              as bool,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
@@ -334,6 +347,7 @@ class _$_ItemDetailItemModel implements _ItemDetailItemModel {
       {required this.id,
       required this.name,
       this.description,
+      this.isMyItem = false,
       required this.owner,
       required this.category});
 
@@ -347,13 +361,16 @@ class _$_ItemDetailItemModel implements _ItemDetailItemModel {
   @override
   final String? description;
   @override
+  @JsonKey()
+  final bool isMyItem;
+  @override
   final ItemDetailUserModel owner;
   @override
   final ItemDetailCategoryModel category;
 
   @override
   String toString() {
-    return 'ItemDetailItemModel(id: $id, name: $name, description: $description, owner: $owner, category: $category)';
+    return 'ItemDetailItemModel(id: $id, name: $name, description: $description, isMyItem: $isMyItem, owner: $owner, category: $category)';
   }
 
   @override
@@ -365,6 +382,8 @@ class _$_ItemDetailItemModel implements _ItemDetailItemModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.isMyItem, isMyItem) ||
+                other.isMyItem == isMyItem) &&
             (identical(other.owner, owner) || other.owner == owner) &&
             (identical(other.category, category) ||
                 other.category == category));
@@ -372,8 +391,8 @@ class _$_ItemDetailItemModel implements _ItemDetailItemModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, description, owner, category);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, description, isMyItem, owner, category);
 
   @JsonKey(ignore: true)
   @override
@@ -395,6 +414,7 @@ abstract class _ItemDetailItemModel implements ItemDetailItemModel {
           {required final String id,
           required final String name,
           final String? description,
+          final bool isMyItem,
           required final ItemDetailUserModel owner,
           required final ItemDetailCategoryModel category}) =
       _$_ItemDetailItemModel;
@@ -408,6 +428,8 @@ abstract class _ItemDetailItemModel implements ItemDetailItemModel {
   String get name;
   @override
   String? get description;
+  @override
+  bool get isMyItem;
   @override
   ItemDetailUserModel get owner;
   @override

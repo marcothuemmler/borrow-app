@@ -2,7 +2,9 @@ import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/services/routing/routes.dart";
 import "package:borrow_app/views/authentication/login/login.view.dart";
 import "package:borrow_app/views/authentication/signup/signup.view.dart";
+import "package:borrow_app/views/chat/chat.model.dart";
 import "package:borrow_app/views/chat/chat.view.dart";
+import "package:borrow_app/views/chat_list/chat_list.view.dart";
 import "package:borrow_app/views/dashboard/dashboard_wrapper.view.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart';
@@ -149,15 +151,12 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             path: chatRoute.path,
             pageBuilder: (context, state) {
               final String? userId = state.pathParameters['userId'];
-              final String? itemId = state.queryParameters['itemId'];
-              if (userId is! String || itemId is! String) {
+              final MessageItemModel item = state.extra as MessageItemModel;
+              if (userId is! String) {
                 return _errorPage(state: state, error: "No ID provided");
               }
               return MaterialPage(
-                child: ChatView(
-                  itemId: itemId,
-                  userId: userId,
-                ),
+                child: ChatView(item: item, otherUserId: userId),
               );
             },
           ),
@@ -189,7 +188,15 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                 },
               );
             },
-          )
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: chatListRoute.name,
+            path: chatListRoute.path,
+            pageBuilder: (context, state) {
+              return const MaterialPage(child: ChatListView());
+            },
+          ),
         ],
       ),
     ],
