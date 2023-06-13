@@ -10,6 +10,8 @@ import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../views/item_editor/item_editor.model.dart';
+
 class RestBackendServiceImplementation implements BackendServiceAggregator {
   final Dio _client;
   final SecureStorageService _storageService;
@@ -149,6 +151,22 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       final item = ItemDetailItemModel.fromJson(response.data);
       final myUserId = await _storageService.read(key: "user-id");
       return item.copyWith(isMyItem: item.owner.id == myUserId);
+    } catch (error) {
+      throw Exception("Could not get item detail: $error");
+    }
+  }
+  @override
+  Future<ItemEditorItemModel> getItemEditorDetails({
+    required String itemId,
+  }) async {
+    try {
+      final response = await _client.get(
+        "/items/$itemId",
+        queryParameters: {
+          'join': ['category', 'owner']
+        },
+      );
+      return ItemEditorItemModel.fromJson(response.data);
     } catch (error) {
       throw Exception("Could not get item detail: $error");
     }

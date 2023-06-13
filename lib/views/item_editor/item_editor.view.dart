@@ -1,8 +1,8 @@
 import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 
 class ItemEditorView extends ConsumerWidget {
   final String? itemId;
@@ -20,11 +20,10 @@ class ItemEditorView extends ConsumerWidget {
       providers.itemEditorProvider(itemId).notifier,
     );
     final model = ref.watch(providers.itemEditorProvider(itemId));
-    itemNameController.text = model.item.fold(() => "", (item) => item.name);
-    itemDescriptionController.text = model.item.fold(
-      () => "",
-      (item) => item.description is! String ? "" : item.description!,
-    );
+    itemNameController.text = model.item == null ? "" : model.item!.name;
+    itemDescriptionController.text =
+      model.item == null || model.item!.description == null ?
+      "" : model.item!.description!;
 
     if (model.isLoading) {
       return Scaffold(
@@ -38,12 +37,14 @@ class ItemEditorView extends ConsumerWidget {
         body: const Center(child: Text("Something went wrong")),
       );
     }
-    return model.item.fold(
-      () => Scaffold(
+    if(model.item == null) {
+      return Scaffold(
         appBar: AppBar(),
         body: const Center(child: Text("Something went wrong")),
-      ),
-      (item) => Scaffold(
+      );
+    } else {
+      final item = model.item!;
+      return Scaffold(
         appBar: AppBar(
           title: Text(item.name),
         ),
@@ -135,12 +136,12 @@ class ItemEditorView extends ConsumerWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
 
-abstract class ItemEditorController extends StateNotifier<ItemDetailModel> {
+abstract class ItemEditorController extends StateNotifier<ItemEditorModel> {
   ItemEditorController(super.model);
 
   void setName({required String value});

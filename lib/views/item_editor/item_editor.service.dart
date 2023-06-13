@@ -1,5 +1,5 @@
-import 'package:borrow_app/views/item_detail/item_detail.model.dart';
+import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 
 abstract class ItemEditorService {
-  Future<ItemDetailItemModel> getItemDetails({required String itemId});
+  Future<ItemEditorItemModel> getItemEditorDetails({required String itemId});
 }

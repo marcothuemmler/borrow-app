@@ -1,8 +1,7 @@
-import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_editor/item_editor.service.dart';
 import 'package:borrow_app/views/item_editor/item_editor.view.dart';
-import 'package:dartz/dartz.dart';
 import 'package:go_router/go_router.dart';
+import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 
 class ItemEditorControllerImplementation extends ItemEditorController {
   final String? _itemId;
@@ -11,7 +10,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   String description = "";
 
   ItemEditorControllerImplementation({
-    ItemDetailModel? model,
+    ItemEditorModel? model,
     required String? itemId,
     required ItemEditorService itemEditorService,
     required GoRouter router,
@@ -19,10 +18,10 @@ class ItemEditorControllerImplementation extends ItemEditorController {
         _itemId = itemId,
         super(
           model ??
-              ItemDetailModel(
+              ItemEditorModel(
                 isLoading: false,
                 hasError: false,
-                item: none(),
+                item: null,
               ),
         ) {
     _init();
@@ -37,8 +36,8 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   Future<void> getItemDetails({required String itemId}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await _itemEditorService.getItemDetails(itemId: itemId);
-      state = state.copyWith(item: optionOf(response), isLoading: false);
+      final response = await _itemEditorService.getItemEditorDetails(itemId: itemId);
+      state = state.copyWith(item: response, isLoading: false);
     } catch (error) {
       state = state.copyWith(isLoading: false, hasError: true);
     }

@@ -39,6 +39,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 
 final providers = Providers();
 
@@ -172,9 +173,9 @@ class Providers {
     ),
   );
 
-  final StateNotifierProviderFamily<ItemEditorController, ItemDetailModel,
+  final StateNotifierProviderFamily<ItemEditorController, ItemEditorModel,
           String?> itemEditorProvider =
-      StateNotifierProvider.family<ItemEditorController, ItemDetailModel,
+      StateNotifierProvider.family<ItemEditorController, ItemEditorModel,
           String?>(
     (ref, itemId) => ItemEditorControllerImplementation(
       itemId: itemId,
