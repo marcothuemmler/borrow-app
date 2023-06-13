@@ -1,6 +1,6 @@
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
-import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../item_detail/item_detail.model.dart';
 
 part 'item_editor.model.freezed.dart';
 part 'item_editor.model.g.dart';
@@ -10,10 +10,19 @@ class ItemEditorModel with _$ItemEditorModel {
   factory ItemEditorModel({
     required bool isLoading,
     required bool hasError,
-    required ItemListItemModel? item,
-    required CategorySettingsCategoryListModel? availableCategories,
+    required ItemEditorItemModel? item,
   }) = _ItemEditorModel;
+}
 
-  factory ItemEditorModel.fromJson(Map<String, dynamic> json) =>
-      _$ItemEditorModelFromJson(json);
+@freezed
+class ItemEditorItemModel with _$ItemEditorItemModel {
+  factory ItemEditorItemModel({
+    required String id,
+    required String name,
+    String? description,
+    required ItemDetailCategoryModel category,
+  }) = _ItemEditorItemModel;
+
+  factory ItemEditorItemModel.fromJson(Map<String, dynamic> json) =>
+      _$ItemEditorItemModelFromJson(json);
 }
