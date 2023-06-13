@@ -19,6 +19,7 @@ class ItemDetailItemModel with _$ItemDetailItemModel {
     required String id,
     required String name,
     String? description,
+    @Default(false) bool isMyItem,
     required ItemDetailUserModel owner,
     required ItemDetailCategoryModel category,
   }) = _ItemDetailItemModel;

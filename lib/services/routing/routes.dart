@@ -24,4 +24,5 @@ const profileItemListRoute = RouteDefinition(
   path: "profileItemList",
 );
 const itemEditorRoute =
-    RouteDefinition(name: "itemEditor/", path: "itemEditor/:itemId");
+    RouteDefinition(name: "itemEditor", path: "itemEditor/:itemId");
+const chatListRoute = RouteDefinition(name: "chatList", path: "chats");

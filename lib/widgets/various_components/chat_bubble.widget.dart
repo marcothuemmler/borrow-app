@@ -1,20 +1,17 @@
+import 'package:borrow_app/views/chat/chat.model.dart';
 import 'package:flutter/material.dart';
 
 class ChatBubble extends StatelessWidget {
-  final bool isOwnMessage;
-  final String content;
+  final MessageModel message;
 
-  const ChatBubble({
-    super.key,
-    required this.isOwnMessage,
-    required this.content,
-  });
+  const ChatBubble({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment:
-          isOwnMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment: message.isOwnMessage
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
       children: [
         Flexible(
           child: Container(
@@ -24,7 +21,7 @@ class ChatBubble extends StatelessWidget {
               horizontal: 20,
             ),
             decoration: BoxDecoration(
-              color: isOwnMessage
+              color: message.isOwnMessage
                   ? const Color.fromRGBO(60, 120, 240, 1)
                   : const Color.fromRGBO(240, 240, 240, 1),
               borderRadius: const BorderRadius.all(Radius.circular(13)),
@@ -41,9 +38,9 @@ class ChatBubble extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    content,
+                    message.content,
                     style: TextStyle(
-                      color: isOwnMessage ? Colors.white : Colors.black,
+                      color: message.isOwnMessage ? Colors.white : Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
                     ),

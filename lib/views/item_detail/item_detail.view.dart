@@ -38,9 +38,7 @@ class ItemDetailView extends ConsumerWidget {
         ),
       ),
       (item) => Scaffold(
-        appBar: AppBar(
-          title: Text(item.name),
-        ),
+        appBar: AppBar(title: Text(item.name)),
         body: SafeArea(
           child: Column(
             children: [
@@ -101,24 +99,25 @@ class ItemDetailView extends ConsumerWidget {
                                 style: const TextStyle(color: Colors.black54),
                               ),
                               const Spacer(),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 13,
+                              if (!item.isMyItem)
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 13,
+                                    ),
+                                  ),
+                                  onPressed: () => controller.contactOwner(
+                                    ownerId: item.owner.id,
+                                  ),
+                                  child: Text(
+                                    AppLocalizations.of(context).contactOwner,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
-                                onPressed: () => controller.contactOwner(
-                                  ownerId: item.owner.id,
-                                ),
-                                child: Text(
-                                  AppLocalizations.of(context).contactOwner,
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
                               const SizedBox(width: 5)
                             ],
                           ),

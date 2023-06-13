@@ -1,5 +1,6 @@
 import 'package:borrow_app/services/api/backend_service.dart';
 import 'package:borrow_app/services/api/rest_backend_service.dart';
+import 'package:borrow_app/services/api/websocket_service.dart';
 import 'package:borrow_app/services/routing/router.dart';
 import 'package:borrow_app/services/storage/secure_storage.service.dart';
 import 'package:borrow_app/util/dio.util.dart';
@@ -11,6 +12,9 @@ import 'package:borrow_app/views/authentication/signup/signup.view.dart';
 import 'package:borrow_app/views/chat/chat.controller.dart';
 import 'package:borrow_app/views/chat/chat.model.dart';
 import 'package:borrow_app/views/chat/chat.view.dart';
+import 'package:borrow_app/views/chat_list/chat_list.controller.dart';
+import 'package:borrow_app/views/chat_list/chat_list.model.dart';
+import 'package:borrow_app/views/chat_list/chat_list.view.dart';
 import 'package:borrow_app/views/dashboard/dashboard.controller.dart';
 import 'package:borrow_app/views/dashboard/dashboard.model.dart';
 import 'package:borrow_app/views/dashboard/dashboard_wrapper.view.dart';
@@ -60,6 +64,12 @@ class Providers {
     (ProviderRef ref) => RestBackendServiceImplementation(
       dioClient: ref.read(providers.dioProvider),
       storageService: ref.read(providers.secureStorageServiceProvider),
+    ),
+  );
+
+  final Provider<WebSocketService> webSocketServiceProvider = Provider(
+    (ref) => WebSocketService(
+      service: ref.read(providers.secureStorageServiceProvider),
     ),
   );
 
@@ -132,14 +142,16 @@ class Providers {
   );
 
   final AutoDisposeStateNotifierProviderFamily<ChatController, ChatModel,
-          String> chatControllerProvider =
+          ChatControllerParameters> chatControllerProvider =
       AutoDisposeStateNotifierProvider.family<ChatController, ChatModel,
-          String>(
-    (ref, userId) => ChatControllerImplementation(
-      userId: userId,
-      chatService: ref.read(providers.backendServiceProvider),
-    ),
-  );
+          ChatControllerParameters>((ref, parameters) {
+    ref.onDispose(ref.read(providers.webSocketServiceProvider).disposeSocket);
+    return ChatControllerImplementation(
+      parameters: parameters,
+      socketService: ref.read(providers.webSocketServiceProvider),
+      storageService: ref.read(providers.secureStorageServiceProvider),
+    );
+  });
 
   final StateNotifierProviderFamily<CategoriesSettingsController,
           CategoryListDetailModel, String> categoriesListProvider =
@@ -148,6 +160,15 @@ class Providers {
     (ref, groupId) => CategoriesSettingsControllerImplementation(
       groupId: groupId,
       categorySettingsService: ref.read(providers.backendServiceProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProvider<ChatListController, ChatListModel>
+      chatListControllerProvider = AutoDisposeStateNotifierProvider(
+    (ref) => ChatListControllerImplementation(
+      chatListService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
+      storageService: ref.read(providers.secureStorageServiceProvider),
     ),
   );
 
