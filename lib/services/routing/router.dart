@@ -205,9 +205,13 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             path: itemEditorRoute.path,
             pageBuilder: (context, state) {
               final String? itemId = state.pathParameters['itemId'];
+              final String? groupId = state.pathParameters['groupId'];
+              if(groupId == null) {
+                return _errorPage(state: state, error: "No groupId provided");
+              }
               return CustomTransitionPage(
                 barrierColor: Colors.black26,
-                child: ItemEditorView(itemId: itemId),
+                child: ItemEditorView(itemId: itemId, groupId: groupId,),
                 transitionsBuilder: (
                   BuildContext context,
                   Animation<double> animation,
@@ -227,9 +231,13 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             name: newItemRoute.name,
             path: newItemRoute.path,
             pageBuilder: (context, state) {
+              final String? groupId = state.pathParameters['groupId'];
+              if(groupId == null) {
+                return _errorPage(state: state, error: "No groupId provided");
+              }
               return CustomTransitionPage(
                 barrierColor: Colors.black26,
-                child: ItemEditorView(itemId: null),
+                child: ItemEditorView(itemId: null, groupId: groupId,),
                 transitionsBuilder: (
                     BuildContext context,
                     Animation<double> animation,

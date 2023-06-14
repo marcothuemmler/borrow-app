@@ -62,7 +62,7 @@ class ProfileItemListControllerImplementation
   void navigateToItem({required String itemId}) {
     _router.pushNamed(
       itemEditorRoute.name,
-      pathParameters: {"itemId": itemId},
+      pathParameters: {"itemId": itemId, "groupId": _groupId},
     );
   }
 

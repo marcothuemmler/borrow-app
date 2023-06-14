@@ -10,19 +10,26 @@ class ItemEditorModel with _$ItemEditorModel {
   factory ItemEditorModel({
     required bool isLoading,
     required bool hasError,
-    required ItemEditorItemModel? item,
+    required ItemEditorItemModel item,
   }) = _ItemEditorModel;
 }
 
 @freezed
 class ItemEditorItemModel with _$ItemEditorItemModel {
   factory ItemEditorItemModel({
-    required String id,
     required String name,
     String? description,
-    required ItemDetailCategoryModel category,
+    required ItemDetailCategoryModel? category,
   }) = _ItemEditorItemModel;
 
   factory ItemEditorItemModel.fromJson(Map<String, dynamic> json) =>
       _$ItemEditorItemModelFromJson(json);
+}
+
+@freezed
+class ItemEditorParameters with _$ItemEditorParameters {
+  factory ItemEditorParameters({
+    required String? itemId,
+    required String groupId,
+  }) = _ItemEditorParameters;
 }

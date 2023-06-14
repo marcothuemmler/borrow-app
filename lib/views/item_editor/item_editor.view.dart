@@ -1,13 +1,16 @@
 import 'package:borrow_app/common/providers.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:borrow_app/views/item_editor/item_editor.model.dart';
+import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
 
 class ItemEditorView extends ConsumerWidget {
   final String? itemId;
+  final String groupId;
 
-  ItemEditorView({super.key, required this.itemId});
+  ItemEditorView({super.key, required this.itemId, required this.groupId});
 
   final TextEditingController itemNameController = TextEditingController();
   final TextEditingController itemDescriptionController =
@@ -16,10 +19,12 @@ class ItemEditorView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // ignore: unused_local_variable
+    final itemEditorParameters = ItemEditorParameters(
+        itemId: itemId, groupId: groupId);
     final controller = ref.read(
-      providers.itemEditorProvider(itemId).notifier,
+      providers.itemEditorProvider(itemEditorParameters).notifier,
     );
-    final model = ref.watch(providers.itemEditorProvider(itemId));
+    final model = ref.watch(providers.itemEditorProvider(itemEditorParameters));
     itemNameController.text = model.item == null ? "" : model.item!.name;
     itemDescriptionController.text =
       model.item == null || model.item!.description == null ?
@@ -139,6 +144,24 @@ class ItemEditorView extends ConsumerWidget {
       );
     }
   }
+
+  Widget getDropDownMenu(ItemEditorController controller, WidgetRef ref,
+      ) {
+    final categoryModel = ref.read(providers.categoriesListProvider(groupId));
+    return DropdownWidget<CategorySettingsCategoryModel>(
+      hint: const Text("Category"),
+      items: [
+        ...?(categoryModel.items?.categories),
+        CategorySettingsCategoryModel(name: "All"),
+      ],
+      onChanged: controller.selectCategory,
+      value: null,
+      mapFunction: (category) => DropdownMenuItem(
+        value: category,
+        child: Text(category.name),
+      ),
+    );
+  }
 }
 
 abstract class ItemEditorController extends StateNotifier<ItemEditorModel> {
@@ -149,4 +172,8 @@ abstract class ItemEditorController extends StateNotifier<ItemEditorModel> {
   void setDescription({required String value});
 
   void save();
+
+  void selectCategory(CategorySettingsCategoryModel? category);
+
+  Future<CategorySettingsCategoryListModel?> getCategories();
 }

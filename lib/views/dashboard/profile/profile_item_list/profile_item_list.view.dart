@@ -55,7 +55,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                   const Spacer(),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () => context.pushNamed(itemEditorRoute.name),
+                      onPressed: () => context.goNamed(newItemRoute.name, pathParameters: {"groupId": groupId}),
                       child: const Text("Neuer Gegenstand"),
                     ),
                   )
@@ -80,7 +80,9 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                   DottedBorderButton(
                     title: "Add a new item",
                     icon: const Icon(Icons.add),
-                    onTap: () {context.goNamed("newItemRoute");},
+                    onTap: () {context.goNamed(
+                        newItemRoute.name,
+                        pathParameters: {"groupId": groupId});},
                     width: 200,
                   ),
                 ],

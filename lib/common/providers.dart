@@ -174,12 +174,13 @@ class Providers {
   );
 
   final StateNotifierProviderFamily<ItemEditorController, ItemEditorModel,
-          String?> itemEditorProvider =
+          ItemEditorParameters> itemEditorProvider =
       StateNotifierProvider.family<ItemEditorController, ItemEditorModel,
-          String?>(
-    (ref, itemId) => ItemEditorControllerImplementation(
-      itemId: itemId,
+          ItemEditorParameters>(
+    (ref, itemEditorParameters) => ItemEditorControllerImplementation(
+      itemEditorParameters: itemEditorParameters,
       itemEditorService: ref.read(providers.backendServiceProvider),
+      categoriesSettingsService: ref.read(providers.backendServiceProvider),
       router: ref.read(providers.routerProvider),
     ),
   );

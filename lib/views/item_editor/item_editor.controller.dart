@@ -1,27 +1,34 @@
+import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.service.dart';
+import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
 import 'package:borrow_app/views/item_editor/item_editor.service.dart';
 import 'package:borrow_app/views/item_editor/item_editor.view.dart';
-import 'package:go_router/go_router.dart';
 import 'package:borrow_app/views/item_editor/item_editor.model.dart';
+import 'package:go_router/go_router.dart';
 
 class ItemEditorControllerImplementation extends ItemEditorController {
   final String? _itemId;
+  final String _groupId;
   final ItemEditorService _itemEditorService;
-  String name = "";
-  String description = "";
+  final CategoriesSettingsService _categorySettingsService;
+  CategorySettingsCategoryModel? selectedCategory;
 
   ItemEditorControllerImplementation({
     ItemEditorModel? model,
-    required String? itemId,
+    required ItemEditorParameters itemEditorParameters,
     required ItemEditorService itemEditorService,
+    required CategoriesSettingsService categoriesSettingsService,
     required GoRouter router,
   })  : _itemEditorService = itemEditorService,
-        _itemId = itemId,
+        _itemId = itemEditorParameters.itemId,
+        _groupId = itemEditorParameters.groupId,
+        _categorySettingsService = categoriesSettingsService,
+
         super(
           model ??
               ItemEditorModel(
                 isLoading: false,
                 hasError: false,
-                item: null,
+                item: ItemEditorItemModel(name: '', category: null),
               ),
         ) {
     _init();
@@ -50,11 +57,21 @@ class ItemEditorControllerImplementation extends ItemEditorController {
 
   @override
   void setDescription({required String value}) {
-    description = value;
+    state = state.copyWith.item(description: value);
   }
 
   @override
   void setName({required String value}) {
-    name = value;
+    state = state.copyWith.item(name: value);
+  }
+
+  @override
+  void selectCategory(CategorySettingsCategoryModel? category) {
+    selectedCategory = category;
+  }
+
+  @override
+  Future<CategorySettingsCategoryListModel?> getCategories() async {
+    return await _categorySettingsService.getCategories(groupId: _groupId);
   }
 }
