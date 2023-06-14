@@ -224,6 +224,28 @@ final routerProviderDef = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             parentNavigatorKey: _rootNavigatorKey,
+            name: newItemRoute.name,
+            path: newItemRoute.path,
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                barrierColor: Colors.black26,
+                child: ItemEditorView(itemId: null),
+                transitionsBuilder: (
+                    BuildContext context,
+                    Animation<double> animation,
+                    Animation<double> secondaryAnimation,
+                    Widget child,
+                    ) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  );
+                },
+              );
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
             name: chatListRoute.name,
             path: chatListRoute.path,
             pageBuilder: (context, state) {

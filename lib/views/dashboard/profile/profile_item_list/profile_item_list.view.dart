@@ -80,7 +80,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                   DottedBorderButton(
                     title: "Add a new item",
                     icon: const Icon(Icons.add),
-                    onTap: () {},
+                    onTap: () {context.goNamed("newItemRoute");},
                     width: 200,
                   ),
                 ],
