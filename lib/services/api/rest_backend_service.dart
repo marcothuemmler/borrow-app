@@ -256,4 +256,47 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       throw Exception("Could not patch user: $error");
     }
   }
+
+  @override
+  Future<void> putProfileImage({required XFile profileImage}) async {
+    try {
+      final bytes = await profileImage.readAsBytes();
+      final type = profileImage.name.split(".").last;
+      final userId = await _storageService.read(key: "user-id");
+      final formData = FormData.fromMap({
+        "file": MultipartFile.fromBytes(
+          bytes,
+          filename: profileImage.name,
+          contentType: MediaType("image", type),
+        ),
+        "type": "image/$type",
+      });
+      await _client.put(
+        "/users/cover/$userId",
+        data: formData,
+        options: Options(contentType: "multipart/form-data"),
+      );
+    } catch (error) {
+      throw Exception("Failed to upload project image: $error");
+    }
+  }
+
+  @override
+  Future<XFile> getProfileImage({required String imageUrl}) async {
+    try {
+      final response = await _client.get(
+        imageUrl,
+        options: Options(responseType: ResponseType.bytes),
+      );
+      final contentType = response.headers["content-type"]?.first;
+      final extension = contentType?.split("/").last;
+      return XFile.fromData(
+        response.data,
+        name: "cover.$extension",
+        mimeType: contentType,
+      );
+    } catch (error) {
+      throw Exception("Could not load profile image: $error");
+    }
+  }
 }

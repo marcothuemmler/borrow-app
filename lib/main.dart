@@ -29,7 +29,10 @@ class MyApp extends ConsumerWidget {
               !options.path.contains("logout");
           final key = isRefreshPath ? "refreshToken" : "accessToken";
           final authorizationToken = await storageService.read(key: key);
-          options.headers['Authorization'] = 'Bearer $authorizationToken';
+          // TODO: compare with .env value
+          if (options.uri.port == 3000) {
+            options.headers['Authorization'] = 'Bearer $authorizationToken';
+          }
           return handler.next(options);
         },
       ),

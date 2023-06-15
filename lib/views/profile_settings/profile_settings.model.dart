@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:image_picker/image_picker.dart';
 
 part 'profile_settings.model.freezed.dart';
 part 'profile_settings.model.g.dart';
@@ -9,6 +10,8 @@ class ProfileSettingsModel with _$ProfileSettingsModel {
     required bool isLoading,
     required bool hasError,
     required bool userDataChanged,
+    required XFile? profileImage,
+    required XFile? patchedProfileImage,
     required ProfileSettingsUserModel? user,
     required ProfileSettingsUserModel? patchedUser,
   }) = _ProfileSettingsModel;

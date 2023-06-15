@@ -49,7 +49,10 @@ class ProfileSettingsView extends ConsumerWidget {
                             key: _formKey,
                             child: Column(
                               children: [
-                                ImageUpload(onImageChanged: (XFile? image) {}),
+                                ImageUpload(
+                                  image: model.profileImage,
+                                  onImageChanged: controller.setProfileImage,
+                                ),
                                 SizedBox(height: isPortrait ? 40 : 20),
                                 TextFormField(
                                   initialValue: model.patchedUser?.username,
@@ -97,12 +100,14 @@ class ProfileSettingsView extends ConsumerWidget {
                                         CrossAxisAlignment.stretch,
                                     children: [
                                       ElevatedButton(
-                                        onPressed: model.userDataChanged ? () {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            controller.patchUser();
-                                          }
-                                        } : null,
+                                        onPressed: model.userDataChanged
+                                            ? () {
+                                                if (_formKey.currentState!
+                                                    .validate()) {
+                                                  controller.patchUser();
+                                                }
+                                              }
+                                            : null,
                                         child: const Text("Apply changes"),
                                       ),
                                       const SizedBox(height: 10),
@@ -138,4 +143,5 @@ abstract class ProfileSettingsController
 
   void setUsername({required String username});
   void setEmail({required String email});
+  void setProfileImage(XFile? file);
 }
