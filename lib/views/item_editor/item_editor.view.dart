@@ -1,5 +1,6 @@
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
+import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,12 +43,6 @@ class ItemEditorView extends ConsumerWidget {
         body: const Center(child: Text("Something went wrong")),
       );
     }
-    if(model.item == null) {
-      return Scaffold(
-        appBar: AppBar(),
-        body: const Center(child: Text("Something went wrong")),
-      );
-    } else {
       final item = model.item!;
       return Scaffold(
         appBar: AppBar(
@@ -108,6 +103,10 @@ class ItemEditorView extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 30),
+                              Center(
+                                child: getDropDownMenu(controller, ref, model.item.category),
+                              ),
+                              const SizedBox(height: 30),
                               TextFieldWidget(
                                 text: "Name",
                                 validator: null,
@@ -142,20 +141,20 @@ class ItemEditorView extends ConsumerWidget {
           ),
         ),
       );
-    }
   }
 
-  Widget getDropDownMenu(ItemEditorController controller, WidgetRef ref,
+  Widget getDropDownMenu(ItemEditorController controller, WidgetRef ref, ItemDetailCategoryModel? category,
       ) {
     final categoryModel = ref.read(providers.categoriesListProvider(groupId));
+    final categories = categoryModel.items?.categories;
     return DropdownWidget<CategorySettingsCategoryModel>(
       hint: const Text("Category"),
       items: [
-        ...?(categoryModel.items?.categories),
+        ...?(categories),
         CategorySettingsCategoryModel(name: "All"),
       ],
       onChanged: controller.selectCategory,
-      value: null,
+      value: categories?.where((c) => c.id == category!.id).first,
       mapFunction: (category) => DropdownMenuItem(
         value: category,
         child: Text(category.name),
