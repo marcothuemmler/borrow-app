@@ -109,6 +109,7 @@ class _ImageUploadState extends State<ImageUpload> {
       }
       if (!newImageSelected) {
         setState(() => _image = null);
+        _onImageChanged?.call(null);
         return;
       }
       final XFile? input =

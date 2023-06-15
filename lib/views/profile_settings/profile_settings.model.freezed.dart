@@ -19,6 +19,7 @@ mixin _$ProfileSettingsModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   bool get userDataChanged => throw _privateConstructorUsedError;
+  bool get imageChanged => throw _privateConstructorUsedError;
   XFile? get profileImage => throw _privateConstructorUsedError;
   XFile? get patchedProfileImage => throw _privateConstructorUsedError;
   ProfileSettingsUserModel? get user => throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $ProfileSettingsModelCopyWith<$Res> {
       {bool isLoading,
       bool hasError,
       bool userDataChanged,
+      bool imageChanged,
       XFile? profileImage,
       XFile? patchedProfileImage,
       ProfileSettingsUserModel? user,
@@ -66,6 +68,7 @@ class _$ProfileSettingsModelCopyWithImpl<$Res,
     Object? isLoading = null,
     Object? hasError = null,
     Object? userDataChanged = null,
+    Object? imageChanged = null,
     Object? profileImage = freezed,
     Object? patchedProfileImage = freezed,
     Object? user = freezed,
@@ -83,6 +86,10 @@ class _$ProfileSettingsModelCopyWithImpl<$Res,
       userDataChanged: null == userDataChanged
           ? _value.userDataChanged
           : userDataChanged // ignore: cast_nullable_to_non_nullable
+              as bool,
+      imageChanged: null == imageChanged
+          ? _value.imageChanged
+          : imageChanged // ignore: cast_nullable_to_non_nullable
               as bool,
       profileImage: freezed == profileImage
           ? _value.profileImage
@@ -141,6 +148,7 @@ abstract class _$$_ProfileSettingsModelCopyWith<$Res>
       {bool isLoading,
       bool hasError,
       bool userDataChanged,
+      bool imageChanged,
       XFile? profileImage,
       XFile? patchedProfileImage,
       ProfileSettingsUserModel? user,
@@ -166,6 +174,7 @@ class __$$_ProfileSettingsModelCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? hasError = null,
     Object? userDataChanged = null,
+    Object? imageChanged = null,
     Object? profileImage = freezed,
     Object? patchedProfileImage = freezed,
     Object? user = freezed,
@@ -183,6 +192,10 @@ class __$$_ProfileSettingsModelCopyWithImpl<$Res>
       userDataChanged: null == userDataChanged
           ? _value.userDataChanged
           : userDataChanged // ignore: cast_nullable_to_non_nullable
+              as bool,
+      imageChanged: null == imageChanged
+          ? _value.imageChanged
+          : imageChanged // ignore: cast_nullable_to_non_nullable
               as bool,
       profileImage: freezed == profileImage
           ? _value.profileImage
@@ -211,6 +224,7 @@ class _$_ProfileSettingsModel implements _ProfileSettingsModel {
       {required this.isLoading,
       required this.hasError,
       required this.userDataChanged,
+      required this.imageChanged,
       required this.profileImage,
       required this.patchedProfileImage,
       required this.user,
@@ -223,6 +237,8 @@ class _$_ProfileSettingsModel implements _ProfileSettingsModel {
   @override
   final bool userDataChanged;
   @override
+  final bool imageChanged;
+  @override
   final XFile? profileImage;
   @override
   final XFile? patchedProfileImage;
@@ -233,7 +249,7 @@ class _$_ProfileSettingsModel implements _ProfileSettingsModel {
 
   @override
   String toString() {
-    return 'ProfileSettingsModel(isLoading: $isLoading, hasError: $hasError, userDataChanged: $userDataChanged, profileImage: $profileImage, patchedProfileImage: $patchedProfileImage, user: $user, patchedUser: $patchedUser)';
+    return 'ProfileSettingsModel(isLoading: $isLoading, hasError: $hasError, userDataChanged: $userDataChanged, imageChanged: $imageChanged, profileImage: $profileImage, patchedProfileImage: $patchedProfileImage, user: $user, patchedUser: $patchedUser)';
   }
 
   @override
@@ -247,6 +263,8 @@ class _$_ProfileSettingsModel implements _ProfileSettingsModel {
                 other.hasError == hasError) &&
             (identical(other.userDataChanged, userDataChanged) ||
                 other.userDataChanged == userDataChanged) &&
+            (identical(other.imageChanged, imageChanged) ||
+                other.imageChanged == imageChanged) &&
             (identical(other.profileImage, profileImage) ||
                 other.profileImage == profileImage) &&
             (identical(other.patchedProfileImage, patchedProfileImage) ||
@@ -257,8 +275,16 @@ class _$_ProfileSettingsModel implements _ProfileSettingsModel {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, hasError,
-      userDataChanged, profileImage, patchedProfileImage, user, patchedUser);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      hasError,
+      userDataChanged,
+      imageChanged,
+      profileImage,
+      patchedProfileImage,
+      user,
+      patchedUser);
 
   @JsonKey(ignore: true)
   @override
@@ -273,6 +299,7 @@ abstract class _ProfileSettingsModel implements ProfileSettingsModel {
           {required final bool isLoading,
           required final bool hasError,
           required final bool userDataChanged,
+          required final bool imageChanged,
           required final XFile? profileImage,
           required final XFile? patchedProfileImage,
           required final ProfileSettingsUserModel? user,
@@ -285,6 +312,8 @@ abstract class _ProfileSettingsModel implements ProfileSettingsModel {
   bool get hasError;
   @override
   bool get userDataChanged;
+  @override
+  bool get imageChanged;
   @override
   XFile? get profileImage;
   @override

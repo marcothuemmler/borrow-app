@@ -10,6 +10,7 @@ class ProfileSettingsModel with _$ProfileSettingsModel {
     required bool isLoading,
     required bool hasError,
     required bool userDataChanged,
+    required bool imageChanged,
     required XFile? profileImage,
     required XFile? patchedProfileImage,
     required ProfileSettingsUserModel? user,

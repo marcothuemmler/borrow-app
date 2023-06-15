@@ -29,10 +29,18 @@ class ProfileSettingsView extends ConsumerWidget {
         body: const Center(child: CircularProgressIndicator()),
       );
     }
+    if (model.hasError) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context).profileSettings),
+        ),
+        body: Center(
+          child: Text(AppLocalizations.of(context).unspecifiedError),
+        ),
+      );
+    }
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).profileSettings),
-      ),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).profileSettings)),
       body: SafeArea(
         child: Column(
           children: [
@@ -55,6 +63,7 @@ class ProfileSettingsView extends ConsumerWidget {
                                 ),
                                 SizedBox(height: isPortrait ? 40 : 20),
                                 TextFormField(
+                                  autocorrect: false,
                                   initialValue: model.patchedUser?.username,
                                   onChanged: (value) => controller.setUsername(
                                     username: value,
@@ -75,6 +84,7 @@ class ProfileSettingsView extends ConsumerWidget {
                                 ),
                                 const SizedBox(height: 20),
                                 TextFormField(
+                                  autocorrect: false,
                                   initialValue: model.patchedUser?.email,
                                   onChanged: (value) => controller.setEmail(
                                     email: value,
@@ -100,7 +110,8 @@ class ProfileSettingsView extends ConsumerWidget {
                                         CrossAxisAlignment.stretch,
                                     children: [
                                       ElevatedButton(
-                                        onPressed: model.userDataChanged
+                                        onPressed: model.userDataChanged ||
+                                                model.imageChanged
                                             ? () {
                                                 if (_formKey.currentState!
                                                     .validate()) {
@@ -110,9 +121,15 @@ class ProfileSettingsView extends ConsumerWidget {
                                             : null,
                                         child: const Text("Apply changes"),
                                       ),
-                                      const SizedBox(height: 10),
                                       TextButton(
                                         child: const Text("Change password"),
+                                        onPressed: () {},
+                                      ),
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          foregroundColor: Colors.red,
+                                        ),
+                                        child: const Text("Close account"),
                                         onPressed: () {},
                                       ),
                                     ],
@@ -142,6 +159,8 @@ abstract class ProfileSettingsController
   void patchUser();
 
   void setUsername({required String username});
+
   void setEmail({required String email});
+
   void setProfileImage(XFile? file);
 }

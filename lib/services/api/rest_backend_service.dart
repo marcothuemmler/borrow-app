@@ -299,4 +299,14 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       throw Exception("Could not load profile image: $error");
     }
   }
+
+  @override
+  Future<void> deleteProfileImage() async {
+    try {
+      final userId = await _storageService.read(key: "user-id");
+      await _client.delete("/users/cover/$userId");
+    } catch (error) {
+      throw Exception("Could not delete profile image: $error");
+    }
+  }
 }

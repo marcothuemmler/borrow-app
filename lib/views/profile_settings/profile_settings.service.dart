@@ -11,4 +11,6 @@ abstract class ProfileSettingsService {
   Future<void> putProfileImage({required XFile profileImage});
 
   Future<XFile> getProfileImage({required String imageUrl});
+
+  Future<void> deleteProfileImage();
 }

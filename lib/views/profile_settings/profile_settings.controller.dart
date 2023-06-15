@@ -15,6 +15,7 @@ class ProfileSettingsControllerImplementation
                 isLoading: false,
                 hasError: false,
                 userDataChanged: false,
+                imageChanged: false,
                 profileImage: null,
                 patchedProfileImage: null,
                 user: null,
@@ -30,13 +31,21 @@ class ProfileSettingsControllerImplementation
     state = state.copyWith(isLoading: true, hasError: false);
     try {
       final user = await _profileSettingsService.loadProfileData();
+      XFile? image;
       if (user.imageUrl is String) {
-        final image = await _profileSettingsService.getProfileImage(
+        image = await _profileSettingsService.getProfileImage(
           imageUrl: user.imageUrl!,
         );
-        state = state.copyWith(profileImage: image, patchedProfileImage: image);
       }
-      state = state.copyWith(isLoading: false, user: user, patchedUser: user);
+      state = state.copyWith(
+        isLoading: false,
+        user: user,
+        patchedUser: user,
+        profileImage: image,
+        patchedProfileImage: image,
+        userDataChanged: false,
+        imageChanged: false,
+      );
     } catch (error) {
       state = state.copyWith(isLoading: false, hasError: true);
     }
@@ -46,14 +55,18 @@ class ProfileSettingsControllerImplementation
   void patchUser() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await _profileSettingsService.patchUser(
-        user: state.patchedUser!,
-      );
-      final image = state.patchedProfileImage;
-      if (image is XFile) {
-        await _profileSettingsService.putProfileImage(profileImage: image);
+      if (state.userDataChanged) {
+        await _profileSettingsService.patchUser(user: state.patchedUser!);
       }
-      state = state.copyWith(user: response, isLoading: false);
+      final image = state.patchedProfileImage;
+      if (state.imageChanged) {
+        if (image is XFile) {
+          await _profileSettingsService.putProfileImage(profileImage: image);
+        } else {
+          await _profileSettingsService.deleteProfileImage();
+        }
+      }
+      _init();
     } catch (error) {
       state = state.copyWith(isLoading: false, hasError: true);
     }
@@ -74,13 +87,16 @@ class ProfileSettingsControllerImplementation
   @override
   void setProfileImage(XFile? file) {
     state = state.copyWith(patchedProfileImage: file);
-    _compareUserData();
+    _checkIfImageChanged();
   }
 
   void _compareUserData() {
+    state = state.copyWith(userDataChanged: state.user != state.patchedUser);
+  }
+
+  void _checkIfImageChanged() {
     state = state.copyWith(
-      userDataChanged: state.user != state.patchedUser ||
-          state.profileImage != state.patchedProfileImage,
+      imageChanged: state.profileImage != state.patchedProfileImage,
     );
   }
 }
