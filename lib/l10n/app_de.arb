@@ -36,7 +36,7 @@
   "category": "Kategorie",
   "categories": "Kategorien",
   "browse": "Stöbern",
-  "profile": "Profil",
+  "groupSettings": "Gruppeneinstellungen",
   "contactOwner": "Besitzer kontaktieren",
   "noDescription": "Keine Beschreibung angegeben",
   "available": "Verfügbar",
@@ -50,5 +50,6 @@
   "filterByCategory": "Nach Kategorie filtern:",
   "filterByDate": "Nach Datum filtern:",
   "messages": "Nachrichten",
-  "preferences": "Einstellungen"
+  "preferences": "Einstellungen",
+  "emptyChatListMessage": "Ihre Nachrichten werden hier erscheinen"
 }

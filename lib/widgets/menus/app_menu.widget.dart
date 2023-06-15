@@ -30,7 +30,7 @@ class AppMenu extends ConsumerWidget {
             ),
           ),
           PopupMenuItem(
-            onTap: () {},
+            onTap: () => context.pushNamed(profileRoute.name),
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 5),
               minLeadingWidth: 8,

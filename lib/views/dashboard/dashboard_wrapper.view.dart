@@ -32,7 +32,9 @@ class DashboardWrapperView extends ConsumerWidget {
         title: Text(
           model.currentIndex == 0
               ? AppLocalizations.of(context).browse
-              : AppLocalizations.of(context).profile,
+              : AppLocalizations.of(context).groupSettings,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         actions: [
           if (model.currentIndex == 0)

@@ -36,7 +36,7 @@
   "categories": "Categories",
   "allCategories": "All",
   "browse": "Browse",
-  "profile": "Profile",
+  "groupSettings": "Group settings",
   "contactOwner": "Contact owner",
   "noDescription": "No description provided",
   "available": "Available",
@@ -50,5 +50,6 @@
   "filterByCategory": "Filter by category:",
   "filterByDate": "Filter by date:",
   "messages": "Messages",
-  "preferences": "Preferences"
+  "preferences": "Preferences",
+  "emptyChatListMessage": "Your messages will appear here"
 }

@@ -2,17 +2,16 @@ import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/services/routing/routes.dart";
 import "package:borrow_app/views/authentication/login/login.view.dart";
 import "package:borrow_app/views/authentication/signup/signup.view.dart";
-import "package:borrow_app/views/chat/chat.model.dart";
 import "package:borrow_app/views/chat/chat.view.dart";
 import "package:borrow_app/views/chat_list/chat_list.view.dart";
 import "package:borrow_app/views/dashboard/dashboard_wrapper.view.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart';
 import 'package:borrow_app/views/dashboard/profile/group_settings/group_settings.view.dart';
-import 'package:borrow_app/views/dashboard/profile/profile_main/profile_main.view.dart';
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
+import "package:borrow_app/views/profile_settings/profile_settings.view.dart";
 import "package:borrow_app/views/welcome/welcome.view.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -28,6 +27,7 @@ MaterialPage _errorPage({
   return MaterialPage(
     key: state.pageKey,
     child: Scaffold(
+      appBar: AppBar(),
       body: Center(child: Text(error)),
     ),
   );
@@ -117,14 +117,6 @@ final routerProviderDef = Provider<GoRouter>((ref) {
                     routes: [
                       GoRoute(
                         parentNavigatorKey: _shellNavigatorKey,
-                        name: profileRoute.name,
-                        path: profileRoute.path,
-                        builder: (context, state) => ProfileMain(
-                          groupId: state.pathParameters['groupId']!,
-                        ),
-                      ),
-                      GoRoute(
-                        parentNavigatorKey: _shellNavigatorKey,
                         name: groupSettingsRoute.name,
                         path: groupSettingsRoute.path,
                         builder: (context, state) => GroupSettingsView(
@@ -151,12 +143,19 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             path: chatRoute.path,
             pageBuilder: (context, state) {
               final String? userId = state.pathParameters['userId'];
-              final MessageItemModel item = state.extra as MessageItemModel;
-              if (userId is! String) {
+              final String? itemId = state.queryParameters["itemId"];
+              final String? ownerId = state.queryParameters["ownerId"];
+              if (userId is! String ||
+                  itemId is! String ||
+                  ownerId is! String) {
                 return _errorPage(state: state, error: "No ID provided");
               }
               return MaterialPage(
-                child: ChatView(item: item, otherUserId: userId),
+                child: ChatView(
+                  itemId: itemId,
+                  ownerId: ownerId,
+                  otherUserId: userId,
+                ),
               );
             },
           ),
@@ -196,6 +195,12 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             pageBuilder: (context, state) {
               return const MaterialPage(child: ChatListView());
             },
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: profileRoute.name,
+            path: profileRoute.path,
+            builder: (context, state) => ProfileSettingsView(),
           ),
         ],
       ),

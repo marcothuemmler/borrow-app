@@ -30,6 +30,9 @@ import 'package:borrow_app/views/group_selection/group_selection.view.dart';
 import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
+import 'package:borrow_app/views/profile_settings/profile_settings.controller.dart';
+import 'package:borrow_app/views/profile_settings/profile_settings.model.dart';
+import 'package:borrow_app/views/profile_settings/profile_settings.view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -153,6 +156,14 @@ class Providers {
       chatListService: ref.read(providers.backendServiceProvider),
       router: ref.read(providers.routerProvider),
       storageService: ref.read(providers.secureStorageServiceProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProvider<ProfileSettingsController,
+          ProfileSettingsModel> profileSettingsControllerProvider =
+      AutoDisposeStateNotifierProvider(
+    (ref) => ProfileSettingsControllerImplementation(
+      profileSettingsService: ref.read(providers.backendServiceProvider),
     ),
   );
 }

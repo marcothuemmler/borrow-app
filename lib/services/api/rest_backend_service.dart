@@ -6,6 +6,7 @@ import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
+import 'package:borrow_app/views/profile_settings/profile_settings.model.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -57,9 +58,10 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     try {
       final userId = await _storageService.read(key: "user-id");
       final response = await _client.get(
-        "/users/$userId",
+        "/users/with-groups/$userId",
         queryParameters: {
-          "join": ['groups']
+          "join": ['groups'],
+          "fields": "username"
         },
       );
       return GroupSelectionUserModel.fromJson(response.data);
@@ -224,6 +226,34 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       );
     } catch (error) {
       throw Exception("Could not load user chatrooms: $error");
+    }
+  }
+
+  @override
+  Future<ProfileSettingsUserModel> loadProfileData() async {
+    try {
+      final userId = await _storageService.read(key: "user-id");
+      final response = await _client.get("/users/$userId");
+      return ProfileSettingsUserModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception(("Could not load profile data: $error"));
+    }
+  }
+
+  @override
+  Future<ProfileSettingsUserModel> patchUser({
+    required ProfileSettingsUserModel user,
+  }) async {
+    try {
+      final String? userId = await _storageService.read(key: "user-id");
+      final UpdateUserDto payload = UpdateUserDto(
+        username: user.username,
+        email: user.email,
+      );
+      final response = await _client.patch("/users/$userId", data: payload);
+      return ProfileSettingsUserModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception("Could not patch user: $error");
     }
   }
 }

@@ -36,7 +36,7 @@
   "categories": "Categorías",
   "allCategories": "Todas",
   "browse": "Explorar",
-  "profile": "Perfil",
+  "groupSettings": "Ajustes de grupo",
   "contactOwner": "Contactar con el dueño",
   "noDescription": "Sin descripción",
   "available": "Disponible",
@@ -50,5 +50,6 @@
   "filterByCategory": "Filtrar por categoria:",
   "filterByDate": "Filtrar por fecha:",
   "messages": "Ajustes",
-  "preferences": "Einstellungen"
+  "preferences": "Einstellungen",
+  "emptyChatListMessage": "Sus mensajes aparecerán aquí"
 }
