@@ -111,7 +111,7 @@ class ItemEditorView extends ConsumerWidget {
                               TextFieldWidget(
                                 text: "Name",
                                 validator: null,
-                                onChanged:(value) {controller.setName(value: value);},
+                                onChanged:(v) {controller.setName(value: v);},
                                 autocorrect: false,
                                 controller: itemNameController,
                               ),
@@ -119,7 +119,7 @@ class ItemEditorView extends ConsumerWidget {
                               TextFieldWidget(
                                 text: "Beschreibung",
                                 validator: null,
-                                onChanged: (value) {controller.setDescription(value: value);},
+                                onChanged: (v) {controller.setDescription(value: v);},
                                 autocorrect: false,
                                 controller: itemDescriptionController,
                               ),

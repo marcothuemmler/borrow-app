@@ -10,6 +10,8 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   final String _groupId;
   final ItemEditorService _itemEditorService;
   final CategoriesSettingsService _categorySettingsService;
+  String? _name;
+  String? _description;
   CategorySettingsCategoryModel? selectedCategory;
 
   ItemEditorControllerImplementation({
@@ -53,18 +55,23 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   @override
   void save() {
     if(_itemId != null) {
-      _itemEditorService.patchItem(itemId: _itemId!, model: state);
+      final model = state.item;
+      final newModel = model.copyWith(
+          name: _name == null ? model.name : _name!,
+          description: _description == null ? model.description : (_description == "" ? null : _description));
+      _itemEditorService.patchItem(itemId: _itemId!, model: state.copyWith(item: newModel));
     }
+    _init();
   }
 
   @override
   void setDescription({required String value}) {
-    state = state.copyWith.item(description: value);
+    _description = value;
   }
 
   @override
   void setName({required String value}) {
-    state = state.copyWith.item(name: value);
+    _name = value;
   }
 
   @override
