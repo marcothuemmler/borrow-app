@@ -9,8 +9,7 @@ import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../views/item_editor/item_editor.model.dart';
+import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 
 class RestBackendServiceImplementation implements BackendServiceAggregator {
   final Dio _client;
@@ -264,6 +263,21 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       );
     } catch (error) {
       throw Exception("Could not load user chatrooms: $error");
+    }
+  }
+
+
+  @override
+  Future<void> patchItem({required String itemId, required ItemEditorModel model}) async {
+    try {
+      final data = ItemEditorItemModelDTO(
+          name: model.item.name,
+          description: model.item.description,
+          categoryId: model.item.category!.id,
+      );
+      await _client.patch("/items/$itemId", data: data);
+    } catch (error) {
+      throw Exception("Could patch item $error");
     }
   }
 }

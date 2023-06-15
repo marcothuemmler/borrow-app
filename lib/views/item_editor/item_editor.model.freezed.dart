@@ -188,6 +188,7 @@ ItemEditorItemModel _$ItemEditorItemModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ItemEditorItemModel {
+  String? get itemId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   ItemDetailCategoryModel? get category => throw _privateConstructorUsedError;
@@ -205,7 +206,10 @@ abstract class $ItemEditorItemModelCopyWith<$Res> {
       _$ItemEditorItemModelCopyWithImpl<$Res, ItemEditorItemModel>;
   @useResult
   $Res call(
-      {String name, String? description, ItemDetailCategoryModel? category});
+      {String? itemId,
+      String name,
+      String? description,
+      ItemDetailCategoryModel? category});
 
   $ItemDetailCategoryModelCopyWith<$Res>? get category;
 }
@@ -223,11 +227,16 @@ class _$ItemEditorItemModelCopyWithImpl<$Res, $Val extends ItemEditorItemModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? itemId = freezed,
     Object? name = null,
     Object? description = freezed,
     Object? category = freezed,
   }) {
     return _then(_value.copyWith(
+      itemId: freezed == itemId
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -265,7 +274,10 @@ abstract class _$$_ItemEditorItemModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name, String? description, ItemDetailCategoryModel? category});
+      {String? itemId,
+      String name,
+      String? description,
+      ItemDetailCategoryModel? category});
 
   @override
   $ItemDetailCategoryModelCopyWith<$Res>? get category;
@@ -282,11 +294,16 @@ class __$$_ItemEditorItemModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? itemId = freezed,
     Object? name = null,
     Object? description = freezed,
     Object? category = freezed,
   }) {
     return _then(_$_ItemEditorItemModel(
+      itemId: freezed == itemId
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -307,11 +324,16 @@ class __$$_ItemEditorItemModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ItemEditorItemModel implements _ItemEditorItemModel {
   _$_ItemEditorItemModel(
-      {required this.name, this.description, required this.category});
+      {this.itemId,
+      required this.name,
+      this.description,
+      required this.category});
 
   factory _$_ItemEditorItemModel.fromJson(Map<String, dynamic> json) =>
       _$$_ItemEditorItemModelFromJson(json);
 
+  @override
+  final String? itemId;
   @override
   final String name;
   @override
@@ -321,7 +343,7 @@ class _$_ItemEditorItemModel implements _ItemEditorItemModel {
 
   @override
   String toString() {
-    return 'ItemEditorItemModel(name: $name, description: $description, category: $category)';
+    return 'ItemEditorItemModel(itemId: $itemId, name: $name, description: $description, category: $category)';
   }
 
   @override
@@ -329,6 +351,7 @@ class _$_ItemEditorItemModel implements _ItemEditorItemModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ItemEditorItemModel &&
+            (identical(other.itemId, itemId) || other.itemId == itemId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -338,7 +361,8 @@ class _$_ItemEditorItemModel implements _ItemEditorItemModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, description, category);
+  int get hashCode =>
+      Object.hash(runtimeType, itemId, name, description, category);
 
   @JsonKey(ignore: true)
   @override
@@ -357,7 +381,8 @@ class _$_ItemEditorItemModel implements _ItemEditorItemModel {
 
 abstract class _ItemEditorItemModel implements ItemEditorItemModel {
   factory _ItemEditorItemModel(
-          {required final String name,
+          {final String? itemId,
+          required final String name,
           final String? description,
           required final ItemDetailCategoryModel? category}) =
       _$_ItemEditorItemModel;
@@ -365,6 +390,8 @@ abstract class _ItemEditorItemModel implements ItemEditorItemModel {
   factory _ItemEditorItemModel.fromJson(Map<String, dynamic> json) =
       _$_ItemEditorItemModel.fromJson;
 
+  @override
+  String? get itemId;
   @override
   String get name;
   @override
@@ -511,5 +538,183 @@ abstract class _ItemEditorParameters implements ItemEditorParameters {
   @override
   @JsonKey(ignore: true)
   _$$_ItemEditorParametersCopyWith<_$_ItemEditorParameters> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ItemEditorItemModelDTO _$ItemEditorItemModelDTOFromJson(
+    Map<String, dynamic> json) {
+  return _ItemEditorItemModelDTO.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ItemEditorItemModelDTO {
+  String get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String get categoryId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ItemEditorItemModelDTOCopyWith<ItemEditorItemModelDTO> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ItemEditorItemModelDTOCopyWith<$Res> {
+  factory $ItemEditorItemModelDTOCopyWith(ItemEditorItemModelDTO value,
+          $Res Function(ItemEditorItemModelDTO) then) =
+      _$ItemEditorItemModelDTOCopyWithImpl<$Res, ItemEditorItemModelDTO>;
+  @useResult
+  $Res call({String name, String? description, String categoryId});
+}
+
+/// @nodoc
+class _$ItemEditorItemModelDTOCopyWithImpl<$Res,
+        $Val extends ItemEditorItemModelDTO>
+    implements $ItemEditorItemModelDTOCopyWith<$Res> {
+  _$ItemEditorItemModelDTOCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? description = freezed,
+    Object? categoryId = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryId: null == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ItemEditorItemModelDTOCopyWith<$Res>
+    implements $ItemEditorItemModelDTOCopyWith<$Res> {
+  factory _$$_ItemEditorItemModelDTOCopyWith(_$_ItemEditorItemModelDTO value,
+          $Res Function(_$_ItemEditorItemModelDTO) then) =
+      __$$_ItemEditorItemModelDTOCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, String? description, String categoryId});
+}
+
+/// @nodoc
+class __$$_ItemEditorItemModelDTOCopyWithImpl<$Res>
+    extends _$ItemEditorItemModelDTOCopyWithImpl<$Res,
+        _$_ItemEditorItemModelDTO>
+    implements _$$_ItemEditorItemModelDTOCopyWith<$Res> {
+  __$$_ItemEditorItemModelDTOCopyWithImpl(_$_ItemEditorItemModelDTO _value,
+      $Res Function(_$_ItemEditorItemModelDTO) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? description = freezed,
+    Object? categoryId = null,
+  }) {
+    return _then(_$_ItemEditorItemModelDTO(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryId: null == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ItemEditorItemModelDTO implements _ItemEditorItemModelDTO {
+  _$_ItemEditorItemModelDTO(
+      {required this.name, this.description, required this.categoryId});
+
+  factory _$_ItemEditorItemModelDTO.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemEditorItemModelDTOFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String? description;
+  @override
+  final String categoryId;
+
+  @override
+  String toString() {
+    return 'ItemEditorItemModelDTO(name: $name, description: $description, categoryId: $categoryId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ItemEditorItemModelDTO &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, description, categoryId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ItemEditorItemModelDTOCopyWith<_$_ItemEditorItemModelDTO> get copyWith =>
+      __$$_ItemEditorItemModelDTOCopyWithImpl<_$_ItemEditorItemModelDTO>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ItemEditorItemModelDTOToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ItemEditorItemModelDTO implements ItemEditorItemModelDTO {
+  factory _ItemEditorItemModelDTO(
+      {required final String name,
+      final String? description,
+      required final String categoryId}) = _$_ItemEditorItemModelDTO;
+
+  factory _ItemEditorItemModelDTO.fromJson(Map<String, dynamic> json) =
+      _$_ItemEditorItemModelDTO.fromJson;
+
+  @override
+  String get name;
+  @override
+  String? get description;
+  @override
+  String get categoryId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ItemEditorItemModelDTOCopyWith<_$_ItemEditorItemModelDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -111,7 +111,7 @@ class ItemEditorView extends ConsumerWidget {
                               TextFieldWidget(
                                 text: "Name",
                                 validator: null,
-                                onChanged: null,
+                                onChanged:(value) {controller.setName(value: value);},
                                 autocorrect: false,
                                 controller: itemNameController,
                               ),
@@ -119,7 +119,7 @@ class ItemEditorView extends ConsumerWidget {
                               TextFieldWidget(
                                 text: "Beschreibung",
                                 validator: null,
-                                onChanged: null,
+                                onChanged: (value) {controller.setDescription(value: value);},
                                 autocorrect: false,
                                 controller: itemDescriptionController,
                               ),
@@ -133,7 +133,7 @@ class ItemEditorView extends ConsumerWidget {
               ),
               Center(
                 child: ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: controller.save,
                   child: const Text("Speichern"),
                 ),
               ),

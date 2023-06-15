@@ -52,7 +52,9 @@ class ItemEditorControllerImplementation extends ItemEditorController {
 
   @override
   void save() {
-    // TODO: implement save
+    if(_itemId != null) {
+      _itemEditorService.patchItem(itemId: _itemId!, model: state);
+    }
   }
 
   @override
