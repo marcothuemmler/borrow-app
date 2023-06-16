@@ -59,7 +59,10 @@ class ItemEditorControllerImplementation extends ItemEditorController {
       final newModel = model.copyWith(
           name: _name == null ? model.name : _name!,
           description: _description == null ? model.description : (_description == "" ? null : _description));
-      _itemEditorService.patchItem(itemId: _itemId!, model: state.copyWith(item: newModel));
+      _itemEditorService.patchItem(
+          itemId: _itemId!,
+          model: state.copyWith(item: newModel),
+          categoryId: selectedCategory == null ? model.category!.id : selectedCategory!.id!);
     }
     _init();
   }

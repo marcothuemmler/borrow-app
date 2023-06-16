@@ -150,11 +150,11 @@ class ItemEditorView extends ConsumerWidget {
     return DropdownWidget<CategorySettingsCategoryModel>(
       hint: const Text("Category"),
       items: [
-        ...?(categories),
+        ...?categories,
         CategorySettingsCategoryModel(name: "All"),
       ],
       onChanged: controller.selectCategory,
-      value: categories?.where((c) => c.id == category!.id).first,
+      value: categories!.where((c) => c.id == category!.id).first,
       mapFunction: (category) => DropdownMenuItem(
         value: category,
         child: Text(category.name),
