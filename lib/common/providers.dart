@@ -34,12 +34,12 @@ import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
 import 'package:borrow_app/views/item_editor/item_editor.controller.dart';
+import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 import 'package:borrow_app/views/item_editor/item_editor.view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
-import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 
 final providers = Providers();
 
@@ -180,7 +180,6 @@ class Providers {
     (ref, itemEditorParameters) => ItemEditorControllerImplementation(
       itemEditorParameters: itemEditorParameters,
       itemEditorService: ref.read(providers.backendServiceProvider),
-      categoriesSettingsService: ref.read(providers.backendServiceProvider),
       router: ref.read(providers.routerProvider),
     ),
   );

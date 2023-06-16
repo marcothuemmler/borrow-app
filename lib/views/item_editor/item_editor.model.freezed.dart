@@ -19,6 +19,8 @@ mixin _$ItemEditorModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   ItemEditorItemModel get item => throw _privateConstructorUsedError;
+  List<ItemEditorCategoryModel> get categories =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ItemEditorModelCopyWith<ItemEditorModel> get copyWith =>
@@ -31,7 +33,11 @@ abstract class $ItemEditorModelCopyWith<$Res> {
           ItemEditorModel value, $Res Function(ItemEditorModel) then) =
       _$ItemEditorModelCopyWithImpl<$Res, ItemEditorModel>;
   @useResult
-  $Res call({bool isLoading, bool hasError, ItemEditorItemModel item});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      ItemEditorItemModel item,
+      List<ItemEditorCategoryModel> categories});
 
   $ItemEditorItemModelCopyWith<$Res> get item;
 }
@@ -52,6 +58,7 @@ class _$ItemEditorModelCopyWithImpl<$Res, $Val extends ItemEditorModel>
     Object? isLoading = null,
     Object? hasError = null,
     Object? item = null,
+    Object? categories = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -66,6 +73,10 @@ class _$ItemEditorModelCopyWithImpl<$Res, $Val extends ItemEditorModel>
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
               as ItemEditorItemModel,
+      categories: null == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<ItemEditorCategoryModel>,
     ) as $Val);
   }
 
@@ -86,7 +97,11 @@ abstract class _$$_ItemEditorModelCopyWith<$Res>
       __$$_ItemEditorModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, bool hasError, ItemEditorItemModel item});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      ItemEditorItemModel item,
+      List<ItemEditorCategoryModel> categories});
 
   @override
   $ItemEditorItemModelCopyWith<$Res> get item;
@@ -106,6 +121,7 @@ class __$$_ItemEditorModelCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? hasError = null,
     Object? item = null,
+    Object? categories = null,
   }) {
     return _then(_$_ItemEditorModel(
       isLoading: null == isLoading
@@ -120,6 +136,10 @@ class __$$_ItemEditorModelCopyWithImpl<$Res>
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
               as ItemEditorItemModel,
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<ItemEditorCategoryModel>,
     ));
   }
 }
@@ -127,8 +147,12 @@ class __$$_ItemEditorModelCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ItemEditorModel implements _ItemEditorModel {
-  _$_ItemEditorModel(
-      {required this.isLoading, required this.hasError, required this.item});
+  const _$_ItemEditorModel(
+      {required this.isLoading,
+      required this.hasError,
+      required this.item,
+      required final List<ItemEditorCategoryModel> categories})
+      : _categories = categories;
 
   @override
   final bool isLoading;
@@ -136,10 +160,17 @@ class _$_ItemEditorModel implements _ItemEditorModel {
   final bool hasError;
   @override
   final ItemEditorItemModel item;
+  final List<ItemEditorCategoryModel> _categories;
+  @override
+  List<ItemEditorCategoryModel> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
 
   @override
   String toString() {
-    return 'ItemEditorModel(isLoading: $isLoading, hasError: $hasError, item: $item)';
+    return 'ItemEditorModel(isLoading: $isLoading, hasError: $hasError, item: $item, categories: $categories)';
   }
 
   @override
@@ -151,11 +182,14 @@ class _$_ItemEditorModel implements _ItemEditorModel {
                 other.isLoading == isLoading) &&
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
-            (identical(other.item, item) || other.item == item));
+            (identical(other.item, item) || other.item == item) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, hasError, item);
+  int get hashCode => Object.hash(runtimeType, isLoading, hasError, item,
+      const DeepCollectionEquality().hash(_categories));
 
   @JsonKey(ignore: true)
   @override
@@ -165,10 +199,12 @@ class _$_ItemEditorModel implements _ItemEditorModel {
 }
 
 abstract class _ItemEditorModel implements ItemEditorModel {
-  factory _ItemEditorModel(
-      {required final bool isLoading,
-      required final bool hasError,
-      required final ItemEditorItemModel item}) = _$_ItemEditorModel;
+  const factory _ItemEditorModel(
+          {required final bool isLoading,
+          required final bool hasError,
+          required final ItemEditorItemModel item,
+          required final List<ItemEditorCategoryModel> categories}) =
+      _$_ItemEditorModel;
 
   @override
   bool get isLoading;
@@ -176,6 +212,8 @@ abstract class _ItemEditorModel implements ItemEditorModel {
   bool get hasError;
   @override
   ItemEditorItemModel get item;
+  @override
+  List<ItemEditorCategoryModel> get categories;
   @override
   @JsonKey(ignore: true)
   _$$_ItemEditorModelCopyWith<_$_ItemEditorModel> get copyWith =>
@@ -191,7 +229,7 @@ mixin _$ItemEditorItemModel {
   String? get itemId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  ItemDetailCategoryModel? get category => throw _privateConstructorUsedError;
+  ItemEditorCategoryModel? get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -209,9 +247,9 @@ abstract class $ItemEditorItemModelCopyWith<$Res> {
       {String? itemId,
       String name,
       String? description,
-      ItemDetailCategoryModel? category});
+      ItemEditorCategoryModel? category});
 
-  $ItemDetailCategoryModelCopyWith<$Res>? get category;
+  $ItemEditorCategoryModelCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -248,18 +286,18 @@ class _$ItemEditorItemModelCopyWithImpl<$Res, $Val extends ItemEditorItemModel>
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as ItemDetailCategoryModel?,
+              as ItemEditorCategoryModel?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ItemDetailCategoryModelCopyWith<$Res>? get category {
+  $ItemEditorCategoryModelCopyWith<$Res>? get category {
     if (_value.category == null) {
       return null;
     }
 
-    return $ItemDetailCategoryModelCopyWith<$Res>(_value.category!, (value) {
+    return $ItemEditorCategoryModelCopyWith<$Res>(_value.category!, (value) {
       return _then(_value.copyWith(category: value) as $Val);
     });
   }
@@ -277,10 +315,10 @@ abstract class _$$_ItemEditorItemModelCopyWith<$Res>
       {String? itemId,
       String name,
       String? description,
-      ItemDetailCategoryModel? category});
+      ItemEditorCategoryModel? category});
 
   @override
-  $ItemDetailCategoryModelCopyWith<$Res>? get category;
+  $ItemEditorCategoryModelCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -315,7 +353,7 @@ class __$$_ItemEditorItemModelCopyWithImpl<$Res>
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as ItemDetailCategoryModel?,
+              as ItemEditorCategoryModel?,
     ));
   }
 }
@@ -323,7 +361,7 @@ class __$$_ItemEditorItemModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ItemEditorItemModel implements _ItemEditorItemModel {
-  _$_ItemEditorItemModel(
+  const _$_ItemEditorItemModel(
       {this.itemId,
       required this.name,
       this.description,
@@ -339,7 +377,7 @@ class _$_ItemEditorItemModel implements _ItemEditorItemModel {
   @override
   final String? description;
   @override
-  final ItemDetailCategoryModel? category;
+  final ItemEditorCategoryModel? category;
 
   @override
   String toString() {
@@ -380,11 +418,11 @@ class _$_ItemEditorItemModel implements _ItemEditorItemModel {
 }
 
 abstract class _ItemEditorItemModel implements ItemEditorItemModel {
-  factory _ItemEditorItemModel(
+  const factory _ItemEditorItemModel(
           {final String? itemId,
           required final String name,
           final String? description,
-          required final ItemDetailCategoryModel? category}) =
+          required final ItemEditorCategoryModel? category}) =
       _$_ItemEditorItemModel;
 
   factory _ItemEditorItemModel.fromJson(Map<String, dynamic> json) =
@@ -397,7 +435,7 @@ abstract class _ItemEditorItemModel implements ItemEditorItemModel {
   @override
   String? get description;
   @override
-  ItemDetailCategoryModel? get category;
+  ItemEditorCategoryModel? get category;
   @override
   @JsonKey(ignore: true)
   _$$_ItemEditorItemModelCopyWith<_$_ItemEditorItemModel> get copyWith =>
@@ -494,7 +532,7 @@ class __$$_ItemEditorParametersCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ItemEditorParameters implements _ItemEditorParameters {
-  _$_ItemEditorParameters({required this.itemId, required this.groupId});
+  const _$_ItemEditorParameters({required this.itemId, required this.groupId});
 
   @override
   final String? itemId;
@@ -527,7 +565,7 @@ class _$_ItemEditorParameters implements _ItemEditorParameters {
 }
 
 abstract class _ItemEditorParameters implements ItemEditorParameters {
-  factory _ItemEditorParameters(
+  const factory _ItemEditorParameters(
       {required final String? itemId,
       required final String groupId}) = _$_ItemEditorParameters;
 
@@ -539,6 +577,184 @@ abstract class _ItemEditorParameters implements ItemEditorParameters {
   @JsonKey(ignore: true)
   _$$_ItemEditorParametersCopyWith<_$_ItemEditorParameters> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+ItemEditorCategoryModel _$ItemEditorCategoryModelFromJson(
+    Map<String, dynamic> json) {
+  return _ItemEditorCategoryModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ItemEditorCategoryModel {
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ItemEditorCategoryModelCopyWith<ItemEditorCategoryModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ItemEditorCategoryModelCopyWith<$Res> {
+  factory $ItemEditorCategoryModelCopyWith(ItemEditorCategoryModel value,
+          $Res Function(ItemEditorCategoryModel) then) =
+      _$ItemEditorCategoryModelCopyWithImpl<$Res, ItemEditorCategoryModel>;
+  @useResult
+  $Res call({String id, String name, String? description});
+}
+
+/// @nodoc
+class _$ItemEditorCategoryModelCopyWithImpl<$Res,
+        $Val extends ItemEditorCategoryModel>
+    implements $ItemEditorCategoryModelCopyWith<$Res> {
+  _$ItemEditorCategoryModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? description = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ItemEditorCategoryModelCopyWith<$Res>
+    implements $ItemEditorCategoryModelCopyWith<$Res> {
+  factory _$$_ItemEditorCategoryModelCopyWith(_$_ItemEditorCategoryModel value,
+          $Res Function(_$_ItemEditorCategoryModel) then) =
+      __$$_ItemEditorCategoryModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String id, String name, String? description});
+}
+
+/// @nodoc
+class __$$_ItemEditorCategoryModelCopyWithImpl<$Res>
+    extends _$ItemEditorCategoryModelCopyWithImpl<$Res,
+        _$_ItemEditorCategoryModel>
+    implements _$$_ItemEditorCategoryModelCopyWith<$Res> {
+  __$$_ItemEditorCategoryModelCopyWithImpl(_$_ItemEditorCategoryModel _value,
+      $Res Function(_$_ItemEditorCategoryModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? description = freezed,
+  }) {
+    return _then(_$_ItemEditorCategoryModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ItemEditorCategoryModel implements _ItemEditorCategoryModel {
+  const _$_ItemEditorCategoryModel(
+      {required this.id, required this.name, this.description});
+
+  factory _$_ItemEditorCategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ItemEditorCategoryModelFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String name;
+  @override
+  final String? description;
+
+  @override
+  String toString() {
+    return 'ItemEditorCategoryModel(id: $id, name: $name, description: $description)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ItemEditorCategoryModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name, description);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ItemEditorCategoryModelCopyWith<_$_ItemEditorCategoryModel>
+      get copyWith =>
+          __$$_ItemEditorCategoryModelCopyWithImpl<_$_ItemEditorCategoryModel>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ItemEditorCategoryModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ItemEditorCategoryModel implements ItemEditorCategoryModel {
+  const factory _ItemEditorCategoryModel(
+      {required final String id,
+      required final String name,
+      final String? description}) = _$_ItemEditorCategoryModel;
+
+  factory _ItemEditorCategoryModel.fromJson(Map<String, dynamic> json) =
+      _$_ItemEditorCategoryModel.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get name;
+  @override
+  String? get description;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ItemEditorCategoryModelCopyWith<_$_ItemEditorCategoryModel>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 ItemEditorItemModelDTO _$ItemEditorItemModelDTOFromJson(

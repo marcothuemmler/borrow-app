@@ -6,10 +6,10 @@ import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
+import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 
 class RestBackendServiceImplementation implements BackendServiceAggregator {
   final Dio _client;
@@ -154,6 +154,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       throw Exception("Could not get item detail: $error");
     }
   }
+
   @override
   Future<ItemEditorItemModel> getItemEditorDetails({
     required String itemId,
@@ -266,16 +267,40 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     }
   }
 
+  @override
+  Future<List<ItemEditorCategoryModel>> getCategoriesForItemEditor({
+    required String groupId,
+  }) async {
+    try {
+      final response = await _client.get(
+        "/categories",
+        queryParameters: {
+          "join": ["group"],
+          "filter": "group.id||\$eq||$groupId"
+        },
+      );
+      return List<ItemEditorCategoryModel>.from(
+        response.data.map((json) {
+          return ItemEditorCategoryModel.fromJson(json);
+        }),
+      );
+    } catch (error) {
+      throw Exception("Could not load categories: $error");
+    }
+  }
 
   @override
-  Future<void> patchItem({required String itemId, required ItemEditorModel model}) async {
+  Future<void> patchItem({
+    required String itemId,
+    required ItemEditorItemModel item,
+  }) async {
     try {
-      final data = ItemEditorItemModelDTO(
-          name: model.item.name,
-          description: model.item.description,
-          categoryId: model.item.category!.id,
+      final payload = ItemEditorItemModelDTO(
+        name: item.name,
+        description: item.description,
+        categoryId: item.category!.id,
       );
-      await _client.patch("/items/$itemId", data: data);
+      await _client.patch("/items/$itemId", data: payload);
     } catch (error) {
       throw Exception("Could patch item $error");
     }
