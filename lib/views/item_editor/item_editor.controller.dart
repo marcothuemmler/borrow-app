@@ -56,16 +56,17 @@ class ItemEditorControllerImplementation extends ItemEditorController {
     final item = state.item;
     return state.copyWith(
         item: item.copyWith(
-            name: _name == null ? "" : _name!, description: _description,
-        )
+            name: _name == null ? item.name : _name!,
+            description: _description == null ? item.description : (_description == "" ? null : _description)
+        ),
     );
   }
 
   @override
-  void save() {
+  Future<void> save() async {
     if(_itemId != null) {
       state = copyParamsToState();
-      _itemEditorService.patchItem(
+      await _itemEditorService.patchItem(
           itemId: _itemId!,
           model: state.copyWith(item: state.item),);
     }
@@ -90,7 +91,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
     final newState = copyParamsToState();
     final selectedCategoryModel = ItemDetailCategoryModel(
         id: category.id!,
-        name: category.name);
+        name: category.name,);
     state = newState.copyWith(item: state.item.copyWith(category: selectedCategoryModel),);
   }
 
