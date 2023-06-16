@@ -154,7 +154,7 @@ class ItemEditorView extends ConsumerWidget {
         CategorySettingsCategoryModel(name: "All"),
       ],
       onChanged: controller.selectCategory,
-      value: categories!.where((c) => c.id == category!.id).first,
+      value: categories == null ? null : categories!.where((c) => c.id == category!.id).first,
       mapFunction: (category) => DropdownMenuItem(
         value: category,
         child: Text(category.name),

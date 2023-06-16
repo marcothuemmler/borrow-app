@@ -1,5 +1,6 @@
 import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.service.dart';
 import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
+import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_editor/item_editor.service.dart';
 import 'package:borrow_app/views/item_editor/item_editor.view.dart';
 import 'package:borrow_app/views/item_editor/item_editor.model.dart';
@@ -12,7 +13,6 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   final CategoriesSettingsService _categorySettingsService;
   String? _name;
   String? _description;
-  CategorySettingsCategoryModel? selectedCategory;
 
   ItemEditorControllerImplementation({
     ItemEditorModel? model,
@@ -52,17 +52,22 @@ class ItemEditorControllerImplementation extends ItemEditorController {
     }
   }
 
+  ItemEditorModel copyParamsToState() {
+    final item = state.item;
+    return state.copyWith(
+        item: item.copyWith(
+            name: _name == null ? "" : _name!, description: _description,
+        )
+    );
+  }
+
   @override
   void save() {
     if(_itemId != null) {
-      final model = state.item;
-      final newModel = model.copyWith(
-          name: _name == null ? model.name : _name!,
-          description: _description == null ? model.description : (_description == "" ? null : _description));
+      state = copyParamsToState();
       _itemEditorService.patchItem(
           itemId: _itemId!,
-          model: state.copyWith(item: newModel),
-          categoryId: selectedCategory == null ? model.category!.id : selectedCategory!.id!);
+          model: state.copyWith(item: state.item),);
     }
     _init();
   }
@@ -79,7 +84,14 @@ class ItemEditorControllerImplementation extends ItemEditorController {
 
   @override
   void selectCategory(CategorySettingsCategoryModel? category) {
-    selectedCategory = category;
+    if(category == null) {
+      return;
+    }
+    final newState = copyParamsToState();
+    final selectedCategoryModel = ItemDetailCategoryModel(
+        id: category.id!,
+        name: category.name);
+    state = newState.copyWith(item: state.item.copyWith(category: selectedCategoryModel),);
   }
 
   @override

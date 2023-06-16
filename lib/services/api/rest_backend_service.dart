@@ -268,12 +268,12 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
 
 
   @override
-  Future<void> patchItem({required String itemId, required ItemEditorModel model, required String categoryId}) async {
+  Future<void> patchItem({required String itemId, required ItemEditorModel model}) async {
     try {
       final data = ItemEditorItemModelDTO(
           name: model.item.name,
           description: model.item.description,
-          categoryId: categoryId,
+          categoryId: model.item.category!.id,
       );
       await _client.patch("/items/$itemId", data: data);
     } catch (error) {
