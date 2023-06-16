@@ -51,5 +51,9 @@
   "filterByDate": "Nach Datum filtern:",
   "messages": "Nachrichten",
   "preferences": "Einstellungen",
-  "emptyChatListMessage": "Ihre Nachrichten werden hier erscheinen"
+  "emptyChatListMessage": "Ihre Nachrichten werden hier erscheinen",
+  "setProfileImage": "Profilbild setzen",
+  "applyChanges": "Änderungen anwenden",
+  "changePassword": "Passwort ändern",
+  "deleteAccount": "Konto löschen"
 }

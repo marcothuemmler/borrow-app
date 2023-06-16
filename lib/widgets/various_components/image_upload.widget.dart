@@ -7,10 +7,18 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageUpload extends StatefulWidget {
-  final void Function(XFile? image)? onImageChanged;
-  final XFile? image;
+  final void Function(XFile? image)? _onImageChanged;
+  final XFile? _image;
+  final String _text;
 
-  const ImageUpload({super.key, required this.onImageChanged, this.image});
+  const ImageUpload({
+    super.key,
+    required void Function(XFile?)? onImageChanged,
+    XFile? image,
+    required String text,
+  })  : _onImageChanged = onImageChanged,
+        _image = image,
+        _text = text;
 
   @override
   State<ImageUpload> createState() => _ImageUploadState();
@@ -19,8 +27,9 @@ class ImageUpload extends StatefulWidget {
 class _ImageUploadState extends State<ImageUpload> {
   Image? _image;
   bool _hovered = false;
-  void Function(XFile? image)? _onImageChanged;
+  late final void Function(XFile? image)? _onImageChanged;
   final double size = 150;
+  late final String _text;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +76,7 @@ class _ImageUploadState extends State<ImageUpload> {
                         height: 40,
                         child: Center(
                           child: Text(
-                            AppLocalizations.of(context).setGroupImage,
+                            _text,
                             style: const TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.w500,
@@ -90,8 +99,9 @@ class _ImageUploadState extends State<ImageUpload> {
   @override
   void initState() {
     super.initState();
-    _onImageChanged = widget.onImageChanged;
-    _initImage(image: widget.image);
+    _onImageChanged = widget._onImageChanged;
+    _text = widget._text;
+    _initImage(image: widget._image);
   }
 
   Future<void> _initImage({required XFile? image}) async {

@@ -58,7 +58,9 @@ class ProfileSettingsView extends ConsumerWidget {
                             child: Column(
                               children: [
                                 ImageUpload(
-                                  image: model.profileImage,
+                                  image: model.patchedProfileImage,
+                                  text: AppLocalizations.of(context)
+                                      .setProfileImage,
                                   onImageChanged: controller.setProfileImage,
                                 ),
                                 SizedBox(height: isPortrait ? 40 : 20),
@@ -119,17 +121,26 @@ class ProfileSettingsView extends ConsumerWidget {
                                                 }
                                               }
                                             : null,
-                                        child: const Text("Apply changes"),
+                                        child: Text(
+                                          AppLocalizations.of(context)
+                                              .applyChanges,
+                                        ),
                                       ),
                                       TextButton(
-                                        child: const Text("Change password"),
+                                        child: Text(
+                                          AppLocalizations.of(context)
+                                              .changePassword,
+                                        ),
                                         onPressed: () {},
                                       ),
                                       TextButton(
                                         style: TextButton.styleFrom(
                                           foregroundColor: Colors.red,
                                         ),
-                                        child: const Text("Close account"),
+                                        child: Text(
+                                          AppLocalizations.of(context)
+                                              .deleteAccount,
+                                        ),
                                         onPressed: () {},
                                       ),
                                     ],
