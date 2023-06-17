@@ -2,6 +2,7 @@ import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
 import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/profile_settings/profile_settings.model.dart';
+import 'package:borrow_app/widgets/dialogs/delete_account_dialog.dart';
 import 'package:borrow_app/widgets/various_components/image_upload.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -42,118 +43,149 @@ class ProfileSettingsView extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context).profileSettings)),
       body: SafeArea(
-        child: Column(
+        child: Flex(
+          direction: isPortrait ? Axis.vertical : Axis.horizontal,
           children: [
             Expanded(
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 350),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          padding: EdgeInsets.only(top: isPortrait ? 40 : 20),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                ImageUpload(
-                                  image: model.patchedProfileImage,
-                                  text: AppLocalizations.of(context)
-                                      .setProfileImage,
-                                  onImageChanged: controller.setProfileImage,
-                                ),
-                                SizedBox(height: isPortrait ? 40 : 20),
-                                TextFormField(
-                                  autocorrect: false,
-                                  initialValue: model.patchedUser?.username,
-                                  onChanged: (value) => controller.setUsername(
-                                    username: value,
-                                  ),
-                                  validator: (value) {
-                                    return controller.validateFormField(
-                                      fieldType: FormValidationType.username,
-                                      context: context,
-                                      value: value,
-                                    );
-                                  },
-                                  decoration: InputDecoration(
-                                    border: const OutlineInputBorder(),
-                                    label: Text(
-                                      AppLocalizations.of(context).username,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                                TextFormField(
-                                  autocorrect: false,
-                                  initialValue: model.patchedUser?.email,
-                                  onChanged: (value) => controller.setEmail(
-                                    email: value,
-                                  ),
-                                  validator: (value) {
-                                    return controller.validateFormField(
-                                      fieldType: FormValidationType.email,
-                                      context: context,
-                                      value: value,
-                                    );
-                                  },
-                                  decoration: InputDecoration(
-                                    border: const OutlineInputBorder(),
-                                    label: Text(
-                                      AppLocalizations.of(context).email,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 30),
-                                IntrinsicWidth(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 350),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                padding:
+                                    EdgeInsets.only(top: isPortrait ? 30 : 20),
+                                child: Form(
+                                  key: _formKey,
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
                                     children: [
-                                      ElevatedButton(
-                                        onPressed: model.userDataChanged ||
-                                                model.imageChanged
-                                            ? () {
-                                                if (_formKey.currentState!
-                                                    .validate()) {
-                                                  controller.patchUser();
-                                                }
-                                              }
-                                            : null,
-                                        child: Text(
-                                          AppLocalizations.of(context)
-                                              .applyChanges,
+                                      ImageUpload(
+                                        image: model.patchedProfileImage,
+                                        text: AppLocalizations.of(context)
+                                            .setProfileImage,
+                                        onImageChanged:
+                                            controller.setProfileImage,
+                                      ),
+                                      SizedBox(height: isPortrait ? 40 : 20),
+                                      TextFormField(
+                                        autocorrect: false,
+                                        initialValue:
+                                            model.patchedUser?.username,
+                                        onChanged: (value) =>
+                                            controller.setUsername(
+                                          username: value,
+                                        ),
+                                        validator: (value) {
+                                          return controller.validateFormField(
+                                            fieldType:
+                                                FormValidationType.username,
+                                            context: context,
+                                            value: value,
+                                          );
+                                        },
+                                        decoration: InputDecoration(
+                                          border: const OutlineInputBorder(),
+                                          label: Text(
+                                            AppLocalizations.of(context)
+                                                .username,
+                                          ),
                                         ),
                                       ),
-                                      TextButton(
-                                        child: Text(
-                                          AppLocalizations.of(context)
-                                              .changePassword,
+                                      const SizedBox(height: 20),
+                                      TextFormField(
+                                        autocorrect: false,
+                                        initialValue: model.patchedUser?.email,
+                                        onChanged: (value) =>
+                                            controller.setEmail(
+                                          email: value,
                                         ),
-                                        onPressed: () {},
+                                        validator: (value) {
+                                          return controller.validateFormField(
+                                            fieldType: FormValidationType.email,
+                                            context: context,
+                                            value: value,
+                                          );
+                                        },
+                                        decoration: InputDecoration(
+                                          border: const OutlineInputBorder(),
+                                          label: Text(
+                                            AppLocalizations.of(context).email,
+                                          ),
+                                        ),
                                       ),
-                                      TextButton(
-                                        style: TextButton.styleFrom(
-                                          foregroundColor: Colors.red,
-                                        ),
-                                        child: Text(
-                                          AppLocalizations.of(context)
-                                              .deleteAccount,
-                                        ),
-                                        onPressed: () {},
-                                      ),
+                                      if (isPortrait)
+                                        const SizedBox(height: 30),
                                     ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
+              ),
+            ),
+            Flexible(
+              child: Column(
+                mainAxisSize: isPortrait ? MainAxisSize.min : MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IntrinsicWidth(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ElevatedButton(
+                          onPressed: model.userDataChanged || model.imageChanged
+                              ? () {
+                                  if (_formKey.currentState!.validate()) {
+                                    controller.patchUser();
+                                  }
+                                }
+                              : null,
+                          child: Text(
+                            AppLocalizations.of(context).applyChanges,
+                          ),
+                        ),
+                        TextButton(
+                          child: Text(
+                            AppLocalizations.of(context).changePassword,
+                          ),
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Coming soon!")),
+                            );
+                          },
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.red,
+                          ),
+                          onPressed: () => showModalBottomSheet(
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                            ),
+                            context: context,
+                            builder: (context) => const DeleteAccountDialog(),
+                          ),
+                          child: Text(
+                            AppLocalizations.of(context).deleteAccount,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -174,4 +206,6 @@ abstract class ProfileSettingsController
   void setEmail({required String email});
 
   void setProfileImage(XFile? file);
+
+  void deleteAccount({required String password});
 }

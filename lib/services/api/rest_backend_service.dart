@@ -309,4 +309,15 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       throw Exception("Could not delete profile image: $error");
     }
   }
+
+  @override
+  Future<void> deleteAccount({required String password}) async {
+    try {
+      final String? userId = await _storageService.read(key: "user-id");
+      await _client.delete("/users/$userId", data: {"password": password});
+      await _storageService.deleteAll();
+    } catch (error) {
+      throw Exception("Could not delete account");
+    }
+  }
 }

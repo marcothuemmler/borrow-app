@@ -99,4 +99,15 @@ class ProfileSettingsControllerImplementation
       imageChanged: state.profileImage != state.patchedProfileImage,
     );
   }
+
+  @override
+  void deleteAccount({required String password}) async {
+    try {
+      state = state.copyWith(isLoading: true, hasError: false);
+      await _profileSettingsService.deleteAccount(password: password);
+      state = state.copyWith(isLoading: false);
+    } catch (error) {
+      state = state.copyWith(isLoading: false, hasError: true);
+    }
+  }
 }

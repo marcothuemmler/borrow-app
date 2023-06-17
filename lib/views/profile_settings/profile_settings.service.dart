@@ -13,4 +13,6 @@ abstract class ProfileSettingsService {
   Future<XFile> getProfileImage({required String imageUrl});
 
   Future<void> deleteProfileImage();
+
+  Future<void> deleteAccount({required String password});
 }
