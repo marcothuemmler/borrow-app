@@ -40,6 +40,7 @@ class ChatRoomUserModel with _$ChatRoomUserModel {
   const factory ChatRoomUserModel({
     required String id,
     required String username,
+    String? imageUrl,
   }) = _ChatRoomUserModel;
 
   factory ChatRoomUserModel.fromJson(Map<String, dynamic> json) =>

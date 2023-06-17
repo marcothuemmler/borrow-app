@@ -24,13 +24,13 @@ class ChatListItem extends StatelessWidget {
           horizontal: 15,
         ),
         child: ListTile(
-          leading: const CircleAvatar(
+          leading: CircleAvatar(
             radius: 19,
             backgroundColor: CupertinoColors.systemGrey5,
-            child: Icon(
-              Icons.person,
-              color: CupertinoColors.systemGrey,
-            ),
+            foregroundImage: _message.sender.imageUrl is String
+                ? NetworkImage(_message.sender.imageUrl!)
+                : null,
+            child: const Icon(Icons.person, color: CupertinoColors.systemGrey),
           ),
           title: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
