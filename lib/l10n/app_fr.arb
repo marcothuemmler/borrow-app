@@ -55,5 +55,8 @@
   "setProfileImage": "Définir l'image de profil",
   "applyChanges": "Appliquer les changements",
   "changePassword": "Changer le mot de passe",
-  "deleteAccount": "Supprimer le compte"
+  "deleteAccount": "Supprimer le compte",
+  "comingSoon": "Bientôt disponible!",
+  "insertPassword": "Saisir le mot de passe",
+  "accountDeletionMessage": "Vous perdrez tous vos objets et groupes."
 }

@@ -159,7 +159,11 @@ class ProfileSettingsView extends ConsumerWidget {
                           ),
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Coming soon!")),
+                              SnackBar(
+                                content: Text(
+                                  AppLocalizations.of(context).comingSoon,
+                                ),
+                              ),
                             );
                           },
                         ),

@@ -55,5 +55,8 @@
   "setProfileImage": "Set profile image",
   "applyChanges": "Apply changes",
   "changePassword": "Change password",
-  "deleteAccount": "Delete account"
+  "deleteAccount": "Delete account",
+  "comingSoon": "Coming soon!",
+  "insertPassword": "Insert Password",
+  "accountDeletionMessage": "You will lose all your objects and groups."
 }

@@ -55,5 +55,8 @@
   "setProfileImage": "Profilbild setzen",
   "applyChanges": "Änderungen anwenden",
   "changePassword": "Passwort ändern",
-  "deleteAccount": "Konto löschen"
+  "deleteAccount": "Konto löschen",
+  "comingSoon": "Demnächst verfügbar!",
+  "insertPassword": "Passwort eingeben",
+  "accountDeletionMessage": "Sie verlieren alle Ihre Gegenstände und Gruppen."
 }

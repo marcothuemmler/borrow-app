@@ -1,5 +1,7 @@
+import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DeleteAccountDialog extends ConsumerWidget {
@@ -7,6 +9,7 @@ class DeleteAccountDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final GlobalKey<FormState> formKey = GlobalKey();
     final textEditingController = TextEditingController();
     final controller =
         ref.read(providers.profileSettingsControllerProvider.notifier);
@@ -18,33 +21,48 @@ class DeleteAccountDialog extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                "Konto löschen?",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+              Text(
+                "${AppLocalizations.of(context).deleteAccount}?",
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 40),
-              const Text(
-                "Sie verlieren alle Ihre Gegenstände und Gruppen.",
-                style: TextStyle(fontSize: 16),
+              Text(
+                AppLocalizations.of(context).accountDeletionMessage,
+                style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 30),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 350),
-                child: TextFormField(
-                  controller: textEditingController,
-                  decoration: const InputDecoration(
-                    label: Text("Passwort eingeben"),
-                    border: OutlineInputBorder(),
+                child: Form(
+                  key: formKey,
+                  child: TextFormField(
+                    validator: (value) => controller.validateFormField(
+                      fieldType: FormValidationType.password,
+                      context: context,
+                      value: value,
+                    ),
+                    controller: textEditingController,
+                    decoration: InputDecoration(
+                      label: Text(AppLocalizations.of(context).insertPassword),
+                      border: const OutlineInputBorder(),
+                    ),
                   ),
                 ),
               ),
               const SizedBox(height: 30),
               TextButton(
-                onPressed: () => controller.deleteAccount(
-                  password: textEditingController.text,
-                ),
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    controller.deleteAccount(
+                      password: textEditingController.text,
+                    );
+                  }
+                },
                 style: TextButton.styleFrom(foregroundColor: Colors.red),
-                child: const Text("Konto löschen"),
+                child: Text(AppLocalizations.of(context).deleteAccount),
               ),
             ],
           ),
