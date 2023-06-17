@@ -58,3 +58,23 @@ Map<String, dynamic> _$$_ItemEditorItemModelDTOToJson(
       'description': instance.description,
       'categoryId': instance.categoryId,
     };
+
+_$_NewItemEditorItemModelDTO _$$_NewItemEditorItemModelDTOFromJson(
+        Map<String, dynamic> json) =>
+    _$_NewItemEditorItemModelDTO(
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      categoryId: json['categoryId'] as String,
+      ownerId: json['ownerId'] as String,
+      groupId: json['groupId'] as String,
+    );
+
+Map<String, dynamic> _$$_NewItemEditorItemModelDTOToJson(
+        _$_NewItemEditorItemModelDTO instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'description': instance.description,
+      'categoryId': instance.categoryId,
+      'ownerId': instance.ownerId,
+      'groupId': instance.groupId,
+    };

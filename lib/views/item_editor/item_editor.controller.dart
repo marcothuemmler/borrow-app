@@ -4,7 +4,7 @@ import 'package:borrow_app/views/item_editor/item_editor.view.dart';
 import 'package:go_router/go_router.dart';
 
 class ItemEditorControllerImplementation extends ItemEditorController {
-  final String? _itemId;
+  String? _itemId;
   final String _groupId;
   final ItemEditorService _itemEditorService;
 
@@ -54,6 +54,11 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   void save() async {
     if (_itemId is String) {
       await _itemEditorService.patchItem(itemId: _itemId!, item: state.item);
+      _init();
+    } else {
+      final res = await _itemEditorService.postItem(
+          item: state.item, groupId: _groupId,);
+      _itemId = res;
       _init();
     }
   }

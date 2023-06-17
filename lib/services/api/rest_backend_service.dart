@@ -305,4 +305,25 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       throw Exception("Could patch item $error");
     }
   }
+
+  @override
+  Future<String> postItem({
+    required ItemEditorItemModel item,
+    required String groupId,
+  }) async {
+    try {
+      final myUserId = await _storageService.read(key: "user-id");
+      final payload = NewItemEditorItemModelDTO(
+        name: item.name,
+        description: item.description,
+        categoryId: item.category!.id,
+        ownerId: myUserId!,
+        groupId: groupId,
+      );
+      final res = await _client.post("/items", data: payload);
+      return res.data['id'];
+    } catch (error) {
+      throw Exception("Could post item $error");
+    }
+  }
 }

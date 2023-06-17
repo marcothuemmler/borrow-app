@@ -57,3 +57,17 @@ class ItemEditorItemModelDTO with _$ItemEditorItemModelDTO {
   factory ItemEditorItemModelDTO.fromJson(Map<String, dynamic> json) =>
       _$ItemEditorItemModelDTOFromJson(json);
 }
+
+@freezed
+class NewItemEditorItemModelDTO with _$NewItemEditorItemModelDTO {
+  factory NewItemEditorItemModelDTO({
+    required String name,
+    String? description,
+    required String categoryId,
+    required String ownerId,
+    required String groupId,
+  }) = _NewItemEditorItemModelDTO;
+
+  factory NewItemEditorItemModelDTO.fromJson(Map<String, dynamic> json) =>
+      _$NewItemEditorItemModelDTOFromJson(json);
+}
