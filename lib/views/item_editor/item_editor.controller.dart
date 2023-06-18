@@ -56,10 +56,12 @@ class ItemEditorControllerImplementation extends ItemEditorController {
       await _itemEditorService.patchItem(itemId: _itemId!, item: state.item);
       _init();
     } else {
-      final res = await _itemEditorService.postItem(
+      if(state.item.category != null) {
+        final res = await _itemEditorService.postItem(
           item: state.item, groupId: _groupId,);
-      _itemId = res;
-      _init();
+        _itemId = res;
+        _init();
+      }
     }
   }
 

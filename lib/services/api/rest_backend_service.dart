@@ -323,7 +323,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       final res = await _client.post("/items", data: payload);
       return res.data['id'];
     } catch (error) {
-      throw Exception("Could post item $error");
+      throw Exception("Couldn't post item $error");
     }
   }
 }
