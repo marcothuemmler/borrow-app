@@ -1,3 +1,4 @@
+import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 import 'package:borrow_app/views/item_editor/item_editor.service.dart';
 import 'package:borrow_app/views/item_editor/item_editor.view.dart';

@@ -1,9 +1,12 @@
+import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../common/enums/form_validation_type.enum.dart';
 
 class ItemEditorView extends ConsumerWidget {
   final String? _itemId;
@@ -18,6 +21,7 @@ class ItemEditorView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final _formKey = GlobalKey<FormState>();
     final itemEditorParameters = ItemEditorParameters(
       itemId: _itemId,
       groupId: _groupId,
@@ -94,39 +98,58 @@ class ItemEditorView extends ConsumerWidget {
                             SizedBox(width: 5)
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 30),
-                            Center(
-                              child: DropdownWidget<ItemEditorCategoryModel>(
-                                hint: const Text("Category"),
-                                items: model.categories,
-                                onChanged: controller.selectCategory,
-                                value: model.item.category,
-                                mapFunction: (category) => DropdownMenuItem(
-                                  value: category,
-                                  child: Text(category.name),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 30),
+                              Center(
+                                child: DropdownWidget<ItemEditorCategoryModel>(
+                                  hint: const Text("Category"),
+                                  items: model.categories,
+                                  onChanged: controller.selectCategory,
+                                  value: model.item.category,
+                                  mapFunction: (category) => DropdownMenuItem(
+                                    value: category,
+                                    child: Text(category.name),
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 30),
-                            TextFieldWidget(
-                              text: "Name",
-                              validator: null,
-                              onChanged: controller.setName,
-                              autocorrect: false,
-                              initialValue: model.item.name,
-                            ),
-                            const SizedBox(height: 30),
-                            TextFieldWidget(
-                              text: "Beschreibung",
-                              validator: null,
-                              onChanged: controller.setDescription,
-                              autocorrect: false,
-                              initialValue: model.item.description,
-                            ),
-                          ],
+                              const SizedBox(height: 30),
+                              TextFieldWidget(
+                                text: "Name",
+                                validator: (value) =>
+                                    controller.validateFormField(
+                                      fieldType: FormValidationType.categoryName,
+                                      context: context,
+                                      value: value,),
+                                onChanged: controller.setName,
+                                autocorrect: false,
+                                initialValue: model.item.name,
+                              ),
+                              const SizedBox(height: 30),
+                              TextFieldWidget(
+                                text: "Beschreibung",
+                                validator: null,
+                                onChanged: controller.setDescription,
+                                autocorrect: false,
+                                initialValue: model.item.description,
+                              ),
+                              const SizedBox(height: 30),
+                              Center(
+                                child: ElevatedButton(
+                                  onPressed:() => {
+                                    if (_formKey.currentState!.validate()) {
+                                      controller.save(),
+                                    }
+                                  },
+                                  child: const Text("Speichern"),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -134,13 +157,6 @@ class ItemEditorView extends ConsumerWidget {
                 ),
               ),
             ),
-            Center(
-              child: ElevatedButton(
-                onPressed: controller.save,
-                child: const Text("Speichern"),
-              ),
-            ),
-            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -148,7 +164,7 @@ class ItemEditorView extends ConsumerWidget {
   }
 }
 
-abstract class ItemEditorController extends StateNotifier<ItemEditorModel> {
+abstract class ItemEditorController extends StateNotifier<ItemEditorModel> with FormValidator {
   ItemEditorController(super.model);
 
   void setName(String value);
