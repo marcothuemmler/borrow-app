@@ -58,5 +58,6 @@
   "deleteAccount": "Supprimer le compte",
   "comingSoon": "Bientôt disponible!",
   "insertPassword": "Saisir le mot de passe",
-  "accountDeletionMessage": "Vous perdrez tous vos objets et groupes."
+  "accountDeletionMessage": "Vous perdrez tous vos objets et groupes.",
+  "invitations": "Invitations"
 }

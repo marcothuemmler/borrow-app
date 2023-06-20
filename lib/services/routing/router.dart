@@ -11,6 +11,7 @@ import "package:borrow_app/views/dashboard/profile/categories_settings/categorie
 import "package:borrow_app/views/dashboard/profile/group_settings/group_settings.view.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
+import "package:borrow_app/views/invitation_list/invitation_list.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
 import "package:borrow_app/views/profile_settings/profile_settings.view.dart";
 import "package:borrow_app/views/welcome/welcome.view.dart";
@@ -211,6 +212,16 @@ final Provider<GoRouter> routerProviderDef =
             path: profileRoute.path,
             builder: (BuildContext context, GoRouterState state) =>
                 ProfileSettingsView(),
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: invitationsRoute.name,
+            path: invitationsRoute.path,
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              return const MaterialPage<ChatListView>(
+                child: InvitationListView(),
+              );
+            },
           ),
         ],
       ),

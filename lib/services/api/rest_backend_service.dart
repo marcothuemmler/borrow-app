@@ -7,6 +7,7 @@ import "package:borrow_app/views/chat_list/chat_list.model.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
 import "package:borrow_app/views/group_selection/group_selection.model.dart";
+import "package:borrow_app/views/invitation_list/invitation_list.model.dart";
 import "package:borrow_app/views/item_detail/item_detail.model.dart";
 import "package:borrow_app/views/profile_settings/profile_settings.model.dart";
 import "package:dio/dio.dart";
@@ -67,7 +68,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       final Response<Map<String, dynamic>> response = await _client.get(
         "/users/with-groups/$userId",
         queryParameters: <String, dynamic>{
-          "join": <String>["groups"],
+          "join": <dynamic>["groups", "invitations"],
           "fields": "username"
         },
       );
@@ -338,6 +339,32 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       await _storageService.deleteAll();
     } catch (error) {
       throw Exception("Could not delete account");
+    }
+  }
+
+  @override
+  void deleteGroupInvitation({required String groupId}) {
+    // TODO: implement deleteGroupInvitation
+  }
+
+  @override
+  void joinGroup({required String groupId}) {
+    // TODO: implement joinGroup
+  }
+
+  @override
+  Future<List<InvitationListInvitationModel>> loadInvitations() async {
+    try {
+      final String? userId = await _storageService.read(key: "user-id");
+      final Response<List<dynamic>> response =
+          await _client.get("/users/$userId/invitations");
+      return List<InvitationListInvitationModel>.from(
+        response.data!.map((dynamic json) {
+          return InvitationListInvitationModel.fromJson(json);
+        }),
+      );
+    } catch (error) {
+      throw Exception("Could not load invitations");
     }
   }
 }
