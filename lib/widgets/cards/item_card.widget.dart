@@ -1,5 +1,5 @@
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
-import 'package:flutter/material.dart';
+import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
+import "package:flutter/material.dart";
 
 class ItemCard extends StatelessWidget {
   final void Function()? onTap;
@@ -15,7 +15,7 @@ class ItemCard extends StatelessWidget {
         borderRadius: BorderRadius.all(
           Radius.circular(10),
         ),
-        boxShadow: [
+        boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black12,
             offset: Offset(0, 6),
@@ -39,7 +39,7 @@ class ItemCard extends StatelessWidget {
               height: 90,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   const ClipRRect(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(7),
@@ -55,7 +55,7 @@ class ItemCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: <Widget>[
                         Text(
                           "@${item.owner.username}",
                           style: const TextStyle(
@@ -71,7 +71,7 @@ class ItemCard extends StatelessWidget {
                           maxLines: 1,
                         ),
                         Row(
-                          children: [
+                          children: <Widget>[
                             Expanded(
                               child: Text(
                                 item.description ?? "",

@@ -1,10 +1,10 @@
-import 'dart:typed_data';
+import "dart:typed_data";
 
-import 'package:borrow_app/widgets/dialogs/image_change_dialog.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
+import "package:borrow_app/widgets/dialogs/image_change_dialog.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:go_router/go_router.dart";
+import "package:image_picker/image_picker.dart";
 
 class ImageUpload extends StatefulWidget {
   final void Function(XFile? image)? _onImageChanged;

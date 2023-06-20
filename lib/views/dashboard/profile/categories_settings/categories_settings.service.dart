@@ -1,4 +1,4 @@
-import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
+import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
 
 abstract class CategoriesSettingsService {
   Future<CategorySettingsCategoryListModel> getCategories({

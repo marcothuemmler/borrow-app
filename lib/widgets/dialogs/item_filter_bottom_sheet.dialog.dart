@@ -1,10 +1,11 @@
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
-import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
+import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
+import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
+import "package:calendar_date_picker2/calendar_date_picker2.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class ItemFilterBottomSheet extends ConsumerWidget {
   const ItemFilterBottomSheet({super.key, required this.groupId});
@@ -13,10 +14,12 @@ class ItemFilterBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.read(
+    final ItemListController controller = ref.read(
       providers.itemListControllerProvider(groupId).notifier,
     );
-    final model = ref.watch(providers.itemListControllerProvider(groupId));
+    final ItemListModel model = ref.watch(
+      providers.itemListControllerProvider(groupId),
+    );
     return Container(
       padding: const EdgeInsets.all(30),
       constraints: const BoxConstraints(maxWidth: 600),
@@ -24,7 +27,7 @@ class ItemFilterBottomSheet extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             const SizedBox(height: 20),
             Text(
               AppLocalizations.of(context).filterByCategory,
@@ -38,7 +41,7 @@ class ItemFilterBottomSheet extends ConsumerWidget {
               width: 250,
               child: DropdownWidget<ItemListCategoryModel>(
                 hint: Text(AppLocalizations.of(context).category),
-                items: [
+                items: <ItemListCategoryModel>[
                   ...?model.group?.categories,
                   ItemListCategoryModel(
                     name: AppLocalizations.of(context).allCategories,
@@ -46,7 +49,8 @@ class ItemFilterBottomSheet extends ConsumerWidget {
                 ],
                 onChanged: controller.selectCategory,
                 value: model.selectedCategory,
-                mapFunction: (category) => DropdownMenuItem(
+                mapFunction: (ItemListCategoryModel category) =>
+                    DropdownMenuItem<ItemListCategoryModel>(
                   value: category,
                   child: Text(category.name),
                 ),
@@ -71,7 +75,7 @@ class ItemFilterBottomSheet extends ConsumerWidget {
                   ),
                   calendarType: CalendarDatePicker2Type.range,
                 ),
-                value: const [],
+                value: const <DateTime>[],
               ),
             ),
           ],

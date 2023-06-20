@@ -1,7 +1,7 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import "package:freezed_annotation/freezed_annotation.dart";
 
-part 'item_list.model.freezed.dart';
-part 'item_list.model.g.dart';
+part "item_list.model.freezed.dart";
+part "item_list.model.g.dart";
 
 @freezed
 class ItemListModel with _$ItemListModel {

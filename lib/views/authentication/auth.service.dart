@@ -1,4 +1,4 @@
-import 'package:borrow_app/views/authentication/auth.model.dart';
+import "package:borrow_app/views/authentication/auth.model.dart";
 
 abstract class AuthService {
   Future<void> signup({required SignupDto payload});

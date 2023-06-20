@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class DropdownWidget<T> extends StatelessWidget {
   final T? value;
@@ -33,7 +33,7 @@ class DropdownWidget<T> extends StatelessWidget {
             borderRadius: BorderRadius.circular(7),
             hint: hint,
             value: value,
-            items: [...items.map(mapFunction)],
+            items: <DropdownMenuItem<T>>[...items.map(mapFunction)],
             onChanged: onChanged,
           ),
         ),

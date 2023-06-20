@@ -1,8 +1,9 @@
-import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
-import 'package:borrow_app/common/providers.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/profile_settings/profile_settings.view.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class DeleteAccountDialog extends ConsumerWidget {
   const DeleteAccountDialog({super.key});
@@ -10,8 +11,8 @@ class DeleteAccountDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final GlobalKey<FormState> formKey = GlobalKey();
-    final textEditingController = TextEditingController();
-    final controller =
+    final TextEditingController textEditingController = TextEditingController();
+    final ProfileSettingsController controller =
         ref.read(providers.profileSettingsControllerProvider.notifier);
     return SafeArea(
       child: ConstrainedBox(
@@ -20,7 +21,7 @@ class DeleteAccountDialog extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               Text(
                 "${AppLocalizations.of(context).deleteAccount}?",
                 style: const TextStyle(
@@ -39,7 +40,7 @@ class DeleteAccountDialog extends ConsumerWidget {
                 child: Form(
                   key: formKey,
                   child: TextFormField(
-                    validator: (value) => controller.validateFormField(
+                    validator: (String? value) => controller.validateFormField(
                       fieldType: FormValidationType.password,
                       context: context,
                       value: value,

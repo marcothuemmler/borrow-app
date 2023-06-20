@@ -1,8 +1,8 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:image_picker/image_picker.dart';
+import "package:freezed_annotation/freezed_annotation.dart";
+import "package:image_picker/image_picker.dart";
 
-part 'profile_settings.model.freezed.dart';
-part 'profile_settings.model.g.dart';
+part "profile_settings.model.freezed.dart";
+part "profile_settings.model.g.dart";
 
 @freezed
 class ProfileSettingsModel with _$ProfileSettingsModel {

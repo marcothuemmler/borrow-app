@@ -1,8 +1,8 @@
-import 'package:borrow_app/views/chat_list/chat_list.model.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
+import "package:borrow_app/views/chat_list/chat_list.model.dart";
+import "package:flutter/cupertino.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:intl/intl.dart";
 
 class ChatListItem extends StatelessWidget {
   const ChatListItem({
@@ -34,12 +34,12 @@ class ChatListItem extends StatelessWidget {
           ),
           title: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Flexible(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
+                  children: <Widget>[
                     Text(
                       "@${_message.sender.username}",
                       style: TextStyle(

@@ -1,7 +1,7 @@
-import 'package:borrow_app/views/profile_settings/profile_settings.model.dart';
-import 'package:borrow_app/views/profile_settings/profile_settings.service.dart';
-import 'package:borrow_app/views/profile_settings/profile_settings.view.dart';
-import 'package:image_picker/image_picker.dart';
+import "package:borrow_app/views/profile_settings/profile_settings.model.dart";
+import "package:borrow_app/views/profile_settings/profile_settings.service.dart";
+import "package:borrow_app/views/profile_settings/profile_settings.view.dart";
+import "package:image_picker/image_picker.dart";
 
 class ProfileSettingsControllerImplementation
     extends ProfileSettingsController {
@@ -30,7 +30,8 @@ class ProfileSettingsControllerImplementation
   void _init() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final user = await _profileSettingsService.loadProfileData();
+      final ProfileSettingsUserModel user =
+          await _profileSettingsService.loadProfileData();
       XFile? image;
       if (user.imageUrl is String) {
         image = await _profileSettingsService.getProfileImage(
@@ -58,7 +59,7 @@ class ProfileSettingsControllerImplementation
       if (state.userDataChanged) {
         await _profileSettingsService.patchUser(user: state.patchedUser!);
       }
-      final image = state.patchedProfileImage;
+      final XFile? image = state.patchedProfileImage;
       if (state.imageChanged) {
         if (image is XFile) {
           await _profileSettingsService.putProfileImage(profileImage: image);
