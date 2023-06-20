@@ -12,7 +12,7 @@ class InvitationListControllerImplementation extends InvitationListController {
               const InvitationListModel(
                 isLoading: false,
                 hasError: false,
-                invitations: <InvitationListInvitationModel>[],
+                groupInvitations: <InvitationListInvitationModel>[],
               ),
         ) {
     _init();
@@ -25,19 +25,31 @@ class InvitationListControllerImplementation extends InvitationListController {
       state = state.copyWith(isLoading: true, hasError: false);
       final List<InvitationListInvitationModel> response =
           await _invitationListService.loadInvitations();
-      state = state.copyWith(isLoading: false, invitations: response);
+      state = state.copyWith(isLoading: false, groupInvitations: response);
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
     }
   }
 
   @override
-  void deleteGroupInvitation({required String groupId}) {
-    _invitationListService.deleteGroupInvitation(groupId: groupId);
+  void deleteGroupInvitation({required String groupId}) async {
+    try {
+      state = state.copyWith(isLoading: true, hasError: false);
+      await _invitationListService.deleteGroupInvitation(groupId: groupId);
+      _init();
+    } catch (error) {
+      state = state.copyWith(isLoading: false, hasError: true);
+    }
   }
 
   @override
-  void joinGroup({required String groupId}) {
-    _invitationListService.joinGroup(groupId: groupId);
+  void joinGroup({required String groupId}) async {
+    try {
+      state = state.copyWith(isLoading: true, hasError: false);
+      await _invitationListService.joinGroup(groupId: groupId);
+      _init();
+    } catch (error) {
+      state = state.copyWith(isLoading: false, hasError: true);
+    }
   }
 }

@@ -59,5 +59,7 @@
   "comingSoon": "Coming soon!",
   "insertPassword": "Insert Password",
   "accountDeletionMessage": "You will lose all your objects and groups.",
-  "invitations": "Invitations"
+  "invitations": "Invitations",
+  "joinGroup": "Join group",
+  "deleteInvitation": "Delete invitation"
 }

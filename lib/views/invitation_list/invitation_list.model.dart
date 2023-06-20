@@ -8,14 +8,17 @@ class InvitationListModel with _$InvitationListModel {
   const factory InvitationListModel({
     required bool isLoading,
     required bool hasError,
-    required List<InvitationListInvitationModel> invitations,
+    required List<InvitationListInvitationModel> groupInvitations,
   }) = _InvitationListModel;
 }
 
 @freezed
 class InvitationListInvitationModel with _$InvitationListInvitationModel {
-  const factory InvitationListInvitationModel({required String id}) =
-      _InvitationListInvitationModel;
+  const factory InvitationListInvitationModel({
+    required String id,
+    required String name,
+    String? description,
+  }) = _InvitationListInvitationModel;
 
   factory InvitationListInvitationModel.fromJson(Map<String, dynamic> json) =>
       _$InvitationListInvitationModelFromJson(json);

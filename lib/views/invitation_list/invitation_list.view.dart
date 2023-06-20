@@ -1,5 +1,6 @@
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/invitation_list/invitation_list.model.dart";
+import "package:borrow_app/widgets/items/invitation_list_item.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -15,21 +16,54 @@ class InvitationListView extends ConsumerWidget {
     final InvitationListModel model = ref.watch(
       providers.invitationListControllerProvider,
     );
+    if (model.isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            AppLocalizations.of(context).invitations,
+          ),
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (model.hasError) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            AppLocalizations.of(context).invitations,
+          ),
+        ),
+        body: Center(
+          child: Text(AppLocalizations.of(context).unspecifiedError),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context).invitations)),
       body: SafeArea(
         child: Column(
           children: <Expanded>[
             Expanded(
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: model.invitations.length,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  final InvitationListInvitationModel invitation =
-                      model.invitations.elementAt(index);
-                  return Text(invitation.id);
-                },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 10,
+                ),
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: model.groupInvitations.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    final InvitationListInvitationModel groupInvitation =
+                        model.groupInvitations.elementAt(index);
+                    final String id = groupInvitation.id;
+                    return InvitationListItem(
+                      groupName: groupInvitation.name,
+                      onTapJoin: () => controller.joinGroup(groupId: id),
+                      onTapDelete: () => controller.joinGroup(groupId: id),
+                    );
+                  },
+                ),
               ),
             ),
           ],

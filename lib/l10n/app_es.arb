@@ -59,5 +59,7 @@
   "comingSoon": "¡Disponible pronto!",
   "insertPassword": "Introducir contraseña",
   "accountDeletionMessage": "Perderá todos sus objetos y grupos.",
-  "invitations": "Invitaciones"
+  "invitations": "Invitaciones",
+  "joinGroup": "Unirse al grupo",
+  "deleteInvitation": "Eliminar invitación"
 }

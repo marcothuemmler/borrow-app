@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$InvitationListModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-  List<InvitationListInvitationModel> get invitations =>
+  List<InvitationListInvitationModel> get groupInvitations =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $InvitationListModelCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool hasError,
-      List<InvitationListInvitationModel> invitations});
+      List<InvitationListInvitationModel> groupInvitations});
 }
 
 /// @nodoc
@@ -53,7 +53,7 @@ class _$InvitationListModelCopyWithImpl<$Res, $Val extends InvitationListModel>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? invitations = null,
+    Object? groupInvitations = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -64,9 +64,9 @@ class _$InvitationListModelCopyWithImpl<$Res, $Val extends InvitationListModel>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      invitations: null == invitations
-          ? _value.invitations
-          : invitations // ignore: cast_nullable_to_non_nullable
+      groupInvitations: null == groupInvitations
+          ? _value.groupInvitations
+          : groupInvitations // ignore: cast_nullable_to_non_nullable
               as List<InvitationListInvitationModel>,
     ) as $Val);
   }
@@ -83,7 +83,7 @@ abstract class _$$_InvitationListModelCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool hasError,
-      List<InvitationListInvitationModel> invitations});
+      List<InvitationListInvitationModel> groupInvitations});
 }
 
 /// @nodoc
@@ -99,7 +99,7 @@ class __$$_InvitationListModelCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? invitations = null,
+    Object? groupInvitations = null,
   }) {
     return _then(_$_InvitationListModel(
       isLoading: null == isLoading
@@ -110,9 +110,9 @@ class __$$_InvitationListModelCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      invitations: null == invitations
-          ? _value._invitations
-          : invitations // ignore: cast_nullable_to_non_nullable
+      groupInvitations: null == groupInvitations
+          ? _value._groupInvitations
+          : groupInvitations // ignore: cast_nullable_to_non_nullable
               as List<InvitationListInvitationModel>,
     ));
   }
@@ -124,24 +124,25 @@ class _$_InvitationListModel implements _InvitationListModel {
   const _$_InvitationListModel(
       {required this.isLoading,
       required this.hasError,
-      required final List<InvitationListInvitationModel> invitations})
-      : _invitations = invitations;
+      required final List<InvitationListInvitationModel> groupInvitations})
+      : _groupInvitations = groupInvitations;
 
   @override
   final bool isLoading;
   @override
   final bool hasError;
-  final List<InvitationListInvitationModel> _invitations;
+  final List<InvitationListInvitationModel> _groupInvitations;
   @override
-  List<InvitationListInvitationModel> get invitations {
-    if (_invitations is EqualUnmodifiableListView) return _invitations;
+  List<InvitationListInvitationModel> get groupInvitations {
+    if (_groupInvitations is EqualUnmodifiableListView)
+      return _groupInvitations;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_invitations);
+    return EqualUnmodifiableListView(_groupInvitations);
   }
 
   @override
   String toString() {
-    return 'InvitationListModel(isLoading: $isLoading, hasError: $hasError, invitations: $invitations)';
+    return 'InvitationListModel(isLoading: $isLoading, hasError: $hasError, groupInvitations: $groupInvitations)';
   }
 
   @override
@@ -154,12 +155,12 @@ class _$_InvitationListModel implements _InvitationListModel {
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
             const DeepCollectionEquality()
-                .equals(other._invitations, _invitations));
+                .equals(other._groupInvitations, _groupInvitations));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, isLoading, hasError,
-      const DeepCollectionEquality().hash(_invitations));
+      const DeepCollectionEquality().hash(_groupInvitations));
 
   @JsonKey(ignore: true)
   @override
@@ -171,17 +172,17 @@ class _$_InvitationListModel implements _InvitationListModel {
 
 abstract class _InvitationListModel implements InvitationListModel {
   const factory _InvitationListModel(
-          {required final bool isLoading,
-          required final bool hasError,
-          required final List<InvitationListInvitationModel> invitations}) =
-      _$_InvitationListModel;
+      {required final bool isLoading,
+      required final bool hasError,
+      required final List<InvitationListInvitationModel>
+          groupInvitations}) = _$_InvitationListModel;
 
   @override
   bool get isLoading;
   @override
   bool get hasError;
   @override
-  List<InvitationListInvitationModel> get invitations;
+  List<InvitationListInvitationModel> get groupInvitations;
   @override
   @JsonKey(ignore: true)
   _$$_InvitationListModelCopyWith<_$_InvitationListModel> get copyWith =>
@@ -196,6 +197,8 @@ InvitationListInvitationModel _$InvitationListInvitationModelFromJson(
 /// @nodoc
 mixin _$InvitationListInvitationModel {
   String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -211,7 +214,7 @@ abstract class $InvitationListInvitationModelCopyWith<$Res> {
       _$InvitationListInvitationModelCopyWithImpl<$Res,
           InvitationListInvitationModel>;
   @useResult
-  $Res call({String id});
+  $Res call({String id, String name, String? description});
 }
 
 /// @nodoc
@@ -229,12 +232,22 @@ class _$InvitationListInvitationModelCopyWithImpl<$Res,
   @override
   $Res call({
     Object? id = null,
+    Object? name = null,
+    Object? description = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -248,7 +261,7 @@ abstract class _$$_InvitationListInvitationModelCopyWith<$Res>
       __$$_InvitationListInvitationModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id});
+  $Res call({String id, String name, String? description});
 }
 
 /// @nodoc
@@ -265,12 +278,22 @@ class __$$_InvitationListInvitationModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? name = null,
+    Object? description = freezed,
   }) {
     return _then(_$_InvitationListInvitationModel(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -279,7 +302,8 @@ class __$$_InvitationListInvitationModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_InvitationListInvitationModel
     implements _InvitationListInvitationModel {
-  const _$_InvitationListInvitationModel({required this.id});
+  const _$_InvitationListInvitationModel(
+      {required this.id, required this.name, this.description});
 
   factory _$_InvitationListInvitationModel.fromJson(
           Map<String, dynamic> json) =>
@@ -287,10 +311,14 @@ class _$_InvitationListInvitationModel
 
   @override
   final String id;
+  @override
+  final String name;
+  @override
+  final String? description;
 
   @override
   String toString() {
-    return 'InvitationListInvitationModel(id: $id)';
+    return 'InvitationListInvitationModel(id: $id, name: $name, description: $description)';
   }
 
   @override
@@ -298,12 +326,15 @@ class _$_InvitationListInvitationModel
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_InvitationListInvitationModel &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, name, description);
 
   @JsonKey(ignore: true)
   @override
@@ -322,14 +353,20 @@ class _$_InvitationListInvitationModel
 
 abstract class _InvitationListInvitationModel
     implements InvitationListInvitationModel {
-  const factory _InvitationListInvitationModel({required final String id}) =
-      _$_InvitationListInvitationModel;
+  const factory _InvitationListInvitationModel(
+      {required final String id,
+      required final String name,
+      final String? description}) = _$_InvitationListInvitationModel;
 
   factory _InvitationListInvitationModel.fromJson(Map<String, dynamic> json) =
       _$_InvitationListInvitationModel.fromJson;
 
   @override
   String get id;
+  @override
+  String get name;
+  @override
+  String? get description;
   @override
   @JsonKey(ignore: true)
   _$$_InvitationListInvitationModelCopyWith<_$_InvitationListInvitationModel>

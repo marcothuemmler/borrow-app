@@ -343,13 +343,18 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  void deleteGroupInvitation({required String groupId}) {
+  Future<void> deleteGroupInvitation({required String groupId}) async {
     // TODO: implement deleteGroupInvitation
   }
 
   @override
-  void joinGroup({required String groupId}) {
-    // TODO: implement joinGroup
+  Future<void> joinGroup({required String groupId}) async {
+    try {
+      final String? userId = await _storageService.read(key: "user-id");
+      _client.put<dynamic>("/groups/$groupId/members/$userId");
+    } catch (error) {
+      throw Exception("Could not join group: $error");
+    }
   }
 
   @override
@@ -364,7 +369,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
         }),
       );
     } catch (error) {
-      throw Exception("Could not load invitations");
+      throw Exception("Could not load invitations : $error");
     }
   }
 }
