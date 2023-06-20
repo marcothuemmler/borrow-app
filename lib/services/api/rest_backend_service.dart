@@ -351,7 +351,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   Future<void> joinGroup({required String groupId}) async {
     try {
       final String? userId = await _storageService.read(key: "user-id");
-      _client.put<dynamic>("/groups/$groupId/members/$userId");
+      await _client.put<dynamic>("/groups/$groupId/members/$userId");
     } catch (error) {
       throw Exception("Could not join group: $error");
     }
