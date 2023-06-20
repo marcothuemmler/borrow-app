@@ -10,6 +10,7 @@
   "enterValidPassword": "Password must be at least 8 characters long and contain a number, an uppercase character and a lowercase character",
   "enterValidGroupName": "Group name must contain at least 3 characters",
   "enterValidCategoryName": "Category name must contain at least 3 characters",
+  "enterValidItemName": "Item name must contain at least 3 characters",
   "submit": "Submit",
   "welcome": "Welcome!",
   "goToLogin": "To Login",

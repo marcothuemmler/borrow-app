@@ -33,7 +33,7 @@ mixin FormValidator {
       case FormValidationType.itemName:
         return value is String && value.length > 2
             ? null
-            : AppLocalizations.of(context).enterValidCategoryName;
+            : AppLocalizations.of(context).enterValidItemName;
     }
   }
 }

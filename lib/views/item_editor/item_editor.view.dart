@@ -5,14 +5,16 @@ import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../common/enums/form_validation_type.enum.dart';
 
 class ItemEditorView extends ConsumerWidget {
   final String? _itemId;
   final String _groupId;
+  final _formKey = GlobalKey<FormState>();
 
-  const ItemEditorView({
+  ItemEditorView({
     super.key,
     required String? itemId,
     required String groupId,
@@ -21,7 +23,6 @@ class ItemEditorView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
     final itemEditorParameters = ItemEditorParameters(
       itemId: _itemId,
       groupId: _groupId,
@@ -121,7 +122,7 @@ class ItemEditorView extends ConsumerWidget {
                                 text: "Name",
                                 validator: (value) =>
                                     controller.validateFormField(
-                                      fieldType: FormValidationType.categoryName,
+                                      fieldType: FormValidationType.itemName,
                                       context: context,
                                       value: value,),
                                 onChanged: controller.setName,

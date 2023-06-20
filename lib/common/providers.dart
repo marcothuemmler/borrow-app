@@ -173,9 +173,9 @@ class Providers {
     ),
   );
 
-  final StateNotifierProviderFamily<ItemEditorController, ItemEditorModel,
-          ItemEditorParameters> itemEditorProvider =
-      StateNotifierProvider.family<ItemEditorController, ItemEditorModel,
+  final AutoDisposeStateNotifierProviderFamily<ItemEditorController, ItemEditorModel,
+      ItemEditorParameters> itemEditorProvider =
+  AutoDisposeStateNotifierProvider.family<ItemEditorController, ItemEditorModel,
           ItemEditorParameters>(
     (ref, itemEditorParameters) => ItemEditorControllerImplementation(
       itemEditorParameters: itemEditorParameters,

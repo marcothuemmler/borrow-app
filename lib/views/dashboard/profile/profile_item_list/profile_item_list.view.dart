@@ -40,19 +40,20 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
               child: Column(
                 children: [
                   getDropDownMenu(controller, model),
-                  ListView.builder(
-                    padding: const EdgeInsets.only(top: 20),
-                    itemCount: model.filteredItems.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final item = model.filteredItems.elementAt(index);
-                      return ItemCard(
-                        item: item,
-                        onTap: () => controller.navigateToItem(itemId: item.id),
-                      );
-                    },
+                  Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(top: 20),
+                      itemCount: model.filteredItems.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final item = model.filteredItems.elementAt(index);
+                        return ItemCard(
+                          item: item,
+                          onTap: () => controller.navigateToItem(itemId: item.id),
+                        );
+                      },
+                    ),
                   ),
-                  const Spacer(),
                   Center(
                     child: ElevatedButton(
                       onPressed: () => context.goNamed(
