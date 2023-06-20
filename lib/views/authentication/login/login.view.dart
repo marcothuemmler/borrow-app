@@ -1,12 +1,12 @@
-import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
-import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/authentication/auth.model.dart';
-import 'package:borrow_app/widgets/textform_fields/password_field.widget.dart';
-import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/common/mixins/form_validator.mixin.dart";
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/authentication/auth.model.dart";
+import "package:borrow_app/widgets/textform_fields/password_field.widget.dart";
+import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
@@ -19,7 +19,7 @@ class LoginView extends ConsumerStatefulWidget {
 
 class _LoginViewState extends ConsumerState<LoginView> {
   bool _obscurePassword = true;
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _toggleObscurePassword() {
     setState(() => _obscurePassword = !_obscurePassword);
@@ -27,8 +27,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.read(providers.loginControllerProvider.notifier);
-    final model = ref.watch(providers.loginControllerProvider);
+    final LoginController controller = ref.read(
+      providers.loginControllerProvider.notifier,
+    );
+    final LoginModel model = ref.watch(providers.loginControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).login),
@@ -41,13 +43,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 TextFieldWidget(
                   text: AppLocalizations.of(context).email,
                   keyboardType: TextInputType.emailAddress,
-                  autofillHints: const [AutofillHints.email],
+                  autofillHints: const <String>[AutofillHints.email],
                   autocorrect: false,
-                  validator: (value) => controller.validateFormField(
+                  validator: (String? value) => controller.validateFormField(
                     fieldType: FormValidationType.email,
                     context: context,
                     value: value,
@@ -56,7 +58,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 ),
                 PasswordFieldWidget(
                   text: AppLocalizations.of(context).password,
-                  validator: (value) => controller.validateFormField(
+                  validator: (String? value) => controller.validateFormField(
                     fieldType: FormValidationType.password,
                     context: context,
                     value: value,
@@ -78,7 +80,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 const SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
+                  children: <Widget>[
                     ElevatedButton(
                       child: Text(AppLocalizations.of(context).submit),
                       onPressed: () {

@@ -1,5 +1,5 @@
-import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
+import "package:dotted_border/dotted_border.dart";
+import "package:flutter/material.dart";
 
 class DottedBorderButton extends StatelessWidget {
   final String title;
@@ -30,14 +30,12 @@ class DottedBorderButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+              children: <Widget>[
                 icon,
                 const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(title),
-                  ],
+                  children: <Widget>[Text(title)],
                 ),
               ],
             ),

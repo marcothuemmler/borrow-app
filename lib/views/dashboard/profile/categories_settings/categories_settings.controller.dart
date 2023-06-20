@@ -1,6 +1,6 @@
-import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.service.dart';
-import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart';
-import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
+import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.service.dart";
+import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart";
+import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
 
 class CategoriesSettingsControllerImplementation
     extends CategoriesSettingsController {
@@ -32,7 +32,7 @@ class CategoriesSettingsControllerImplementation
   Future<void> _loadCategories() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response =
+      final CategorySettingsCategoryListModel response =
           await _categorySettingsService.getCategories(groupId: _groupId);
       state = state.copyWith(isLoading: false, items: response);
     } catch (error) {

@@ -1,7 +1,7 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import "package:freezed_annotation/freezed_annotation.dart";
 
-part 'chat.model.freezed.dart';
-part 'chat.model.g.dart';
+part "chat.model.freezed.dart";
+part "chat.model.g.dart";
 
 @freezed
 class ChatModel with _$ChatModel {
@@ -9,6 +9,7 @@ class ChatModel with _$ChatModel {
     required bool isLoading,
     required bool hasError,
     required List<MessageModel> messages,
+    required String? userId,
   }) = _ChatModel;
 }
 

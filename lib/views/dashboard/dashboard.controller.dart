@@ -24,10 +24,14 @@ class DashboardControllerImplementation extends DashboardController {
     if (index == state.currentIndex) {
       return;
     }
-    final newRoute = index == 0 ? groupRoute.name : groupSettingsRoute.name;
+    final String newRoute =
+        index == 0 ? groupRoute.name : groupSettingsRoute.name;
     state = state.copyWith(currentIndex: index);
     if (pushNewRoute) {
-      _router.pushNamed(newRoute, pathParameters: {"groupId": _groupId});
+      _router.pushNamed(
+        newRoute,
+        pathParameters: <String, String>{"groupId": _groupId},
+      );
     }
   }
 

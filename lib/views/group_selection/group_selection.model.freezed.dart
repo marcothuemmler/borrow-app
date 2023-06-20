@@ -18,8 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GroupSelectionModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-  Option<GroupSelectionUserModel> get user =>
-      throw _privateConstructorUsedError;
+  GroupSelectionUserModel? get user => throw _privateConstructorUsedError;
   GroupSelectionGroupModel? get newGroup => throw _privateConstructorUsedError;
   XFile? get groupImage => throw _privateConstructorUsedError;
   InvitationModel? get invitations => throw _privateConstructorUsedError;
@@ -38,11 +37,12 @@ abstract class $GroupSelectionModelCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool hasError,
-      Option<GroupSelectionUserModel> user,
+      GroupSelectionUserModel? user,
       GroupSelectionGroupModel? newGroup,
       XFile? groupImage,
       InvitationModel? invitations});
 
+  $GroupSelectionUserModelCopyWith<$Res>? get user;
   $GroupSelectionGroupModelCopyWith<$Res>? get newGroup;
   $InvitationModelCopyWith<$Res>? get invitations;
 }
@@ -62,7 +62,7 @@ class _$GroupSelectionModelCopyWithImpl<$Res, $Val extends GroupSelectionModel>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? user = null,
+    Object? user = freezed,
     Object? newGroup = freezed,
     Object? groupImage = freezed,
     Object? invitations = freezed,
@@ -76,10 +76,10 @@ class _$GroupSelectionModelCopyWithImpl<$Res, $Val extends GroupSelectionModel>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      user: null == user
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as Option<GroupSelectionUserModel>,
+              as GroupSelectionUserModel?,
       newGroup: freezed == newGroup
           ? _value.newGroup
           : newGroup // ignore: cast_nullable_to_non_nullable
@@ -93,6 +93,18 @@ class _$GroupSelectionModelCopyWithImpl<$Res, $Val extends GroupSelectionModel>
           : invitations // ignore: cast_nullable_to_non_nullable
               as InvitationModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GroupSelectionUserModelCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $GroupSelectionUserModelCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
   }
 
   @override
@@ -131,11 +143,13 @@ abstract class _$$_GroupSelectionModelCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool hasError,
-      Option<GroupSelectionUserModel> user,
+      GroupSelectionUserModel? user,
       GroupSelectionGroupModel? newGroup,
       XFile? groupImage,
       InvitationModel? invitations});
 
+  @override
+  $GroupSelectionUserModelCopyWith<$Res>? get user;
   @override
   $GroupSelectionGroupModelCopyWith<$Res>? get newGroup;
   @override
@@ -155,7 +169,7 @@ class __$$_GroupSelectionModelCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? user = null,
+    Object? user = freezed,
     Object? newGroup = freezed,
     Object? groupImage = freezed,
     Object? invitations = freezed,
@@ -169,10 +183,10 @@ class __$$_GroupSelectionModelCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      user: null == user
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as Option<GroupSelectionUserModel>,
+              as GroupSelectionUserModel?,
       newGroup: freezed == newGroup
           ? _value.newGroup
           : newGroup // ignore: cast_nullable_to_non_nullable
@@ -205,7 +219,7 @@ class _$_GroupSelectionModel implements _GroupSelectionModel {
   @override
   final bool hasError;
   @override
-  final Option<GroupSelectionUserModel> user;
+  final GroupSelectionUserModel? user;
   @override
   final GroupSelectionGroupModel? newGroup;
   @override
@@ -252,7 +266,7 @@ abstract class _GroupSelectionModel implements GroupSelectionModel {
   factory _GroupSelectionModel(
       {required final bool isLoading,
       required final bool hasError,
-      required final Option<GroupSelectionUserModel> user,
+      required final GroupSelectionUserModel? user,
       required final GroupSelectionGroupModel? newGroup,
       required final XFile? groupImage,
       required final InvitationModel? invitations}) = _$_GroupSelectionModel;
@@ -262,7 +276,7 @@ abstract class _GroupSelectionModel implements GroupSelectionModel {
   @override
   bool get hasError;
   @override
-  Option<GroupSelectionUserModel> get user;
+  GroupSelectionUserModel? get user;
   @override
   GroupSelectionGroupModel? get newGroup;
   @override
@@ -388,7 +402,8 @@ class _$_UserModel implements _UserModel {
   _$_UserModel(
       {required this.id,
       required this.username,
-      final List<GroupSelectionGroupModel> groups = const []})
+      final List<GroupSelectionGroupModel> groups =
+          const <GroupSelectionGroupModel>[]})
       : _groups = groups;
 
   factory _$_UserModel.fromJson(Map<String, dynamic> json) =>

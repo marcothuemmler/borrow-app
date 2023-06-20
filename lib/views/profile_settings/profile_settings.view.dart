@@ -1,13 +1,13 @@
-import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
-import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/profile_settings/profile_settings.model.dart';
-import 'package:borrow_app/widgets/dialogs/delete_account_dialog.dart';
-import 'package:borrow_app/widgets/various_components/image_upload.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
+import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/common/mixins/form_validator.mixin.dart";
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/profile_settings/profile_settings.model.dart";
+import "package:borrow_app/widgets/dialogs/delete_account_dialog.dart";
+import "package:borrow_app/widgets/various_components/image_upload.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:image_picker/image_picker.dart";
 
 class ProfileSettingsView extends ConsumerWidget {
   ProfileSettingsView({super.key});
@@ -18,10 +18,12 @@ class ProfileSettingsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bool isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
-    final controller = ref.read(
+    final ProfileSettingsController controller = ref.read(
       providers.profileSettingsControllerProvider.notifier,
     );
-    final model = ref.watch(providers.profileSettingsControllerProvider);
+    final ProfileSettingsModel model = ref.watch(
+      providers.profileSettingsControllerProvider,
+    );
     if (model.isLoading) {
       return Scaffold(
         appBar: AppBar(
@@ -45,16 +47,16 @@ class ProfileSettingsView extends ConsumerWidget {
       body: SafeArea(
         child: Flex(
           direction: isPortrait ? Axis.vertical : Axis.horizontal,
-          children: [
+          children: <Widget>[
             Expanded(
               child: Column(
-                children: [
+                children: <Widget>[
                   Expanded(
                     child: Center(
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 350),
                         child: Column(
-                          children: [
+                          children: <Widget>[
                             Expanded(
                               child: SingleChildScrollView(
                                 padding:
@@ -62,7 +64,7 @@ class ProfileSettingsView extends ConsumerWidget {
                                 child: Form(
                                   key: _formKey,
                                   child: Column(
-                                    children: [
+                                    children: <Widget>[
                                       ImageUpload(
                                         image: model.patchedProfileImage,
                                         text: AppLocalizations.of(context)
@@ -75,11 +77,11 @@ class ProfileSettingsView extends ConsumerWidget {
                                         autocorrect: false,
                                         initialValue:
                                             model.patchedUser?.username,
-                                        onChanged: (value) =>
+                                        onChanged: (String value) =>
                                             controller.setUsername(
                                           username: value,
                                         ),
-                                        validator: (value) {
+                                        validator: (String? value) {
                                           return controller.validateFormField(
                                             fieldType:
                                                 FormValidationType.username,
@@ -99,11 +101,11 @@ class ProfileSettingsView extends ConsumerWidget {
                                       TextFormField(
                                         autocorrect: false,
                                         initialValue: model.patchedUser?.email,
-                                        onChanged: (value) =>
+                                        onChanged: (String value) =>
                                             controller.setEmail(
                                           email: value,
                                         ),
-                                        validator: (value) {
+                                        validator: (String? value) {
                                           return controller.validateFormField(
                                             fieldType: FormValidationType.email,
                                             context: context,
@@ -136,11 +138,11 @@ class ProfileSettingsView extends ConsumerWidget {
               child: Column(
                 mainAxisSize: isPortrait ? MainAxisSize.min : MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   IntrinsicWidth(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
+                      children: <Widget>[
                         ElevatedButton(
                           onPressed: model.userDataChanged || model.imageChanged
                               ? () {
@@ -171,7 +173,7 @@ class ProfileSettingsView extends ConsumerWidget {
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.red,
                           ),
-                          onPressed: () => showModalBottomSheet(
+                          onPressed: () => showModalBottomSheet<void>(
                             isScrollControlled: true,
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
@@ -180,7 +182,8 @@ class ProfileSettingsView extends ConsumerWidget {
                               ),
                             ),
                             context: context,
-                            builder: (context) => const DeleteAccountDialog(),
+                            builder: (BuildContext context) =>
+                                const DeleteAccountDialog(),
                           ),
                           child: Text(
                             AppLocalizations.of(context).deleteAccount,

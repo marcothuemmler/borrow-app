@@ -1,12 +1,12 @@
-import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
-import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
-import 'package:borrow_app/widgets/dialogs/new_category_dialog.dart';
-import 'package:borrow_app/widgets/items/dismissible_item.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/common/mixins/form_validator.mixin.dart";
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
+import "package:borrow_app/widgets/dialogs/new_category_dialog.dart";
+import "package:borrow_app/widgets/items/dismissible_item.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class CategoriesSettingsView extends ConsumerWidget {
   final String groupId;
@@ -18,10 +18,12 @@ class CategoriesSettingsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.read(
+    final CategoriesSettingsController controller = ref.read(
       providers.categoriesListProvider(groupId).notifier,
     );
-    final model = ref.watch(providers.categoriesListProvider(groupId));
+    final CategoryListDetailModel model = ref.watch(
+      providers.categoriesListProvider(groupId),
+    );
 
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -29,19 +31,21 @@ class CategoriesSettingsView extends ConsumerWidget {
     if (model.hasError) {
       return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
-    final categories = model.items!.categories;
+    final List<CategorySettingsCategoryModel> categories =
+        model.items!.categories;
     return Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 20),
                 itemCount: categories.length,
                 shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final category = categories.elementAt(index);
+                itemBuilder: (BuildContext context, int index) {
+                  final CategorySettingsCategoryModel category =
+                      categories.elementAt(index);
                   return DismissibleItem(
                     item: category,
                     onDismissed: (_) => controller.deleteCategory(category.id!),
@@ -84,7 +88,7 @@ class CategoriesSettingsView extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return NewCategoryDialog(
-          nameValidator: (value) => controller.validateFormField(
+          nameValidator: (String? value) => controller.validateFormField(
             fieldType: FormValidationType.categoryName,
             context: context,
             value: value,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class SettingsItem extends StatelessWidget {
   final String text;
@@ -23,19 +23,15 @@ class SettingsItem extends StatelessWidget {
         child: SizedBox(
           height: 80,
           child: Row(
-            children: [
+            children: <Widget>[
               if (iconData is IconData)
-                Icon(
-                  iconData!,
-                  size: 32,
-                  color: iconColor,
-                ),
+                Icon(iconData!, size: 32, color: iconColor),
               const SizedBox(width: 20),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     const SizedBox(height: 8),
                     Text(
                       text,

@@ -1,6 +1,6 @@
 import "package:borrow_app/services/routing/routes.dart";
 import "package:flutter/material.dart";
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:go_router/go_router.dart";
 
 class HomeView extends StatelessWidget {
@@ -11,12 +11,12 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
-        children: [
+        children: <Widget>[
           ShaderMask(
-            shaderCallback: (rect) => const LinearGradient(
+            shaderCallback: (Rect rect) => const LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [
+              colors: <Color>[
                 Colors.black,
                 Colors.black87,
                 Colors.black26,
@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
               ],
             ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height)),
             blendMode: BlendMode.dstIn,
-            child: Image.asset('assets/images/mess.jpg', fit: BoxFit.cover),
+            child: Image.asset("assets/images/mess.jpg", fit: BoxFit.cover),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,

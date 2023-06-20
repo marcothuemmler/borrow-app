@@ -1,5 +1,5 @@
-import 'package:borrow_app/views/chat/chat.model.dart';
-import 'package:flutter/material.dart';
+import "package:borrow_app/views/chat/chat.model.dart";
+import "package:flutter/material.dart";
 
 class ChatBubble extends StatelessWidget {
   final MessageModel message;
@@ -12,7 +12,7 @@ class ChatBubble extends StatelessWidget {
       mainAxisAlignment: message.isOwnMessage
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Flexible(
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 4),
@@ -25,7 +25,7 @@ class ChatBubble extends StatelessWidget {
                   ? const Color.fromRGBO(60, 120, 240, 1)
                   : const Color.fromRGBO(240, 240, 240, 1),
               borderRadius: const BorderRadius.all(Radius.circular(13)),
-              boxShadow: const [
+              boxShadow: const <BoxShadow>[
                 BoxShadow(
                   color: Colors.black38,
                   blurRadius: 2,
@@ -35,7 +35,7 @@ class ChatBubble extends StatelessWidget {
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Flexible(
                   child: Text(
                     message.content,

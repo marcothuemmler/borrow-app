@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ItemDetailModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-  Option<ItemDetailItemModel> get item => throw _privateConstructorUsedError;
+  ItemDetailItemModel? get item => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ItemDetailModelCopyWith<ItemDetailModel> get copyWith =>
@@ -31,7 +31,9 @@ abstract class $ItemDetailModelCopyWith<$Res> {
           ItemDetailModel value, $Res Function(ItemDetailModel) then) =
       _$ItemDetailModelCopyWithImpl<$Res, ItemDetailModel>;
   @useResult
-  $Res call({bool isLoading, bool hasError, Option<ItemDetailItemModel> item});
+  $Res call({bool isLoading, bool hasError, ItemDetailItemModel? item});
+
+  $ItemDetailItemModelCopyWith<$Res>? get item;
 }
 
 /// @nodoc
@@ -49,7 +51,7 @@ class _$ItemDetailModelCopyWithImpl<$Res, $Val extends ItemDetailModel>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? item = null,
+    Object? item = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -60,11 +62,23 @@ class _$ItemDetailModelCopyWithImpl<$Res, $Val extends ItemDetailModel>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      item: null == item
+      item: freezed == item
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
-              as Option<ItemDetailItemModel>,
+              as ItemDetailItemModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ItemDetailItemModelCopyWith<$Res>? get item {
+    if (_value.item == null) {
+      return null;
+    }
+
+    return $ItemDetailItemModelCopyWith<$Res>(_value.item!, (value) {
+      return _then(_value.copyWith(item: value) as $Val);
+    });
   }
 }
 
@@ -76,7 +90,10 @@ abstract class _$$_ItemDetailModelCopyWith<$Res>
       __$$_ItemDetailModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, bool hasError, Option<ItemDetailItemModel> item});
+  $Res call({bool isLoading, bool hasError, ItemDetailItemModel? item});
+
+  @override
+  $ItemDetailItemModelCopyWith<$Res>? get item;
 }
 
 /// @nodoc
@@ -92,7 +109,7 @@ class __$$_ItemDetailModelCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? item = null,
+    Object? item = freezed,
   }) {
     return _then(_$_ItemDetailModel(
       isLoading: null == isLoading
@@ -103,10 +120,10 @@ class __$$_ItemDetailModelCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      item: null == item
+      item: freezed == item
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
-              as Option<ItemDetailItemModel>,
+              as ItemDetailItemModel?,
     ));
   }
 }
@@ -122,7 +139,7 @@ class _$_ItemDetailModel implements _ItemDetailModel {
   @override
   final bool hasError;
   @override
-  final Option<ItemDetailItemModel> item;
+  final ItemDetailItemModel? item;
 
   @override
   String toString() {
@@ -155,14 +172,14 @@ abstract class _ItemDetailModel implements ItemDetailModel {
   factory _ItemDetailModel(
       {required final bool isLoading,
       required final bool hasError,
-      required final Option<ItemDetailItemModel> item}) = _$_ItemDetailModel;
+      required final ItemDetailItemModel? item}) = _$_ItemDetailModel;
 
   @override
   bool get isLoading;
   @override
   bool get hasError;
   @override
-  Option<ItemDetailItemModel> get item;
+  ItemDetailItemModel? get item;
   @override
   @JsonKey(ignore: true)
   _$$_ItemDetailModelCopyWith<_$_ItemDetailModel> get copyWith =>

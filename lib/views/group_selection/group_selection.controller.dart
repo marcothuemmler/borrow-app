@@ -1,10 +1,9 @@
-import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
-import 'package:borrow_app/views/group_selection/group_selection.model.dart';
-import 'package:borrow_app/views/group_selection/group_selection.service.dart';
-import 'package:borrow_app/views/group_selection/group_selection.view.dart';
-import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/views/group_selection/group_selection.model.dart";
+import "package:borrow_app/views/group_selection/group_selection.service.dart";
+import "package:borrow_app/views/group_selection/group_selection.view.dart";
+import "package:flutter/material.dart";
+import "package:image_picker/image_picker.dart";
 
 class GroupSelectionControllerImplementation extends GroupSelectionController {
   final GroupSelectionService _groupSelectionService;
@@ -18,7 +17,7 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
               GroupSelectionModel(
                 isLoading: true,
                 hasError: false,
-                user: none(),
+                user: null,
                 newGroup: null,
                 groupImage: null,
                 invitations: null,
@@ -34,9 +33,8 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   Future<void> _getGroups() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await _groupSelectionService.getGroups();
       state = state.copyWith(
-        user: optionOf(response),
+        user: await _groupSelectionService.getGroups(),
         isLoading: false,
         hasError: false,
       );
@@ -52,7 +50,8 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
     }
     try {
       state = state.copyWith(isLoading: true, hasError: false);
-      final response = await _groupSelectionService.postGroup(state.newGroup!);
+      final GroupSelectionGroupModel response =
+          await _groupSelectionService.postGroup(state.newGroup!);
       if (state.groupImage is XFile) {
         await _groupSelectionService.putGroupImage(
           groupId: response.id!,
@@ -90,7 +89,7 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   @override
   void setupMemberInvitation({required String groupId}) {
     state = state.copyWith(
-      invitations: InvitationModel(groupId: groupId, emails: {}),
+      invitations: InvitationModel(groupId: groupId, emails: <String>{}),
     );
   }
 
@@ -106,7 +105,7 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
     );
     if (errorText is! String) {
       state = state.copyWith.invitations!(
-        emails: {...state.invitations!.emails, email!},
+        emails: <String>{...state.invitations!.emails, email!},
       );
     }
     return errorText;
@@ -115,7 +114,9 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   @override
   void removeMailFromInvitations(String email) {
     state = state.copyWith.invitations!(
-      emails: {...state.invitations!.emails.where((mail) => mail != email)},
+      emails: <String>{
+        ...state.invitations!.emails.where((String mail) => mail != email)
+      },
     );
   }
 

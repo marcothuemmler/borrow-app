@@ -1,7 +1,7 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import "package:freezed_annotation/freezed_annotation.dart";
 
-part 'chat_list.model.freezed.dart';
-part 'chat_list.model.g.dart';
+part "chat_list.model.freezed.dart";
+part "chat_list.model.g.dart";
 
 @freezed
 class ChatListModel with _$ChatListModel {

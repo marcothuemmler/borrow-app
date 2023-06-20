@@ -16,7 +16,10 @@ class CustomPrettyDioLogger extends PrettyDioLogger {
   });
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
     if (response.requestOptions.responseType == ResponseType.bytes) {
       handler.next(response);
     } else {

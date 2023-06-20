@@ -1,15 +1,14 @@
-import 'package:dartz/dartz.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import "package:freezed_annotation/freezed_annotation.dart";
 
-part 'item_detail.model.freezed.dart';
-part 'item_detail.model.g.dart';
+part "item_detail.model.freezed.dart";
+part "item_detail.model.g.dart";
 
 @freezed
 class ItemDetailModel with _$ItemDetailModel {
   factory ItemDetailModel({
     required bool isLoading,
     required bool hasError,
-    required Option<ItemDetailItemModel> item,
+    required ItemDetailItemModel? item,
   }) = _ItemDetailModel;
 }
 

@@ -1,7 +1,7 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import "package:freezed_annotation/freezed_annotation.dart";
 
-part 'category_settings.model.freezed.dart';
-part 'category_settings.model.g.dart';
+part "category_settings.model.freezed.dart";
+part "category_settings.model.g.dart";
 
 @freezed
 class CreateCategoryDTO with _$CreateCategoryDTO {
