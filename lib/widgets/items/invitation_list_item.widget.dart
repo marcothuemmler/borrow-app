@@ -33,7 +33,7 @@ class InvitationListItem extends StatelessWidget {
         trailing: PopupMenuButton<ListTile>(
           icon: const Icon(Icons.more_vert),
           itemBuilder: (BuildContext context) {
-            return [
+            return <PopupMenuItem<ListTile>>[
               PopupMenuItem<ListTile>(
                 onTap: _onTapJoin,
                 child: ListTile(

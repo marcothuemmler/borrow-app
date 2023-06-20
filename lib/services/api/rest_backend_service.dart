@@ -184,15 +184,14 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     required InvitationModel payload,
   }) async {
     try {
-      final data = {
-        "emails": [...payload.emails]
+      final Map<String, List<String>> data = <String, List<String>>{
+        "emails": <String>[...payload.emails]
       };
       await _client.put<dynamic>(
         "/groups/${payload.groupId}/invitations",
         data: data,
       );
     } catch (error) {
-      print("$error");
       throw Exception("Could not invite users: $error");
     }
   }
