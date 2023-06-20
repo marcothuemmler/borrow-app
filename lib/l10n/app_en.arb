@@ -61,5 +61,6 @@
   "accountDeletionMessage": "You will lose all your objects and groups.",
   "invitations": "Invitations",
   "joinGroup": "Join group",
-  "deleteInvitation": "Delete invitation"
+  "deleteInvitation": "Delete invitation",
+  "emptyInvitationsMessage": "Your group invitations will appear here"
 }

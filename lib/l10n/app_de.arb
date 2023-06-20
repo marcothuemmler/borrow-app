@@ -61,5 +61,6 @@
   "accountDeletionMessage": "Sie verlieren alle Ihre Gegenstände und Gruppen.",
   "invitations": "Einladungen",
   "joinGroup": "Gruppe beitreten",
-  "deleteInvitation": "Einladung löschen"
+  "deleteInvitation": "Einladung löschen",
+  "emptyInvitationsMessage": "Ihre Gruppeneinladungen werden hier erscheinen"
 }

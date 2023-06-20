@@ -344,7 +344,12 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
 
   @override
   Future<void> deleteGroupInvitation({required String groupId}) async {
-    // TODO: implement deleteGroupInvitation
+    try {
+      final String? userId = await _storageService.read(key: "user-id");
+      await _client.delete<dynamic>("/groups/$groupId/invitations/$userId");
+    } catch (error) {
+      throw Exception("Could not delete group invitation: $error");
+    }
   }
 
   @override

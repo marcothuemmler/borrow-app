@@ -42,30 +42,45 @@ class InvitationListView extends ConsumerWidget {
       appBar: AppBar(title: Text(AppLocalizations.of(context).invitations)),
       body: SafeArea(
         child: Column(
-          children: <Expanded>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 10,
+          children: <Widget>[
+            if (model.groupInvitations.isNotEmpty)
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 10,
+                  ),
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: model.groupInvitations.length,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      final InvitationListInvitationModel groupInvitation =
+                          model.groupInvitations.elementAt(index);
+                      final String id = groupInvitation.id;
+                      return InvitationListItem(
+                        groupName: groupInvitation.name,
+                        onTapJoin: () => controller.joinGroup(groupId: id),
+                        onTapDelete: () => controller.deleteGroupInvitation(
+                          groupId: id,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: model.groupInvitations.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    final InvitationListInvitationModel groupInvitation =
-                        model.groupInvitations.elementAt(index);
-                    final String id = groupInvitation.id;
-                    return InvitationListItem(
-                      groupName: groupInvitation.name,
-                      onTapJoin: () => controller.joinGroup(groupId: id),
-                      onTapDelete: () => controller.joinGroup(groupId: id),
-                    );
-                  },
+              )
+            else
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.1,
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context).emptyInvitationsMessage,
+                    style: const TextStyle(fontSize: 16),
+                  ),
                 ),
-              ),
-            ),
+              )
           ],
         ),
       ),
