@@ -27,6 +27,9 @@ import "package:borrow_app/views/dashboard/profile/categories_settings/category_
 import "package:borrow_app/views/group_selection/group_selection.controller.dart";
 import "package:borrow_app/views/group_selection/group_selection.model.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
+import "package:borrow_app/views/invitation_list/invitation_list.controller.dart";
+import "package:borrow_app/views/invitation_list/invitation_list.model.dart";
+import "package:borrow_app/views/invitation_list/invitation_list.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.controller.dart";
 import "package:borrow_app/views/item_detail/item_detail.model.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
@@ -210,6 +213,20 @@ class Providers {
     ) =>
         ProfileSettingsControllerImplementation(
       profileSettingsService: ref.read(providers.backendServiceProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProvider<InvitationListController,
+          InvitationListModel> invitationListControllerProvider =
+      AutoDisposeStateNotifierProvider<InvitationListController,
+          InvitationListModel>(
+    (
+      AutoDisposeStateNotifierProviderRef<InvitationListController,
+              InvitationListModel>
+          ref,
+    ) =>
+        InvitationListControllerImplementation(
+      invitationListService: ref.read(providers.backendServiceProvider),
     ),
   );
 }

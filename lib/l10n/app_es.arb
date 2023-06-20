@@ -58,5 +58,9 @@
   "deleteAccount": "Eliminar cuenta",
   "comingSoon": "¡Disponible pronto!",
   "insertPassword": "Introducir contraseña",
-  "accountDeletionMessage": "Perderá todos sus objetos y grupos."
+  "accountDeletionMessage": "Perderá todos sus objetos y grupos.",
+  "invitations": "Invitaciones",
+  "joinGroup": "Unirse al grupo",
+  "deleteInvitation": "Eliminar invitación",
+  "emptyInvitationsMessage": "Sus invitaciones de grupo aparecerán aquí"
 }

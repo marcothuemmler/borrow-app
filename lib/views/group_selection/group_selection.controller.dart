@@ -121,10 +121,17 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   }
 
   @override
-  void inviteGroupMembers({required bool confirmed}) {
+  void inviteGroupMembers({required bool confirmed}) async {
     if (confirmed) {
-      _groupSelectionService.inviteGroupMembers(payload: state.invitations!);
+      try {
+        state = state.copyWith(isLoading: true, hasError: false);
+        await _groupSelectionService.inviteGroupMembers(
+          payload: state.invitations!,
+        );
+        state = state.copyWith(invitations: null, isLoading: false);
+      } catch (error) {
+        state = state.copyWith(hasError: true, isLoading: false);
+      }
     }
-    state = state.copyWith(invitations: null);
   }
 }

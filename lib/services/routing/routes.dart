@@ -28,3 +28,5 @@ const RouteDefinition chatRoute =
     RouteDefinition(name: "chat", path: "chat/:userId");
 const RouteDefinition chatListRoute =
     RouteDefinition(name: "chatList", path: "chats");
+const RouteDefinition invitationsRoute =
+    RouteDefinition(name: "invitations", path: "invitations");
