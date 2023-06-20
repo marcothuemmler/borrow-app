@@ -1,32 +1,35 @@
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/chat/chat.model.dart';
-import 'package:borrow_app/widgets/various_components/chat_bubble.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/chat/chat.model.dart";
+import "package:borrow_app/widgets/various_components/chat_bubble.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class ChatView extends ConsumerWidget {
   final MessageItemModel _item;
   final String _otherUserId;
-  final _textController = TextEditingController();
-  final _scrollController = ScrollController();
+  final TextEditingController _textController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   ChatView({
     super.key,
-    required MessageItemModel item,
+    required String itemId,
+    required String ownerId,
     required String otherUserId,
-  })  : _item = item,
+  })  : _item = MessageItemModel(id: itemId, ownerId: ownerId),
         _otherUserId = otherUserId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final chatParameters = ChatControllerParameters(
+    final ChatControllerParameters chatParameters = ChatControllerParameters(
       item: _item,
       otherUserId: _otherUserId,
     );
-    final controller = ref.read(
+    final ChatController controller = ref.read(
       providers.chatControllerProvider(chatParameters).notifier,
     );
-    final model = ref.watch(providers.chatControllerProvider(chatParameters));
+    final ChatModel model = ref.watch(
+      providers.chatControllerProvider(chatParameters),
+    );
     WidgetsBinding.instance.addPostFrameCallback(_scrollDown);
     return Scaffold(
       appBar: AppBar(title: const Text("Title")),
@@ -36,11 +39,11 @@ class ChatView extends ConsumerWidget {
           child: Stack(
             fit: StackFit.expand,
             alignment: Alignment.bottomCenter,
-            children: [
+            children: <Widget>[
               ColoredBox(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Expanded(
                       child: SingleChildScrollView(
                         controller: _scrollController,
@@ -51,8 +54,8 @@ class ChatView extends ConsumerWidget {
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ...model.messages.map((message) {
+                          children: <ChatBubble>[
+                            ...model.messages.map((MessageModel message) {
                               return ChatBubble(message: message);
                             }),
                           ],
@@ -66,7 +69,7 @@ class ChatView extends ConsumerWidget {
                       ),
                       color: const Color.fromRGBO(240, 240, 240, 1),
                       child: Row(
-                        children: [
+                        children: <Widget>[
                           Flexible(
                             child: TextField(
                               autofocus: true,

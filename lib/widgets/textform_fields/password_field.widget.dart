@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class PasswordFieldWidget extends StatelessWidget {
   final String text;
@@ -20,14 +20,14 @@ class PasswordFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         const SizedBox(height: 16),
         Text(text),
         const SizedBox(height: 10),
         TextFormField(
           keyboardType: TextInputType.visiblePassword,
           textInputAction: TextInputAction.next,
-          autofillHints: const [AutofillHints.password],
+          autofillHints: const <String>[AutofillHints.password],
           autocorrect: false,
           validator: validator,
           decoration: InputDecoration(

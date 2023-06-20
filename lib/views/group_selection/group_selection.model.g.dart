@@ -13,7 +13,7 @@ _$_UserModel _$$_UserModelFromJson(Map<String, dynamic> json) => _$_UserModel(
               ?.map((e) =>
                   GroupSelectionGroupModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
-          const [],
+          const <GroupSelectionGroupModel>[],
     );
 
 Map<String, dynamic> _$$_UserModelToJson(_$_UserModel instance) =>

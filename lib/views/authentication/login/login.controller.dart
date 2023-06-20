@@ -1,6 +1,6 @@
-import 'package:borrow_app/views/authentication/auth.model.dart';
-import 'package:borrow_app/views/authentication/auth.service.dart';
-import 'package:borrow_app/views/authentication/login/login.view.dart';
+import "package:borrow_app/views/authentication/auth.model.dart";
+import "package:borrow_app/views/authentication/auth.service.dart";
+import "package:borrow_app/views/authentication/login/login.view.dart";
 
 class LoginControllerImplementation extends LoginController {
   final AuthService _loginService;

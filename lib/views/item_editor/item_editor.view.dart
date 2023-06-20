@@ -1,17 +1,17 @@
-import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
-import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/item_editor/item_editor.model.dart';
-import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
-import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/common/mixins/form_validator.mixin.dart";
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/item_editor/item_editor.model.dart";
+import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
+import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class ItemEditorView extends ConsumerWidget {
   final String? _itemId;
   final String _groupId;
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ItemEditorView({
     super.key,
@@ -22,14 +22,16 @@ class ItemEditorView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemEditorParameters = ItemEditorParameters(
+    final ItemEditorParameters itemEditorParameters = ItemEditorParameters(
       itemId: _itemId,
       groupId: _groupId,
     );
-    final controller = ref.read(
+    final ItemEditorController controller = ref.read(
       providers.itemEditorProvider(itemEditorParameters).notifier,
     );
-    final model = ref.watch(providers.itemEditorProvider(itemEditorParameters));
+    final ItemEditorModel model = ref.watch(
+      providers.itemEditorProvider(itemEditorParameters),
+    );
     if (model.isLoading) {
       return Scaffold(
         appBar: AppBar(),
@@ -44,14 +46,14 @@ class ItemEditorView extends ConsumerWidget {
         ),
       );
     }
-    final item = model.item;
+    final ItemEditorItemModel item = model.item;
     return Scaffold(
       appBar: AppBar(
         title: Text(item.name),
       ),
       body: SafeArea(
         child: Column(
-          children: [
+          children: <Widget>[
             Expanded(
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -61,7 +63,7 @@ class ItemEditorView extends ConsumerWidget {
                     padding: const EdgeInsets.all(30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Center(
                           child: AspectRatio(
                             aspectRatio: 1.5,
@@ -72,7 +74,7 @@ class ItemEditorView extends ConsumerWidget {
                                   Radius.circular(10),
                                 ),
                                 color: Colors.white,
-                                boxShadow: [
+                                boxShadow: <BoxShadow>[
                                   BoxShadow(
                                     color: Colors.black12,
                                     offset: Offset(0, 3),
@@ -94,7 +96,7 @@ class ItemEditorView extends ConsumerWidget {
                         ),
                         const SizedBox(height: 20),
                         Row(
-                          children: const [
+                          children: const <Widget>[
                             SizedBox(width: 5),
                             Spacer(),
                             SizedBox(width: 5)
@@ -104,7 +106,7 @@ class ItemEditorView extends ConsumerWidget {
                           key: _formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: <Widget>[
                               const SizedBox(height: 30),
                               Center(
                                 child: DropdownWidget<ItemEditorCategoryModel>(
@@ -114,7 +116,10 @@ class ItemEditorView extends ConsumerWidget {
                                   items: model.categories,
                                   onChanged: controller.selectCategory,
                                   value: model.item.category,
-                                  mapFunction: (category) => DropdownMenuItem(
+                                  mapFunction: (
+                                    ItemEditorCategoryModel category,
+                                  ) =>
+                                      DropdownMenuItem<ItemEditorCategoryModel>(
                                     value: category,
                                     child: Text(category.name),
                                   ),
@@ -123,7 +128,7 @@ class ItemEditorView extends ConsumerWidget {
                               const SizedBox(height: 30),
                               TextFieldWidget(
                                 text: AppLocalizations.of(context).name,
-                                validator: (value) =>
+                                validator: (String? value) =>
                                     controller.validateFormField(
                                   fieldType: FormValidationType.itemName,
                                   context: context,

@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ItemDetailModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
-  Option<ItemDetailItemModel> get item => throw _privateConstructorUsedError;
+  ItemDetailItemModel? get item => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ItemDetailModelCopyWith<ItemDetailModel> get copyWith =>
@@ -31,7 +31,9 @@ abstract class $ItemDetailModelCopyWith<$Res> {
           ItemDetailModel value, $Res Function(ItemDetailModel) then) =
       _$ItemDetailModelCopyWithImpl<$Res, ItemDetailModel>;
   @useResult
-  $Res call({bool isLoading, bool hasError, Option<ItemDetailItemModel> item});
+  $Res call({bool isLoading, bool hasError, ItemDetailItemModel? item});
+
+  $ItemDetailItemModelCopyWith<$Res>? get item;
 }
 
 /// @nodoc
@@ -49,7 +51,7 @@ class _$ItemDetailModelCopyWithImpl<$Res, $Val extends ItemDetailModel>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? item = null,
+    Object? item = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -60,11 +62,23 @@ class _$ItemDetailModelCopyWithImpl<$Res, $Val extends ItemDetailModel>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      item: null == item
+      item: freezed == item
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
-              as Option<ItemDetailItemModel>,
+              as ItemDetailItemModel?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ItemDetailItemModelCopyWith<$Res>? get item {
+    if (_value.item == null) {
+      return null;
+    }
+
+    return $ItemDetailItemModelCopyWith<$Res>(_value.item!, (value) {
+      return _then(_value.copyWith(item: value) as $Val);
+    });
   }
 }
 
@@ -76,7 +90,10 @@ abstract class _$$_ItemDetailModelCopyWith<$Res>
       __$$_ItemDetailModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, bool hasError, Option<ItemDetailItemModel> item});
+  $Res call({bool isLoading, bool hasError, ItemDetailItemModel? item});
+
+  @override
+  $ItemDetailItemModelCopyWith<$Res>? get item;
 }
 
 /// @nodoc
@@ -92,7 +109,7 @@ class __$$_ItemDetailModelCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
-    Object? item = null,
+    Object? item = freezed,
   }) {
     return _then(_$_ItemDetailModel(
       isLoading: null == isLoading
@@ -103,10 +120,10 @@ class __$$_ItemDetailModelCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
-      item: null == item
+      item: freezed == item
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
-              as Option<ItemDetailItemModel>,
+              as ItemDetailItemModel?,
     ));
   }
 }
@@ -122,7 +139,7 @@ class _$_ItemDetailModel implements _ItemDetailModel {
   @override
   final bool hasError;
   @override
-  final Option<ItemDetailItemModel> item;
+  final ItemDetailItemModel? item;
 
   @override
   String toString() {
@@ -155,14 +172,14 @@ abstract class _ItemDetailModel implements ItemDetailModel {
   factory _ItemDetailModel(
       {required final bool isLoading,
       required final bool hasError,
-      required final Option<ItemDetailItemModel> item}) = _$_ItemDetailModel;
+      required final ItemDetailItemModel? item}) = _$_ItemDetailModel;
 
   @override
   bool get isLoading;
   @override
   bool get hasError;
   @override
-  Option<ItemDetailItemModel> get item;
+  ItemDetailItemModel? get item;
   @override
   @JsonKey(ignore: true)
   _$$_ItemDetailModelCopyWith<_$_ItemDetailModel> get copyWith =>
@@ -668,6 +685,7 @@ ItemDetailUserModel _$ItemDetailUserModelFromJson(Map<String, dynamic> json) {
 mixin _$ItemDetailUserModel {
   String get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -681,7 +699,7 @@ abstract class $ItemDetailUserModelCopyWith<$Res> {
           ItemDetailUserModel value, $Res Function(ItemDetailUserModel) then) =
       _$ItemDetailUserModelCopyWithImpl<$Res, ItemDetailUserModel>;
   @useResult
-  $Res call({String id, String username});
+  $Res call({String id, String username, String? imageUrl});
 }
 
 /// @nodoc
@@ -699,6 +717,7 @@ class _$ItemDetailUserModelCopyWithImpl<$Res, $Val extends ItemDetailUserModel>
   $Res call({
     Object? id = null,
     Object? username = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -709,6 +728,10 @@ class _$ItemDetailUserModelCopyWithImpl<$Res, $Val extends ItemDetailUserModel>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -721,7 +744,7 @@ abstract class _$$_ItemDetailUserModelCopyWith<$Res>
       __$$_ItemDetailUserModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String username});
+  $Res call({String id, String username, String? imageUrl});
 }
 
 /// @nodoc
@@ -737,6 +760,7 @@ class __$$_ItemDetailUserModelCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? username = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$_ItemDetailUserModel(
       id: null == id
@@ -747,6 +771,10 @@ class __$$_ItemDetailUserModelCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -754,7 +782,8 @@ class __$$_ItemDetailUserModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ItemDetailUserModel implements _ItemDetailUserModel {
-  _$_ItemDetailUserModel({required this.id, required this.username});
+  _$_ItemDetailUserModel(
+      {required this.id, required this.username, this.imageUrl});
 
   factory _$_ItemDetailUserModel.fromJson(Map<String, dynamic> json) =>
       _$$_ItemDetailUserModelFromJson(json);
@@ -763,10 +792,12 @@ class _$_ItemDetailUserModel implements _ItemDetailUserModel {
   final String id;
   @override
   final String username;
+  @override
+  final String? imageUrl;
 
   @override
   String toString() {
-    return 'ItemDetailUserModel(id: $id, username: $username)';
+    return 'ItemDetailUserModel(id: $id, username: $username, imageUrl: $imageUrl)';
   }
 
   @override
@@ -776,12 +807,14 @@ class _$_ItemDetailUserModel implements _ItemDetailUserModel {
             other is _$_ItemDetailUserModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
-                other.username == username));
+                other.username == username) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, username);
+  int get hashCode => Object.hash(runtimeType, id, username, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -801,7 +834,8 @@ class _$_ItemDetailUserModel implements _ItemDetailUserModel {
 abstract class _ItemDetailUserModel implements ItemDetailUserModel {
   factory _ItemDetailUserModel(
       {required final String id,
-      required final String username}) = _$_ItemDetailUserModel;
+      required final String username,
+      final String? imageUrl}) = _$_ItemDetailUserModel;
 
   factory _ItemDetailUserModel.fromJson(Map<String, dynamic> json) =
       _$_ItemDetailUserModel.fromJson;
@@ -810,6 +844,8 @@ abstract class _ItemDetailUserModel implements ItemDetailUserModel {
   String get id;
   @override
   String get username;
+  @override
+  String? get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$_ItemDetailUserModelCopyWith<_$_ItemDetailUserModel> get copyWith =>

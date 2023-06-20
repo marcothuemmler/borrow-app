@@ -1,10 +1,8 @@
-import 'package:borrow_app/services/routing/routes.dart';
-import 'package:borrow_app/views/chat/chat.model.dart';
-import 'package:borrow_app/views/item_detail/item_detail.model.dart';
-import 'package:borrow_app/views/item_detail/item_detail.service.dart';
-import 'package:borrow_app/views/item_detail/item_detail.view.dart';
-import 'package:dartz/dartz.dart';
-import 'package:go_router/go_router.dart';
+import "package:borrow_app/services/routing/routes.dart";
+import "package:borrow_app/views/item_detail/item_detail.model.dart";
+import "package:borrow_app/views/item_detail/item_detail.service.dart";
+import "package:borrow_app/views/item_detail/item_detail.view.dart";
+import "package:go_router/go_router.dart";
 
 class ItemDetailControllerImplementation extends ItemDetailController {
   final String _itemId;
@@ -24,7 +22,7 @@ class ItemDetailControllerImplementation extends ItemDetailController {
               ItemDetailModel(
                 isLoading: false,
                 hasError: false,
-                item: none(),
+                item: null,
               ),
         ) {
     _init();
@@ -37,8 +35,9 @@ class ItemDetailControllerImplementation extends ItemDetailController {
   Future<void> getItemDetails({required String itemId}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await _itemDetailService.getItemDetails(itemId: itemId);
-      state = state.copyWith(item: optionOf(response), isLoading: false);
+      final ItemDetailItemModel response =
+          await _itemDetailService.getItemDetails(itemId: itemId);
+      state = state.copyWith(item: response, isLoading: false);
     } catch (error) {
       state = state.copyWith(isLoading: false, hasError: true);
     }
@@ -46,14 +45,16 @@ class ItemDetailControllerImplementation extends ItemDetailController {
 
   @override
   void contactOwner({required String ownerId}) {
-    final item = state.item.toNullable();
-    if (item is! ItemDetailItemModel) {
+    if (state.item is! ItemDetailItemModel) {
       return;
     }
     _router.pushNamed(
       chatRoute.name,
-      pathParameters: {'userId': ownerId},
-      extra: MessageItemModel(ownerId: ownerId, id: item.id),
+      pathParameters: <String, String>{"userId": ownerId},
+      queryParameters: <String, String>{
+        "ownerId": ownerId,
+        "itemId": state.item!.id,
+      },
     );
   }
 

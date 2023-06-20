@@ -19,6 +19,7 @@ mixin _$ChatModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   List<MessageModel> get messages => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatModelCopyWith<ChatModel> get copyWith =>
@@ -30,7 +31,11 @@ abstract class $ChatModelCopyWith<$Res> {
   factory $ChatModelCopyWith(ChatModel value, $Res Function(ChatModel) then) =
       _$ChatModelCopyWithImpl<$Res, ChatModel>;
   @useResult
-  $Res call({bool isLoading, bool hasError, List<MessageModel> messages});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      List<MessageModel> messages,
+      String? userId});
 }
 
 /// @nodoc
@@ -49,6 +54,7 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
     Object? isLoading = null,
     Object? hasError = null,
     Object? messages = null,
+    Object? userId = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -63,6 +69,10 @@ class _$ChatModelCopyWithImpl<$Res, $Val extends ChatModel>
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<MessageModel>,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -74,7 +84,11 @@ abstract class _$$_ChatModelCopyWith<$Res> implements $ChatModelCopyWith<$Res> {
       __$$_ChatModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, bool hasError, List<MessageModel> messages});
+  $Res call(
+      {bool isLoading,
+      bool hasError,
+      List<MessageModel> messages,
+      String? userId});
 }
 
 /// @nodoc
@@ -91,6 +105,7 @@ class __$$_ChatModelCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? hasError = null,
     Object? messages = null,
+    Object? userId = freezed,
   }) {
     return _then(_$_ChatModel(
       isLoading: null == isLoading
@@ -105,6 +120,10 @@ class __$$_ChatModelCopyWithImpl<$Res>
           ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<MessageModel>,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -115,7 +134,8 @@ class _$_ChatModel implements _ChatModel {
   const _$_ChatModel(
       {required this.isLoading,
       required this.hasError,
-      required final List<MessageModel> messages})
+      required final List<MessageModel> messages,
+      required this.userId})
       : _messages = messages;
 
   @override
@@ -131,8 +151,11 @@ class _$_ChatModel implements _ChatModel {
   }
 
   @override
+  final String? userId;
+
+  @override
   String toString() {
-    return 'ChatModel(isLoading: $isLoading, hasError: $hasError, messages: $messages)';
+    return 'ChatModel(isLoading: $isLoading, hasError: $hasError, messages: $messages, userId: $userId)';
   }
 
   @override
@@ -144,12 +167,13 @@ class _$_ChatModel implements _ChatModel {
                 other.isLoading == isLoading) &&
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
-            const DeepCollectionEquality().equals(other._messages, _messages));
+            const DeepCollectionEquality().equals(other._messages, _messages) &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, isLoading, hasError,
-      const DeepCollectionEquality().hash(_messages));
+      const DeepCollectionEquality().hash(_messages), userId);
 
   @JsonKey(ignore: true)
   @override
@@ -162,7 +186,8 @@ abstract class _ChatModel implements ChatModel {
   const factory _ChatModel(
       {required final bool isLoading,
       required final bool hasError,
-      required final List<MessageModel> messages}) = _$_ChatModel;
+      required final List<MessageModel> messages,
+      required final String? userId}) = _$_ChatModel;
 
   @override
   bool get isLoading;
@@ -170,6 +195,8 @@ abstract class _ChatModel implements ChatModel {
   bool get hasError;
   @override
   List<MessageModel> get messages;
+  @override
+  String? get userId;
   @override
   @JsonKey(ignore: true)
   _$$_ChatModelCopyWith<_$_ChatModel> get copyWith =>

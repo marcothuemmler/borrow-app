@@ -5,26 +5,36 @@ class RouteDefinition {
   final String path;
 }
 
-const homeRoute = RouteDefinition(name: "home", path: "/");
-const loginRoute = RouteDefinition(name: "login", path: "login");
-const signupRoute = RouteDefinition(name: "signup", path: "signup");
-const welcomeRoute = RouteDefinition(name: "welcome", path: "welcome");
-const groupSelectionRoute =
+const RouteDefinition homeRoute = RouteDefinition(name: "home", path: "/");
+const RouteDefinition loginRoute =
+    RouteDefinition(name: "login", path: "login");
+const RouteDefinition signupRoute =
+    RouteDefinition(name: "signup", path: "signup");
+const RouteDefinition welcomeRoute =
+    RouteDefinition(name: "welcome", path: "welcome");
+const RouteDefinition groupSelectionRoute =
     RouteDefinition(name: "group-selection", path: "groups");
-const groupRoute = RouteDefinition(name: "group", path: ":groupId");
-const itemDetailRoute = RouteDefinition(name: "item", path: "item/:itemId");
-const profileRoute = RouteDefinition(name: "profile", path: "profileSettings");
-const groupSettingsRoute =
+const RouteDefinition groupRoute =
+    RouteDefinition(name: "group", path: ":groupId");
+const RouteDefinition itemDetailRoute =
+    RouteDefinition(name: "item", path: "item/:itemId");
+const RouteDefinition profileRoute =
+    RouteDefinition(name: "profile", path: "profileSettings");
+const RouteDefinition groupSettingsRoute =
     RouteDefinition(name: "groupSettings", path: "groupSettings");
-const categorySettingsRoute =
+const RouteDefinition categorySettingsRoute =
     RouteDefinition(name: "categorySettings", path: "categorySettings");
-const chatRoute = RouteDefinition(name: "chat", path: "chat/:userId");
-const profileItemListRoute = RouteDefinition(
+const RouteDefinition chatRoute =
+    RouteDefinition(name: "chat", path: "chat/:userId");
+const RouteDefinition profileItemListRoute = RouteDefinition(
   name: "profileItemList",
   path: "profileItemList",
 );
-const itemEditorRoute =
+const RouteDefinition itemEditorRoute =
     RouteDefinition(name: "itemEditor", path: ":groupId/itemEditor/:itemId");
-const newItemRoute =
+const RouteDefinition newItemRoute =
     RouteDefinition(name: "newItemRoute", path: ":groupId/newItemRoute");
-const chatListRoute = RouteDefinition(name: "chatList", path: "chats");
+const RouteDefinition chatListRoute =
+    RouteDefinition(name: "chatList", path: "chats");
+const RouteDefinition invitationsRoute =
+    RouteDefinition(name: "invitations", path: "invitations");

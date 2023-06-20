@@ -1,6 +1,6 @@
-import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class NewCategoryDialog extends StatelessWidget {
   NewCategoryDialog({
@@ -12,11 +12,11 @@ class NewCategoryDialog extends StatelessWidget {
   });
 
   final String? Function(String?)? nameValidator;
-  final Function(String) setName;
-  final Function(String) setDescription;
+  final void Function(String) setName;
+  final void Function(String) setDescription;
   final void Function() createCategoryCallback;
 
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class NewCategoryDialog extends StatelessWidget {
         FocusTraversalGroup(
           policy: _ReversedTraversalPolicy(),
           child: Row(
-            children: [
+            children: <Widget>[
               TextButton(
                 child: Text(AppLocalizations.of(context).cancel),
                 onPressed: () => Navigator.of(context).pop(false),

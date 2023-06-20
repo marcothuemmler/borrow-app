@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class TextFieldWidget extends StatelessWidget {
   final String text;
@@ -27,7 +27,7 @@ class TextFieldWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         const SizedBox(height: 16),
         Text(text),
         const SizedBox(height: 10),

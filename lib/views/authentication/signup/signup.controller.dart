@@ -1,6 +1,6 @@
-import 'package:borrow_app/views/authentication/auth.model.dart';
-import 'package:borrow_app/views/authentication/auth.service.dart';
-import 'package:borrow_app/views/authentication/signup/signup.view.dart';
+import "package:borrow_app/views/authentication/auth.model.dart";
+import "package:borrow_app/views/authentication/auth.service.dart";
+import "package:borrow_app/views/authentication/signup/signup.view.dart";
 
 class SignupControllerImplementation extends SignupController {
   final AuthService _signupService;

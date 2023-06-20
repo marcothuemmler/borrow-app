@@ -1,12 +1,12 @@
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/group_selection/group_selection.model.dart';
-import 'package:borrow_app/views/group_selection/group_selection.view.dart';
-import 'package:borrow_app/widgets/chips/invitation_chip.widget.dart';
-import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/group_selection/group_selection.model.dart";
+import "package:borrow_app/views/group_selection/group_selection.view.dart";
+import "package:borrow_app/widgets/chips/invitation_chip.widget.dart";
+import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 
 class InviteMembersDialog extends ConsumerWidget {
   final String groupId;
@@ -65,7 +65,7 @@ class InviteMembersDialog extends ConsumerWidget {
                   text: AppLocalizations.of(context).enterEmail,
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  validator: (value) =>
+                  validator: (String? value) =>
                       controller.validateAndAddEmailToInvitations(
                     email: value,
                     context: context,

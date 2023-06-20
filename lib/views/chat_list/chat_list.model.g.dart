@@ -41,6 +41,7 @@ _$_ChatRoomUserModel _$$_ChatRoomUserModelFromJson(Map<String, dynamic> json) =>
     _$_ChatRoomUserModel(
       id: json['id'] as String,
       username: json['username'] as String,
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$$_ChatRoomUserModelToJson(
@@ -48,4 +49,5 @@ Map<String, dynamic> _$$_ChatRoomUserModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'username': instance.username,
+      'imageUrl': instance.imageUrl,
     };

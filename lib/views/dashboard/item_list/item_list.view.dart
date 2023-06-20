@@ -1,24 +1,26 @@
-import 'package:borrow_app/common/mixins/category_dialog.mixin.dart';
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
-import 'package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart';
-import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
-import 'package:borrow_app/widgets/cards/item_card.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
+import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart";
+import "package:borrow_app/widgets/buttons/dotted_border_button.widget.dart";
+import "package:borrow_app/widgets/cards/item_card.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class ItemListView extends ConsumerWidget with CategoryDialogMixin {
-  final String groupId;
+  final String _groupId;
 
-  const ItemListView({super.key, required this.groupId});
+  const ItemListView({super.key, required String groupId}) : _groupId = groupId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.read(
-      providers.itemListControllerProvider(groupId).notifier,
+    final ItemListController controller = ref.read(
+      providers.itemListControllerProvider(_groupId).notifier,
     );
-    final model = ref.watch(providers.itemListControllerProvider(groupId));
+    final ItemListModel model = ref.watch(
+      providers.itemListControllerProvider(_groupId),
+    );
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -28,15 +30,15 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           if (model.items.isNotEmpty)
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 20),
                 itemCount: model.items.length,
                 shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final item = model.items.elementAt(index);
+                itemBuilder: (BuildContext context, int index) {
+                  final ItemListItemModel item = model.items.elementAt(index);
                   return ItemCard(
                     item: item,
                     onTap: () => controller.navigateToItem(itemId: item.id),
@@ -49,7 +51,7 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   Center(
                     child: Text(
                       AppLocalizations.of(context).emptyGroupMessage,
@@ -65,7 +67,7 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
                     icon: const Icon(Icons.add),
                     onTap: () => _onNewCategory(
                       ref.read(
-                        providers.categoriesListProvider(groupId).notifier,
+                        providers.categoriesListProvider(_groupId).notifier,
                       ),
                       context,
                     ),

@@ -1,9 +1,10 @@
-import 'package:borrow_app/services/routing/routes.dart';
-import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
-import 'package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart';
-import 'package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.service.dart';
-import 'package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.view.dart';
-import 'package:go_router/go_router.dart';
+import "package:borrow_app/services/routing/routes.dart";
+import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
+import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.service.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.view.dart";
+import "package:go_router/go_router.dart";
 
 class ProfileItemListControllerImplementation
     extends ProfileItemListController {
@@ -25,9 +26,9 @@ class ProfileItemListControllerImplementation
                 isLoading: false,
                 hasError: false,
                 categories: null,
-                items: [],
-                filteredItems: [],
-                groupId: '',
+                items: <ItemListItemModel>[],
+                filteredItems: <ItemListItemModel>[],
+                groupId: "",
                 selectedCategory: null,
               ),
         ) {
@@ -41,10 +42,12 @@ class ProfileItemListControllerImplementation
   Future<void> getGroupItemsAndCategories({required String id}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final items = await _profileItemListService.getItemsFromOwner(
+      final List<ItemListItemModel> items =
+          await _profileItemListService.getItemsFromOwner(
         groupId: id,
       );
-      final categories = await _profileItemListService.getCategories(
+      final CategorySettingsCategoryListModel categories =
+          await _profileItemListService.getCategories(
         groupId: _groupId,
       );
       state = state.copyWith(
@@ -62,19 +65,21 @@ class ProfileItemListControllerImplementation
   void navigateToItem({required String itemId}) {
     _router.pushNamed(
       itemEditorRoute.name,
-      pathParameters: {"itemId": itemId, "groupId": _groupId},
+      pathParameters: <String, String>{"itemId": itemId, "groupId": _groupId},
     );
   }
 
   @override
   void selectCategory(CategorySettingsCategoryModel? category) {
-    final selectedCategory = category?.id is! String ? null : category;
+    final CategorySettingsCategoryModel? selectedCategory =
+        category?.id is! String ? null : category;
     state = state.copyWith(selectedCategory: selectedCategory);
     filterItemsByCategory(category: selectedCategory);
   }
 
   void filterItemsByCategory({CategorySettingsCategoryModel? category}) {
-    final filteredItems = state.items.where((item) {
+    final List<ItemListItemModel> filteredItems =
+        state.items.where((ItemListItemModel item) {
       return category is! CategorySettingsCategoryModel ||
           item.category?.id == category.id;
     }).toList();

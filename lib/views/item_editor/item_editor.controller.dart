@@ -1,7 +1,7 @@
-import 'package:borrow_app/views/item_editor/item_editor.model.dart';
-import 'package:borrow_app/views/item_editor/item_editor.service.dart';
-import 'package:borrow_app/views/item_editor/item_editor.view.dart';
-import 'package:go_router/go_router.dart';
+import "package:borrow_app/views/item_editor/item_editor.model.dart";
+import "package:borrow_app/views/item_editor/item_editor.service.dart";
+import "package:borrow_app/views/item_editor/item_editor.view.dart";
+import "package:go_router/go_router.dart";
 
 class ItemEditorControllerImplementation extends ItemEditorController {
   String? _itemId;
@@ -21,9 +21,9 @@ class ItemEditorControllerImplementation extends ItemEditorController {
               const ItemEditorModel(
                 isLoading: false,
                 hasError: false,
-                categories: [],
+                categories: <ItemEditorCategoryModel>[],
                 item: ItemEditorItemModel(
-                  name: '',
+                  name: "",
                   category: null,
                 ),
               ),
@@ -41,9 +41,8 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   Future<void> getItemDetails() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await _itemEditorService.getItemEditorDetails(
-        itemId: _itemId!,
-      );
+      final ItemEditorItemModel response =
+          await _itemEditorService.getItemEditorDetails(itemId: _itemId!);
       state = state.copyWith(item: response, isLoading: false);
     } catch (error) {
       state = state.copyWith(isLoading: false, hasError: true);
@@ -57,7 +56,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
         await _itemEditorService.patchItem(itemId: _itemId!, item: state.item);
         _init();
       } else {
-        final res = await _itemEditorService.postItem(
+        final String res = await _itemEditorService.postItem(
           item: state.item,
           groupId: _groupId,
         );
@@ -83,7 +82,8 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   }
 
   void _getCategories() async {
-    final categories = await _itemEditorService.getCategoriesForItemEditor(
+    final List<ItemEditorCategoryModel> categories =
+        await _itemEditorService.getCategoriesForItemEditor(
       groupId: _groupId,
     );
     state = state.copyWith(categories: categories);

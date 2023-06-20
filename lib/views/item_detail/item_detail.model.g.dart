@@ -56,6 +56,7 @@ _$_ItemDetailUserModel _$$_ItemDetailUserModelFromJson(
     _$_ItemDetailUserModel(
       id: json['id'] as String,
       username: json['username'] as String,
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$$_ItemDetailUserModelToJson(
@@ -63,4 +64,5 @@ Map<String, dynamic> _$$_ItemDetailUserModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'username': instance.username,
+      'imageUrl': instance.imageUrl,
     };

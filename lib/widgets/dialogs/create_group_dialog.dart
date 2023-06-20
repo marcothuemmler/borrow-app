@@ -1,9 +1,9 @@
-import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
-import 'package:borrow_app/widgets/various_components/image_upload.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
+import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
+import "package:borrow_app/widgets/various_components/image_upload.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:go_router/go_router.dart";
+import "package:image_picker/image_picker.dart";
 
 class CreateGroupDialog extends StatelessWidget {
   CreateGroupDialog({
@@ -44,7 +44,10 @@ class CreateGroupDialog extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(30),
-                child: ImageUpload(onImageChanged: onImageChanged),
+                child: ImageUpload(
+                  onImageChanged: onImageChanged,
+                  text: AppLocalizations.of(context).setGroupImage,
+                ),
               ),
               Flexible(
                 child: Column(

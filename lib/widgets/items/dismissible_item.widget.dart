@@ -1,9 +1,9 @@
-import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
-import 'package:borrow_app/widgets/items/settings_item.widget.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
+import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
+import "package:borrow_app/widgets/items/settings_item.widget.dart";
+import "package:flutter/cupertino.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:go_router/go_router.dart";
 
 class DismissibleItem extends StatefulWidget {
   const DismissibleItem({
@@ -33,21 +33,18 @@ class _DismissibleItemState extends State<DismissibleItem> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const [
-            Icon(
-              Icons.delete,
-              color: CupertinoColors.systemGrey6,
-            ),
+          children: const <Icon>[
+            Icon(Icons.delete, color: CupertinoColors.systemGrey6),
           ],
         ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           Container(height: 0.5, color: Colors.black.withOpacity(0.1)),
           Flexible(
             child: Row(
-              children: [
+              children: <Widget>[
                 Flexible(
                   child: SettingsItem(
                     text: widget._item.name,
@@ -74,7 +71,7 @@ class _DismissibleItemState extends State<DismissibleItem> {
   Future<bool?> _confirmDismiss(DismissDirection ignored) async {
     return await showDialog(
       context: context,
-      builder: (context) {
+      builder: (BuildContext context) {
         return AlertDialog(
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
@@ -82,7 +79,7 @@ class _DismissibleItemState extends State<DismissibleItem> {
             ),
           ),
           title: Text(AppLocalizations.of(context).deleteCategory),
-          actions: [
+          actions: <TextButton>[
             TextButton(
               onPressed: context.pop,
               child: Text(AppLocalizations.of(context).cancel),

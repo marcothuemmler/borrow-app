@@ -1,15 +1,16 @@
-import 'package:borrow_app/common/mixins/category_dialog.mixin.dart';
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/services/routing/routes.dart';
-import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
-import 'package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart';
-import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
-import 'package:borrow_app/widgets/cards/item_card.widget.dart';
-import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/services/routing/routes.dart";
+import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
+import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
+import "package:borrow_app/widgets/buttons/dotted_border_button.widget.dart";
+import "package:borrow_app/widgets/cards/item_card.widget.dart";
+import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 
 class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   final String groupId;
@@ -18,10 +19,10 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.read(
+    final ProfileItemListController controller = ref.read(
       providers.profileItemListControllerProvider(groupId).notifier,
     );
-    final model =
+    final ProfileItemListModel model =
         ref.watch(providers.profileItemListControllerProvider(groupId));
     if (model.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -30,28 +31,30 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
       return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
 
-    final filteredItems = model.filteredItems;
+    final List<ItemListItemModel> filteredItems = model.filteredItems;
 
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           if (filteredItems.isNotEmpty)
             Expanded(
               child: Column(
-                children: [
+                children: <Widget>[
                   getDropDownMenu(controller, model, context),
                   Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.only(top: 20),
                       itemCount: model.filteredItems.length,
                       shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        final item = model.filteredItems.elementAt(index);
+                      itemBuilder: (BuildContext context, int index) {
+                        final ItemListItemModel item =
+                            model.filteredItems.elementAt(index);
                         return ItemCard(
                           item: item,
-                          onTap: () =>
-                              controller.navigateToItem(itemId: item.id),
+                          onTap: () => controller.navigateToItem(
+                            itemId: item.id,
+                          ),
                         );
                       },
                     ),
@@ -60,7 +63,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                     child: ElevatedButton(
                       onPressed: () => context.pushNamed(
                         newItemRoute.name,
-                        pathParameters: {"groupId": groupId},
+                        pathParameters: <String, String>{"groupId": groupId},
                       ),
                       child: Text(AppLocalizations.of(context).addNewItem),
                     ),
@@ -71,7 +74,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
           else
             Expanded(
               child: Column(
-                children: [
+                children: <Widget>[
                   getDropDownMenu(controller, model, context),
                   Center(
                     child: Text(
@@ -89,7 +92,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                     onTap: () {
                       context.pushNamed(
                         newItemRoute.name,
-                        pathParameters: {"groupId": groupId},
+                        pathParameters: <String, String>{"groupId": groupId},
                       );
                     },
                     width: 200,
@@ -109,7 +112,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   ) {
     return DropdownWidget<CategorySettingsCategoryModel>(
       hint: Text(AppLocalizations.of(context).category),
-      items: [
+      items: <CategorySettingsCategoryModel>[
         ...?model.categories?.categories,
         CategorySettingsCategoryModel(
           name: AppLocalizations.of(context).allCategories,
@@ -117,10 +120,12 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
       ],
       onChanged: controller.selectCategory,
       value: model.selectedCategory,
-      mapFunction: (category) => DropdownMenuItem(
-        value: category,
-        child: Text(category.name),
-      ),
+      mapFunction: (CategorySettingsCategoryModel category) {
+        return DropdownMenuItem<CategorySettingsCategoryModel>(
+          value: category,
+          child: Text(category.name),
+        );
+      },
     );
   }
 }
