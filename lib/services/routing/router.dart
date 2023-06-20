@@ -206,12 +206,15 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             pageBuilder: (context, state) {
               final String? itemId = state.pathParameters['itemId'];
               final String? groupId = state.pathParameters['groupId'];
-              if(groupId == null) {
+              if (groupId is! String) {
                 return _errorPage(state: state, error: "No groupId provided");
               }
               return CustomTransitionPage(
                 barrierColor: Colors.black26,
-                child: ItemEditorView(itemId: itemId, groupId: groupId,),
+                child: ItemEditorView(
+                  itemId: itemId,
+                  groupId: groupId,
+                ),
                 transitionsBuilder: (
                   BuildContext context,
                   Animation<double> animation,
@@ -232,18 +235,21 @@ final routerProviderDef = Provider<GoRouter>((ref) {
             path: newItemRoute.path,
             pageBuilder: (context, state) {
               final String? groupId = state.pathParameters['groupId'];
-              if(groupId == null) {
+              if (groupId is! String) {
                 return _errorPage(state: state, error: "No groupId provided");
               }
               return CustomTransitionPage(
                 barrierColor: Colors.black26,
-                child: ItemEditorView(itemId: null, groupId: groupId,),
+                child: ItemEditorView(
+                  itemId: null,
+                  groupId: groupId,
+                ),
                 transitionsBuilder: (
-                    BuildContext context,
-                    Animation<double> animation,
-                    Animation<double> secondaryAnimation,
-                    Widget child,
-                    ) {
+                  BuildContext context,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  Widget child,
+                ) {
                   return ScaleTransition(
                     scale: animation,
                     child: child,

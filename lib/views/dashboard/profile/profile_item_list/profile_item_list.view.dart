@@ -7,6 +7,7 @@ import 'package:borrow_app/widgets/buttons/dotted_border_button.widget.dart';
 import 'package:borrow_app/widgets/cards/item_card.widget.dart';
 import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,7 +27,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
       return const Center(child: CircularProgressIndicator());
     }
     if (model.hasError) {
-      return const Center(child: Text("something went wrong"));
+      return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
 
     final filteredItems = model.filteredItems;
@@ -39,7 +40,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
             Expanded(
               child: Column(
                 children: [
-                  getDropDownMenu(controller, model),
+                  getDropDownMenu(controller, model, context),
                   Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.only(top: 20),
@@ -49,18 +50,19 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                         final item = model.filteredItems.elementAt(index);
                         return ItemCard(
                           item: item,
-                          onTap: () => controller.navigateToItem(itemId: item.id),
+                          onTap: () =>
+                              controller.navigateToItem(itemId: item.id),
                         );
                       },
                     ),
                   ),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () => context.goNamed(
+                      onPressed: () => context.pushNamed(
                         newItemRoute.name,
                         pathParameters: {"groupId": groupId},
                       ),
-                      child: const Text("Neuer Gegenstand"),
+                      child: Text(AppLocalizations.of(context).addNewItem),
                     ),
                   )
                 ],
@@ -70,11 +72,11 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
             Expanded(
               child: Column(
                 children: [
-                  getDropDownMenu(controller, model),
-                  const Center(
+                  getDropDownMenu(controller, model, context),
+                  Center(
                     child: Text(
-                      "It's empty in here",
-                      style: TextStyle(
+                      AppLocalizations.of(context).emptyGroupMessage,
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 24,
                       ),
@@ -82,10 +84,10 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                   ),
                   const SizedBox(height: 25),
                   DottedBorderButton(
-                    title: "Add a new item",
+                    title: AppLocalizations.of(context).addNewItem,
                     icon: const Icon(Icons.add),
                     onTap: () {
-                      context.goNamed(
+                      context.pushNamed(
                         newItemRoute.name,
                         pathParameters: {"groupId": groupId},
                       );
@@ -103,12 +105,15 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   Widget getDropDownMenu(
     ProfileItemListController controller,
     ProfileItemListModel model,
+    BuildContext context,
   ) {
     return DropdownWidget<CategorySettingsCategoryModel>(
-      hint: const Text("Category"),
+      hint: Text(AppLocalizations.of(context).category),
       items: [
         ...?model.categories?.categories,
-        CategorySettingsCategoryModel(name: "All"),
+        CategorySettingsCategoryModel(
+          name: AppLocalizations.of(context).allCategories,
+        ),
       ],
       onChanged: controller.selectCategory,
       value: model.selectedCategory,

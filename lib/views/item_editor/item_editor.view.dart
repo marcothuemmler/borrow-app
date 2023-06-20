@@ -1,13 +1,12 @@
+import 'package:borrow_app/common/enums/form_validation_type.enum.dart';
 import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/common/providers.dart';
 import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 import 'package:borrow_app/widgets/dropdowns/dropdown.widget.dart';
 import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../common/enums/form_validation_type.enum.dart';
 
 class ItemEditorView extends ConsumerWidget {
   final String? _itemId;
@@ -40,7 +39,9 @@ class ItemEditorView extends ConsumerWidget {
     if (model.hasError) {
       return Scaffold(
         appBar: AppBar(),
-        body: const Center(child: Text("Something went wrong")),
+        body: Center(
+          child: Text(AppLocalizations.of(context).unspecifiedError),
+        ),
       );
     }
     final item = model.item;
@@ -107,7 +108,9 @@ class ItemEditorView extends ConsumerWidget {
                               const SizedBox(height: 30),
                               Center(
                                 child: DropdownWidget<ItemEditorCategoryModel>(
-                                  hint: const Text("Category"),
+                                  hint: Text(
+                                    AppLocalizations.of(context).category,
+                                  ),
                                   items: model.categories,
                                   onChanged: controller.selectCategory,
                                   value: model.item.category,
@@ -119,19 +122,20 @@ class ItemEditorView extends ConsumerWidget {
                               ),
                               const SizedBox(height: 30),
                               TextFieldWidget(
-                                text: "Name",
+                                text: AppLocalizations.of(context).name,
                                 validator: (value) =>
                                     controller.validateFormField(
-                                      fieldType: FormValidationType.itemName,
-                                      context: context,
-                                      value: value,),
+                                  fieldType: FormValidationType.itemName,
+                                  context: context,
+                                  value: value,
+                                ),
                                 onChanged: controller.setName,
                                 autocorrect: false,
                                 initialValue: model.item.name,
                               ),
                               const SizedBox(height: 30),
                               TextFieldWidget(
-                                text: "Beschreibung",
+                                text: AppLocalizations.of(context).description,
                                 validator: null,
                                 onChanged: controller.setDescription,
                                 autocorrect: false,
@@ -140,12 +144,14 @@ class ItemEditorView extends ConsumerWidget {
                               const SizedBox(height: 30),
                               Center(
                                 child: ElevatedButton(
-                                  onPressed:() => {
+                                  onPressed: () {
                                     if (_formKey.currentState!.validate()) {
-                                      controller.save(),
+                                      controller.save();
                                     }
                                   },
-                                  child: const Text("Speichern"),
+                                  child: Text(
+                                    AppLocalizations.of(context).save,
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 20),
@@ -165,7 +171,8 @@ class ItemEditorView extends ConsumerWidget {
   }
 }
 
-abstract class ItemEditorController extends StateNotifier<ItemEditorModel> with FormValidator {
+abstract class ItemEditorController extends StateNotifier<ItemEditorModel>
+    with FormValidator {
   ItemEditorController(super.model);
 
   void setName(String value);

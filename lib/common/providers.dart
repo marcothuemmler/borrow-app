@@ -173,10 +173,10 @@ class Providers {
     ),
   );
 
-  final AutoDisposeStateNotifierProviderFamily<ItemEditorController, ItemEditorModel,
-      ItemEditorParameters> itemEditorProvider =
-  AutoDisposeStateNotifierProvider.family<ItemEditorController, ItemEditorModel,
-          ItemEditorParameters>(
+  final AutoDisposeStateNotifierProviderFamily<ItemEditorController,
+          ItemEditorModel, ItemEditorParameters> itemEditorProvider =
+      AutoDisposeStateNotifierProvider.family<ItemEditorController,
+          ItemEditorModel, ItemEditorParameters>(
     (ref, itemEditorParameters) => ItemEditorControllerImplementation(
       itemEditorParameters: itemEditorParameters,
       itemEditorService: ref.read(providers.backendServiceProvider),

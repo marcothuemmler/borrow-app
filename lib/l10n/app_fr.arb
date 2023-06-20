@@ -10,6 +10,7 @@
   "enterValidPassword": "Le mot de passe doit comporter au moins 8 caractères et contenir un chiffre, une majuscule et une minuscule.",
   "enterValidGroupName": "Le nom de groupe doit contenir au moins 3 caractères",
   "enterValidCategoryName": "Le nom de la categorie doit contenir au moins 3 caractères",
+  "enterValidItemName": "Le nom du objet doit contenir au moins 3 caractères",
   "submit": "Soumettre",
   "welcome": "Bienvenue!",
   "goToLogin": "Aller à la connexion",
@@ -50,5 +51,6 @@
   "filterByCategory": "Filtrer par catégorie:",
   "filterByDate": "Filtrer par date:",
   "messages": "Messages",
-  "preferences": "Réglages"
+  "preferences": "Réglages",
+  "save": "Sauver"
 }

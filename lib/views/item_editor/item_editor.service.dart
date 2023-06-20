@@ -1,7 +1,5 @@
 import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 
-import '../item_detail/item_detail.model.dart';
-
 abstract class ItemEditorService {
   Future<ItemEditorItemModel> getItemEditorDetails({required String itemId});
   Future<void> patchItem({
@@ -9,7 +7,8 @@ abstract class ItemEditorService {
     required ItemEditorItemModel item,
   });
   Future<String> postItem({
-    required ItemEditorItemModel item, required String groupId,
+    required ItemEditorItemModel item,
+    required String groupId,
   });
 
   Future<List<ItemEditorCategoryModel>> getCategoriesForItemEditor({

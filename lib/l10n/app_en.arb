@@ -51,5 +51,6 @@
   "filterByCategory": "Filter by category:",
   "filterByDate": "Filter by date:",
   "messages": "Messages",
-  "preferences": "Preferences"
+  "preferences": "Preferences",
+  "save": "Save"
 }

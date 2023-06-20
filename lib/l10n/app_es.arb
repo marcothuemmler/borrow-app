@@ -10,6 +10,7 @@
   "enterValidPassword": "La contraseña debe tener al menos 8 caracteres y contener un número, una mayúscula y una minúscula.",
   "enterValidGroupName": "El nombre de grupo debe contener al menos 3 caracteres",
   "enterValidCategoryName": "El nombre de categoría debe contener al menos 3 caracteres",
+  "enterValidItemName": "El nombre del objeto debe contener al menos 3 caracteres",
   "submit": "Enviar",
   "welcome": "¡Bienvenido!",
   "goToLogin": "Ir al inicio de sesión",
@@ -50,5 +51,6 @@
   "filterByCategory": "Filtrar por categoria:",
   "filterByDate": "Filtrar por fecha:",
   "messages": "Ajustes",
-  "preferences": "Einstellungen"
+  "preferences": "Einstellungen",
+  "save": "Guardar"
 }

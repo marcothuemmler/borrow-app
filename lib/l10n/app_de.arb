@@ -51,5 +51,6 @@
   "filterByCategory": "Nach Kategorie filtern:",
   "filterByDate": "Nach Datum filtern:",
   "messages": "Nachrichten",
-  "preferences": "Einstellungen"
+  "preferences": "Einstellungen",
+  "save": "Speichern"
 }

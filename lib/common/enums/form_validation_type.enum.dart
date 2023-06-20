@@ -1,1 +1,8 @@
-enum FormValidationType { email, username, password, groupName, categoryName, itemName }
+enum FormValidationType {
+  email,
+  username,
+  password,
+  groupName,
+  categoryName,
+  itemName,
+}

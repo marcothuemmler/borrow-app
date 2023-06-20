@@ -1,6 +1,3 @@
-import 'dart:js';
-
-import 'package:borrow_app/common/mixins/form_validator.mixin.dart';
 import 'package:borrow_app/views/item_editor/item_editor.model.dart';
 import 'package:borrow_app/views/item_editor/item_editor.service.dart';
 import 'package:borrow_app/views/item_editor/item_editor.view.dart';
@@ -55,17 +52,18 @@ class ItemEditorControllerImplementation extends ItemEditorController {
 
   @override
   void save() async {
-    if(state.item.category != null) {
+    if (state.item.category is String) {
       if (_itemId is String) {
         await _itemEditorService.patchItem(itemId: _itemId!, item: state.item);
         _init();
       } else {
         final res = await _itemEditorService.postItem(
-          item: state.item, groupId: _groupId,);
+          item: state.item,
+          groupId: _groupId,
+        );
         _itemId = res;
         _init();
       }
-
     }
   }
 
@@ -74,12 +72,10 @@ class ItemEditorControllerImplementation extends ItemEditorController {
     state = state.copyWith.item(description: value);
   }
 
-
   @override
   void setName(String value) {
     state = state.copyWith.item(name: value);
   }
-
 
   @override
   void selectCategory(ItemEditorCategoryModel? category) {
