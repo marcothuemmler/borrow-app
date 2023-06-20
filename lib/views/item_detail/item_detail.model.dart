@@ -46,6 +46,7 @@ class ItemDetailUserModel with _$ItemDetailUserModel {
   factory ItemDetailUserModel({
     required String id,
     required String username,
+    String? imageUrl,
   }) = _ItemDetailUserModel;
 
   factory ItemDetailUserModel.fromJson(Map<String, dynamic> json) =>

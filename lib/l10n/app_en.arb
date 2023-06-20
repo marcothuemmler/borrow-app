@@ -36,7 +36,7 @@
   "categories": "Categories",
   "allCategories": "All",
   "browse": "Browse",
-  "profile": "Profile",
+  "groupSettings": "Group settings",
   "contactOwner": "Contact owner",
   "noDescription": "No description provided",
   "available": "Available",
@@ -50,5 +50,13 @@
   "filterByCategory": "Filter by category:",
   "filterByDate": "Filter by date:",
   "messages": "Messages",
-  "preferences": "Preferences"
+  "preferences": "Preferences",
+  "emptyChatListMessage": "Your messages will appear here",
+  "setProfileImage": "Set profile image",
+  "applyChanges": "Apply changes",
+  "changePassword": "Change password",
+  "deleteAccount": "Delete account",
+  "comingSoon": "Coming soon!",
+  "insertPassword": "Insert Password",
+  "accountDeletionMessage": "You will lose all your objects and groups."
 }

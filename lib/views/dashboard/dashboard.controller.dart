@@ -24,7 +24,7 @@ class DashboardControllerImplementation extends DashboardController {
     if (index == state.currentIndex) {
       return;
     }
-    final newRoute = index == 0 ? groupRoute.name : profileRoute.name;
+    final newRoute = index == 0 ? groupRoute.name : groupSettingsRoute.name;
     state = state.copyWith(currentIndex: index);
     if (pushNewRoute) {
       _router.pushNamed(newRoute, pathParameters: {"groupId": _groupId});
@@ -33,7 +33,7 @@ class DashboardControllerImplementation extends DashboardController {
 
   @override
   void goBack() {
-    if (_router.location.contains(profileRoute.path)) {
+    if (_router.location.contains(groupSettingsRoute.path)) {
       _setCurrentIndex(index: 0, pushNewRoute: false);
     }
     _router.pop();

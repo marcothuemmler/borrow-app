@@ -12,9 +12,10 @@ class ChatView extends ConsumerWidget {
 
   ChatView({
     super.key,
-    required MessageItemModel item,
+    required String itemId,
+    required String ownerId,
     required String otherUserId,
-  })  : _item = item,
+  })  : _item = MessageItemModel(id: itemId, ownerId: ownerId),
         _otherUserId = otherUserId;
 
   @override

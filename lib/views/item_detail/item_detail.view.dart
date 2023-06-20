@@ -86,12 +86,15 @@ class ItemDetailView extends ConsumerWidget {
                           Row(
                             children: [
                               const SizedBox(width: 5),
-                              const CircleAvatar(
+                              CircleAvatar(
+                                foregroundImage: item.owner.imageUrl is String
+                                    ? NetworkImage(item.owner.imageUrl!)
+                                    : null,
                                 radius: 14,
                                 backgroundColor:
-                                    Color.fromARGB(255, 220, 220, 220),
+                                    const Color.fromARGB(255, 220, 220, 220),
                                 foregroundColor: Colors.grey,
-                                child: Icon(Icons.person, size: 18),
+                                child: const Icon(Icons.person, size: 18),
                               ),
                               const SizedBox(width: 10),
                               Text(

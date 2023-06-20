@@ -1,6 +1,5 @@
 import 'package:borrow_app/services/routing/routes.dart';
 import 'package:borrow_app/services/storage/secure_storage.service.dart';
-import 'package:borrow_app/views/chat/chat.model.dart';
 import 'package:borrow_app/views/chat_list/chat_list.model.dart';
 import 'package:borrow_app/views/chat_list/chat_list.service.dart';
 import 'package:borrow_app/views/chat_list/chat_list.view.dart';
@@ -49,7 +48,7 @@ class ChatListControllerImplementation extends ChatListController {
     final String otherUserId = ownerId == userId ? ids.last : ownerId;
     _router.pushNamed(
       chatRoute.name,
-      extra: MessageItemModel(id: itemId, ownerId: ownerId),
+      queryParameters: {"itemId": itemId, "ownerId": ownerId},
       pathParameters: {"userId": otherUserId},
     );
   }

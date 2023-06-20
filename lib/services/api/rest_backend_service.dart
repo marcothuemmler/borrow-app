@@ -6,6 +6,7 @@ import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
 import 'package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart';
 import 'package:borrow_app/views/group_selection/group_selection.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
+import 'package:borrow_app/views/profile_settings/profile_settings.model.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -57,9 +58,10 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     try {
       final userId = await _storageService.read(key: "user-id");
       final response = await _client.get(
-        "/users/$userId",
+        "/users/with-groups/$userId",
         queryParameters: {
-          "join": ['groups']
+          "join": ['groups'],
+          "fields": "username"
         },
       );
       return GroupSelectionUserModel.fromJson(response.data);
@@ -224,6 +226,98 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       );
     } catch (error) {
       throw Exception("Could not load user chatrooms: $error");
+    }
+  }
+
+  @override
+  Future<ProfileSettingsUserModel> loadProfileData() async {
+    try {
+      final userId = await _storageService.read(key: "user-id");
+      final response = await _client.get("/users/$userId");
+      return ProfileSettingsUserModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception(("Could not load profile data: $error"));
+    }
+  }
+
+  @override
+  Future<ProfileSettingsUserModel> patchUser({
+    required ProfileSettingsUserModel user,
+  }) async {
+    try {
+      final String? userId = await _storageService.read(key: "user-id");
+      final UpdateUserDto payload = UpdateUserDto(
+        username: user.username,
+        email: user.email,
+      );
+      final response = await _client.patch("/users/$userId", data: payload);
+      return ProfileSettingsUserModel.fromJson(response.data);
+    } catch (error) {
+      throw Exception("Could not patch user: $error");
+    }
+  }
+
+  @override
+  Future<void> putProfileImage({required XFile profileImage}) async {
+    try {
+      final bytes = await profileImage.readAsBytes();
+      final type = profileImage.name.split(".").last;
+      final userId = await _storageService.read(key: "user-id");
+      final formData = FormData.fromMap({
+        "file": MultipartFile.fromBytes(
+          bytes,
+          filename: profileImage.name,
+          contentType: MediaType("image", type),
+        ),
+        "type": "image/$type",
+      });
+      await _client.put(
+        "/users/cover/$userId",
+        data: formData,
+        options: Options(contentType: "multipart/form-data"),
+      );
+    } catch (error) {
+      throw Exception("Failed to upload project image: $error");
+    }
+  }
+
+  @override
+  Future<XFile> getProfileImage({required String imageUrl}) async {
+    try {
+      final response = await _client.get(
+        imageUrl,
+        options: Options(responseType: ResponseType.bytes),
+      );
+      final contentType = response.headers["content-type"]?.first;
+      final extension = contentType?.split("/").last;
+      return XFile.fromData(
+        response.data,
+        name: "cover.$extension",
+        mimeType: contentType,
+      );
+    } catch (error) {
+      throw Exception("Could not load profile image: $error");
+    }
+  }
+
+  @override
+  Future<void> deleteProfileImage() async {
+    try {
+      final userId = await _storageService.read(key: "user-id");
+      await _client.delete("/users/cover/$userId");
+    } catch (error) {
+      throw Exception("Could not delete profile image: $error");
+    }
+  }
+
+  @override
+  Future<void> deleteAccount({required String password}) async {
+    try {
+      final String? userId = await _storageService.read(key: "user-id");
+      await _client.delete("/users/$userId", data: {"password": password});
+      await _storageService.deleteAll();
+    } catch (error) {
+      throw Exception("Could not delete account");
     }
   }
 }

@@ -1,5 +1,4 @@
 import 'package:borrow_app/services/routing/routes.dart';
-import 'package:borrow_app/views/chat/chat.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.model.dart';
 import 'package:borrow_app/views/item_detail/item_detail.service.dart';
 import 'package:borrow_app/views/item_detail/item_detail.view.dart';
@@ -53,7 +52,7 @@ class ItemDetailControllerImplementation extends ItemDetailController {
     _router.pushNamed(
       chatRoute.name,
       pathParameters: {'userId': ownerId},
-      extra: MessageItemModel(ownerId: ownerId, id: item.id),
+      queryParameters: {"ownerId": ownerId, "itemId": item.id},
     );
   }
 

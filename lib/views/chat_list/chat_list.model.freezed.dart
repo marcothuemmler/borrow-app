@@ -536,6 +536,7 @@ ChatRoomUserModel _$ChatRoomUserModelFromJson(Map<String, dynamic> json) {
 mixin _$ChatRoomUserModel {
   String get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -549,7 +550,7 @@ abstract class $ChatRoomUserModelCopyWith<$Res> {
           ChatRoomUserModel value, $Res Function(ChatRoomUserModel) then) =
       _$ChatRoomUserModelCopyWithImpl<$Res, ChatRoomUserModel>;
   @useResult
-  $Res call({String id, String username});
+  $Res call({String id, String username, String? imageUrl});
 }
 
 /// @nodoc
@@ -567,6 +568,7 @@ class _$ChatRoomUserModelCopyWithImpl<$Res, $Val extends ChatRoomUserModel>
   $Res call({
     Object? id = null,
     Object? username = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -577,6 +579,10 @@ class _$ChatRoomUserModelCopyWithImpl<$Res, $Val extends ChatRoomUserModel>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -589,7 +595,7 @@ abstract class _$$_ChatRoomUserModelCopyWith<$Res>
       __$$_ChatRoomUserModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String username});
+  $Res call({String id, String username, String? imageUrl});
 }
 
 /// @nodoc
@@ -605,6 +611,7 @@ class __$$_ChatRoomUserModelCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? username = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$_ChatRoomUserModel(
       id: null == id
@@ -615,6 +622,10 @@ class __$$_ChatRoomUserModelCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -622,7 +633,8 @@ class __$$_ChatRoomUserModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ChatRoomUserModel implements _ChatRoomUserModel {
-  const _$_ChatRoomUserModel({required this.id, required this.username});
+  const _$_ChatRoomUserModel(
+      {required this.id, required this.username, this.imageUrl});
 
   factory _$_ChatRoomUserModel.fromJson(Map<String, dynamic> json) =>
       _$$_ChatRoomUserModelFromJson(json);
@@ -631,10 +643,12 @@ class _$_ChatRoomUserModel implements _ChatRoomUserModel {
   final String id;
   @override
   final String username;
+  @override
+  final String? imageUrl;
 
   @override
   String toString() {
-    return 'ChatRoomUserModel(id: $id, username: $username)';
+    return 'ChatRoomUserModel(id: $id, username: $username, imageUrl: $imageUrl)';
   }
 
   @override
@@ -644,12 +658,14 @@ class _$_ChatRoomUserModel implements _ChatRoomUserModel {
             other is _$_ChatRoomUserModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
-                other.username == username));
+                other.username == username) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, username);
+  int get hashCode => Object.hash(runtimeType, id, username, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -669,7 +685,8 @@ class _$_ChatRoomUserModel implements _ChatRoomUserModel {
 abstract class _ChatRoomUserModel implements ChatRoomUserModel {
   const factory _ChatRoomUserModel(
       {required final String id,
-      required final String username}) = _$_ChatRoomUserModel;
+      required final String username,
+      final String? imageUrl}) = _$_ChatRoomUserModel;
 
   factory _ChatRoomUserModel.fromJson(Map<String, dynamic> json) =
       _$_ChatRoomUserModel.fromJson;
@@ -678,6 +695,8 @@ abstract class _ChatRoomUserModel implements ChatRoomUserModel {
   String get id;
   @override
   String get username;
+  @override
+  String? get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$_ChatRoomUserModelCopyWith<_$_ChatRoomUserModel> get copyWith =>

@@ -21,25 +21,41 @@ class ChatListView extends ConsumerWidget {
                   child: Text(AppLocalizations.of(context).unspecifiedError),
                 )
               : SafeArea(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: model.chats.length,
-                          itemBuilder: (context, index) {
-                            final chatRoom = model.chats.elementAt(index);
-                            return ChatListItem(
-                              message: chatRoom.messages.first,
-                              onTap: () => controller.navigateToChat(
-                                chatRoomId: chatRoom.id,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      if (model.chats.isNotEmpty)
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: model.chats.length,
+                              itemBuilder: (context, index) {
+                                final chatRoom = model.chats.elementAt(index);
+                                return ChatListItem(
+                                  message: chatRoom.messages.first,
+                                  onTap: () => controller.navigateToChat(
+                                    chatRoomId: chatRoom.id,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        )
+                      else
+                        Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.1,
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context).emptyChatListMessage,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        )
+                    ],
                   ),
                 ),
     );

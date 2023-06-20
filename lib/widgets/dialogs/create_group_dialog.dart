@@ -44,7 +44,10 @@ class CreateGroupDialog extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(30),
-                child: ImageUpload(onImageChanged: onImageChanged),
+                child: ImageUpload(
+                  onImageChanged: onImageChanged,
+                  text: AppLocalizations.of(context).setGroupImage,
+                ),
               ),
               Flexible(
                 child: Column(

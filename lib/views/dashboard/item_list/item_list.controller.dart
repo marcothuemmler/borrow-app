@@ -31,17 +31,17 @@ class ItemListControllerImplementation extends ItemListController {
   }
 
   void _init() {
-    getGroupItemsAndCategories(id: _groupId);
+    _getGroupItemsAndCategories(id: _groupId);
   }
 
-  Future<void> getGroupItemsAndCategories({required String id}) async {
+  Future<void> _getGroupItemsAndCategories({required String id}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
       final response = await _itemListService.getGroupItemsAndCategories(
         groupId: id,
       );
       state = state.copyWith(group: response, isLoading: false);
-      filterItemsByCategory(category: state.selectedCategory);
+      _filterItemsByCategory(category: state.selectedCategory);
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
     }
@@ -59,10 +59,10 @@ class ItemListControllerImplementation extends ItemListController {
   void selectCategory(ItemListCategoryModel? category) {
     final selectedCategory = category?.id is! String ? null : category;
     state = state.copyWith(selectedCategory: selectedCategory);
-    filterItemsByCategory(category: selectedCategory);
+    _filterItemsByCategory(category: selectedCategory);
   }
 
-  void filterItemsByCategory({ItemListCategoryModel? category}) {
+  void _filterItemsByCategory({ItemListCategoryModel? category}) {
     if (state.group is ItemListGroupModel) {
       final filteredItems = state.group!.items.where((item) {
         return category is! ItemListCategoryModel ||
