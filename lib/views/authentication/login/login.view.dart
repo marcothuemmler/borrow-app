@@ -37,61 +37,63 @@ class _LoginViewState extends ConsumerState<LoginView> {
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50),
-        child: Form(
-          key: _formKey,
-          child: AutofillGroup(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextFieldWidget(
-                  text: AppLocalizations.of(context).email,
-                  keyboardType: TextInputType.emailAddress,
-                  autofillHints: const <String>[AutofillHints.email],
-                  autocorrect: false,
-                  validator: (String? value) => controller.validateFormField(
-                    fieldType: FormValidationType.email,
-                    context: context,
-                    value: value,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: AutofillGroup(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  TextFieldWidget(
+                    text: AppLocalizations.of(context).email,
+                    keyboardType: TextInputType.emailAddress,
+                    autofillHints: const <String>[AutofillHints.email],
+                    autocorrect: false,
+                    validator: (String? value) => controller.validateFormField(
+                      fieldType: FormValidationType.email,
+                      context: context,
+                      value: value,
+                    ),
+                    onChanged: controller.setEmail,
                   ),
-                  onChanged: controller.setEmail,
-                ),
-                PasswordFieldWidget(
-                  text: AppLocalizations.of(context).password,
-                  validator: (String? value) => controller.validateFormField(
-                    fieldType: FormValidationType.password,
-                    context: context,
-                    value: value,
+                  PasswordFieldWidget(
+                    text: AppLocalizations.of(context).password,
+                    validator: (String? value) => controller.validateFormField(
+                      fieldType: FormValidationType.password,
+                      context: context,
+                      value: value,
+                    ),
+                    onTapIcon: _toggleObscurePassword,
+                    onChanged: controller.setPassword,
+                    obscureText: _obscurePassword,
                   ),
-                  onTapIcon: _toggleObscurePassword,
-                  onChanged: controller.setPassword,
-                  obscureText: _obscurePassword,
-                ),
-                if (model.hasError)
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Text(
-                        AppLocalizations.of(context).loginFailed,
-                        style: const TextStyle(color: Colors.red),
+                  if (model.hasError)
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(
+                          AppLocalizations.of(context).loginFailed,
+                          style: const TextStyle(color: Colors.red),
+                        ),
                       ),
                     ),
+                  const SizedBox(height: 50),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      ElevatedButton(
+                        child: Text(AppLocalizations.of(context).submit),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            controller.login();
+                          }
+                        },
+                      )
+                    ],
                   ),
-                const SizedBox(height: 50),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    ElevatedButton(
-                      child: Text(AppLocalizations.of(context).submit),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          controller.login();
-                        }
-                      },
-                    )
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

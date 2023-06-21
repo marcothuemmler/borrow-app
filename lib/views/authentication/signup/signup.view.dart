@@ -39,76 +39,78 @@ class _SignupViewState extends ConsumerState<SignupView> {
       appBar: AppBar(title: Text(AppLocalizations.of(context).register)),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50),
-        child: Form(
-          key: _formKey,
-          child: AutofillGroup(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TextFieldWidget(
-                  keyboardType: TextInputType.emailAddress,
-                  autofillHints: const <String>[AutofillHints.email],
-                  text: AppLocalizations.of(context).email,
-                  autocorrect: false,
-                  validator: (String? value) => controller.validateFormField(
-                    fieldType: FormValidationType.email,
-                    context: context,
-                    value: value,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: AutofillGroup(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextFieldWidget(
+                    keyboardType: TextInputType.emailAddress,
+                    autofillHints: const <String>[AutofillHints.email],
+                    text: AppLocalizations.of(context).email,
+                    autocorrect: false,
+                    validator: (String? value) => controller.validateFormField(
+                      fieldType: FormValidationType.email,
+                      context: context,
+                      value: value,
+                    ),
+                    onChanged: controller.setEmail,
                   ),
-                  onChanged: controller.setEmail,
-                ),
-                TextFieldWidget(
-                  keyboardType: TextInputType.name,
-                  autofillHints: const <String>[AutofillHints.username],
-                  text: AppLocalizations.of(context).username,
-                  autocorrect: false,
-                  validator: (String? value) => controller.validateFormField(
-                    fieldType: FormValidationType.username,
-                    context: context,
-                    value: value,
+                  TextFieldWidget(
+                    keyboardType: TextInputType.name,
+                    autofillHints: const <String>[AutofillHints.username],
+                    text: AppLocalizations.of(context).username,
+                    autocorrect: false,
+                    validator: (String? value) => controller.validateFormField(
+                      fieldType: FormValidationType.username,
+                      context: context,
+                      value: value,
+                    ),
+                    onChanged: controller.setUsername,
                   ),
-                  onChanged: controller.setUsername,
-                ),
-                PasswordFieldWidget(
-                  text: AppLocalizations.of(context).password,
-                  validator: (String? value) => controller.validateFormField(
-                    fieldType: FormValidationType.password,
-                    context: context,
-                    value: value,
+                  PasswordFieldWidget(
+                    text: AppLocalizations.of(context).password,
+                    validator: (String? value) => controller.validateFormField(
+                      fieldType: FormValidationType.password,
+                      context: context,
+                      value: value,
+                    ),
+                    onTapIcon: _toggleObscurePassword,
+                    onChanged: controller.setPassword,
+                    obscureText: _obscurePassword,
                   ),
-                  onTapIcon: _toggleObscurePassword,
-                  onChanged: controller.setPassword,
-                  obscureText: _obscurePassword,
-                ),
-                if (model.hasError)
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: Text(
-                        AppLocalizations.of(context).loginFailed,
-                        style: const TextStyle(color: Colors.red),
+                  if (model.hasError)
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(
+                          AppLocalizations.of(context).loginFailed,
+                          style: const TextStyle(color: Colors.red),
+                        ),
                       ),
                     ),
+                  const SizedBox(height: 50),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      ElevatedButton(
+                        child: Text(AppLocalizations.of(context).submit),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            controller.signup().then((bool success) {
+                              if (success) {
+                                context.goNamed(welcomeRoute.name);
+                              }
+                            });
+                          }
+                        },
+                      )
+                    ],
                   ),
-                const SizedBox(height: 50),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    ElevatedButton(
-                      child: Text(AppLocalizations.of(context).submit),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          controller.signup().then((bool success) {
-                            if (success) {
-                              context.goNamed(welcomeRoute.name);
-                            }
-                          });
-                        }
-                      },
-                    )
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
