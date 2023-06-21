@@ -78,9 +78,9 @@ class Providers {
     (ProviderRef<WebSocketService> ref) => WebSocketService(),
   );
 
-  final StateNotifierProvider<SignupController, SignupModel>
+  final AutoDisposeStateNotifierProvider<SignupController, SignupModel>
       signupControllerProvider =
-      StateNotifierProvider<SignupController, SignupModel>(
+      AutoDisposeStateNotifierProvider<SignupController, SignupModel>(
     (StateNotifierProviderRef<SignupController, SignupModel> ref) =>
         SignupControllerImplementation(
       authService: ref.read(providers.backendServiceProvider),
