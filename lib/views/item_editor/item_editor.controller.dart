@@ -26,6 +26,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
                   name: "",
                   category: null,
                 ),
+                categoryNotSelected: false,
               ),
         ) {
     _init();
@@ -51,7 +52,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
 
   @override
   void save() async {
-    if (state.item.category is String) {
+    if (state.item.category is ItemEditorCategoryModel) {
       if (_itemId is String) {
         await _itemEditorService.patchItem(itemId: _itemId!, item: state.item);
         _init();
@@ -63,6 +64,8 @@ class ItemEditorControllerImplementation extends ItemEditorController {
         _itemId = res;
         _init();
       }
+    } else {
+      state = state.copyWith(categoryNotSelected: true);
     }
   }
 
@@ -78,7 +81,9 @@ class ItemEditorControllerImplementation extends ItemEditorController {
 
   @override
   void selectCategory(ItemEditorCategoryModel? category) {
-    state = state.copyWith.item(category: category);
+    state = state.copyWith(
+      item: state.item.copyWith(
+          category: category,), categoryNotSelected: false,);
   }
 
   void _getCategories() async {

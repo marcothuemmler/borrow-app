@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ItemEditorModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
+  bool get categoryNotSelected => throw _privateConstructorUsedError;
   ItemEditorItemModel get item => throw _privateConstructorUsedError;
   List<ItemEditorCategoryModel> get categories =>
       throw _privateConstructorUsedError;
@@ -36,6 +37,7 @@ abstract class $ItemEditorModelCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool hasError,
+      bool categoryNotSelected,
       ItemEditorItemModel item,
       List<ItemEditorCategoryModel> categories});
 
@@ -57,6 +59,7 @@ class _$ItemEditorModelCopyWithImpl<$Res, $Val extends ItemEditorModel>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
+    Object? categoryNotSelected = null,
     Object? item = null,
     Object? categories = null,
   }) {
@@ -68,6 +71,10 @@ class _$ItemEditorModelCopyWithImpl<$Res, $Val extends ItemEditorModel>
       hasError: null == hasError
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      categoryNotSelected: null == categoryNotSelected
+          ? _value.categoryNotSelected
+          : categoryNotSelected // ignore: cast_nullable_to_non_nullable
               as bool,
       item: null == item
           ? _value.item
@@ -100,6 +107,7 @@ abstract class _$$_ItemEditorModelCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool hasError,
+      bool categoryNotSelected,
       ItemEditorItemModel item,
       List<ItemEditorCategoryModel> categories});
 
@@ -120,6 +128,7 @@ class __$$_ItemEditorModelCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
+    Object? categoryNotSelected = null,
     Object? item = null,
     Object? categories = null,
   }) {
@@ -131,6 +140,10 @@ class __$$_ItemEditorModelCopyWithImpl<$Res>
       hasError: null == hasError
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      categoryNotSelected: null == categoryNotSelected
+          ? _value.categoryNotSelected
+          : categoryNotSelected // ignore: cast_nullable_to_non_nullable
               as bool,
       item: null == item
           ? _value.item
@@ -150,6 +163,7 @@ class _$_ItemEditorModel implements _ItemEditorModel {
   const _$_ItemEditorModel(
       {required this.isLoading,
       required this.hasError,
+      required this.categoryNotSelected,
       required this.item,
       required final List<ItemEditorCategoryModel> categories})
       : _categories = categories;
@@ -158,6 +172,8 @@ class _$_ItemEditorModel implements _ItemEditorModel {
   final bool isLoading;
   @override
   final bool hasError;
+  @override
+  final bool categoryNotSelected;
   @override
   final ItemEditorItemModel item;
   final List<ItemEditorCategoryModel> _categories;
@@ -170,7 +186,7 @@ class _$_ItemEditorModel implements _ItemEditorModel {
 
   @override
   String toString() {
-    return 'ItemEditorModel(isLoading: $isLoading, hasError: $hasError, item: $item, categories: $categories)';
+    return 'ItemEditorModel(isLoading: $isLoading, hasError: $hasError, categoryNotSelected: $categoryNotSelected, item: $item, categories: $categories)';
   }
 
   @override
@@ -182,13 +198,20 @@ class _$_ItemEditorModel implements _ItemEditorModel {
                 other.isLoading == isLoading) &&
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
+            (identical(other.categoryNotSelected, categoryNotSelected) ||
+                other.categoryNotSelected == categoryNotSelected) &&
             (identical(other.item, item) || other.item == item) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, hasError, item,
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      hasError,
+      categoryNotSelected,
+      item,
       const DeepCollectionEquality().hash(_categories));
 
   @JsonKey(ignore: true)
@@ -202,6 +225,7 @@ abstract class _ItemEditorModel implements ItemEditorModel {
   const factory _ItemEditorModel(
           {required final bool isLoading,
           required final bool hasError,
+          required final bool categoryNotSelected,
           required final ItemEditorItemModel item,
           required final List<ItemEditorCategoryModel> categories}) =
       _$_ItemEditorModel;
@@ -210,6 +234,8 @@ abstract class _ItemEditorModel implements ItemEditorModel {
   bool get isLoading;
   @override
   bool get hasError;
+  @override
+  bool get categoryNotSelected;
   @override
   ItemEditorItemModel get item;
   @override

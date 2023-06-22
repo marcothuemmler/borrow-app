@@ -8,6 +8,7 @@ class ItemEditorModel with _$ItemEditorModel {
   const factory ItemEditorModel({
     required bool isLoading,
     required bool hasError,
+    required bool categoryNotSelected,
     required ItemEditorItemModel item,
     required List<ItemEditorCategoryModel> categories,
   }) = _ItemEditorModel;

@@ -109,20 +109,28 @@ class ItemEditorView extends ConsumerWidget {
                             children: <Widget>[
                               const SizedBox(height: 30),
                               Center(
-                                child: DropdownWidget<ItemEditorCategoryModel>(
-                                  hint: Text(
-                                    AppLocalizations.of(context).category,
-                                  ),
-                                  items: model.categories,
-                                  onChanged: controller.selectCategory,
-                                  value: model.item.category,
-                                  mapFunction: (
-                                    ItemEditorCategoryModel category,
-                                  ) =>
-                                      DropdownMenuItem<ItemEditorCategoryModel>(
-                                    value: category,
-                                    child: Text(category.name),
-                                  ),
+                                child: Column(
+                                  children: [
+                                    DropdownWidget<ItemEditorCategoryModel>(
+                                      hint: Text(
+                                        AppLocalizations.of(context).category,
+                                      ),
+                                      items: model.categories,
+                                      onChanged: controller.selectCategory,
+                                      value: model.item.category,
+                                      mapFunction: (
+                                          ItemEditorCategoryModel category,
+                                          ) =>
+                                          DropdownMenuItem<ItemEditorCategoryModel>(
+                                            value: category,
+                                            child: Text(category.name),
+                                          ),
+                                    ),
+                                    Text(
+                                      model.categoryNotSelected ? "Bitte Kategorie auswählen" : "",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(height: 30),

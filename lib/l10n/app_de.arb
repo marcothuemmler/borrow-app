@@ -64,5 +64,6 @@
   "joinGroup": "Gruppe beitreten",
   "deleteInvitation": "Einladung löschen",
   "emptyInvitationsMessage": "Ihre Gruppeneinladungen werden hier erscheinen",
-  "save": "Speichern"
+  "save": "Speichern",
+  "categoryNotSelected": "Bitte Kategorie auswählen"
 }
