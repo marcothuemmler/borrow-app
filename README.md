@@ -8,6 +8,18 @@ Sciences.
 Borrow app, as the name suggests, is an app that allows people to borrow things. People can create groups within their
 community to be able to see what things other people are offering, and offer their own.
 
+### Backend API
+
+* **The API repository can be found [here](https://github.com/marcothuemmler/borrow-api)**
+
+* This project communicates with an API implemented with [NestJS](https://nestjs.com). You can configure the API_URL in
+  the projects .env file located in the assets directory.
+
+    * ***<span style="color:#DC5000">Note: Due to limitations of the hosting service,
+      the WebSockets needed for the in-app chat unfortunately don't currently work on the public instance. Read more
+      <a href="https://vercel.com/guides/do-vercel-serverless-functions-support-websocket-connections">here</a>
+      </span>***
+
 ### Installation
 
 * Install Flutter following the steps in [this resource](https://docs.flutter.dev/get-started/install)
@@ -24,18 +36,10 @@ flutter pub get
 flutter gen-l10n
 ```
 
-* This project communicates with a [NestJS API](https://nestjs.com). You can configure the API_URL in the projects .env
-  file located in the assets directory. A working instance of the API can be found
-  at https://borrow-api-marcothuemmler.vercel.app/ </br>
-
-    * <span style="color:#DC5000; font-weight:bold;font-style:italic">Note: Due to limitations of the hosting service,
-      the WebSockets needed for the in-app chat unfortunately don't currently work on the public instance. Read more
-      <a href="https://vercel.com/guides/do-vercel-serverless-functions-support-websocket-connections">here</a>
-      </span>
-
-    * **The API repository can be found [here](https://github.com/marcothuemmler/borrow-api)**
-
-* Create a .env file in the projects assets directory. See .env.template for assistance
+* Create a .env file in the projects assets directory. See .env.template for assistance.<br>
+  There is a public instance of th API at https://borrow-api-marcothuemmler.vercel.app/ <br>
+  For testing purposes, you can set this URL as your API_URL in your .env file. *Note that WebSockets are currently not
+  supported by the hosting provider. Therefore, chat will unfortunately not work on the public instance.*
 
 ### Usage
 
@@ -71,7 +75,8 @@ from MVC is that it adds a service layer. This leads to higher decoupling of the
 
 * **GoRouter**: GoRouter is a declarative routing package for Flutter that uses the Router API to provide a
   convenient, url-based API for navigating between different screens. It is used in this project for its straightforward
-  declarative routing.
+  declarative routing, its support for nested routing and
+  [ShellRoutes](https://pub.dev/documentation/go_router/latest/go_router/ShellRoute-class.html).
 
 * **Dio**: Dio is a powerful HTTP client for Dart/Flutter, which supports global configuration, interceptors, FormData,
   request cancellation, file uploading/downloading, timeout, and custom adapters etc. It is used in the
