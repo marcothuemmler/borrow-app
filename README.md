@@ -2,23 +2,29 @@
 
 ### Introduction
 
-"borrow.app", an application developed for the mobile applications lecture at Constance University Of Applied
-Sciences.
+"borrow.app", an application developed for the Mobile Applications lecture at Constance University Of Applied Sciences.
 
 Borrow app, as the name suggests, is an app that allows people to borrow things. People can create groups within their
 community to be able to see what things other people are offering, and offer their own.
 
 ### Backend API
 
-* **The API repository can be found [here](https://github.com/marcothuemmler/borrow-api)**
+**The API repository can be found [here](https://github.com/marcothuemmler/borrow-api)**
 
-* This project communicates with an API implemented with [NestJS](https://nestjs.com). You can configure the API_URL in
+* This project communicates with an API implemented in [NestJS](https://nestjs.com). You can configure the API_URL in
   the projects .env file located in the assets directory.
 
     * ***<span style="color:#DC5000">Note: Due to limitations of the hosting service,
       the WebSockets needed for the in-app chat unfortunately don't currently work on the public instance. Read more
       <a href="https://vercel.com/guides/do-vercel-serverless-functions-support-websocket-connections">here</a>
       </span>***
+
+* The backend connects to a Postgres database using TypeORM for entity mapping.
+* An instance of Min.IO S3 compatible object storage is used for group covers, profile pictures and item pictures.
+* In dev environment the API is accessible through OpenAPI
+  using [@nestjs/swagger](https://docs.nestjs.com/openapi/introduction).
+* Authentication is implemented
+  using [passport-jwt](https://docs.nestjs.com/recipes/passport#implementing-passport-jwt).
 
 ### Installation
 
@@ -37,7 +43,7 @@ flutter gen-l10n
 ```
 
 * Create a .env file in the projects assets directory. See .env.template for assistance.<br>
-  There is a public instance of th API at https://borrow-api-marcothuemmler.vercel.app/ <br>
+  There is a public instance of th API at https://borrow-api-marcothuemmler.vercel.app <br>
   For testing purposes, you can set this URL as your API_URL in your .env file. *Note that WebSockets are currently not
   supported by the hosting provider. Therefore, chat will unfortunately not work on the public instance.*
 
@@ -81,7 +87,8 @@ from MVC is that it adds a service layer. This leads to higher decoupling of the
 * **Dio**: Dio is a powerful HTTP client for Dart/Flutter, which supports global configuration, interceptors, FormData,
   request cancellation, file uploading/downloading, timeout, and custom adapters etc. It is used in the
   RestBackendService of this project for communication with the backend API, and to retrieve objects from
-  the [min.io](https://min.io) instance.
+  the min.io instance. HTTP requests and responses are logged using pretty_dio_logger, which enables
+  easier debugging.
 
 * **Freezed**: Freezed is a code-generation package that helps you to create data classes in Dart. It generates
   boilerplate code from simple blueprint classes. It provides the backbone of the model layer in this project.
@@ -94,8 +101,14 @@ from MVC is that it adds a service layer. This leads to higher decoupling of the
   [Flutter internationalization documentation](https://docs.flutter.dev/accessibility-and-localization/internationalization)
   using the "flutter_localizations" and "intl" packages.
 
-* **socket.io_client**: Socket.io_client is a port of the JavaScript library socket.io-client. It is used in this
-  project to provide real time chat functionality.
+* **socket.io_client**: Socket.io_client is a port of the JavaScript library socket.io-client. It is a WebSocket
+  library that used in this project to provide real time chat functionality.
+
+### Database
+
+UML representation of the data model:
+
+![database](assets/images/borrow-db.png)
 
 ### Contributors
 
