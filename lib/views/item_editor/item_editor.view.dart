@@ -127,7 +127,7 @@ class ItemEditorView extends ConsumerWidget {
                                           ),
                                     ),
                                     Text(
-                                      model.categoryNotSelected ? "Bitte Kategorie auswählen" : "",
+                                      model.categoryNotSelected ? AppLocalizations.of(context).categoryNotSelected : "",
                                       style: TextStyle(color: Colors.red),
                                     ),
                                   ],

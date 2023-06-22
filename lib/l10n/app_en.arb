@@ -64,5 +64,6 @@
   "joinGroup": "Join group",
   "deleteInvitation": "Delete invitation",
   "emptyInvitationsMessage": "Your group invitations will appear here",
-  "save": "Save"
+  "save": "Save",
+  "categoryNotSelected": "Please select category"
 }
