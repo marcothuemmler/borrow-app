@@ -3,7 +3,7 @@
   "register": "Registrieren",
   "email": "Email",
   "username": "Benutzername",
-  "password": "Password",
+  "password": "Passwort",
   "loginFailed": "Beim Einloggen ist etwas schiefgelaufen",
   "enterValidEmail": "Bitte geben Sie eine gültige Email ein",
   "enterValidUsername": "Username muss mindestens 3 Zeichen lang sein",

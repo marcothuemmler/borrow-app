@@ -45,4 +45,13 @@ final ThemeData themeData = ThemeData(
     foregroundColor: Colors.black,
     centerTitle: false,
   ),
+  listTileTheme: const ListTileThemeData(
+    minLeadingWidth: 8,
+    contentPadding: EdgeInsets.symmetric(horizontal: 5),
+  ),
+  popupMenuTheme: const PopupMenuThemeData(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    ),
+  ),
 );

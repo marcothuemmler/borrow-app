@@ -18,16 +18,11 @@ class AppMenu extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: PopupMenuButton<ListTile>(
         padding: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
         icon: const Icon(Icons.menu),
         itemBuilder: (BuildContext context) => <PopupMenuItem<ListTile>>[
           PopupMenuItem<ListTile>(
             onTap: () => context.pushNamed(chatListRoute.name),
             child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-              minLeadingWidth: 8,
               leading: const Icon(Icons.notifications_rounded),
               title: Text(AppLocalizations.of(context).messages),
             ),
@@ -35,8 +30,6 @@ class AppMenu extends ConsumerWidget {
           PopupMenuItem<ListTile>(
             onTap: () => context.pushNamed(invitationsRoute.name),
             child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-              minLeadingWidth: 8,
               leading: const Icon(Icons.group_add_rounded),
               title: Text(AppLocalizations.of(context).invitations),
             ),
@@ -44,8 +37,6 @@ class AppMenu extends ConsumerWidget {
           PopupMenuItem<ListTile>(
             onTap: () => context.pushNamed(profileRoute.name),
             child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-              minLeadingWidth: 8,
               leading: const Icon(Icons.settings),
               title: Text(AppLocalizations.of(context).preferences),
             ),
@@ -60,8 +51,6 @@ class AppMenu extends ConsumerWidget {
           PopupMenuItem<ListTile>(
             onTap: controller.logout,
             child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-              minLeadingWidth: 8,
               leading: const Icon(Icons.logout, color: Colors.red),
               title: Text(AppLocalizations.of(context).logout),
             ),
