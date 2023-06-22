@@ -32,6 +32,7 @@ class ItemEditorParameters with _$ItemEditorParameters {
   const factory ItemEditorParameters({
     required String? itemId,
     required String groupId,
+    required String? preselectedCategory,
   }) = _ItemEditorParameters;
 }
 

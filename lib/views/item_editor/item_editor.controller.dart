@@ -7,6 +7,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   String? _itemId;
   final String _groupId;
   final ItemEditorService _itemEditorService;
+  final String? _preselectedCategory;
 
   ItemEditorControllerImplementation({
     ItemEditorModel? model,
@@ -16,6 +17,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   })  : _itemEditorService = itemEditorService,
         _itemId = itemEditorParameters.itemId,
         _groupId = itemEditorParameters.groupId,
+        _preselectedCategory = itemEditorParameters.preselectedCategory,
         super(
           model ??
               const ItemEditorModel(
@@ -91,6 +93,13 @@ class ItemEditorControllerImplementation extends ItemEditorController {
         await _itemEditorService.getCategoriesForItemEditor(
       groupId: _groupId,
     );
-    state = state.copyWith(categories: categories);
+    //selected category in profileItemlist => preselect this for new category
+    if(_itemId == null && _preselectedCategory != null && _preselectedCategory != "") {
+      final item = state.item.copyWith(
+          category: categories.where((e) => e.id == _preselectedCategory).first);
+      state = state.copyWith(categories: categories, item: item);
+    } else {
+      state = state.copyWith(categories: categories);
+    }
   }
 }

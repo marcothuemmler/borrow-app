@@ -225,6 +225,7 @@ final Provider<GoRouter> routerProviderDef =
                 child: ItemEditorView(
                   itemId: itemId,
                   groupId: groupId,
+                  preselectedCategory: "",
                 ),
                 transitionsBuilder: (
                   BuildContext context,
@@ -246,6 +247,7 @@ final Provider<GoRouter> routerProviderDef =
             path: newItemRoute.path,
             pageBuilder: (BuildContext context, GoRouterState state) {
               final String? groupId = state.pathParameters["groupId"];
+              final String? category = state.queryParameters["preselectedCategory"];
               if (groupId is! String) {
                 return _errorPage(state: state, error: "No groupId provided");
               }
@@ -254,6 +256,7 @@ final Provider<GoRouter> routerProviderDef =
                 child: ItemEditorView(
                   itemId: null,
                   groupId: groupId,
+                  preselectedCategory: category,
                 ),
                 transitionsBuilder: (
                   BuildContext context,

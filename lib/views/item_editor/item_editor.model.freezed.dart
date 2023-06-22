@@ -472,6 +472,7 @@ abstract class _ItemEditorItemModel implements ItemEditorItemModel {
 mixin _$ItemEditorParameters {
   String? get itemId => throw _privateConstructorUsedError;
   String get groupId => throw _privateConstructorUsedError;
+  String? get preselectedCategory => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ItemEditorParametersCopyWith<ItemEditorParameters> get copyWith =>
@@ -484,7 +485,7 @@ abstract class $ItemEditorParametersCopyWith<$Res> {
           $Res Function(ItemEditorParameters) then) =
       _$ItemEditorParametersCopyWithImpl<$Res, ItemEditorParameters>;
   @useResult
-  $Res call({String? itemId, String groupId});
+  $Res call({String? itemId, String groupId, String? preselectedCategory});
 }
 
 /// @nodoc
@@ -503,6 +504,7 @@ class _$ItemEditorParametersCopyWithImpl<$Res,
   $Res call({
     Object? itemId = freezed,
     Object? groupId = null,
+    Object? preselectedCategory = freezed,
   }) {
     return _then(_value.copyWith(
       itemId: freezed == itemId
@@ -513,6 +515,10 @@ class _$ItemEditorParametersCopyWithImpl<$Res,
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
               as String,
+      preselectedCategory: freezed == preselectedCategory
+          ? _value.preselectedCategory
+          : preselectedCategory // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -525,7 +531,7 @@ abstract class _$$_ItemEditorParametersCopyWith<$Res>
       __$$_ItemEditorParametersCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? itemId, String groupId});
+  $Res call({String? itemId, String groupId, String? preselectedCategory});
 }
 
 /// @nodoc
@@ -541,6 +547,7 @@ class __$$_ItemEditorParametersCopyWithImpl<$Res>
   $Res call({
     Object? itemId = freezed,
     Object? groupId = null,
+    Object? preselectedCategory = freezed,
   }) {
     return _then(_$_ItemEditorParameters(
       itemId: freezed == itemId
@@ -551,6 +558,10 @@ class __$$_ItemEditorParametersCopyWithImpl<$Res>
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
               as String,
+      preselectedCategory: freezed == preselectedCategory
+          ? _value.preselectedCategory
+          : preselectedCategory // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -558,16 +569,21 @@ class __$$_ItemEditorParametersCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ItemEditorParameters implements _ItemEditorParameters {
-  const _$_ItemEditorParameters({required this.itemId, required this.groupId});
+  const _$_ItemEditorParameters(
+      {required this.itemId,
+      required this.groupId,
+      required this.preselectedCategory});
 
   @override
   final String? itemId;
   @override
   final String groupId;
+  @override
+  final String? preselectedCategory;
 
   @override
   String toString() {
-    return 'ItemEditorParameters(itemId: $itemId, groupId: $groupId)';
+    return 'ItemEditorParameters(itemId: $itemId, groupId: $groupId, preselectedCategory: $preselectedCategory)';
   }
 
   @override
@@ -576,11 +592,14 @@ class _$_ItemEditorParameters implements _ItemEditorParameters {
         (other.runtimeType == runtimeType &&
             other is _$_ItemEditorParameters &&
             (identical(other.itemId, itemId) || other.itemId == itemId) &&
-            (identical(other.groupId, groupId) || other.groupId == groupId));
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            (identical(other.preselectedCategory, preselectedCategory) ||
+                other.preselectedCategory == preselectedCategory));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, itemId, groupId);
+  int get hashCode =>
+      Object.hash(runtimeType, itemId, groupId, preselectedCategory);
 
   @JsonKey(ignore: true)
   @override
@@ -593,12 +612,15 @@ class _$_ItemEditorParameters implements _ItemEditorParameters {
 abstract class _ItemEditorParameters implements ItemEditorParameters {
   const factory _ItemEditorParameters(
       {required final String? itemId,
-      required final String groupId}) = _$_ItemEditorParameters;
+      required final String groupId,
+      required final String? preselectedCategory}) = _$_ItemEditorParameters;
 
   @override
   String? get itemId;
   @override
   String get groupId;
+  @override
+  String? get preselectedCategory;
   @override
   @JsonKey(ignore: true)
   _$$_ItemEditorParametersCopyWith<_$_ItemEditorParameters> get copyWith =>

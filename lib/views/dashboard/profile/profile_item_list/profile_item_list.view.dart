@@ -88,12 +88,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        onPressed: () => {
-          context.pushNamed(
-            newItemRoute.name,
-            pathParameters: <String, String>{"groupId": groupId},
-          )
-        },
+        onPressed: () => {controller.navigateToNewItem()},
         label: Text(AppLocalizations.of(context).addNewItem),
       ),
     );
@@ -131,4 +126,6 @@ abstract class ProfileItemListController
   void navigateToItem({required String itemId});
 
   void selectCategory(CategorySettingsCategoryModel? category);
+
+  void navigateToNewItem();
 }

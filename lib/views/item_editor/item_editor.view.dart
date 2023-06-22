@@ -11,20 +11,25 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 class ItemEditorView extends ConsumerWidget {
   final String? _itemId;
   final String _groupId;
+  final String? _preselectedCategory;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ItemEditorView({
     super.key,
     required String? itemId,
     required String groupId,
+    required String? preselectedCategory,
   })  : _groupId = groupId,
-        _itemId = itemId;
+        _itemId = itemId,
+        _preselectedCategory = preselectedCategory
+  ;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ItemEditorParameters itemEditorParameters = ItemEditorParameters(
       itemId: _itemId,
       groupId: _groupId,
+      preselectedCategory: _preselectedCategory,
     );
     final ItemEditorController controller = ref.read(
       providers.itemEditorProvider(itemEditorParameters).notifier,

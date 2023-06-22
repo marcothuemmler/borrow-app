@@ -66,6 +66,18 @@ class ProfileItemListControllerImplementation
     _router.pushNamed(
       itemEditorRoute.name,
       pathParameters: <String, String>{"itemId": itemId, "groupId": _groupId},
+      queryParameters: <String, String>{
+        "preselectedCategory": state.selectedCategory == null ? "" : state.selectedCategory!.id!},
+    );
+  }
+
+  @override
+  void navigateToNewItem() {
+    _router.pushNamed(
+      newItemRoute.name,
+      pathParameters: <String, String>{"groupId": _groupId},
+      queryParameters: <String, String>{
+        "preselectedCategory": state.selectedCategory == null ? "" : state.selectedCategory!.id!},
     );
   }
 
