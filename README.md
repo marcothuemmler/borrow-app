@@ -73,6 +73,10 @@ from MVC is that it adds a service layer. This leads to higher decoupling of the
 - **Service**: The service layer provides a way of communicating with external data sources, such as the applications
   backend API.
 
+The following graph is a representation of the MVC+S pattern used in this project:
+
+![mvcs](https://miro.medium.com/v2/resize:fit:1000/1*_12T0F3eT3PWQ6DFm_XGIQ.png)
+
 ### Technologies used
 
 * **flutter_riverpod**: flutter_riverpod is a state management and dependency injection library for Flutter. Its
@@ -104,7 +108,7 @@ from MVC is that it adds a service layer. This leads to higher decoupling of the
 * **socket.io_client**: Socket.io_client is a port of the JavaScript library socket.io-client. It is a WebSocket
   library that used in this project to provide real time chat functionality.
 
-### Database
+### Data model:
 
 UML representation of the data model:
 
