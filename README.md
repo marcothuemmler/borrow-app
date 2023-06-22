@@ -1,4 +1,4 @@
-# Borrow.app - Your private swap meet
+## Borrow.app - Your private swap meet
 
 ### Introduction
 
@@ -28,14 +28,12 @@ flutter gen-l10n
   file located in the assets directory. A working instance of the API can be found
   at https://borrow-api-marcothuemmler.vercel.app/ </br>
 
-  <span style="color:#DC5000; font-weight:bold;font-style:italic">
-  Note: Due to limitations of the hosting service, the WebSockets needed for the in-app chat do unfortunately
-  currently not work
-  on the public instance. Read
-  more <a href="https://vercel.com/guides/do-vercel-serverless-functions-support-websocket-connections">here</a>
-  </span>
+    * <span style="color:#DC5000; font-weight:bold;font-style:italic">Note: Due to limitations of the hosting service,
+      the WebSockets needed for the in-app chat unfortunately don't currently work on the public instance. Read more
+      <a href="https://vercel.com/guides/do-vercel-serverless-functions-support-websocket-connections">here</a>
+      </span>
 
-  **The API repository can be found [here](https://github.com/marcothuemmler/borrow-api)**
+    * **The API repository can be found [here](https://github.com/marcothuemmler/borrow-api)**
 
 * Create a .env file in the projects assets directory. See .env.template for assistance
 
@@ -48,4 +46,46 @@ flutter gen-l10n
 flutter run -d <YOUR_DEVICE_ID>
 ```
 
+### Architecture
+
+This project is based on the MVC+S design pattern, which is itself based on the classic MVC pattern. The main difference
+from MVC is that it adds a service layer. This leads to higher decoupling of the different layers of the application.
+
+- **Model**: Holds the state of the application. The model is used in the view layer to display relevant information to
+  the user, and manipulated by the controller layer.
+
+- **View**: Describes the UI using the model and provides an interface for the user to interact with the controller
+  layer.
+
+- **Controller**: The controller layer holds the various commands which represent the business login of the application.
+  These commands are used to manipulate the state of the application.
+
+- **Service**: The service layer provides a way of communicating with external data sources, such as the applications
+  backend API.
+
 ### Technologies used
+
+* Riverpod
+
+* go_router
+
+* dio
+
+* freezed
+
+* flutter secure storage
+
+* flutter_localizations
+
+* intl
+
+* Socket.IO
+
+### Contributors
+
+* Marco Thümmler
+* Johannes Wirbser
+
+### License
+
+This project is available for use under the [MIT license](LICENSE)
