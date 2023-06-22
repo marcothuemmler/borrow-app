@@ -65,21 +65,32 @@ from MVC is that it adds a service layer. This leads to higher decoupling of the
 
 ### Technologies used
 
-* Riverpod
+* **flutter_riverpod**: flutter_riverpod is a state management and dependency injection library for Flutter. Its
+  creators describe it as a re-implementation of the provider library. flutter_riverpod constitutes the backbone of
+  state management in this project.
 
-* go_router
+* **GoRouter**: GoRouter is a declarative routing package for Flutter that uses the Router API to provide a
+  convenient, url-based API for navigating between different screens. It is used in this project for its straightforward
+  declarative routing.
 
-* dio
+* **Dio**: Dio is a powerful HTTP client for Dart/Flutter, which supports global configuration, interceptors, FormData,
+  request cancellation, file uploading/downloading, timeout, and custom adapters etc. It is used in the
+  RestBackendService of this project for communication with the backend API, and to retrieve objects from
+  the [min.io](https://min.io) instance.
 
-* freezed
+* **Freezed**: Freezed is a code-generation package that helps you to create data classes in Dart. It generates
+  boilerplate code from simple blueprint classes. It provides the backbone of the model layer in this project.
 
-* flutter secure storage
+* **flutter secure storage**: Flutter Secure Storage is a Flutter plugin to store data in secure storage. It is
+  primarily used to store JWT token data for authorization in the backend API.
 
-* flutter_localizations
+* **flutter_localizations & intl**: This project is translated into four different languages, namely English, wich is
+  the base language of the project, German, Spanish and French. The internationalization follows the official
+  [Flutter internationalization documentation](https://docs.flutter.dev/accessibility-and-localization/internationalization)
+  using the "flutter_localizations" and "intl" packages.
 
-* intl
-
-* Socket.IO
+* **socket.io_client**: Socket.io_client is a port of the JavaScript library socket.io-client. It is used in this
+  project to provide real time chat functionality.
 
 ### Contributors
 
