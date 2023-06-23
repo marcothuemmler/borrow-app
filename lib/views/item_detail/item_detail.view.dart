@@ -6,17 +6,17 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class ItemDetailView extends ConsumerWidget {
-  final String itemId;
+  final String _itemId;
 
-  const ItemDetailView({super.key, required this.itemId});
+  const ItemDetailView({super.key, required String itemId}) : _itemId = itemId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ItemDetailController controller = ref.read(
-      providers.itemDetailControllerProvider(itemId).notifier,
+      providers.itemDetailControllerProvider(_itemId).notifier,
     );
     final ItemDetailModel model = ref.watch(
-      providers.itemDetailControllerProvider(itemId),
+      providers.itemDetailControllerProvider(_itemId),
     );
     if (model.isLoading) {
       return Scaffold(
@@ -70,8 +70,13 @@ class ItemDetailView extends ConsumerWidget {
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(7),
                                 ),
-                                child: Image.asset(
-                                  "assets/images/default.jpg",
+                                child: Image(
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  image: item.imageUrl is String
+                                      ? NetworkImage(item.imageUrl!)
+                                      : Image.asset("assets/images/default.jpg")
+                                          .image,
                                   fit: BoxFit.cover,
                                 ),
                               ),

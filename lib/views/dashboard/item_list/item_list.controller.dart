@@ -57,7 +57,7 @@ class ItemListControllerImplementation extends ItemListController {
   }
 
   @override
-  void navigateToItemEditor({required String itemId}) {
+  void navigateToItemEditor() {
     _router.pushNamed(
       newItemRoute.name,
       pathParameters: <String, String>{"groupId": _groupId},

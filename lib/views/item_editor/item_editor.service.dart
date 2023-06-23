@@ -1,4 +1,5 @@
 import "package:borrow_app/views/item_editor/item_editor.model.dart";
+import "package:image_picker/image_picker.dart";
 
 abstract class ItemEditorService {
   Future<ItemEditorItemModel> getItemEditorDetails({required String itemId});
@@ -14,4 +15,6 @@ abstract class ItemEditorService {
   Future<List<ItemEditorCategoryModel>> getCategoriesForItemEditor({
     required String groupId,
   });
+
+  void putItemImage({required String itemId, required XFile image});
 }

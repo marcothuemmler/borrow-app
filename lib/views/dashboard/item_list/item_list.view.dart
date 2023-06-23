@@ -77,7 +77,7 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
                   DottedBorderButton(
                     title: AppLocalizations.of(context).addNewItem,
                     icon: const Icon(Icons.add),
-                    onTap: () => controller.navigateToItemEditor(itemId: ""),
+                    onTap: controller.navigateToItemEditor,
                     width: 220,
                   ),
                 ],
@@ -104,7 +104,7 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
 
   void navigateToItem({required String itemId});
 
-  void navigateToItemEditor({required String itemId});
+  void navigateToItemEditor();
 
   void selectCategory(ItemListCategoryModel? category);
 }

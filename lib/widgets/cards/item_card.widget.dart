@@ -45,16 +45,21 @@ class ItemCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(7),
-                      bottomLeft: Radius.circular(7),
-                    ),
-                    child: Image(
-                      image: _item.imageUrl is String
-                          ? NetworkImage(_item.imageUrl!)
-                          : Image.asset("assets/images/default.jpg").image,
-                      fit: BoxFit.contain,
+                  SizedBox(
+                    width: 90,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(7),
+                        bottomLeft: Radius.circular(7),
+                      ),
+                      child: Image(
+                        width: double.infinity,
+                        height: double.infinity,
+                        image: _item.imageUrl is String
+                            ? NetworkImage(_item.imageUrl!)
+                            : Image.asset("assets/images/default.jpg").image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 20),

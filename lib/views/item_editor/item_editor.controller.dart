@@ -2,9 +2,10 @@ import "package:borrow_app/views/item_editor/item_editor.model.dart";
 import "package:borrow_app/views/item_editor/item_editor.service.dart";
 import "package:borrow_app/views/item_editor/item_editor.view.dart";
 import "package:go_router/go_router.dart";
+import "package:image_picker/image_picker.dart";
 
 class ItemEditorControllerImplementation extends ItemEditorController {
-  String? _itemId;
+  final String? _itemId;
   final String _groupId;
   final ItemEditorService _itemEditorService;
   final String? _preselectedCategory;
@@ -23,6 +24,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
               const ItemEditorModel(
                 isLoading: false,
                 hasError: false,
+                itemImage: null,
                 categories: <ItemEditorCategoryModel>[],
                 item: ItemEditorItemModel(
                   name: "",
@@ -46,6 +48,11 @@ class ItemEditorControllerImplementation extends ItemEditorController {
     try {
       final ItemEditorItemModel response =
           await _itemEditorService.getItemEditorDetails(itemId: _itemId!);
+      // if (response.imageUrl is String) {
+      //   image = await _itemEditorService.getItemImage(
+      //     imageUrl: item.imageUrl!,
+      //   );
+      // }
       state = state.copyWith(item: response, isLoading: false);
     } catch (error) {
       state = state.copyWith(isLoading: false, hasError: true);
@@ -54,15 +61,21 @@ class ItemEditorControllerImplementation extends ItemEditorController {
 
   @override
   void save() async {
+    String? itemId = _itemId;
     if (state.item.category is ItemEditorCategoryModel) {
       if (_itemId is String) {
         await _itemEditorService.patchItem(itemId: _itemId!, item: state.item);
       } else {
-        final String res = await _itemEditorService.postItem(
+        itemId = await _itemEditorService.postItem(
           item: state.item,
           groupId: _groupId,
         );
-        _itemId = res;
+      }
+      if (state.itemImage is XFile && itemId is String) {
+        _itemEditorService.putItemImage(
+          itemId: itemId,
+          image: state.itemImage!,
+        );
       }
       _init();
     } else {
@@ -78,6 +91,10 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   @override
   void setName(String value) {
     state = state.copyWith.item(name: value);
+  }
+
+  void setItemImage(XFile? image) {
+    state = state.copyWith(itemImage: image);
   }
 
   @override

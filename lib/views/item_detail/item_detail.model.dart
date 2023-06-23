@@ -17,6 +17,7 @@ class ItemDetailItemModel with _$ItemDetailItemModel {
   factory ItemDetailItemModel({
     required String id,
     required String name,
+    String? imageUrl,
     String? description,
     @Default(false) bool isMyItem,
     required ItemDetailUserModel owner,

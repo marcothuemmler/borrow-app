@@ -20,6 +20,7 @@ mixin _$ItemEditorModel {
   bool get hasError => throw _privateConstructorUsedError;
   bool get categoryNotSelected => throw _privateConstructorUsedError;
   ItemEditorItemModel get item => throw _privateConstructorUsedError;
+  XFile? get itemImage => throw _privateConstructorUsedError;
   List<ItemEditorCategoryModel> get categories =>
       throw _privateConstructorUsedError;
 
@@ -39,6 +40,7 @@ abstract class $ItemEditorModelCopyWith<$Res> {
       bool hasError,
       bool categoryNotSelected,
       ItemEditorItemModel item,
+      XFile? itemImage,
       List<ItemEditorCategoryModel> categories});
 
   $ItemEditorItemModelCopyWith<$Res> get item;
@@ -61,6 +63,7 @@ class _$ItemEditorModelCopyWithImpl<$Res, $Val extends ItemEditorModel>
     Object? hasError = null,
     Object? categoryNotSelected = null,
     Object? item = null,
+    Object? itemImage = freezed,
     Object? categories = null,
   }) {
     return _then(_value.copyWith(
@@ -80,6 +83,10 @@ class _$ItemEditorModelCopyWithImpl<$Res, $Val extends ItemEditorModel>
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
               as ItemEditorItemModel,
+      itemImage: freezed == itemImage
+          ? _value.itemImage
+          : itemImage // ignore: cast_nullable_to_non_nullable
+              as XFile?,
       categories: null == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -109,6 +116,7 @@ abstract class _$$_ItemEditorModelCopyWith<$Res>
       bool hasError,
       bool categoryNotSelected,
       ItemEditorItemModel item,
+      XFile? itemImage,
       List<ItemEditorCategoryModel> categories});
 
   @override
@@ -130,6 +138,7 @@ class __$$_ItemEditorModelCopyWithImpl<$Res>
     Object? hasError = null,
     Object? categoryNotSelected = null,
     Object? item = null,
+    Object? itemImage = freezed,
     Object? categories = null,
   }) {
     return _then(_$_ItemEditorModel(
@@ -149,6 +158,10 @@ class __$$_ItemEditorModelCopyWithImpl<$Res>
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
               as ItemEditorItemModel,
+      itemImage: freezed == itemImage
+          ? _value.itemImage
+          : itemImage // ignore: cast_nullable_to_non_nullable
+              as XFile?,
       categories: null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -165,6 +178,7 @@ class _$_ItemEditorModel implements _ItemEditorModel {
       required this.hasError,
       required this.categoryNotSelected,
       required this.item,
+      required this.itemImage,
       required final List<ItemEditorCategoryModel> categories})
       : _categories = categories;
 
@@ -176,6 +190,8 @@ class _$_ItemEditorModel implements _ItemEditorModel {
   final bool categoryNotSelected;
   @override
   final ItemEditorItemModel item;
+  @override
+  final XFile? itemImage;
   final List<ItemEditorCategoryModel> _categories;
   @override
   List<ItemEditorCategoryModel> get categories {
@@ -186,7 +202,7 @@ class _$_ItemEditorModel implements _ItemEditorModel {
 
   @override
   String toString() {
-    return 'ItemEditorModel(isLoading: $isLoading, hasError: $hasError, categoryNotSelected: $categoryNotSelected, item: $item, categories: $categories)';
+    return 'ItemEditorModel(isLoading: $isLoading, hasError: $hasError, categoryNotSelected: $categoryNotSelected, item: $item, itemImage: $itemImage, categories: $categories)';
   }
 
   @override
@@ -201,6 +217,8 @@ class _$_ItemEditorModel implements _ItemEditorModel {
             (identical(other.categoryNotSelected, categoryNotSelected) ||
                 other.categoryNotSelected == categoryNotSelected) &&
             (identical(other.item, item) || other.item == item) &&
+            (identical(other.itemImage, itemImage) ||
+                other.itemImage == itemImage) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories));
   }
@@ -212,6 +230,7 @@ class _$_ItemEditorModel implements _ItemEditorModel {
       hasError,
       categoryNotSelected,
       item,
+      itemImage,
       const DeepCollectionEquality().hash(_categories));
 
   @JsonKey(ignore: true)
@@ -227,6 +246,7 @@ abstract class _ItemEditorModel implements ItemEditorModel {
           required final bool hasError,
           required final bool categoryNotSelected,
           required final ItemEditorItemModel item,
+          required final XFile? itemImage,
           required final List<ItemEditorCategoryModel> categories}) =
       _$_ItemEditorModel;
 
@@ -238,6 +258,8 @@ abstract class _ItemEditorModel implements ItemEditorModel {
   bool get categoryNotSelected;
   @override
   ItemEditorItemModel get item;
+  @override
+  XFile? get itemImage;
   @override
   List<ItemEditorCategoryModel> get categories;
   @override

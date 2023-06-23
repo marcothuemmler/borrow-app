@@ -515,4 +515,30 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       data: <String, bool>{"isActive": availability},
     );
   }
+
+  @override
+  Future<void> putItemImage({
+    required String itemId,
+    required XFile image,
+  }) async {
+    try {
+      final Uint8List bytes = await image.readAsBytes();
+      final String type = image.name.split(".").last;
+      final FormData formData = FormData.fromMap(<String, dynamic>{
+        "file": MultipartFile.fromBytes(
+          bytes,
+          filename: image.name,
+          contentType: MediaType("image", type),
+        ),
+        "type": "image/$type",
+      });
+      await _client.put<dynamic>(
+        "/items/cover/$itemId",
+        data: formData,
+        options: Options(contentType: "multipart/form-data"),
+      );
+    } catch (error) {
+      throw Exception("Failed to upload item image: $error");
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import "package:freezed_annotation/freezed_annotation.dart";
+import "package:image_picker/image_picker.dart";
 
 part "item_editor.model.freezed.dart";
 part "item_editor.model.g.dart";
@@ -10,6 +11,7 @@ class ItemEditorModel with _$ItemEditorModel {
     required bool hasError,
     required bool categoryNotSelected,
     required ItemEditorItemModel item,
+    required XFile? itemImage,
     required List<ItemEditorCategoryModel> categories,
   }) = _ItemEditorModel;
 }
