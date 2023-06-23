@@ -133,7 +133,7 @@ class ItemEditorView extends ConsumerWidget {
                                     ),
                                     Text(
                                       model.categoryNotSelected ? AppLocalizations.of(context).categoryNotSelected : "",
-                                      style: TextStyle(color: Colors.red),
+                                      style: const TextStyle(color: Colors.red),
                                     ),
                                   ],
                                 ),

@@ -97,4 +97,9 @@ class ProfileItemListControllerImplementation
     }).toList();
     state = state.copyWith(filteredItems: filteredItems);
   }
+
+  @override
+  Future<void> deleteItem({required String itemId}) async {
+    await _profileItemListService.deleteItem(id: itemId);
+  }
 }

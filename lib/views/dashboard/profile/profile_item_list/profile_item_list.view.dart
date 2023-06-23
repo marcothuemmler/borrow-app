@@ -1,15 +1,14 @@
 import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/providers.dart";
-import "package:borrow_app/services/routing/routes.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
-import "package:borrow_app/widgets/cards/item_card.widget.dart";
+import "package:borrow_app/widgets/cards/item_card_dismissable.widget.dart";
 import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:go_router/go_router.dart";
 
 class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
   final String groupId;
@@ -49,12 +48,11 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index) {
                           final ItemListItemModel item =
-                              model.filteredItems.elementAt(index);
-                          return ItemCard(
+                            model.filteredItems.elementAt(index);
+                          return ItemCardDismissable(
+                            onTap: controller.navigateToItem,
+                            onDismiss: controller.deleteItem,
                             item: item,
-                            onTap: () => controller.navigateToItem(
-                              itemId: item.id,
-                            ),
                           );
                         },
                       ),
@@ -128,4 +126,6 @@ abstract class ProfileItemListController
   void selectCategory(CategorySettingsCategoryModel? category);
 
   void navigateToNewItem();
+
+  void deleteItem({required String itemId});
 }

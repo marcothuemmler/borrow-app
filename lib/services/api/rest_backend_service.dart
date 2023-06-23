@@ -286,6 +286,15 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
+  Future<void> deleteItem({required String id}) async {
+    try {
+      await _client.delete<dynamic>("/items/$id");
+    } catch (error) {
+      throw Exception("Could not delete category: $error");
+    }
+  }
+
+  @override
   Future<List<ChatRoomModel>> loadMyChatRooms() async {
     try {
       final Response<List<dynamic>> response = await _client.get("/chats");

@@ -8,4 +8,5 @@ abstract class ProfileItemListService {
   Future<CategorySettingsCategoryListModel> getCategories({
     required String groupId,
   });
+  Future<void> deleteItem({required String id});
 }
