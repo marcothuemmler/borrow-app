@@ -29,8 +29,6 @@ class TextFieldWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         const SizedBox(height: 16),
-        Text(text),
-        const SizedBox(height: 10),
         Flexible(
           child: TextFormField(
             initialValue: initialValue,
@@ -40,7 +38,10 @@ class TextFieldWidget extends StatelessWidget {
             autofillHints: autofillHints,
             autocorrect: autocorrect,
             validator: validator,
-            decoration: const InputDecoration(border: OutlineInputBorder()),
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              labelText: text,
+            ),
             onChanged: onChanged,
           ),
         ),

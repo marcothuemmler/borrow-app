@@ -22,8 +22,6 @@ class PasswordFieldWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const SizedBox(height: 16),
-        Text(text),
-        const SizedBox(height: 10),
         TextFormField(
           keyboardType: TextInputType.visiblePassword,
           textInputAction: TextInputAction.next,
@@ -33,6 +31,7 @@ class PasswordFieldWidget extends StatelessWidget {
           decoration: InputDecoration(
             errorMaxLines: 3,
             border: const OutlineInputBorder(),
+            labelText: text,
             suffixIcon: GestureDetector(
               onTap: onTapIcon,
               child: Icon(

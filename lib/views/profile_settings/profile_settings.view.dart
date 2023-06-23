@@ -135,64 +135,68 @@ class ProfileSettingsView extends ConsumerWidget {
               ),
             ),
             Flexible(
-              child: Column(
-                mainAxisSize: isPortrait ? MainAxisSize.min : MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  IntrinsicWidth(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        ElevatedButton(
-                          onPressed: model.userDataChanged || model.imageChanged
-                              ? () {
-                                  if (_formKey.currentState!.validate()) {
-                                    controller.patchUser();
-                                  }
-                                }
-                              : null,
-                          child: Text(
-                            AppLocalizations.of(context).applyChanges,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize:
+                      isPortrait ? MainAxisSize.min : MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IntrinsicWidth(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed:
+                                model.userDataChanged || model.imageChanged
+                                    ? () {
+                                        if (_formKey.currentState!.validate()) {
+                                          controller.patchUser();
+                                        }
+                                      }
+                                    : null,
+                            child: Text(
+                              AppLocalizations.of(context).applyChanges,
+                            ),
                           ),
-                        ),
-                        TextButton(
-                          child: Text(
-                            AppLocalizations.of(context).changePassword,
+                          TextButton(
+                            child: Text(
+                              AppLocalizations.of(context).changePassword,
+                            ),
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    AppLocalizations.of(context).comingSoon,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  AppLocalizations.of(context).comingSoon,
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.red,
+                            ),
+                            onPressed: () => showModalBottomSheet<void>(
+                              isScrollControlled: true,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.red,
-                          ),
-                          onPressed: () => showModalBottomSheet<void>(
-                            isScrollControlled: true,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  const DeleteAccountDialog(),
                             ),
-                            context: context,
-                            builder: (BuildContext context) =>
-                                const DeleteAccountDialog(),
+                            child: Text(
+                              AppLocalizations.of(context).deleteAccount,
+                            ),
                           ),
-                          child: Text(
-                            AppLocalizations.of(context).deleteAccount,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

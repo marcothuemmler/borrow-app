@@ -49,13 +49,14 @@ class _ImageUploadState extends State<ImageUpload> {
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
-                if (_image is! Image)
-                  const Image(
-                    image: AssetImage("assets/images/default.jpg"),
+                Image.asset("assets/images/default.jpg", fit: BoxFit.cover),
+                if (_image is Image)
+                  FadeInImage(
+                    fadeInDuration: const Duration(milliseconds: 150),
+                    image: _image!.image,
                     fit: BoxFit.cover,
-                  )
-                else
-                  Image(image: _image!.image, fit: BoxFit.cover),
+                    placeholder: Image.asset("assets/images/default.jpg").image,
+                  ),
                 AnimatedOpacity(
                   opacity: _hovered ? 1 : 0,
                   duration: const Duration(milliseconds: 150),

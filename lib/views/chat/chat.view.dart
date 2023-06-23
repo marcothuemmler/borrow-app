@@ -5,8 +5,7 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class ChatView extends ConsumerWidget {
-  final MessageItemModel _item;
-  final String _otherUserId;
+  final ChatControllerParameters _chatParameters;
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
@@ -15,20 +14,18 @@ class ChatView extends ConsumerWidget {
     required String itemId,
     required String ownerId,
     required String otherUserId,
-  })  : _item = MessageItemModel(id: itemId, ownerId: ownerId),
-        _otherUserId = otherUserId;
+  }) : _chatParameters = ChatControllerParameters(
+          item: MessageItemModel(id: itemId, ownerId: ownerId),
+          otherUserId: otherUserId,
+        );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ChatControllerParameters chatParameters = ChatControllerParameters(
-      item: _item,
-      otherUserId: _otherUserId,
-    );
     final ChatController controller = ref.read(
-      providers.chatControllerProvider(chatParameters).notifier,
+      providers.chatControllerProvider(_chatParameters).notifier,
     );
     final ChatModel model = ref.watch(
-      providers.chatControllerProvider(chatParameters),
+      providers.chatControllerProvider(_chatParameters),
     );
     WidgetsBinding.instance.addPostFrameCallback(_scrollDown);
     return Scaffold(
@@ -45,21 +42,19 @@ class ChatView extends ConsumerWidget {
                 child: Column(
                   children: <Widget>[
                     Expanded(
-                      child: SingleChildScrollView(
-                        controller: _scrollController,
-                        physics: const AlwaysScrollableScrollPhysics(),
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 15,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <ChatBubble>[
-                            ...model.messages.map((MessageModel message) {
-                              return ChatBubble(message: message);
-                            }),
-                          ],
-                        ),
+                        controller: _scrollController,
+                        itemCount: model.messages.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ChatBubble(
+                            message: model.messages.elementAt(index),
+                          );
+                        },
                       ),
                     ),
                     Container(
@@ -91,7 +86,7 @@ class ChatView extends ConsumerWidget {
                               );
                               _textController.clear();
                             },
-                            icon: const Icon(Icons.send_outlined),
+                            icon: const Icon(Icons.send),
                           )
                         ],
                       ),
