@@ -23,12 +23,12 @@ class ItemCard extends StatelessWidget {
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black12,
-            offset: Offset(0, 6),
-            blurRadius: 20,
+            offset: Offset(0, 3),
+            blurRadius: 6,
           ),
         ],
       ),
-      margin: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -41,16 +41,16 @@ class ItemCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
             child: SizedBox(
-              height: 90,
+              height: 85,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(
-                    width: 90,
+                    width: 85,
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(7),
-                        bottomLeft: Radius.circular(7),
+                      borderRadius: const BorderRadius.horizontal(
+                        left: Radius.circular(7),
+                        right: Radius.circular(3.5),
                       ),
                       child: Image(
                         width: double.infinity,
