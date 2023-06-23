@@ -47,6 +47,7 @@
   "items": "Gegenstände",
   "balance": "Balance",
   "deleteCategory": "Kategorie löschen?",
+  "deleteItem": "Objekt löschen?",
   "delete": "Löschen",
   "filterByCategory": "Nach Kategorie filtern:",
   "filterByDate": "Nach Datum filtern:",

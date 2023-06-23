@@ -2,8 +2,8 @@ import "package:borrow_app/views/dashboard/profile/categories_settings/category_
 import "package:borrow_app/widgets/items/settings_item.widget.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
+import "package:borrow_app/common/mixins/delete_confirm_dialog.mixin.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import "package:go_router/go_router.dart";
 
 class DismissibleItem extends StatefulWidget {
   const DismissibleItem({
@@ -20,13 +20,15 @@ class DismissibleItem extends StatefulWidget {
   State<DismissibleItem> createState() => _DismissibleItemState();
 }
 
-class _DismissibleItemState extends State<DismissibleItem> {
+class _DismissibleItemState extends State<DismissibleItem> with DeleteConfirmMixin {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       direction: DismissDirection.endToStart,
       onDismissed: widget._onDismissed,
-      confirmDismiss: _confirmDismiss,
+      confirmDismiss: (dir) {
+        return confirmDismiss(dir, context, AppLocalizations.of(context).deleteCategory);
+      },
       key: UniqueKey(),
       background: Container(
         color: Colors.red,
@@ -65,33 +67,6 @@ class _DismissibleItemState extends State<DismissibleItem> {
           Container(height: 0.5, color: Colors.black.withOpacity(0.1)),
         ],
       ),
-    );
-  }
-
-  Future<bool?> _confirmDismiss(DismissDirection ignored) async {
-    return await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          title: Text(AppLocalizations.of(context).deleteCategory),
-          actions: <TextButton>[
-            TextButton(
-              onPressed: context.pop,
-              child: Text(AppLocalizations.of(context).cancel),
-            ),
-            TextButton(
-              onPressed: () => context.pop(true),
-              style: TextButton.styleFrom(foregroundColor: Colors.red),
-              child: Text(AppLocalizations.of(context).delete),
-            ),
-          ],
-        );
-      },
     );
   }
 }

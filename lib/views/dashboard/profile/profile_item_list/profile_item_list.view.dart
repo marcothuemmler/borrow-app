@@ -3,7 +3,7 @@ import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
-import "package:borrow_app/widgets/cards/item_card_dismissable.widget.dart";
+import "package:borrow_app/widgets/cards/item_card_dismissible.widget.dart";
 import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
@@ -49,7 +49,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                         itemBuilder: (BuildContext context, int index) {
                           final ItemListItemModel item =
                             model.filteredItems.elementAt(index);
-                          return ItemCardDismissable(
+                          return ItemCardDismissible(
                             onTap: controller.navigateToItem,
                             onDismiss: controller.deleteItem,
                             item: item,
