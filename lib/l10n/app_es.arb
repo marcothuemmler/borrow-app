@@ -47,6 +47,7 @@
   "items": "Objetos",
   "balance": "Balance",
   "deleteCategory": "¿Eliminar la categoria?",
+  "deleteItem": "¿Eliminar el objeto?",
   "delete": "Eliminar",
   "filterByCategory": "Filtrar por categoria:",
   "filterByDate": "Filtrar por fecha:",
@@ -64,5 +65,6 @@
   "joinGroup": "Unirse al grupo",
   "deleteInvitation": "Eliminar invitación",
   "emptyInvitationsMessage": "Sus invitaciones de grupo aparecerán aquí",
-  "save": "Guardar"
+  "save": "Guardar",
+  "categoryNotSelected": "Por favor, seleccione una categoría"
 }
