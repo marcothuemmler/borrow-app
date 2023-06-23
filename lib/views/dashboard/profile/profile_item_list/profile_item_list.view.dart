@@ -26,54 +26,124 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
     if (model.hasError) {
       return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
-
-    final List<ProfileItemListItemModel> filteredItems = model.filteredItems;
-
+    final bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                        child: getDropDownMenu(controller, model, context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: isPortrait ? 10 : 5,
+                  ),
+                  child: DropdownWidget<CategorySettingsCategoryModel>(
+                    hint: Text(AppLocalizations.of(context).category),
+                    items: <CategorySettingsCategoryModel>[
+                      ...?model.categories?.categories,
+                      CategorySettingsCategoryModel(
+                        name: AppLocalizations.of(context).allCategories,
                       ),
                     ],
+                    onChanged: controller.selectCategory,
+                    value: model.selectedCategory,
+                    mapFunction: (CategorySettingsCategoryModel category) {
+                      return DropdownMenuItem<CategorySettingsCategoryModel>(
+                        value: category,
+                        child: Text(category.name),
+                      );
+                    },
                   ),
-                  if (filteredItems.isNotEmpty)
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: model.filteredItems.length,
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          final ProfileItemListItemModel item =
-                              model.filteredItems.elementAt(index);
-                          return DismissibleProfileItemCard(
-                            onTap: controller.navigateToItem,
-                            onDismiss: controller.deleteItem,
-                            onTapToggleAvailability: () {
-                              controller.toggleAvailability(
-                                itemId: item.id,
-                                itemIsAvailable: item.isActive,
-                              );
-                            },
-                            item: item,
-                          );
-                        },
+                ),
+              ],
+            ),
+            Expanded(
+              child: DefaultTabController(
+                length: 2,
+                child: Column(
+                  children: <Widget>[
+                    TabBar(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: isPortrait ? 15 : 5,
                       ),
-                    )
-                ],
+                      labelStyle: const TextStyle(fontSize: 16),
+                      unselectedLabelColor: Colors.black54,
+                      labelColor: Colors.black87,
+                      tabs: const <Widget>[
+                        Tab(text: "Available items"),
+                        Tab(text: "Borrowed items"),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        children: <Widget>[
+                          // TODO: extract widget and implement separate lists
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: model.filteredItems.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final ProfileItemListItemModel item =
+                                        model.filteredItems.elementAt(index);
+                                    return DismissibleProfileItemCard(
+                                      item: item,
+                                      onTap: controller.navigateToItem,
+                                      onDismiss: controller.deleteItem,
+                                      onTapToggleAvailability: () {
+                                        controller.toggleAvailability(
+                                          itemId: item.id,
+                                          itemIsAvailable: item.isActive,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: model.filteredItems.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final ProfileItemListItemModel item =
+                                        model.filteredItems.elementAt(index);
+                                    return DismissibleProfileItemCard(
+                                      item: item,
+                                      onTap: controller.navigateToItem,
+                                      onDismiss: controller.deleteItem,
+                                      onTapToggleAvailability: () {
+                                        controller.toggleAvailability(
+                                          itemId: item.id,
+                                          itemIsAvailable: item.isActive,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -85,30 +155,6 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
         onPressed: controller.navigateToNewItem,
         label: Text(AppLocalizations.of(context).addNewItem),
       ),
-    );
-  }
-
-  Widget getDropDownMenu(
-    ProfileItemListController controller,
-    ProfileItemListModel model,
-    BuildContext context,
-  ) {
-    return DropdownWidget<CategorySettingsCategoryModel>(
-      hint: Text(AppLocalizations.of(context).category),
-      items: <CategorySettingsCategoryModel>[
-        ...?model.categories?.categories,
-        CategorySettingsCategoryModel(
-          name: AppLocalizations.of(context).allCategories,
-        ),
-      ],
-      onChanged: controller.selectCategory,
-      value: model.selectedCategory,
-      mapFunction: (CategorySettingsCategoryModel category) {
-        return DropdownMenuItem<CategorySettingsCategoryModel>(
-          value: category,
-          child: Text(category.name),
-        );
-      },
     );
   }
 }

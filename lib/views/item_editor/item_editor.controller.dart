@@ -93,6 +93,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
     state = state.copyWith.item(name: value);
   }
 
+  @override
   void setItemImage(XFile? image) {
     state = state.copyWith(itemImage: image);
   }
