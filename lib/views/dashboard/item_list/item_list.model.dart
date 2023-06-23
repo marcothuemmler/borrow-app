@@ -51,6 +51,7 @@ class ItemListItemModel with _$ItemListItemModel {
     required String? description,
     required ItemListCategoryModel? category,
     required ItemListUserModel owner,
+    String? imageUrl,
   }) = _ItemListItemModel;
 
   factory ItemListItemModel.fromJson(Map<String, dynamic> json) =>

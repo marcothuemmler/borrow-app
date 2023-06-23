@@ -6,6 +6,7 @@ import "package:borrow_app/views/authentication/auth.model.dart";
 import "package:borrow_app/views/chat_list/chat_list.model.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
 import "package:borrow_app/views/group_selection/group_selection.model.dart";
 import "package:borrow_app/views/invitation_list/invitation_list.model.dart";
 import "package:borrow_app/views/item_detail/item_detail.model.dart";
@@ -112,7 +113,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
   }
 
   @override
-  Future<List<ItemListItemModel>> getItemsFromOwner({
+  Future<List<ProfileItemListItemModel>> getItemsFromOwner({
     required String groupId,
   }) async {
     try {
@@ -127,10 +128,9 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
           ],
         },
       );
-      return List<ItemListItemModel>.from(
-        // ignore: unnecessary_lambdas
+      return List<ProfileItemListItemModel>.from(
         response.data!.map((dynamic json) {
-          return ItemListItemModel.fromJson(json);
+          return ProfileItemListItemModel.fromJson(json);
         }),
       );
     } catch (error) {
@@ -503,5 +503,16 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
     } catch (error) {
       throw Exception("Couldn't post item $error");
     }
+  }
+
+  @override
+  Future<void> setItemAvailability({
+    required String itemId,
+    required bool availability,
+  }) async {
+    await _client.patch<dynamic>(
+      "/items/$itemId",
+      data: <String, bool>{"isActive": availability},
+    );
   }
 }

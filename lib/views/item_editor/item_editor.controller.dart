@@ -57,15 +57,14 @@ class ItemEditorControllerImplementation extends ItemEditorController {
     if (state.item.category is ItemEditorCategoryModel) {
       if (_itemId is String) {
         await _itemEditorService.patchItem(itemId: _itemId!, item: state.item);
-        _init();
       } else {
         final String res = await _itemEditorService.postItem(
           item: state.item,
           groupId: _groupId,
         );
         _itemId = res;
-        _init();
       }
+      _init();
     } else {
       state = state.copyWith(categoryNotSelected: true);
     }
@@ -84,8 +83,9 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   @override
   void selectCategory(ItemEditorCategoryModel? category) {
     state = state.copyWith(
-      item: state.item.copyWith(
-          category: category,), categoryNotSelected: false,);
+      item: state.item.copyWith(category: category),
+      categoryNotSelected: false,
+    );
   }
 
   void _getCategories() async {
@@ -93,10 +93,13 @@ class ItemEditorControllerImplementation extends ItemEditorController {
         await _itemEditorService.getCategoriesForItemEditor(
       groupId: _groupId,
     );
-    //selected category in profileItemlist => preselect this for new category
-    if(_itemId == null && _preselectedCategory != null && _preselectedCategory != "") {
-      final item = state.item.copyWith(
-          category: categories.where((e) => e.id == _preselectedCategory).first);
+    if (_itemId is! String && _preselectedCategory?.isNotEmpty == true) {
+      final ItemEditorItemModel item = state.item.copyWith(
+        category: categories.firstWhere(
+          (ItemEditorCategoryModel category) =>
+              category.id == _preselectedCategory,
+        ),
+      );
       state = state.copyWith(categories: categories, item: item);
     } else {
       state = state.copyWith(categories: categories);

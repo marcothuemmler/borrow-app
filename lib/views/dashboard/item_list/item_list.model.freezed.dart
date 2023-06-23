@@ -707,6 +707,7 @@ mixin _$ItemListItemModel {
   String? get description => throw _privateConstructorUsedError;
   ItemListCategoryModel? get category => throw _privateConstructorUsedError;
   ItemListUserModel get owner => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -725,7 +726,8 @@ abstract class $ItemListItemModelCopyWith<$Res> {
       String name,
       String? description,
       ItemListCategoryModel? category,
-      ItemListUserModel owner});
+      ItemListUserModel owner,
+      String? imageUrl});
 
   $ItemListCategoryModelCopyWith<$Res>? get category;
   $ItemListUserModelCopyWith<$Res> get owner;
@@ -749,6 +751,7 @@ class _$ItemListItemModelCopyWithImpl<$Res, $Val extends ItemListItemModel>
     Object? description = freezed,
     Object? category = freezed,
     Object? owner = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -771,6 +774,10 @@ class _$ItemListItemModelCopyWithImpl<$Res, $Val extends ItemListItemModel>
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as ItemListUserModel,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -808,7 +815,8 @@ abstract class _$$_ItemListItemModelCopyWith<$Res>
       String name,
       String? description,
       ItemListCategoryModel? category,
-      ItemListUserModel owner});
+      ItemListUserModel owner,
+      String? imageUrl});
 
   @override
   $ItemListCategoryModelCopyWith<$Res>? get category;
@@ -832,6 +840,7 @@ class __$$_ItemListItemModelCopyWithImpl<$Res>
     Object? description = freezed,
     Object? category = freezed,
     Object? owner = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$_ItemListItemModel(
       id: null == id
@@ -854,6 +863,10 @@ class __$$_ItemListItemModelCopyWithImpl<$Res>
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as ItemListUserModel,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -866,7 +879,8 @@ class _$_ItemListItemModel implements _ItemListItemModel {
       required this.name,
       required this.description,
       required this.category,
-      required this.owner});
+      required this.owner,
+      this.imageUrl});
 
   factory _$_ItemListItemModel.fromJson(Map<String, dynamic> json) =>
       _$$_ItemListItemModelFromJson(json);
@@ -881,10 +895,12 @@ class _$_ItemListItemModel implements _ItemListItemModel {
   final ItemListCategoryModel? category;
   @override
   final ItemListUserModel owner;
+  @override
+  final String? imageUrl;
 
   @override
   String toString() {
-    return 'ItemListItemModel(id: $id, name: $name, description: $description, category: $category, owner: $owner)';
+    return 'ItemListItemModel(id: $id, name: $name, description: $description, category: $category, owner: $owner, imageUrl: $imageUrl)';
   }
 
   @override
@@ -898,13 +914,15 @@ class _$_ItemListItemModel implements _ItemListItemModel {
                 other.description == description) &&
             (identical(other.category, category) ||
                 other.category == category) &&
-            (identical(other.owner, owner) || other.owner == owner));
+            (identical(other.owner, owner) || other.owner == owner) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, description, category, owner);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, description, category, owner, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -927,7 +945,8 @@ abstract class _ItemListItemModel implements ItemListItemModel {
       required final String name,
       required final String? description,
       required final ItemListCategoryModel? category,
-      required final ItemListUserModel owner}) = _$_ItemListItemModel;
+      required final ItemListUserModel owner,
+      final String? imageUrl}) = _$_ItemListItemModel;
 
   factory _ItemListItemModel.fromJson(Map<String, dynamic> json) =
       _$_ItemListItemModel.fromJson;
@@ -942,6 +961,8 @@ abstract class _ItemListItemModel implements ItemListItemModel {
   ItemListCategoryModel? get category;
   @override
   ItemListUserModel get owner;
+  @override
+  String? get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$_ItemListItemModelCopyWith<_$_ItemListItemModel> get copyWith =>

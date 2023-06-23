@@ -31,7 +31,7 @@ const RouteDefinition profileItemListRoute =
 const RouteDefinition itemEditorRoute =
     RouteDefinition(name: "itemEditor", path: ":groupId/itemEditor/:itemId");
 const RouteDefinition newItemRoute =
-    RouteDefinition(name: "newItemRoute", path: ":groupId/newItemRoute");
+    RouteDefinition(name: "newItemRoute", path: ":groupId/itemEditor");
 const RouteDefinition chatListRoute =
     RouteDefinition(name: "chatList", path: "chats");
 const RouteDefinition invitationsRoute =

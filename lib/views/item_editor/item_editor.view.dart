@@ -21,8 +21,7 @@ class ItemEditorView extends ConsumerWidget {
     required String? preselectedCategory,
   })  : _groupId = groupId,
         _itemId = itemId,
-        _preselectedCategory = preselectedCategory
-  ;
+        _preselectedCategory = preselectedCategory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,7 +53,7 @@ class ItemEditorView extends ConsumerWidget {
     final ItemEditorItemModel item = model.item;
     return Scaffold(
       appBar: AppBar(
-        title: Text(item.name),
+        title: Text(_itemId is String ? item.name : "New item"),
       ),
       body: SafeArea(
         child: Column(
@@ -99,14 +98,6 @@ class ItemEditorView extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: const <Widget>[
-                            SizedBox(width: 5),
-                            Spacer(),
-                            SizedBox(width: 5)
-                          ],
-                        ),
                         Form(
                           key: _formKey,
                           child: Column(
@@ -115,43 +106,56 @@ class ItemEditorView extends ConsumerWidget {
                               const SizedBox(height: 30),
                               Center(
                                 child: Column(
-                                  children: [
-                                    DropdownWidget<ItemEditorCategoryModel>(
-                                      hint: Text(
-                                        AppLocalizations.of(context).category,
-                                      ),
-                                      items: model.categories,
-                                      onChanged: controller.selectCategory,
-                                      value: model.item.category,
-                                      mapFunction: (
-                                          ItemEditorCategoryModel category,
-                                          ) =>
-                                          DropdownMenuItem<ItemEditorCategoryModel>(
-                                            value: category,
-                                            child: Text(category.name),
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        DropdownWidget<ItemEditorCategoryModel>(
+                                          hint: Text(
+                                            AppLocalizations.of(context)
+                                                .category,
                                           ),
+                                          items: model.categories,
+                                          onChanged: controller.selectCategory,
+                                          value: model.item.category,
+                                          mapFunction: (
+                                            ItemEditorCategoryModel category,
+                                          ) {
+                                            return DropdownMenuItem<
+                                                ItemEditorCategoryModel>(
+                                              value: category,
+                                              child: Text(category.name),
+                                            );
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      model.categoryNotSelected ? AppLocalizations.of(context).categoryNotSelected : "",
-                                      style: const TextStyle(color: Colors.red),
-                                    ),
+                                    if (model.categoryNotSelected)
+                                      Text(
+                                        AppLocalizations.of(context)
+                                            .categoryNotSelected,
+                                        style: const TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 30),
+                              const SizedBox(height: 20),
                               TextFieldWidget(
                                 text: AppLocalizations.of(context).name,
-                                validator: (String? value) =>
-                                    controller.validateFormField(
-                                  fieldType: FormValidationType.itemName,
-                                  context: context,
-                                  value: value,
-                                ),
+                                validator: (String? value) {
+                                  return controller.validateFormField(
+                                    fieldType: FormValidationType.itemName,
+                                    context: context,
+                                    value: value,
+                                  );
+                                },
                                 onChanged: controller.setName,
                                 autocorrect: false,
                                 initialValue: model.item.name,
                               ),
-                              const SizedBox(height: 30),
+                              const SizedBox(height: 15),
                               TextFieldWidget(
                                 text: AppLocalizations.of(context).description,
                                 validator: null,
@@ -160,17 +164,20 @@ class ItemEditorView extends ConsumerWidget {
                                 initialValue: model.item.description,
                               ),
                               const SizedBox(height: 30),
-                              Center(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      controller.save();
-                                    }
-                                  },
-                                  child: Text(
-                                    AppLocalizations.of(context).save,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        controller.save();
+                                      }
+                                    },
+                                    child: Text(
+                                      AppLocalizations.of(context).save,
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                               const SizedBox(height: 20),
                             ],

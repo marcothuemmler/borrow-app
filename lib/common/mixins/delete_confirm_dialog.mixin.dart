@@ -1,10 +1,12 @@
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:go_router/go_router.dart";
 
 mixin DeleteConfirmMixin {
-  Future<bool?> confirmDismiss(DismissDirection ignored, BuildContext context, String text) async {
+  Future<bool?> confirmDismiss({
+    required BuildContext context,
+    required String text,
+  }) async {
     return await showDialog(
       context: context,
       builder: (BuildContext context) {

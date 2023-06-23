@@ -9,20 +9,20 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class CategoriesSettingsView extends ConsumerWidget {
-  final String groupId;
+  final String _groupId;
 
   const CategoriesSettingsView({
     super.key,
-    required this.groupId,
-  });
+    required String groupId,
+  }) : _groupId = groupId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final CategoriesSettingsController controller = ref.read(
-      providers.categoriesListProvider(groupId).notifier,
+      providers.categoriesListProvider(_groupId).notifier,
     );
     final CategoryListDetailModel model = ref.watch(
-      providers.categoriesListProvider(groupId),
+      providers.categoriesListProvider(_groupId),
     );
 
     if (model.isLoading) {

@@ -1,11 +1,9 @@
 import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/providers.dart";
-import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
-import "package:borrow_app/widgets/cards/item_card_dismissible.widget.dart";
+import "package:borrow_app/widgets/cards/dismissible_profile_Item_card.widget.dart";
 import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -29,55 +27,53 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
       return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
 
-    final List<ItemListItemModel> filteredItems = model.filteredItems;
+    final List<ProfileItemListItemModel> filteredItems = model.filteredItems;
 
     return Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            if (filteredItems.isNotEmpty)
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    getDropDownMenu(controller, model, context),
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: getDropDownMenu(controller, model, context),
+                      ),
+                    ],
+                  ),
+                  if (filteredItems.isNotEmpty)
                     Expanded(
                       child: ListView.builder(
-                        padding: const EdgeInsets.only(top: 20),
                         itemCount: model.filteredItems.length,
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index) {
-                          final ItemListItemModel item =
-                            model.filteredItems.elementAt(index);
-                          return ItemCardDismissible(
+                          final ProfileItemListItemModel item =
+                              model.filteredItems.elementAt(index);
+                          return DismissibleProfileItemCard(
                             onTap: controller.navigateToItem,
                             onDismiss: controller.deleteItem,
+                            onTapToggleAvailability: () {
+                              controller.toggleAvailability(
+                                itemId: item.id,
+                                itemIsAvailable: item.isActive,
+                              );
+                            },
                             item: item,
                           );
                         },
                       ),
-                    ),
-                  ],
-                ),
-              )
-            else
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    getDropDownMenu(controller, model, context),
-                    Center(
-                      child: Text(
-                        AppLocalizations.of(context).emptyGroupMessage,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 24,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 25),
-                  ],
-                ),
+                    )
+                ],
               ),
+            )
           ],
         ),
       ),
@@ -86,7 +82,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        onPressed: () => {controller.navigateToNewItem()},
+        onPressed: controller.navigateToNewItem,
         label: Text(AppLocalizations.of(context).addNewItem),
       ),
     );
@@ -128,4 +124,9 @@ abstract class ProfileItemListController
   void navigateToNewItem();
 
   void deleteItem({required String itemId});
+
+  void toggleAvailability({
+    required String itemId,
+    required bool itemIsAvailable,
+  });
 }

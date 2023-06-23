@@ -1,8 +1,8 @@
+import "package:borrow_app/common/mixins/delete_confirm_dialog.mixin.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
 import "package:borrow_app/widgets/items/settings_item.widget.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:borrow_app/common/mixins/delete_confirm_dialog.mixin.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class DismissibleItem extends StatefulWidget {
@@ -20,15 +20,17 @@ class DismissibleItem extends StatefulWidget {
   State<DismissibleItem> createState() => _DismissibleItemState();
 }
 
-class _DismissibleItemState extends State<DismissibleItem> with DeleteConfirmMixin {
+class _DismissibleItemState extends State<DismissibleItem>
+    with DeleteConfirmMixin {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       direction: DismissDirection.endToStart,
       onDismissed: widget._onDismissed,
-      confirmDismiss: (dir) {
-        return confirmDismiss(dir, context, AppLocalizations.of(context).deleteCategory);
-      },
+      confirmDismiss: (_) => confirmDismiss(
+        context: context,
+        text: AppLocalizations.of(context).deleteCategory,
+      ),
       key: UniqueKey(),
       background: Container(
         color: Colors.red,

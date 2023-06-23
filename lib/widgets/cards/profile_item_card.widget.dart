@@ -1,34 +1,35 @@
-import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
 import "package:flutter/material.dart";
 
-class ItemCard extends StatelessWidget {
-  final void Function()? _onTap;
-  final ItemListItemModel _item;
-
-  const ItemCard({
+class ProfileItemCard extends StatelessWidget {
+  const ProfileItemCard({
     super.key,
-    required void Function()? onTap,
-    required ItemListItemModel item,
-  })  : _onTap = onTap,
-        _item = item;
+    required ProfileItemListItemModel item,
+    required void Function() onTap,
+    required void Function() onTapToggleAvailability,
+  })  : _item = item,
+        _onTap = onTap,
+        _onTapToggleAvailability = onTapToggleAvailability;
+
+  final ProfileItemListItemModel _item;
+  final void Function() _onTap;
+  final void Function() _onTapToggleAvailability;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black12,
-            offset: Offset(0, 6),
-            blurRadius: 20,
+            offset: Offset(0, 2),
+            blurRadius: 5,
           ),
         ],
       ),
-      margin: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
       child: Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -41,7 +42,7 @@ class ItemCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
             child: SizedBox(
-              height: 90,
+              height: 65,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -64,15 +65,6 @@ class ItemCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "@${_item.owner.username}",
-                          style: const TextStyle(
-                            color: Colors.black54,
-                            fontSize: 12,
-                          ),
-                          maxLines: 1,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
                           _item.name,
                           style: const TextStyle(fontWeight: FontWeight.w700),
                           maxLines: 1,
@@ -91,6 +83,21 @@ class ItemCard extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                  PopupMenuButton<ListTile>(
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(Icons.more_horiz, color: Colors.black54),
+                    splashRadius: 20,
+                    itemBuilder: (BuildContext context) {
+                      return <PopupMenuEntry<ListTile>>[
+                        PopupMenuItem<ListTile>(
+                          child: ListTile(
+                            title: const Text("Toggle availability"),
+                            onTap: _onTapToggleAvailability,
+                          ),
+                        )
+                      ];
+                    },
                   ),
                 ],
               ),

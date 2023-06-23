@@ -1,5 +1,4 @@
 import "package:borrow_app/services/routing/routes.dart";
-import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.service.dart";
@@ -26,9 +25,8 @@ class ProfileItemListControllerImplementation
                 isLoading: false,
                 hasError: false,
                 categories: null,
-                items: <ItemListItemModel>[],
-                filteredItems: <ItemListItemModel>[],
-                groupId: "",
+                items: <ProfileItemListItemModel>[],
+                filteredItems: <ProfileItemListItemModel>[],
                 selectedCategory: null,
               ),
         ) {
@@ -42,7 +40,7 @@ class ProfileItemListControllerImplementation
   Future<void> getGroupItemsAndCategories({required String id}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final List<ItemListItemModel> items =
+      final List<ProfileItemListItemModel> items =
           await _profileItemListService.getItemsFromOwner(
         groupId: id,
       );
@@ -55,7 +53,7 @@ class ProfileItemListControllerImplementation
         items: items,
         categories: categories,
       );
-      filterItemsByCategory(category: state.selectedCategory);
+      _filterItemsByCategory(category: state.selectedCategory);
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
     }
@@ -66,8 +64,6 @@ class ProfileItemListControllerImplementation
     _router.pushNamed(
       itemEditorRoute.name,
       pathParameters: <String, String>{"itemId": itemId, "groupId": _groupId},
-      queryParameters: <String, String>{
-        "preselectedCategory": state.selectedCategory == null ? "" : state.selectedCategory!.id!},
     );
   }
 
@@ -76,8 +72,9 @@ class ProfileItemListControllerImplementation
     _router.pushNamed(
       newItemRoute.name,
       pathParameters: <String, String>{"groupId": _groupId},
-      queryParameters: <String, String>{
-        "preselectedCategory": state.selectedCategory == null ? "" : state.selectedCategory!.id!},
+      queryParameters: <String, String?>{
+        "preselectedCategory": state.selectedCategory?.id,
+      },
     );
   }
 
@@ -86,12 +83,12 @@ class ProfileItemListControllerImplementation
     final CategorySettingsCategoryModel? selectedCategory =
         category?.id is! String ? null : category;
     state = state.copyWith(selectedCategory: selectedCategory);
-    filterItemsByCategory(category: selectedCategory);
+    _filterItemsByCategory(category: selectedCategory);
   }
 
-  void filterItemsByCategory({CategorySettingsCategoryModel? category}) {
-    final List<ItemListItemModel> filteredItems =
-        state.items.where((ItemListItemModel item) {
+  void _filterItemsByCategory({CategorySettingsCategoryModel? category}) {
+    final List<ProfileItemListItemModel> filteredItems =
+        state.items.where((ProfileItemListItemModel item) {
       return category is! CategorySettingsCategoryModel ||
           item.category?.id == category.id;
     }).toList();
@@ -100,6 +97,29 @@ class ProfileItemListControllerImplementation
 
   @override
   Future<void> deleteItem({required String itemId}) async {
-    await _profileItemListService.deleteItem(id: itemId);
+    try {
+      state = state.copyWith(hasError: false, isLoading: true);
+      await _profileItemListService.deleteItem(id: itemId);
+      state = state.copyWith(isLoading: false);
+    } catch (error) {
+      state = state.copyWith(hasError: true, isLoading: false);
+    }
+  }
+
+  @override
+  void toggleAvailability({
+    required String itemId,
+    required bool itemIsAvailable,
+  }) async {
+    try {
+      state = state.copyWith(isLoading: true, hasError: false);
+      await _profileItemListService.setItemAvailability(
+        itemId: itemId,
+        availability: !itemIsAvailable,
+      );
+      state = state.copyWith(isLoading: false);
+    } catch (error) {
+      state = state.copyWith(hasError: true, isLoading: false);
+    }
   }
 }
