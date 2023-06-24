@@ -2,7 +2,7 @@ import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
-import "package:borrow_app/widgets/cards/dismissible_profile_Item_card.widget.dart";
+import "package:borrow_app/widgets/cards/dismissible_profile_item_card.widget.dart";
 import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -115,12 +115,8 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                                         item: item,
                                         onTap: controller.navigateToItem,
                                         onDismiss: controller.deleteItem,
-                                        onTapToggleAvailability: () {
-                                          controller.toggleAvailability(
-                                            itemId: item.id,
-                                            itemIsAvailable: true,
-                                          );
-                                        },
+                                        onTapToggleAvailability:
+                                            controller.toggleAvailability,
                                       );
                                     },
                                   ),
@@ -145,12 +141,8 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                                         item: item,
                                         onTap: controller.navigateToItem,
                                         onDismiss: controller.deleteItem,
-                                        onTapToggleAvailability: () {
-                                          controller.toggleAvailability(
-                                            itemId: item.id,
-                                            itemIsAvailable: false,
-                                          );
-                                        },
+                                        onTapToggleAvailability:
+                                            controller.toggleAvailability,
                                       );
                                     },
                                   ),
