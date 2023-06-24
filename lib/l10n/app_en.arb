@@ -10,6 +10,7 @@
   "enterValidPassword": "Password must be at least 8 characters long and contain a number, an uppercase character and a lowercase character",
   "enterValidGroupName": "Group name must contain at least 3 characters",
   "enterValidCategoryName": "Category name must contain at least 3 characters",
+  "enterValidItemName": "Item name must contain at least 3 characters",
   "submit": "Submit",
   "welcome": "Welcome!",
   "goToLogin": "To Login",
@@ -46,6 +47,7 @@
   "items": "Items",
   "balance": "Balance",
   "deleteCategory": "Delete category?",
+  "deleteItem": "Delete item?",
   "delete": "Delete",
   "filterByCategory": "Filter by category:",
   "filterByDate": "Filter by date:",
@@ -62,5 +64,11 @@
   "invitations": "Invitations",
   "joinGroup": "Join group",
   "deleteInvitation": "Delete invitation",
-  "emptyInvitationsMessage": "Your group invitations will appear here"
+  "emptyInvitationsMessage": "Your group invitations will appear here",
+  "save": "Save",
+  "categoryNotSelected": "Please select category",
+  "availableItems": "Available items",
+  "borrowedItems": "Borrowed items",
+  "markItemAvailable": "Mark as available",
+  "markItemBorrowed": "Mark as borrowed"
 }

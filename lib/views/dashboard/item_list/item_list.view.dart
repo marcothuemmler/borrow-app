@@ -1,15 +1,15 @@
-import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart";
 import "package:borrow_app/widgets/buttons/dotted_border_button.widget.dart";
 import "package:borrow_app/widgets/cards/item_card.widget.dart";
-import "package:borrow_app/widgets/dialogs/new_category_dialog.dart";
+import "package:borrow_app/widgets/various_components/list_refresh_indicator.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class ItemListView extends ConsumerWidget {
+class ItemListView extends ConsumerWidget with CategoryDialogMixin {
   final String _groupId;
 
   const ItemListView({super.key, required String groupId}) : _groupId = groupId;
@@ -22,19 +22,21 @@ class ItemListView extends ConsumerWidget {
     final ItemListModel model = ref.watch(
       providers.itemListControllerProvider(_groupId),
     );
-    if (model.isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (model.hasError || model.group is! ItemListGroupModel) {
+    if (model.hasError) {
       return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
-    return SafeArea(
+    return ListRefreshIndicator(
+      isLoading: model.isLoading,
+      onAction: controller.refresh,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           if (model.items.isNotEmpty)
             Expanded(
               child: ListView.builder(
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
                 padding: const EdgeInsets.only(top: 20),
                 itemCount: model.items.length,
                 shrinkWrap: true,
@@ -47,7 +49,7 @@ class ItemListView extends ConsumerWidget {
                 },
               ),
             )
-          else
+          else if (!model.isLoading)
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -78,7 +80,7 @@ class ItemListView extends ConsumerWidget {
                   DottedBorderButton(
                     title: AppLocalizations.of(context).addNewItem,
                     icon: const Icon(Icons.add),
-                    onTap: () {},
+                    onTap: controller.navigateToItemEditor,
                     width: 220,
                   ),
                 ],
@@ -93,31 +95,10 @@ class ItemListView extends ConsumerWidget {
     CategoriesSettingsController controller,
     BuildContext context,
   ) async {
-    final bool? value = await _showNewCategoryDialog(controller, context);
+    final bool? value = await showNewCategoryDialog(controller, context);
     if (value ?? false) {
       controller.addCategory();
     }
-  }
-
-  Future<bool?> _showNewCategoryDialog(
-    CategoriesSettingsController controller,
-    BuildContext context,
-  ) async {
-    return showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return NewCategoryDialog(
-          nameValidator: (String? value) => controller.validateFormField(
-            fieldType: FormValidationType.categoryName,
-            context: context,
-            value: value,
-          ),
-          setName: controller.setNewCategoryName,
-          setDescription: controller.setNewCategoryDescription,
-          createCategoryCallback: controller.createNewCategory,
-        );
-      },
-    );
   }
 }
 
@@ -126,5 +107,9 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
 
   void navigateToItem({required String itemId});
 
+  void navigateToItemEditor();
+
   void selectCategory(ItemListCategoryModel? category);
+
+  Future<void> refresh();
 }

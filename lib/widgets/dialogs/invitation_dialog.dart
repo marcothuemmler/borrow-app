@@ -91,17 +91,26 @@ class InviteMembersDialog extends ConsumerWidget {
           ),
         ),
       ),
-      actions: <ButtonStyleButton>[
-        TextButton(
-          onPressed: context.pop,
-          child: Text(AppLocalizations.of(context).cancel),
+      actions: <Widget>[
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: TextButton(
+                style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                onPressed: context.pop,
+                child: Text(AppLocalizations.of(context).cancel),
+              ),
+            ),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: model.invitations?.emails.isNotEmpty ?? false
+                    ? () => context.pop(true)
+                    : null,
+                child: Text(AppLocalizations.of(context).submit),
+              ),
+            ),
+          ],
         ),
-        ElevatedButton(
-          onPressed: model.invitations?.emails.isNotEmpty ?? false
-              ? () => context.pop(true)
-              : null,
-          child: Text(AppLocalizations.of(context).submit),
-        )
       ],
     );
   }

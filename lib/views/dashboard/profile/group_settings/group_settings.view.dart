@@ -28,7 +28,10 @@ class GroupSettingsView extends StatelessWidget {
           SettingsItem(
             iconData: Icons.emoji_objects,
             text: AppLocalizations.of(context).items,
-            onTap: () {},
+            onTap: () => context.pushNamed(
+              profileItemListRoute.name,
+              pathParameters: <String, String>{"groupId": groupId},
+            ),
           ),
           SettingsItem(
             iconData: Icons.account_balance_wallet,

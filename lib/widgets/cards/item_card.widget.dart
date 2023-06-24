@@ -2,10 +2,15 @@ import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:flutter/material.dart";
 
 class ItemCard extends StatelessWidget {
-  final void Function()? onTap;
-  final ItemListItemModel item;
+  final void Function()? _onTap;
+  final ItemListItemModel _item;
 
-  const ItemCard({super.key, required this.onTap, required this.item});
+  const ItemCard({
+    super.key,
+    required void Function()? onTap,
+    required ItemListItemModel item,
+  })  : _onTap = onTap,
+        _item = item;
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +23,12 @@ class ItemCard extends StatelessWidget {
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black12,
-            offset: Offset(0, 6),
-            blurRadius: 20,
+            offset: Offset(0, 3),
+            blurRadius: 6,
           ),
         ],
       ),
-      margin: const EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -32,22 +37,29 @@ class ItemCard extends StatelessWidget {
         elevation: 0,
         clipBehavior: Clip.hardEdge,
         child: InkWell(
-          onTap: onTap,
+          onTap: _onTap,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
             child: SizedBox(
-              height: 90,
+              height: 85,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(7),
-                      bottomLeft: Radius.circular(7),
-                    ),
-                    child: Image(
-                      image: AssetImage("assets/images/default.jpg"),
-                      fit: BoxFit.contain,
+                  SizedBox(
+                    width: 85,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.horizontal(
+                        left: Radius.circular(7),
+                        right: Radius.circular(3.5),
+                      ),
+                      child: Image(
+                        width: double.infinity,
+                        height: double.infinity,
+                        image: _item.imageUrl is String
+                            ? NetworkImage(_item.imageUrl!)
+                            : Image.asset("assets/images/default.jpg").image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -57,7 +69,7 @@ class ItemCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "@${item.owner.username}",
+                          "@${_item.owner.username}",
                           style: const TextStyle(
                             color: Colors.black54,
                             fontSize: 12,
@@ -66,7 +78,7 @@ class ItemCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          item.name,
+                          _item.name,
                           style: const TextStyle(fontWeight: FontWeight.w700),
                           maxLines: 1,
                         ),
@@ -74,7 +86,7 @@ class ItemCard extends StatelessWidget {
                           children: <Widget>[
                             Expanded(
                               child: Text(
-                                item.description ?? "",
+                                _item.description ?? "",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: false,
@@ -85,15 +97,6 @@ class ItemCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // IconButton(
-                  //   padding: EdgeInsets.zero,
-                  //   onPressed: () {},
-                  //   icon: const Icon(
-                  //     Icons.more_horiz,
-                  //   ),
-                  //   visualDensity: VisualDensity.compact,
-                  //   splashRadius: 20,
-                  // ),
                 ],
               ),
             ),

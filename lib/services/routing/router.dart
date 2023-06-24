@@ -9,10 +9,12 @@ import "package:borrow_app/views/dashboard/dashboard_wrapper.view.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart";
 import "package:borrow_app/views/dashboard/profile/group_settings/group_settings.view.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.view.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
 import "package:borrow_app/views/home/home.view.dart";
 import "package:borrow_app/views/invitation_list/invitation_list.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
+import "package:borrow_app/views/item_editor/item_editor.view.dart";
 import "package:borrow_app/views/profile_settings/profile_settings.view.dart";
 import "package:borrow_app/views/welcome/welcome.view.dart";
 import "package:flutter/material.dart";
@@ -141,6 +143,16 @@ final Provider<GoRouter> routerProviderDef =
                           groupId: state.pathParameters["groupId"]!,
                         ),
                       ),
+                      GoRoute(
+                        parentNavigatorKey: _shellNavigatorKey,
+                        name: profileItemListRoute.name,
+                        path: profileItemListRoute.path,
+                        builder: (BuildContext context, GoRouterState state) {
+                          return ProfileItemListView(
+                            groupId: state.pathParameters["groupId"]!,
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ],
@@ -184,6 +196,69 @@ final Provider<GoRouter> routerProviderDef =
               return CustomTransitionPage<ItemDetailView>(
                 barrierColor: Colors.black26,
                 child: ItemDetailView(itemId: itemId),
+                transitionsBuilder: (
+                  BuildContext context,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  Widget child,
+                ) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  );
+                },
+              );
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: itemEditorRoute.name,
+            path: itemEditorRoute.path,
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              final String? itemId = state.pathParameters["itemId"];
+              final String? groupId = state.pathParameters["groupId"];
+              if (groupId is! String) {
+                return _errorPage(state: state, error: "No groupId provided");
+              }
+              return CustomTransitionPage<ItemEditorView>(
+                barrierColor: Colors.black26,
+                child: ItemEditorView(
+                  itemId: itemId,
+                  groupId: groupId,
+                  preselectedCategory: null,
+                ),
+                transitionsBuilder: (
+                  BuildContext context,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  Widget child,
+                ) {
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  );
+                },
+              );
+            },
+          ),
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            name: newItemRoute.name,
+            path: newItemRoute.path,
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              final String? groupId = state.pathParameters["groupId"];
+              final String? category =
+                  state.queryParameters["preselectedCategory"];
+              if (groupId is! String) {
+                return _errorPage(state: state, error: "No groupId provided");
+              }
+              return CustomTransitionPage<ItemEditorView>(
+                barrierColor: Colors.black26,
+                child: ItemEditorView(
+                  itemId: null,
+                  groupId: groupId,
+                  preselectedCategory: category,
+                ),
                 transitionsBuilder: (
                   BuildContext context,
                   Animation<double> animation,

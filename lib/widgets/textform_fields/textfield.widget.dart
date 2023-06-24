@@ -8,6 +8,7 @@ class TextFieldWidget extends StatelessWidget {
   final Iterable<String>? autofillHints;
   final TextInputType? keyboardType;
   final TextEditingController? controller;
+  final String? initialValue;
 
   const TextFieldWidget({
     super.key,
@@ -18,6 +19,7 @@ class TextFieldWidget extends StatelessWidget {
     this.autofillHints,
     this.keyboardType,
     this.controller,
+    this.initialValue,
   });
 
   @override
@@ -29,6 +31,7 @@ class TextFieldWidget extends StatelessWidget {
         const SizedBox(height: 16),
         Flexible(
           child: TextFormField(
+            initialValue: initialValue,
             controller: controller,
             keyboardType: keyboardType,
             textInputAction: TextInputAction.next,

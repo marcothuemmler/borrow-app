@@ -57,6 +57,14 @@ class ItemListControllerImplementation extends ItemListController {
   }
 
   @override
+  void navigateToItemEditor() {
+    _router.pushNamed(
+      newItemRoute.name,
+      pathParameters: <String, String>{"groupId": _groupId},
+    );
+  }
+
+  @override
   void selectCategory(ItemListCategoryModel? category) {
     final ItemListCategoryModel? selectedCategory =
         category?.id is! String ? null : category;
@@ -69,9 +77,14 @@ class ItemListControllerImplementation extends ItemListController {
       final List<ItemListItemModel> filteredItems =
           state.group!.items.where((ItemListItemModel item) {
         return category is! ItemListCategoryModel ||
-            item.category.id == category.id;
+            item.category?.id == category.id;
       }).toList();
       state = state.copyWith(items: filteredItems);
     }
+  }
+
+  @override
+  Future<void> refresh() async {
+    await _getGroupItemsAndCategories(id: _groupId);
   }
 }

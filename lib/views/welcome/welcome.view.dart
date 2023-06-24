@@ -19,7 +19,6 @@ class WelcomeView extends StatelessWidget {
             ),
             const SizedBox(height: 40),
             ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(),
               onPressed: () => context.goNamed(loginRoute.name),
               label: Text(AppLocalizations.of(context).goToLogin),
               icon: const Icon(Icons.arrow_forward),

@@ -10,6 +10,7 @@
   "enterValidPassword": "Le mot de passe doit comporter au moins 8 caractères et contenir un chiffre, une majuscule et une minuscule.",
   "enterValidGroupName": "Le nom de groupe doit contenir au moins 3 caractères",
   "enterValidCategoryName": "Le nom de la categorie doit contenir au moins 3 caractères",
+  "enterValidItemName": "Le nom du objet doit contenir au moins 3 caractères",
   "submit": "Soumettre",
   "welcome": "Bienvenue!",
   "goToLogin": "Aller à la connexion",
@@ -36,7 +37,7 @@
   "categories": "Categories",
   "allCategories": "Toutes",
   "browse": "Parcourir",
-  "groupSettings": "Paramètres du groupe",
+  "groupSettings": "Réglages du groupe",
   "contactOwner": "Contacter le propriétaire",
   "noDescription": "Aucune description n'a été fournie",
   "available": "Disponible",
@@ -46,6 +47,7 @@
   "items": "Objets",
   "balance": "Balance",
   "deleteCategory": "Supprimer la catégorie?",
+  "deleteItem": "Supprimer l'objet?",
   "delete": "Suprimer",
   "filterByCategory": "Filtrer par catégorie:",
   "filterByDate": "Filtrer par date:",
@@ -62,5 +64,11 @@
   "invitations": "Invitations",
   "joinGroup": "Rejoindre le groupe",
   "deleteInvitation": "Supprimer l'invitation",
-  "emptyInvitationsMessage": "Vos invitations de groupe apparaîtront ici"
+  "emptyInvitationsMessage": "Vos invitations de groupe apparaîtront ici",
+  "save": "Sauver",
+  "categoryNotSelected": "Veuillez choisir une catégorie",
+  "availableItems": "Objets disponibles",
+  "borrowedItems": "Objets empruntés",
+  "markItemAvailable": "Marquer comme disponible",
+  "markItemBorrowed": "Marquer comme emprunté"
 }

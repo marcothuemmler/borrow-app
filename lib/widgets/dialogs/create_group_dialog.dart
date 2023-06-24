@@ -82,6 +82,7 @@ class CreateGroupDialog extends StatelessWidget {
               SizedBox(width: isPortrait ? 0 : 200),
               Expanded(
                 child: TextButton(
+                  style: TextButton.styleFrom(padding: EdgeInsets.zero),
                   child: Text(AppLocalizations.of(context).cancel),
                   onPressed: () => context.pop(false),
                 ),

@@ -24,6 +24,9 @@ import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.controller.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.controller.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.view.dart";
 import "package:borrow_app/views/group_selection/group_selection.controller.dart";
 import "package:borrow_app/views/group_selection/group_selection.model.dart";
 import "package:borrow_app/views/group_selection/group_selection.view.dart";
@@ -33,6 +36,9 @@ import "package:borrow_app/views/invitation_list/invitation_list.view.dart";
 import "package:borrow_app/views/item_detail/item_detail.controller.dart";
 import "package:borrow_app/views/item_detail/item_detail.model.dart";
 import "package:borrow_app/views/item_detail/item_detail.view.dart";
+import "package:borrow_app/views/item_editor/item_editor.controller.dart";
+import "package:borrow_app/views/item_editor/item_editor.model.dart";
+import "package:borrow_app/views/item_editor/item_editor.view.dart";
 import "package:borrow_app/views/profile_settings/profile_settings.controller.dart";
 import "package:borrow_app/views/profile_settings/profile_settings.model.dart";
 import "package:borrow_app/views/profile_settings/profile_settings.view.dart";
@@ -122,6 +128,23 @@ class Providers {
     ) =>
         ItemListControllerImplementation(
       itemListService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
+      groupId: groupId,
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<ProfileItemListController,
+          ProfileItemListModel, String> profileItemListControllerProvider =
+      AutoDisposeStateNotifierProvider.family<ProfileItemListController,
+          ProfileItemListModel, String>(
+    (
+      AutoDisposeStateNotifierProviderRef<ProfileItemListController,
+              ProfileItemListModel>
+          ref,
+      String groupId,
+    ) =>
+        ProfileItemListControllerImplementation(
+      profileItemListService: ref.read(providers.backendServiceProvider),
       router: ref.read(providers.routerProvider),
       groupId: groupId,
     ),
@@ -227,6 +250,22 @@ class Providers {
     ) =>
         InvitationListControllerImplementation(
       invitationListService: ref.read(providers.backendServiceProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<ItemEditorController,
+          ItemEditorModel, ItemEditorParameters> itemEditorProvider =
+      AutoDisposeStateNotifierProvider.family<ItemEditorController,
+          ItemEditorModel, ItemEditorParameters>(
+    (
+      AutoDisposeStateNotifierProviderRef<ItemEditorController, ItemEditorModel>
+          ref,
+      ItemEditorParameters itemEditorParameters,
+    ) =>
+        ItemEditorControllerImplementation(
+      itemEditorParameters: itemEditorParameters,
+      itemEditorService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
     ),
   );
 }
