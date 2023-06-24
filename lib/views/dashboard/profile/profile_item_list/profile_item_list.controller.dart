@@ -106,7 +106,7 @@ class ProfileItemListControllerImplementation
     try {
       state = state.copyWith(hasError: false, isLoading: true);
       await _profileItemListService.deleteItem(id: itemId);
-      state = state.copyWith(isLoading: false);
+      _init();
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
     }

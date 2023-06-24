@@ -82,4 +82,9 @@ class ItemListControllerImplementation extends ItemListController {
       state = state.copyWith(items: filteredItems);
     }
   }
+
+  @override
+  Future<void> refresh() async {
+    await _getGroupItemsAndCategories(id: _groupId);
+  }
 }

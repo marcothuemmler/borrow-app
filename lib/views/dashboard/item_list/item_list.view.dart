@@ -4,6 +4,7 @@ import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart";
 import "package:borrow_app/widgets/buttons/dotted_border_button.widget.dart";
 import "package:borrow_app/widgets/cards/item_card.widget.dart";
+import "package:borrow_app/widgets/various_components/list_refresh_indicator.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -21,19 +22,21 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
     final ItemListModel model = ref.watch(
       providers.itemListControllerProvider(_groupId),
     );
-    if (model.isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (model.hasError || model.group is! ItemListGroupModel) {
+    if (model.hasError) {
       return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
-    return SafeArea(
+    return ListRefreshIndicator(
+      isLoading: model.isLoading,
+      onAction: controller.refresh,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           if (model.items.isNotEmpty)
             Expanded(
               child: ListView.builder(
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
                 padding: const EdgeInsets.only(top: 20),
                 itemCount: model.items.length,
                 shrinkWrap: true,
@@ -46,7 +49,7 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
                 },
               ),
             )
-          else
+          else if (!model.isLoading)
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -107,4 +110,6 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
   void navigateToItemEditor();
 
   void selectCategory(ItemListCategoryModel? category);
+
+  Future<void> refresh();
 }
