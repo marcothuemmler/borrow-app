@@ -66,5 +66,9 @@
   "deleteInvitation": "Supprimer l'invitation",
   "emptyInvitationsMessage": "Vos invitations de groupe apparaîtront ici",
   "save": "Sauver",
-  "categoryNotSelected": "Veuillez choisir une catégorie"
+  "categoryNotSelected": "Veuillez choisir une catégorie",
+  "availableItems": "Objets disponibles",
+  "borrowedItems": "Objets empruntés",
+  "markItemAvailable": "Marquer comme disponible",
+  "markItemBorrowed": "Marquer comme emprunté"
 }

@@ -66,5 +66,9 @@
   "deleteInvitation": "Einladung löschen",
   "emptyInvitationsMessage": "Ihre Gruppeneinladungen werden hier erscheinen",
   "save": "Speichern",
-  "categoryNotSelected": "Bitte Kategorie auswählen"
+  "categoryNotSelected": "Bitte Kategorie auswählen",
+  "availableItems": "Verfügbare Objekte",
+  "borrowedItems": "Verliehene Objekte",
+  "markItemAvailable": "Als verfügbar markieren",
+  "markItemBorrowed": "Als verliehen markieren"
 }

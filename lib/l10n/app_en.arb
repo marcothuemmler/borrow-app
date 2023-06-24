@@ -66,5 +66,9 @@
   "deleteInvitation": "Delete invitation",
   "emptyInvitationsMessage": "Your group invitations will appear here",
   "save": "Save",
-  "categoryNotSelected": "Please select category"
+  "categoryNotSelected": "Please select category",
+  "availableItems": "Available items",
+  "borrowedItems": "Borrowed items",
+  "markItemAvailable": "Mark as available",
+  "markItemBorrowed": "Mark as borrowed"
 }

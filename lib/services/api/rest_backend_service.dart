@@ -103,7 +103,8 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
             "items",
             "items.category",
             "items.owner",
-          ]
+          ],
+          "sort": <String>["items.created_at,DESC"]
         },
       );
       return ItemListGroupModel.fromJson(response.data!);
@@ -126,6 +127,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
             "group.id||\$eq||$groupId",
             "owner.id||\$eq||$userId"
           ],
+          "sort": <String>["created_at,DESC"]
         },
       );
       return List<ProfileItemListItemModel>.from(

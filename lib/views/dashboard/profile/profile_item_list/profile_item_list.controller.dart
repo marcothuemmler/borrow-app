@@ -22,6 +22,7 @@ class ProfileItemListControllerImplementation
         super(
           model ??
               ProfileItemListModel(
+                currentIndex: 0,
                 isLoading: false,
                 hasError: false,
                 categories: null,
@@ -34,10 +35,10 @@ class ProfileItemListControllerImplementation
   }
 
   void _init() {
-    getGroupItemsAndCategories(id: _groupId);
+    _getGroupItemsAndCategories(id: _groupId);
   }
 
-  Future<void> getGroupItemsAndCategories({required String id}) async {
+  Future<void> _getGroupItemsAndCategories({required String id}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
       final List<ProfileItemListItemModel> items =
@@ -96,6 +97,11 @@ class ProfileItemListControllerImplementation
   }
 
   @override
+  void setCurrentIndex(int index) {
+    state = state.copyWith(currentIndex: index);
+  }
+
+  @override
   Future<void> deleteItem({required String itemId}) async {
     try {
       state = state.copyWith(hasError: false, isLoading: true);
@@ -117,7 +123,7 @@ class ProfileItemListControllerImplementation
         itemId: itemId,
         availability: !itemIsAvailable,
       );
-      state = state.copyWith(isLoading: false);
+      _init();
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
     }

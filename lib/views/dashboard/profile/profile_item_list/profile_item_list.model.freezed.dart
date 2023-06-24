@@ -22,6 +22,7 @@ ProfileItemListModel _$ProfileItemListModelFromJson(Map<String, dynamic> json) {
 mixin _$ProfileItemListModel {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
+  int get currentIndex => throw _privateConstructorUsedError;
   CategorySettingsCategoryListModel? get categories =>
       throw _privateConstructorUsedError;
   List<ProfileItemListItemModel> get items =>
@@ -46,6 +47,7 @@ abstract class $ProfileItemListModelCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool hasError,
+      int currentIndex,
       CategorySettingsCategoryListModel? categories,
       List<ProfileItemListItemModel> items,
       List<ProfileItemListItemModel> filteredItems,
@@ -71,6 +73,7 @@ class _$ProfileItemListModelCopyWithImpl<$Res,
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
+    Object? currentIndex = null,
     Object? categories = freezed,
     Object? items = null,
     Object? filteredItems = null,
@@ -85,6 +88,10 @@ class _$ProfileItemListModelCopyWithImpl<$Res,
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentIndex: null == currentIndex
+          ? _value.currentIndex
+          : currentIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       categories: freezed == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -142,6 +149,7 @@ abstract class _$$_ProfileItemListModelCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool hasError,
+      int currentIndex,
       CategorySettingsCategoryListModel? categories,
       List<ProfileItemListItemModel> items,
       List<ProfileItemListItemModel> filteredItems,
@@ -166,6 +174,7 @@ class __$$_ProfileItemListModelCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? hasError = null,
+    Object? currentIndex = null,
     Object? categories = freezed,
     Object? items = null,
     Object? filteredItems = null,
@@ -180,6 +189,10 @@ class __$$_ProfileItemListModelCopyWithImpl<$Res>
           ? _value.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentIndex: null == currentIndex
+          ? _value.currentIndex
+          : currentIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       categories: freezed == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
@@ -206,6 +219,7 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
   _$_ProfileItemListModel(
       {required this.isLoading,
       required this.hasError,
+      required this.currentIndex,
       required this.categories,
       required final List<ProfileItemListItemModel> items,
       required final List<ProfileItemListItemModel> filteredItems,
@@ -220,6 +234,8 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
   final bool isLoading;
   @override
   final bool hasError;
+  @override
+  final int currentIndex;
   @override
   final CategorySettingsCategoryListModel? categories;
   final List<ProfileItemListItemModel> _items;
@@ -243,7 +259,7 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
 
   @override
   String toString() {
-    return 'ProfileItemListModel(isLoading: $isLoading, hasError: $hasError, categories: $categories, items: $items, filteredItems: $filteredItems, selectedCategory: $selectedCategory)';
+    return 'ProfileItemListModel(isLoading: $isLoading, hasError: $hasError, currentIndex: $currentIndex, categories: $categories, items: $items, filteredItems: $filteredItems, selectedCategory: $selectedCategory)';
   }
 
   @override
@@ -255,6 +271,8 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
                 other.isLoading == isLoading) &&
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
+            (identical(other.currentIndex, currentIndex) ||
+                other.currentIndex == currentIndex) &&
             (identical(other.categories, categories) ||
                 other.categories == categories) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
@@ -270,6 +288,7 @@ class _$_ProfileItemListModel implements _ProfileItemListModel {
       runtimeType,
       isLoading,
       hasError,
+      currentIndex,
       categories,
       const DeepCollectionEquality().hash(_items),
       const DeepCollectionEquality().hash(_filteredItems),
@@ -294,6 +313,7 @@ abstract class _ProfileItemListModel implements ProfileItemListModel {
   factory _ProfileItemListModel(
           {required final bool isLoading,
           required final bool hasError,
+          required final int currentIndex,
           required final CategorySettingsCategoryListModel? categories,
           required final List<ProfileItemListItemModel> items,
           required final List<ProfileItemListItemModel> filteredItems,
@@ -307,6 +327,8 @@ abstract class _ProfileItemListModel implements ProfileItemListModel {
   bool get isLoading;
   @override
   bool get hasError;
+  @override
+  int get currentIndex;
   @override
   CategorySettingsCategoryListModel? get categories;
   @override

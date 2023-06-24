@@ -9,6 +9,7 @@ class ProfileItemListModel with _$ProfileItemListModel {
   factory ProfileItemListModel({
     required bool isLoading,
     required bool hasError,
+    required int currentIndex,
     required CategorySettingsCategoryListModel? categories,
     required List<ProfileItemListItemModel> items,
     required List<ProfileItemListItemModel> filteredItems,

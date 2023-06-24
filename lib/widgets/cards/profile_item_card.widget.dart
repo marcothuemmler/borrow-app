@@ -4,13 +4,16 @@ import "package:flutter/material.dart";
 class ProfileItemCard extends StatelessWidget {
   const ProfileItemCard({
     super.key,
+    required String text,
     required ProfileItemListItemModel item,
     required void Function() onTap,
     required void Function() onTapToggleAvailability,
-  })  : _item = item,
+  })  : _text = text,
+        _item = item,
         _onTap = onTap,
         _onTapToggleAvailability = onTapToggleAvailability;
 
+  final String _text;
   final ProfileItemListItemModel _item;
   final void Function() _onTap;
   final void Function() _onTapToggleAvailability;
@@ -96,10 +99,8 @@ class ProfileItemCard extends StatelessWidget {
                     itemBuilder: (BuildContext context) {
                       return <PopupMenuEntry<ListTile>>[
                         PopupMenuItem<ListTile>(
-                          child: ListTile(
-                            title: const Text("Toggle availability"),
-                            onTap: _onTapToggleAvailability,
-                          ),
+                          onTap: _onTapToggleAvailability,
+                          child: ListTile(title: Text(_text)),
                         )
                       ];
                     },

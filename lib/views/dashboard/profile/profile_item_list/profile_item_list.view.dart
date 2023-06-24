@@ -20,14 +20,14 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
     );
     final ProfileItemListModel model =
         ref.watch(providers.profileItemListControllerProvider(groupId));
-    if (model.isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (model.hasError) {
-      return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
-    }
     final bool isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
+    final List<ProfileItemListItemModel> availableItems = model.filteredItems
+        .where((ProfileItemListItemModel element) => element.isActive)
+        .toList();
+    final List<ProfileItemListItemModel> borrowedItems = model.filteredItems
+        .where((ProfileItemListItemModel element) => !element.isActive)
+        .toList();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -63,10 +63,12 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
             ),
             Expanded(
               child: DefaultTabController(
+                initialIndex: model.currentIndex,
                 length: 2,
                 child: Column(
                   children: <Widget>[
                     TabBar(
+                      onTap: controller.setCurrentIndex,
                       padding: EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: isPortrait ? 15 : 5,
@@ -74,72 +76,90 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                       labelStyle: const TextStyle(fontSize: 16),
                       unselectedLabelColor: Colors.black54,
                       labelColor: Colors.black87,
-                      tabs: const <Widget>[
-                        Tab(text: "Available items"),
-                        Tab(text: "Borrowed items"),
+                      tabs: <Widget>[
+                        Tab(text: AppLocalizations.of(context).availableItems),
+                        Tab(text: AppLocalizations.of(context).borrowedItems),
                       ],
                     ),
-                    Expanded(
-                      child: TabBarView(
-                        children: <Widget>[
-                          // TODO: extract widget and implement separate lists
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Expanded(
-                                child: ListView.builder(
-                                  itemCount: model.filteredItems.length,
-                                  shrinkWrap: true,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final ProfileItemListItemModel item =
-                                        model.filteredItems.elementAt(index);
-                                    return DismissibleProfileItemCard(
-                                      item: item,
-                                      onTap: controller.navigateToItem,
-                                      onDismiss: controller.deleteItem,
-                                      onTapToggleAvailability: () {
-                                        controller.toggleAvailability(
-                                          itemId: item.id,
-                                          itemIsAvailable: item.isActive,
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
+                    if (model.isLoading)
+                      const Expanded(
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    else if (model.hasError)
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            AppLocalizations.of(context).unspecifiedError,
                           ),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Expanded(
-                                child: ListView.builder(
-                                  itemCount: model.filteredItems.length,
-                                  shrinkWrap: true,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final ProfileItemListItemModel item =
-                                        model.filteredItems.elementAt(index);
-                                    return DismissibleProfileItemCard(
-                                      item: item,
-                                      onTap: controller.navigateToItem,
-                                      onDismiss: controller.deleteItem,
-                                      onTapToggleAvailability: () {
-                                        controller.toggleAvailability(
-                                          itemId: item.id,
-                                          itemIsAvailable: item.isActive,
-                                        );
-                                      },
-                                    );
-                                  },
+                        ),
+                      )
+                    else
+                      Expanded(
+                        child: TabBarView(
+                          children: <Widget>[
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Expanded(
+                                  child: ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: availableItems.length,
+                                    shrinkWrap: true,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      final ProfileItemListItemModel item =
+                                          availableItems.elementAt(index);
+                                      return DismissibleProfileItemCard(
+                                        text: AppLocalizations.of(context)
+                                            .markItemBorrowed,
+                                        item: item,
+                                        onTap: controller.navigateToItem,
+                                        onDismiss: controller.deleteItem,
+                                        onTapToggleAvailability: () {
+                                          controller.toggleAvailability(
+                                            itemId: item.id,
+                                            itemIsAvailable: true,
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Expanded(
+                                  child: ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: borrowedItems.length,
+                                    shrinkWrap: true,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      final ProfileItemListItemModel item =
+                                          borrowedItems.elementAt(index);
+                                      return DismissibleProfileItemCard(
+                                        text: AppLocalizations.of(context)
+                                            .markItemAvailable,
+                                        item: item,
+                                        onTap: controller.navigateToItem,
+                                        onDismiss: controller.deleteItem,
+                                        onTapToggleAvailability: () {
+                                          controller.toggleAvailability(
+                                            itemId: item.id,
+                                            itemIsAvailable: false,
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -175,4 +195,6 @@ abstract class ProfileItemListController
     required String itemId,
     required bool itemIsAvailable,
   });
+
+  void setCurrentIndex(int index);
 }

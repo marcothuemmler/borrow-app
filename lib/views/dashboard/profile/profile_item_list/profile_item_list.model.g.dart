@@ -11,6 +11,7 @@ _$_ProfileItemListModel _$$_ProfileItemListModelFromJson(
     _$_ProfileItemListModel(
       isLoading: json['isLoading'] as bool,
       hasError: json['hasError'] as bool,
+      currentIndex: json['currentIndex'] as int,
       categories: json['categories'] == null
           ? null
           : CategorySettingsCategoryListModel.fromJson(
@@ -34,6 +35,7 @@ Map<String, dynamic> _$$_ProfileItemListModelToJson(
     <String, dynamic>{
       'isLoading': instance.isLoading,
       'hasError': instance.hasError,
+      'currentIndex': instance.currentIndex,
       'categories': instance.categories,
       'items': instance.items,
       'filteredItems': instance.filteredItems,

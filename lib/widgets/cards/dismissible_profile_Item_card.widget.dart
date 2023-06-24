@@ -8,15 +8,18 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 class DismissibleProfileItemCard extends StatefulWidget {
   const DismissibleProfileItemCard({
     super.key,
+    required String text,
     required void Function({required String itemId}) onTap,
     required void Function() onTapToggleAvailability,
     required void Function({required String itemId}) onDismiss,
     required ProfileItemListItemModel item,
-  })  : _item = item,
+  })  : _text = text,
+        _item = item,
         _onDismiss = onDismiss,
         _onTap = onTap,
         _onTapToggleAvailability = onTapToggleAvailability;
 
+  final String _text;
   final void Function({required String itemId}) _onTap;
   final void Function({required String itemId}) _onDismiss;
   final void Function() _onTapToggleAvailability;
@@ -33,10 +36,12 @@ class _DismissibleProfileItemCardState extends State<DismissibleProfileItemCard>
   late final void Function() _onTapToggleAvailability;
   late final ProfileItemListItemModel _item;
   late final void Function({required String itemId}) _onTap;
+  late final String _text;
 
   @override
   void initState() {
     super.initState();
+    _text = widget._text;
     _onTap = widget._onTap;
     _item = widget._item;
     _onDismiss = widget._onDismiss;
@@ -64,6 +69,7 @@ class _DismissibleProfileItemCardState extends State<DismissibleProfileItemCard>
         ),
       ),
       child: ProfileItemCard(
+        text: _text,
         item: _item,
         onTap: () => _onTap(itemId: _item.id),
         onTapToggleAvailability: _onTapToggleAvailability,
