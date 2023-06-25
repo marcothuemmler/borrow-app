@@ -2,6 +2,7 @@ import "package:borrow_app/common/enums/form_validation_type.enum.dart";
 import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/mixins/form_validator.mixin.dart";
 import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart";
 import "package:borrow_app/views/item_editor/item_editor.model.dart";
 import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
 import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
@@ -215,10 +216,18 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
     if (category?.id is String) {
       controller.selectCategory(category);
     } else {
+      final CategoriesSettingsController categoriesSettingsController =
+          ref.read(providers.categoriesListProvider(_groupId).notifier);
       showNewCategoryDialog(
-        ref.read(providers.categoriesListProvider(_groupId).notifier),
+        categoriesSettingsController,
         context,
-      );
+      ).then((bool? success) {
+        if (success == true) {
+          categoriesSettingsController.addCategory().then((_) {
+            controller.refreshCategories();
+          });
+        }
+      });
     }
   }
 
@@ -255,6 +264,8 @@ abstract class ItemEditorController extends StateNotifier<ItemEditorModel>
   void setItemImage(XFile? image);
 
   Future<bool?> save();
+
+  void refreshCategories();
 
   void selectCategory(ItemEditorCategoryModel? category);
 }

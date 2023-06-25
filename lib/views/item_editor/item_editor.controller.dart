@@ -139,4 +139,9 @@ class ItemEditorControllerImplementation extends ItemEditorController {
       state = state.copyWith(categories: categories);
     }
   }
+
+  @override
+  void refreshCategories() {
+    _getCategories();
+  }
 }

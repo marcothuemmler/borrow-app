@@ -110,7 +110,7 @@ abstract class CategoriesSettingsController
 
   void setNewCategoryDescription(String description);
 
-  void addCategory();
+  Future<void> addCategory();
 
   void createNewCategory();
 
