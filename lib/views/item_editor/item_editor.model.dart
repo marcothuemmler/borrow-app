@@ -12,6 +12,7 @@ class ItemEditorModel with _$ItemEditorModel {
     required bool categoryNotSelected,
     required ItemEditorItemModel item,
     required XFile? itemImage,
+    required XFile? patchedItemImage,
     required List<ItemEditorCategoryModel> categories,
   }) = _ItemEditorModel;
 }

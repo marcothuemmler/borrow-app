@@ -1,10 +1,11 @@
 import "package:borrow_app/widgets/dialogs/image_change_dialog.dart";
-import "package:flutter/cupertino.dart";
+import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:go_router/go_router.dart";
 import "package:image_picker/image_picker.dart";
+import "package:transparent_image/transparent_image.dart";
 
 class ImageUpload extends StatefulWidget {
   final void Function(XFile? image)? _onImageChanged;
@@ -28,7 +29,6 @@ class _ImageUploadState extends State<ImageUpload> {
   Image? _image;
   bool _hovered = false;
   late final void Function(XFile? image)? _onImageChanged;
-  final double size = 150;
   late final String _text;
 
   @override
@@ -49,18 +49,16 @@ class _ImageUploadState extends State<ImageUpload> {
               child: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  ColoredBox(
-                    color: CupertinoColors.systemGrey6,
-                    child: Center(
-                      child: Icon(
-                        Icons.cloud_upload_outlined,
-                        size: size / 1.7,
-                        color: CupertinoColors.systemGrey3,
-                      ),
-                    ),
+                  const ImagePlaceholder(
+                    iconData: Icons.cloud_upload_outlined,
+                    size: 100,
                   ),
-                  if (_image is Image)
-                    Image(image: _image!.image, fit: BoxFit.cover),
+                  FadeInImage(
+                    fadeInDuration: const Duration(milliseconds: 250),
+                    image: _image?.image ?? MemoryImage(kTransparentImage),
+                    fit: BoxFit.cover,
+                    placeholder: MemoryImage(kTransparentImage),
+                  ),
                   AnimatedOpacity(
                     opacity: _hovered ? 1 : 0,
                     duration: const Duration(milliseconds: 150),
@@ -77,13 +75,13 @@ class _ImageUploadState extends State<ImageUpload> {
                               )
                             ],
                           ),
-                          width: size,
+                          width: constraints.maxWidth,
                           height: 40,
                           child: Center(
                             child: Text(
                               _text,
                               style: const TextStyle(
-                                color: Colors.black87,
+                                color: Colors.black54,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,
                               ),

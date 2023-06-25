@@ -1,4 +1,5 @@
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
+import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/material.dart";
 
 class ItemCard extends StatelessWidget {
@@ -52,14 +53,23 @@ class ItemCard extends StatelessWidget {
                         left: Radius.circular(7),
                         right: Radius.circular(3.5),
                       ),
-                      child: Image(
-                        width: double.infinity,
-                        height: double.infinity,
-                        image: _item.imageUrl is String
-                            ? NetworkImage(_item.imageUrl!)
-                            : Image.asset("assets/images/default.jpg").image,
-                        fit: BoxFit.cover,
-                      ),
+                      child: _item.imageUrl is String
+                          ? Image.network(
+                              _item.imageUrl!,
+                              width: double.infinity,
+                              height: double.infinity,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) {
+                                return const ImagePlaceholder(
+                                  size: 60,
+                                  iconData: Icons.image_outlined,
+                                );
+                              },
+                            )
+                          : const ImagePlaceholder(
+                              size: 60,
+                              iconData: Icons.image_outlined,
+                            ),
                     ),
                   ),
                   const SizedBox(width: 20),

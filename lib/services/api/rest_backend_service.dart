@@ -562,4 +562,13 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       throw Exception("Could not load item image: $error");
     }
   }
+
+  @override
+  Future<void> deleteItemImage({required String itemId}) async {
+    try {
+      await _client.delete<dynamic>("/items/cover/$itemId");
+    } catch (error) {
+      throw Exception("Could not delete profile image: $error");
+    }
+  }
 }
