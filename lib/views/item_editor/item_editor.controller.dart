@@ -25,6 +25,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
                 isLoading: false,
                 hasError: false,
                 itemImage: null,
+                patchedItemImage: null,
                 categories: <ItemEditorCategoryModel>[],
                 item: ItemEditorItemModel(
                   name: "",
@@ -52,7 +53,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
         final XFile image = await _itemEditorService.getItemImage(
           imageUrl: response.imageUrl!,
         );
-        state = state.copyWith(itemImage: image);
+        state = state.copyWith(itemImage: image, patchedItemImage: image);
       }
       state = state.copyWith(item: response, isLoading: false);
     } catch (error) {
@@ -81,11 +82,15 @@ class ItemEditorControllerImplementation extends ItemEditorController {
             groupId: _groupId,
           );
         }
-        if (state.itemImage is XFile && itemId is String) {
-          _itemEditorService.putItemImage(
-            itemId: itemId,
-            image: state.itemImage!,
-          );
+        if (state.patchedItemImage != state.itemImage && itemId is String) {
+          if (state.patchedItemImage is XFile) {
+            await _itemEditorService.putItemImage(
+              itemId: itemId,
+              image: state.patchedItemImage!,
+            );
+          } else {
+            await _itemEditorService.deleteItemImage(itemId: itemId);
+          }
         }
         state = state.copyWith(isLoading: false);
         return true;
@@ -111,7 +116,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
 
   @override
   void setItemImage(XFile? image) {
-    state = state.copyWith(itemImage: image);
+    state = state.copyWith(patchedItemImage: image);
   }
 
   @override

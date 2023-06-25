@@ -1,5 +1,6 @@
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/item_detail/item_detail.model.dart";
+import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:calendar_date_picker2/calendar_date_picker2.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -70,15 +71,17 @@ class ItemDetailView extends ConsumerWidget {
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(7),
                                 ),
-                                child: Image(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  image: item.imageUrl is String
-                                      ? NetworkImage(item.imageUrl!)
-                                      : Image.asset("assets/images/default.jpg")
-                                          .image,
-                                  fit: BoxFit.cover,
-                                ),
+                                child: item.imageUrl is String
+                                    ? Image.network(
+                                        item.imageUrl!,
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : const ImagePlaceholder(
+                                        iconData: Icons.image_outlined,
+                                        size: 150,
+                                      ),
                               ),
                             ),
                           ),

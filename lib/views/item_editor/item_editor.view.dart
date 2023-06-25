@@ -88,7 +88,7 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(7),
                                 child: ImageUpload(
-                                  image: model.itemImage,
+                                  image: model.patchedItemImage,
                                   onImageChanged: controller.setItemImage,
                                   text: "",
                                 ),

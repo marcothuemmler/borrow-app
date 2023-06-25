@@ -1,3 +1,6 @@
+import "dart:math";
+
+import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/material.dart";
 
 class GroupSelectionCard extends StatelessWidget {
@@ -50,38 +53,52 @@ class GroupSelectionCard extends StatelessWidget {
                   ),
                   child: IgnorePointer(
                     ignoring: inviteButtonHidden,
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: <Widget>[
-                        Image(
-                          height: double.infinity,
-                          width: double.infinity,
-                          image: groupImage is String
-                              ? Image.network(groupImage!).image
-                              : const AssetImage("assets/images/default.jpg"),
-                          fit: BoxFit.cover,
-                        ),
-                        AnimatedOpacity(
-                          opacity: inviteButtonHidden ? 0 : 1,
-                          duration: const Duration(milliseconds: 250),
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                                elevation: 5,
-                                backgroundColor: Colors.white70,
-                              ),
-                              onPressed: onTapInviteButton,
-                              child: const Icon(
-                                Icons.person_add,
-                                color: Colors.black,
-                                size: 22,
+                    child: LayoutBuilder(
+                      builder: (
+                        BuildContext context,
+                        BoxConstraints constraints,
+                      ) {
+                        return Stack(
+                          alignment: Alignment.bottomRight,
+                          children: <Widget>[
+                            groupImage is String
+                                ? Image.network(
+                                    groupImage!,
+                                    height: double.infinity,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  )
+                                : ImagePlaceholder(
+                                    iconData: Icons.image_outlined,
+                                    size: min(
+                                          constraints.maxHeight,
+                                          constraints.maxWidth,
+                                        ) *
+                                        0.8,
+                                  ),
+                            AnimatedOpacity(
+                              opacity: inviteButtonHidden ? 0 : 1,
+                              duration: const Duration(milliseconds: 250),
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: const CircleBorder(),
+                                    elevation: 5,
+                                    backgroundColor: Colors.white70,
+                                  ),
+                                  onPressed: onTapInviteButton,
+                                  child: const Icon(
+                                    Icons.person_add,
+                                    color: Colors.black,
+                                    size: 22,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ],
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),
