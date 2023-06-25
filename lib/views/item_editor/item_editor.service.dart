@@ -17,4 +17,6 @@ abstract class ItemEditorService {
   });
 
   void putItemImage({required String itemId, required XFile image});
+
+  Future<XFile> getItemImage({required String imageUrl});
 }

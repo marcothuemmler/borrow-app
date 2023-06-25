@@ -23,14 +23,17 @@ class NewCategoryDialog extends StatelessWidget {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => createCategoryCallback());
     return AlertDialog(
-      actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-      contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+      contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(10),
         ),
       ),
-      title: Text(AppLocalizations.of(context).newCategory),
+      title: Text(
+        AppLocalizations.of(context).newCategory,
+        style: const TextStyle(fontSize: 18),
+      ),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -57,18 +60,22 @@ class NewCategoryDialog extends StatelessWidget {
           policy: _ReversedTraversalPolicy(),
           child: Row(
             children: <Widget>[
-              TextButton(
-                child: Text(AppLocalizations.of(context).cancel),
-                onPressed: () => Navigator.of(context).pop(false),
+              Expanded(
+                child: TextButton(
+                  child: Text(AppLocalizations.of(context).cancel),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
               ),
-              ElevatedButton(
-                child: Text(AppLocalizations.of(context).add),
-                onPressed: () {
-                  _formKey.currentState!.save();
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.of(context).pop(true);
-                  }
-                },
+              Expanded(
+                child: ElevatedButton(
+                  child: Text(AppLocalizations.of(context).add),
+                  onPressed: () {
+                    _formKey.currentState!.save();
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.of(context).pop(true);
+                    }
+                  },
+                ),
               ),
             ],
           ),

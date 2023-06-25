@@ -89,18 +89,18 @@ class GroupSelectionCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 30,
+                horizontal: 20,
                 vertical: 12,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(groupName, style: const TextStyle(fontSize: 20)),
+                  Text(groupName, style: const TextStyle(fontSize: 16)),
                   const SizedBox(height: 10),
                   Text(
                     groupDescription ?? "",
-                    style: const TextStyle(fontSize: 16, color: Colors.black45),
+                    style: const TextStyle(fontSize: 12, color: Colors.black45),
                   ),
                 ],
               ),

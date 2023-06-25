@@ -12,6 +12,7 @@ _$_ItemEditorItemModel _$$_ItemEditorItemModelFromJson(
       itemId: json['itemId'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
+      imageUrl: json['imageUrl'] as String?,
       category: json['category'] == null
           ? null
           : ItemEditorCategoryModel.fromJson(
@@ -24,13 +25,14 @@ Map<String, dynamic> _$$_ItemEditorItemModelToJson(
       'itemId': instance.itemId,
       'name': instance.name,
       'description': instance.description,
+      'imageUrl': instance.imageUrl,
       'category': instance.category,
     };
 
 _$_ItemEditorCategoryModel _$$_ItemEditorCategoryModelFromJson(
         Map<String, dynamic> json) =>
     _$_ItemEditorCategoryModel(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       name: json['name'] as String,
       description: json['description'] as String?,
     );

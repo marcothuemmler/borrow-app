@@ -70,5 +70,8 @@
   "availableItems": "Objetos disponibles",
   "borrowedItems": "Objetos prestados",
   "markItemAvailable": "Marcar como disponible",
-  "markItemBorrowed": "Marcar como prestado"
+  "markItemBorrowed": "Marcar como prestado",
+  "newItem": "Nuevo objeto",
+  "itemSavedSuccessfully": "Objeto creado con éxito",
+  "itemSaveFailed": "No se ha podido crear el objeto"
 }

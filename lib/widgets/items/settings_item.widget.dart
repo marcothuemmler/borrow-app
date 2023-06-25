@@ -19,14 +19,14 @@ class SettingsItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 45),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
         child: SizedBox(
-          height: 80,
+          height: 60,
           child: Row(
             children: <Widget>[
               if (iconData is IconData)
-                Icon(iconData!, size: 32, color: iconColor),
-              const SizedBox(width: 20),
+                Icon(iconData!, size: 24, color: iconColor),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +37,7 @@ class SettingsItem extends StatelessWidget {
                       text,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
-                        fontSize: 16,
+                        fontSize: 14,
                         height: 0.8,
                       ),
                       maxLines: 1,

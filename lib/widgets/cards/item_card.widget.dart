@@ -28,7 +28,7 @@ class ItemCard extends StatelessWidget {
           ),
         ],
       ),
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       child: Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),

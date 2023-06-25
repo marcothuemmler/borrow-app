@@ -1,4 +1,5 @@
 import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/mixins/form_validator.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/item_editor/item_editor.model.dart";
@@ -7,9 +8,10 @@ import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 import "package:image_picker/image_picker.dart";
 
-class ItemEditorView extends ConsumerWidget {
+class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
   final String? _itemId;
   final String _groupId;
   final String? _preselectedCategory;
@@ -43,25 +45,19 @@ class ItemEditorView extends ConsumerWidget {
         body: const Center(child: CircularProgressIndicator()),
       );
     }
-    if (model.hasError) {
-      return Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: Text(AppLocalizations.of(context).unspecifiedError),
-        ),
-      );
-    }
     final ItemEditorItemModel item = model.item;
     return Scaffold(
       appBar: AppBar(
-        title: Text(_itemId is String ? item.name : "New item"),
+        title: Text(
+          _itemId is String ? item.name : AppLocalizations.of(context).newItem,
+        ),
       ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
             Expanded(
               child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Center(
                   child: Container(
                     constraints: const BoxConstraints(maxWidth: 600),
@@ -116,8 +112,24 @@ class ItemEditorView extends ConsumerWidget {
                                             AppLocalizations.of(context)
                                                 .category,
                                           ),
-                                          items: model.categories,
-                                          onChanged: controller.selectCategory,
+                                          items: <ItemEditorCategoryModel>[
+                                            ...model.categories,
+                                            ItemEditorCategoryModel(
+                                              id: null,
+                                              name: AppLocalizations.of(context)
+                                                  .newCategory,
+                                            )
+                                          ],
+                                          onChanged: (
+                                            ItemEditorCategoryModel? category,
+                                          ) {
+                                            _selectedCategory(
+                                              category: category,
+                                              controller: controller,
+                                              ref: ref,
+                                              context: context,
+                                            );
+                                          },
                                           value: model.item.category,
                                           mapFunction: (
                                             ItemEditorCategoryModel category,
@@ -170,9 +182,7 @@ class ItemEditorView extends ConsumerWidget {
                                 children: <Widget>[
                                   ElevatedButton(
                                     onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        controller.save();
-                                      }
+                                      _saveItem(controller, context);
                                     },
                                     child: Text(
                                       AppLocalizations.of(context).save,
@@ -195,6 +205,43 @@ class ItemEditorView extends ConsumerWidget {
       ),
     );
   }
+
+  void _selectedCategory({
+    required ItemEditorCategoryModel? category,
+    required ItemEditorController controller,
+    required WidgetRef ref,
+    required BuildContext context,
+  }) {
+    if (category?.id is String) {
+      controller.selectCategory(category);
+    } else {
+      showNewCategoryDialog(
+        ref.read(providers.categoriesListProvider(_groupId).notifier),
+        context,
+      );
+    }
+  }
+
+  void _saveItem(ItemEditorController controller, BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      controller.save().then((bool? success) {
+        if (success is bool) {
+          final SnackBar snackBar = SnackBar(
+            content: Text(
+              success == true
+                  ? AppLocalizations.of(context).itemSavedSuccessfully
+                  : AppLocalizations.of(context).itemSaveFailed,
+            ),
+            backgroundColor: success == true ? Colors.green : Colors.red,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          if (success) {
+            Future<void>.delayed(const Duration(seconds: 1), context.pop);
+          }
+        }
+      });
+    }
+  }
 }
 
 abstract class ItemEditorController extends StateNotifier<ItemEditorModel>
@@ -207,7 +254,7 @@ abstract class ItemEditorController extends StateNotifier<ItemEditorModel>
 
   void setItemImage(XFile? image);
 
-  void save();
+  Future<bool?> save();
 
   void selectCategory(ItemEditorCategoryModel? category);
 }

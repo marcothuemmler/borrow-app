@@ -70,5 +70,8 @@
   "availableItems": "Verfügbare Objekte",
   "borrowedItems": "Verliehene Objekte",
   "markItemAvailable": "Als verfügbar markieren",
-  "markItemBorrowed": "Als verliehen markieren"
+  "markItemBorrowed": "Als verliehen markieren",
+  "newItem": "Neues Objekt",
+  "itemSavedSuccessfully": "Objekt erfolgreich erstellt",
+  "itemSaveFailed": "Objekt konnte nicht erstellt werden"
 }

@@ -54,7 +54,7 @@ class ChatListView extends ConsumerWidget {
                             ),
                             child: Text(
                               AppLocalizations.of(context).emptyChatListMessage,
-                              style: const TextStyle(fontSize: 16),
+                              style: const TextStyle(fontSize: 12),
                             ),
                           ),
                         )

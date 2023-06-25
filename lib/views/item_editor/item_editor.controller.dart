@@ -48,11 +48,12 @@ class ItemEditorControllerImplementation extends ItemEditorController {
     try {
       final ItemEditorItemModel response =
           await _itemEditorService.getItemEditorDetails(itemId: _itemId!);
-      // if (response.imageUrl is String) {
-      //   image = await _itemEditorService.getItemImage(
-      //     imageUrl: item.imageUrl!,
-      //   );
-      // }
+      if (response.imageUrl is String) {
+        final XFile image = await _itemEditorService.getItemImage(
+          imageUrl: response.imageUrl!,
+        );
+        state = state.copyWith(itemImage: image);
+      }
       state = state.copyWith(item: response, isLoading: false);
     } catch (error) {
       state = state.copyWith(isLoading: false, hasError: true);
@@ -60,26 +61,41 @@ class ItemEditorControllerImplementation extends ItemEditorController {
   }
 
   @override
-  void save() async {
+  Future<bool?> save() async {
     String? itemId = _itemId;
     if (state.item.category is ItemEditorCategoryModel) {
-      if (_itemId is String) {
-        await _itemEditorService.patchItem(itemId: _itemId!, item: state.item);
-      } else {
-        itemId = await _itemEditorService.postItem(
-          item: state.item,
-          groupId: _groupId,
+      try {
+        state = state.copyWith(
+          hasError: true,
+          isLoading: false,
+          categoryNotSelected: false,
         );
+        if (_itemId is String) {
+          await _itemEditorService.patchItem(
+            itemId: _itemId!,
+            item: state.item,
+          );
+        } else {
+          itemId = await _itemEditorService.postItem(
+            item: state.item,
+            groupId: _groupId,
+          );
+        }
+        if (state.itemImage is XFile && itemId is String) {
+          _itemEditorService.putItemImage(
+            itemId: itemId,
+            image: state.itemImage!,
+          );
+        }
+        state = state.copyWith(isLoading: false);
+        return true;
+      } catch (error) {
+        state = state.copyWith(hasError: true, isLoading: false);
+        return false;
       }
-      if (state.itemImage is XFile && itemId is String) {
-        _itemEditorService.putItemImage(
-          itemId: itemId,
-          image: state.itemImage!,
-        );
-      }
-      _init();
     } else {
       state = state.copyWith(categoryNotSelected: true);
+      return null;
     }
   }
 
