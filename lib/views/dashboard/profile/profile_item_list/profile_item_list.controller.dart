@@ -38,6 +38,11 @@ class ProfileItemListControllerImplementation
     _getGroupItemsAndCategories(id: _groupId);
   }
 
+  @override
+  void refresh() {
+    _getGroupItemsAndCategories(id: _groupId);
+  }
+
   Future<void> _getGroupItemsAndCategories({required String id}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {

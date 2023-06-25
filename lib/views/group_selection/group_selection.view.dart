@@ -167,15 +167,18 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
     return showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        return CreateGroupDialog(
-          nameValidator: (String? value) => controller.validateFormField(
-            fieldType: FormValidationType.groupName,
-            context: context,
-            value: value,
+        return SizedBox(
+          height: 400,
+          child: CreateGroupDialog(
+            nameValidator: (String? value) => controller.validateFormField(
+              fieldType: FormValidationType.groupName,
+              context: context,
+              value: value,
+            ),
+            onGroupNameChanged: controller.setNewGroupName,
+            onGroupDescriptionChanged: controller.setNewGroupDescription,
+            onImageChanged: controller.setGroupImage,
           ),
-          onGroupNameChanged: controller.setNewGroupName,
-          onGroupDescriptionChanged: controller.setNewGroupDescription,
-          onImageChanged: controller.setGroupImage,
         );
       },
     );

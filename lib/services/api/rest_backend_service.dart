@@ -475,7 +475,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       final ItemEditorItemModelDTO payload = ItemEditorItemModelDTO(
         name: item.name,
         description: item.description,
-        categoryId: item.category!.id,
+        categoryId: item.category!.id!,
       );
       await _client.patch<dynamic>("/items/$itemId", data: payload);
     } catch (error) {
@@ -493,7 +493,7 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       final NewItemEditorItemModelDTO payload = NewItemEditorItemModelDTO(
         name: item.name,
         description: item.description,
-        categoryId: item.category!.id,
+        categoryId: item.category!.id!,
         ownerId: userId!,
         groupId: groupId,
       );
@@ -541,6 +541,25 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       );
     } catch (error) {
       throw Exception("Failed to upload item image: $error");
+    }
+  }
+
+  @override
+  Future<XFile> getItemImage({required String imageUrl}) async {
+    try {
+      final Response<Uint8List> response = await _client.get(
+        imageUrl,
+        options: Options(responseType: ResponseType.bytes),
+      );
+      final String? contentType = response.headers["content-type"]?.first;
+      final String? extension = contentType?.split("/").last;
+      return XFile.fromData(
+        response.data!,
+        name: "cover.$extension",
+        mimeType: contentType,
+      );
+    } catch (error) {
+      throw Exception("Could not load item image: $error");
     }
   }
 }

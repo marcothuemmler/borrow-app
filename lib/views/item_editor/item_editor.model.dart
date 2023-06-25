@@ -22,6 +22,7 @@ class ItemEditorItemModel with _$ItemEditorItemModel {
     String? itemId,
     required String name,
     String? description,
+    String? imageUrl,
     required ItemEditorCategoryModel? category,
   }) = _ItemEditorItemModel;
 
@@ -41,7 +42,7 @@ class ItemEditorParameters with _$ItemEditorParameters {
 @freezed
 class ItemEditorCategoryModel with _$ItemEditorCategoryModel {
   const factory ItemEditorCategoryModel({
-    required String id,
+    required String? id,
     required String name,
     String? description,
   }) = _ItemEditorCategoryModel;

@@ -1,6 +1,6 @@
-import "dart:typed_data";
-
 import "package:borrow_app/widgets/dialogs/image_change_dialog.dart";
+import "package:flutter/cupertino.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:go_router/go_router.dart";
@@ -49,14 +49,18 @@ class _ImageUploadState extends State<ImageUpload> {
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
-                Image.asset("assets/images/default.jpg", fit: BoxFit.cover),
-                if (_image is Image)
-                  FadeInImage(
-                    fadeInDuration: const Duration(milliseconds: 150),
-                    image: _image!.image,
-                    fit: BoxFit.cover,
-                    placeholder: Image.asset("assets/images/default.jpg").image,
+                ColoredBox(
+                  color: CupertinoColors.systemGrey6,
+                  child: Center(
+                    child: Icon(
+                      Icons.cloud_upload_outlined,
+                      size: size / 1.7,
+                      color: CupertinoColors.systemGrey3,
+                    ),
                   ),
+                ),
+                if (_image is Image)
+                  Image(image: _image!.image, fit: BoxFit.cover),
                 AnimatedOpacity(
                   opacity: _hovered ? 1 : 0,
                   duration: const Duration(milliseconds: 150),

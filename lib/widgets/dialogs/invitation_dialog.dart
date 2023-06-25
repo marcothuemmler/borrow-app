@@ -33,7 +33,10 @@ class InviteMembersDialog extends ConsumerWidget {
       contentPadding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       actionsPadding: const EdgeInsets.all(20),
       actionsAlignment: MainAxisAlignment.end,
-      title: Text(AppLocalizations.of(context).invite),
+      title: Text(
+        AppLocalizations.of(context).invite,
+        style: const TextStyle(fontSize: 18),
+      ),
       content: SizedBox(
         width: 350,
         child: SingleChildScrollView(

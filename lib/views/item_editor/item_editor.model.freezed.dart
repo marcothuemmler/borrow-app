@@ -277,6 +277,7 @@ mixin _$ItemEditorItemModel {
   String? get itemId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
   ItemEditorCategoryModel? get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -295,6 +296,7 @@ abstract class $ItemEditorItemModelCopyWith<$Res> {
       {String? itemId,
       String name,
       String? description,
+      String? imageUrl,
       ItemEditorCategoryModel? category});
 
   $ItemEditorCategoryModelCopyWith<$Res>? get category;
@@ -316,6 +318,7 @@ class _$ItemEditorItemModelCopyWithImpl<$Res, $Val extends ItemEditorItemModel>
     Object? itemId = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? imageUrl = freezed,
     Object? category = freezed,
   }) {
     return _then(_value.copyWith(
@@ -330,6 +333,10 @@ class _$ItemEditorItemModelCopyWithImpl<$Res, $Val extends ItemEditorItemModel>
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       category: freezed == category
           ? _value.category
@@ -363,6 +370,7 @@ abstract class _$$_ItemEditorItemModelCopyWith<$Res>
       {String? itemId,
       String name,
       String? description,
+      String? imageUrl,
       ItemEditorCategoryModel? category});
 
   @override
@@ -383,6 +391,7 @@ class __$$_ItemEditorItemModelCopyWithImpl<$Res>
     Object? itemId = freezed,
     Object? name = null,
     Object? description = freezed,
+    Object? imageUrl = freezed,
     Object? category = freezed,
   }) {
     return _then(_$_ItemEditorItemModel(
@@ -397,6 +406,10 @@ class __$$_ItemEditorItemModelCopyWithImpl<$Res>
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       category: freezed == category
           ? _value.category
@@ -413,6 +426,7 @@ class _$_ItemEditorItemModel implements _ItemEditorItemModel {
       {this.itemId,
       required this.name,
       this.description,
+      this.imageUrl,
       required this.category});
 
   factory _$_ItemEditorItemModel.fromJson(Map<String, dynamic> json) =>
@@ -425,11 +439,13 @@ class _$_ItemEditorItemModel implements _ItemEditorItemModel {
   @override
   final String? description;
   @override
+  final String? imageUrl;
+  @override
   final ItemEditorCategoryModel? category;
 
   @override
   String toString() {
-    return 'ItemEditorItemModel(itemId: $itemId, name: $name, description: $description, category: $category)';
+    return 'ItemEditorItemModel(itemId: $itemId, name: $name, description: $description, imageUrl: $imageUrl, category: $category)';
   }
 
   @override
@@ -441,6 +457,8 @@ class _$_ItemEditorItemModel implements _ItemEditorItemModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
             (identical(other.category, category) ||
                 other.category == category));
   }
@@ -448,7 +466,7 @@ class _$_ItemEditorItemModel implements _ItemEditorItemModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, itemId, name, description, category);
+      Object.hash(runtimeType, itemId, name, description, imageUrl, category);
 
   @JsonKey(ignore: true)
   @override
@@ -470,6 +488,7 @@ abstract class _ItemEditorItemModel implements ItemEditorItemModel {
           {final String? itemId,
           required final String name,
           final String? description,
+          final String? imageUrl,
           required final ItemEditorCategoryModel? category}) =
       _$_ItemEditorItemModel;
 
@@ -482,6 +501,8 @@ abstract class _ItemEditorItemModel implements ItemEditorItemModel {
   String get name;
   @override
   String? get description;
+  @override
+  String? get imageUrl;
   @override
   ItemEditorCategoryModel? get category;
   @override
@@ -656,7 +677,7 @@ ItemEditorCategoryModel _$ItemEditorCategoryModelFromJson(
 
 /// @nodoc
 mixin _$ItemEditorCategoryModel {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
 
@@ -672,7 +693,7 @@ abstract class $ItemEditorCategoryModelCopyWith<$Res> {
           $Res Function(ItemEditorCategoryModel) then) =
       _$ItemEditorCategoryModelCopyWithImpl<$Res, ItemEditorCategoryModel>;
   @useResult
-  $Res call({String id, String name, String? description});
+  $Res call({String? id, String name, String? description});
 }
 
 /// @nodoc
@@ -689,15 +710,15 @@ class _$ItemEditorCategoryModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -718,7 +739,7 @@ abstract class _$$_ItemEditorCategoryModelCopyWith<$Res>
       __$$_ItemEditorCategoryModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String? description});
+  $Res call({String? id, String name, String? description});
 }
 
 /// @nodoc
@@ -733,15 +754,15 @@ class __$$_ItemEditorCategoryModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? description = freezed,
   }) {
     return _then(_$_ItemEditorCategoryModel(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -764,7 +785,7 @@ class _$_ItemEditorCategoryModel implements _ItemEditorCategoryModel {
       _$$_ItemEditorCategoryModelFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
   final String name;
   @override
@@ -808,7 +829,7 @@ class _$_ItemEditorCategoryModel implements _ItemEditorCategoryModel {
 
 abstract class _ItemEditorCategoryModel implements ItemEditorCategoryModel {
   const factory _ItemEditorCategoryModel(
-      {required final String id,
+      {required final String? id,
       required final String name,
       final String? description}) = _$_ItemEditorCategoryModel;
 
@@ -816,7 +837,7 @@ abstract class _ItemEditorCategoryModel implements ItemEditorCategoryModel {
       _$_ItemEditorCategoryModel.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
   String get name;
   @override

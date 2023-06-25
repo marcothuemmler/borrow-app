@@ -1,7 +1,6 @@
 import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
-import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart";
 import "package:borrow_app/widgets/buttons/dotted_border_button.widget.dart";
 import "package:borrow_app/widgets/cards/item_card.widget.dart";
 import "package:borrow_app/widgets/various_components/list_refresh_indicator.widget.dart";
@@ -37,7 +36,7 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
                 physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics(),
                 ),
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 15),
                 itemCount: model.items.length,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
@@ -51,54 +50,37 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
             )
           else if (!model.isLoading)
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Center(
-                    child: Text(
-                      AppLocalizations.of(context).emptyGroupMessage,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 24,
+              child: Center(
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Center(
+                        child: Text(
+                          AppLocalizations.of(context).emptyGroupMessage,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 24,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  DottedBorderButton(
-                    title: AppLocalizations.of(context).newCategory,
-                    icon: const Icon(Icons.add),
-                    onTap: () => _onNewCategory(
-                      ref.read(
-                        providers.categoriesListProvider(_groupId).notifier,
+                      const SizedBox(height: 25),
+                      DottedBorderButton(
+                        title: AppLocalizations.of(context).addNewItem,
+                        icon: const Icon(Icons.add),
+                        onTap: controller.navigateToItemEditor,
+                        width: 220,
                       ),
-                      context,
-                    ),
-                    width: 220,
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                  DottedBorderButton(
-                    title: AppLocalizations.of(context).addNewItem,
-                    icon: const Icon(Icons.add),
-                    onTap: controller.navigateToItemEditor,
-                    width: 220,
-                  ),
-                ],
+                ),
               ),
             ),
         ],
       ),
     );
-  }
-
-  Future<void> _onNewCategory(
-    CategoriesSettingsController controller,
-    BuildContext context,
-  ) async {
-    final bool? value = await showNewCategoryDialog(controller, context);
-    if (value ?? false) {
-      controller.addCategory();
-    }
   }
 }
 

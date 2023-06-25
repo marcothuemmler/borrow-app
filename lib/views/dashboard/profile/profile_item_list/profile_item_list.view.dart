@@ -4,6 +4,7 @@ import "package:borrow_app/views/dashboard/profile/categories_settings/category_
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
 import "package:borrow_app/widgets/cards/dismissible_profile_item_card.widget.dart";
 import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
+import "package:borrow_app/widgets/various_components/list_refresh_indicator.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -73,7 +74,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                         horizontal: 20,
                         vertical: isPortrait ? 15 : 5,
                       ),
-                      labelStyle: const TextStyle(fontSize: 16),
+                      labelStyle: const TextStyle(fontSize: 14),
                       unselectedLabelColor: Colors.black54,
                       labelColor: Colors.black87,
                       tabs: <Widget>[
@@ -81,11 +82,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                         Tab(text: AppLocalizations.of(context).borrowedItems),
                       ],
                     ),
-                    if (model.isLoading)
-                      const Expanded(
-                        child: Center(child: CircularProgressIndicator()),
-                      )
-                    else if (model.hasError)
+                    if (model.hasError)
                       Expanded(
                         child: Center(
                           child: Text(
@@ -101,24 +98,29 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Expanded(
-                                  child: ListView.builder(
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: availableItems.length,
-                                    shrinkWrap: true,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      final ProfileItemListItemModel item =
-                                          availableItems.elementAt(index);
-                                      return DismissibleProfileItemCard(
-                                        text: AppLocalizations.of(context)
-                                            .markItemBorrowed,
-                                        item: item,
-                                        onTap: controller.navigateToItem,
-                                        onDismiss: controller.deleteItem,
-                                        onTapToggleAvailability:
-                                            controller.toggleAvailability,
-                                      );
-                                    },
+                                  child: ListRefreshIndicator(
+                                    onAction: () async => controller.refresh(),
+                                    isLoading: model.isLoading,
+                                    child: ListView.builder(
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      itemCount: availableItems.length,
+                                      shrinkWrap: true,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        final ProfileItemListItemModel item =
+                                            availableItems.elementAt(index);
+                                        return DismissibleProfileItemCard(
+                                          text: AppLocalizations.of(context)
+                                              .markItemBorrowed,
+                                          item: item,
+                                          onTap: controller.navigateToItem,
+                                          onDismiss: controller.deleteItem,
+                                          onTapToggleAvailability:
+                                              controller.toggleAvailability,
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
@@ -127,24 +129,29 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Expanded(
-                                  child: ListView.builder(
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: borrowedItems.length,
-                                    shrinkWrap: true,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      final ProfileItemListItemModel item =
-                                          borrowedItems.elementAt(index);
-                                      return DismissibleProfileItemCard(
-                                        text: AppLocalizations.of(context)
-                                            .markItemAvailable,
-                                        item: item,
-                                        onTap: controller.navigateToItem,
-                                        onDismiss: controller.deleteItem,
-                                        onTapToggleAvailability:
-                                            controller.toggleAvailability,
-                                      );
-                                    },
+                                  child: ListRefreshIndicator(
+                                    onAction: () async => controller.refresh(),
+                                    isLoading: model.isLoading,
+                                    child: ListView.builder(
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      itemCount: borrowedItems.length,
+                                      shrinkWrap: true,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        final ProfileItemListItemModel item =
+                                            borrowedItems.elementAt(index);
+                                        return DismissibleProfileItemCard(
+                                          text: AppLocalizations.of(context)
+                                              .markItemAvailable,
+                                          item: item,
+                                          onTap: controller.navigateToItem,
+                                          onDismiss: controller.deleteItem,
+                                          onTapToggleAvailability:
+                                              controller.toggleAvailability,
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
@@ -174,6 +181,8 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
 abstract class ProfileItemListController
     extends StateNotifier<ProfileItemListModel> {
   ProfileItemListController(super.model);
+
+  void refresh();
 
   void navigateToItem({required String itemId});
 

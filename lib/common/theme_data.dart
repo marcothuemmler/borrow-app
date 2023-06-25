@@ -5,20 +5,20 @@ final ThemeData themeData = ThemeData(
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       padding: const EdgeInsets.symmetric(
-        vertical: 14,
-        horizontal: 32,
+        vertical: 12,
+        horizontal: 20,
       ),
-      textStyle: const TextStyle(fontSize: 19),
+      textStyle: const TextStyle(fontSize: 16),
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
       padding: const EdgeInsets.symmetric(
-        vertical: 14,
-        horizontal: 32,
+        vertical: 12,
+        horizontal: 20,
       ),
-      textStyle: const TextStyle(fontSize: 19),
+      textStyle: const TextStyle(fontSize: 16),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(7),
@@ -27,8 +27,8 @@ final ThemeData themeData = ThemeData(
     ),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    selectedIconTheme: IconThemeData(size: 36),
-    unselectedIconTheme: IconThemeData(size: 36),
+    selectedIconTheme: IconThemeData(size: 30),
+    unselectedIconTheme: IconThemeData(size: 30),
     showSelectedLabels: false,
     showUnselectedLabels: false,
   ),
@@ -36,7 +36,7 @@ final ThemeData themeData = ThemeData(
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle.dark,
     titleTextStyle: TextStyle(
-      fontSize: 26,
+      fontSize: 18,
       fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
@@ -45,9 +45,10 @@ final ThemeData themeData = ThemeData(
     foregroundColor: Colors.black,
     centerTitle: false,
   ),
-  listTileTheme: const ListTileThemeData(
+  listTileTheme: ListTileThemeData(
     minLeadingWidth: 8,
-    contentPadding: EdgeInsets.symmetric(horizontal: 5),
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
   ),
   popupMenuTheme: const PopupMenuThemeData(
     shape: RoundedRectangleBorder(

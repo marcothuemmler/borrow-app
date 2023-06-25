@@ -70,5 +70,8 @@
   "availableItems": "Available items",
   "borrowedItems": "Borrowed items",
   "markItemAvailable": "Mark as available",
-  "markItemBorrowed": "Mark as borrowed"
+  "markItemBorrowed": "Mark as borrowed",
+  "newItem": "New Item",
+  "itemSavedSuccessfully": "Item created successfully",
+  "itemSaveFailed": "Could not create item"
 }

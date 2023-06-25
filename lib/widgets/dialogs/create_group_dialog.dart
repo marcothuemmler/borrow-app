@@ -31,9 +31,12 @@ class CreateGroupDialog extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      title: Text(AppLocalizations.of(context).newGroup),
-      actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-      contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      title: Text(
+        AppLocalizations.of(context).newGroup,
+        style: const TextStyle(fontSize: 18),
+      ),
+      actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+      contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -43,7 +46,7 @@ class CreateGroupDialog extends StatelessWidget {
             direction: isPortrait ? Axis.vertical : Axis.horizontal,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(20),
                 child: ImageUpload(
                   onImageChanged: onImageChanged,
                   text: AppLocalizations.of(context).setGroupImage,
@@ -83,7 +86,9 @@ class CreateGroupDialog extends StatelessWidget {
               Expanded(
                 child: TextButton(
                   style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                  child: Text(AppLocalizations.of(context).cancel),
+                  child: Text(
+                    AppLocalizations.of(context).cancel,
+                  ),
                   onPressed: () => context.pop(false),
                 ),
               ),
