@@ -6,6 +6,7 @@ import "package:borrow_app/views/dashboard/profile/categories_settings/categorie
 import "package:borrow_app/views/item_editor/item_editor.model.dart";
 import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
 import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
+import "package:borrow_app/widgets/various_components/image_upload.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -85,12 +86,11 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
                                 ],
                               ),
                               child: ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(7),
-                                ),
-                                child: Image.asset(
-                                  "assets/images/default.jpg",
-                                  fit: BoxFit.cover,
+                                borderRadius: BorderRadius.circular(7),
+                                child: ImageUpload(
+                                  image: model.itemImage,
+                                  onImageChanged: controller.setItemImage,
+                                  text: "",
                                 ),
                               ),
                             ),

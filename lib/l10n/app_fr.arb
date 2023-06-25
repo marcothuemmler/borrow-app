@@ -72,6 +72,6 @@
   "markItemAvailable": "Marquer comme disponible",
   "markItemBorrowed": "Marquer comme emprunté",
   "newItem": "Nouvel objet",
-  "itemSavedSuccessfully": "Objet créé avec succès",
-  "itemSaveFailed": "L'objet n'a pas pu être créé"
+  "itemSavedSuccessfully": "Objet sauvegardé avec succès",
+  "itemSaveFailed": "L'objet n'a pas pu être sauvegardé"
 }

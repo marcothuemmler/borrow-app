@@ -72,6 +72,6 @@
   "markItemAvailable": "Mark as available",
   "markItemBorrowed": "Mark as borrowed",
   "newItem": "New Item",
-  "itemSavedSuccessfully": "Item created successfully",
-  "itemSaveFailed": "Could not create item"
+  "itemSavedSuccessfully": "Item saved successfully",
+  "itemSaveFailed": "Could not save item"
 }
