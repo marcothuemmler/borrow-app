@@ -62,11 +62,19 @@ class ProfileSettingsView extends ConsumerWidget {
                             key: _formKey,
                             child: Column(
                               children: <Widget>[
-                                ImageUpload(
-                                  image: model.patchedProfileImage,
-                                  text: AppLocalizations.of(context)
-                                      .setProfileImage,
-                                  onImageChanged: controller.setProfileImage,
+                                SizedBox(
+                                  height: 150,
+                                  width: 150,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: ImageUpload(
+                                      image: model.patchedProfileImage,
+                                      text: AppLocalizations.of(context)
+                                          .setProfileImage,
+                                      onImageChanged:
+                                          controller.setProfileImage,
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(height: isPortrait ? 40 : 20),
                                 TextFormField(

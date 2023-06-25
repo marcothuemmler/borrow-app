@@ -33,71 +33,72 @@ class _ImageUploadState extends State<ImageUpload> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        height: size,
-        width: size,
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          child: InkWell(
-            hoverColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: _selectFile,
-            onHover: (bool hovered) => setState(() => _hovered = hovered),
-            child: Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                ColoredBox(
-                  color: CupertinoColors.systemGrey6,
-                  child: Center(
-                    child: Icon(
-                      Icons.cloud_upload_outlined,
-                      size: size / 1.7,
-                      color: CupertinoColors.systemGrey3,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Center(
+          child: SizedBox(
+            height: constraints.maxHeight,
+            width: constraints.maxWidth,
+            child: InkWell(
+              hoverColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: _selectFile,
+              onHover: (bool hovered) => setState(() => _hovered = hovered),
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  ColoredBox(
+                    color: CupertinoColors.systemGrey6,
+                    child: Center(
+                      child: Icon(
+                        Icons.cloud_upload_outlined,
+                        size: size / 1.7,
+                        color: CupertinoColors.systemGrey3,
+                      ),
                     ),
                   ),
-                ),
-                if (_image is Image)
-                  Image(image: _image!.image, fit: BoxFit.cover),
-                AnimatedOpacity(
-                  opacity: _hovered ? 1 : 0,
-                  duration: const Duration(milliseconds: 150),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Color.fromRGBO(255, 255, 255, 0.7),
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 2,
-                            )
-                          ],
-                        ),
-                        width: size,
-                        height: 40,
-                        child: Center(
-                          child: Text(
-                            _text,
-                            style: const TextStyle(
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
+                  if (_image is Image)
+                    Image(image: _image!.image, fit: BoxFit.cover),
+                  AnimatedOpacity(
+                    opacity: _hovered ? 1 : 0,
+                    duration: const Duration(milliseconds: 150),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.7),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 2,
+                              )
+                            ],
+                          ),
+                          width: size,
+                          height: 40,
+                          child: Center(
+                            child: Text(
+                              _text,
+                              style: const TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

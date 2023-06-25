@@ -1,5 +1,6 @@
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/chat_list/chat_list.model.dart";
+import "package:borrow_app/widgets/cards/information_card.widget.dart";
 import "package:borrow_app/widgets/items/chat_list_item.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -50,14 +51,16 @@ class ChatListView extends ConsumerWidget {
                         Center(
                           child: Padding(
                             padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.1,
+                              left: 30,
+                              top: MediaQuery.of(context).size.height * 0.05,
+                              right: 30,
                             ),
-                            child: Text(
-                              AppLocalizations.of(context).emptyChatListMessage,
-                              style: const TextStyle(fontSize: 12),
+                            child: InformationCard(
+                              message: AppLocalizations.of(context)
+                                  .emptyChatListMessage,
                             ),
                           ),
-                        )
+                        ),
                     ],
                   ),
                 ),
