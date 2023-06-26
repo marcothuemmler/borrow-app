@@ -54,155 +54,170 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
           _itemId is String ? item.name : AppLocalizations.of(context).newItem,
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Center(
-                  child: Container(
-                    constraints: const BoxConstraints(maxWidth: 600),
-                    padding: const EdgeInsets.all(30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Center(
-                          child: AspectRatio(
-                            aspectRatio: 1.5,
-                            child: Container(
-                              padding: const EdgeInsets.all(3),
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                                color: Colors.white,
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    offset: Offset(0, 3),
-                                    blurRadius: 10,
+      body: Stack(
+        children: <Widget>[
+          SafeArea(
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Center(
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 600),
+                        padding: const EdgeInsets.all(30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Center(
+                              child: AspectRatio(
+                                aspectRatio: 1.5,
+                                child: Container(
+                                  padding: const EdgeInsets.all(3),
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    color: Colors.white,
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        offset: Offset(0, 3),
+                                        blurRadius: 10,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(7),
-                                child: ImageUpload(
-                                  image: model.patchedItemImage,
-                                  onImageChanged: controller.setItemImage,
-                                  text: "",
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(7),
+                                    child: ImageUpload(
+                                      image: model.patchedItemImage,
+                                      onImageChanged: controller.setItemImage,
+                                      text: "",
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              const SizedBox(height: 30),
-                              Center(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  const SizedBox(height: 30),
+                                  Center(
+                                    child: Column(
                                       children: <Widget>[
-                                        DropdownWidget<ItemEditorCategoryModel>(
-                                          hint: Text(
-                                            AppLocalizations.of(context)
-                                                .category,
-                                          ),
-                                          items: <ItemEditorCategoryModel>[
-                                            ...model.categories,
-                                            ItemEditorCategoryModel(
-                                              id: null,
-                                              name: AppLocalizations.of(context)
-                                                  .newCategory,
-                                            )
-                                          ],
-                                          onChanged: (
-                                            ItemEditorCategoryModel? category,
-                                          ) {
-                                            _selectedCategory(
-                                              category: category,
-                                              controller: controller,
-                                              ref: ref,
-                                              context: context,
-                                            );
-                                          },
-                                          value: model.item.category,
-                                          mapFunction: (
-                                            ItemEditorCategoryModel category,
-                                          ) {
-                                            return DropdownMenuItem<
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            DropdownWidget<
                                                 ItemEditorCategoryModel>(
-                                              value: category,
-                                              child: Text(category.name),
-                                            );
-                                          },
+                                              hint: Text(
+                                                AppLocalizations.of(context)
+                                                    .category,
+                                              ),
+                                              items: <ItemEditorCategoryModel>[
+                                                ...model.categories,
+                                                ItemEditorCategoryModel(
+                                                  id: null,
+                                                  name: AppLocalizations.of(
+                                                    context,
+                                                  ).newCategory,
+                                                )
+                                              ],
+                                              onChanged: (
+                                                ItemEditorCategoryModel?
+                                                    category,
+                                              ) {
+                                                _selectedCategory(
+                                                  category: category,
+                                                  controller: controller,
+                                                  ref: ref,
+                                                  context: context,
+                                                );
+                                              },
+                                              value: model.item.category,
+                                              mapFunction: (
+                                                ItemEditorCategoryModel
+                                                    category,
+                                              ) {
+                                                return DropdownMenuItem<
+                                                    ItemEditorCategoryModel>(
+                                                  value: category,
+                                                  child: Text(category.name),
+                                                );
+                                              },
+                                            ),
+                                          ],
                                         ),
+                                        if (model.categoryNotSelected)
+                                          Text(
+                                            AppLocalizations.of(context)
+                                                .categoryNotSelected,
+                                            style: const TextStyle(
+                                              color: Colors.red,
+                                            ),
+                                          ),
                                       ],
                                     ),
-                                    if (model.categoryNotSelected)
-                                      Text(
-                                        AppLocalizations.of(context)
-                                            .categoryNotSelected,
-                                        style: const TextStyle(
-                                          color: Colors.red,
+                                  ),
+                                  const SizedBox(height: 20),
+                                  TextFieldWidget(
+                                    text: AppLocalizations.of(context).name,
+                                    validator: (String? value) {
+                                      return controller.validateFormField(
+                                        fieldType: FormValidationType.itemName,
+                                        context: context,
+                                        value: value,
+                                      );
+                                    },
+                                    onChanged: controller.setName,
+                                    autocorrect: false,
+                                    initialValue: model.item.name,
+                                  ),
+                                  const SizedBox(height: 15),
+                                  TextFieldWidget(
+                                    text: AppLocalizations.of(context)
+                                        .description,
+                                    validator: null,
+                                    onChanged: controller.setDescription,
+                                    autocorrect: false,
+                                    initialValue: model.item.description,
+                                  ),
+                                  const SizedBox(height: 30),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          _saveItem(controller, context);
+                                        },
+                                        child: Text(
+                                          AppLocalizations.of(context).save,
                                         ),
                                       ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              TextFieldWidget(
-                                text: AppLocalizations.of(context).name,
-                                validator: (String? value) {
-                                  return controller.validateFormField(
-                                    fieldType: FormValidationType.itemName,
-                                    context: context,
-                                    value: value,
-                                  );
-                                },
-                                onChanged: controller.setName,
-                                autocorrect: false,
-                                initialValue: model.item.name,
-                              ),
-                              const SizedBox(height: 15),
-                              TextFieldWidget(
-                                text: AppLocalizations.of(context).description,
-                                validator: null,
-                                onChanged: controller.setDescription,
-                                autocorrect: false,
-                                initialValue: model.item.description,
-                              ),
-                              const SizedBox(height: 30),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      _saveItem(controller, context);
-                                    },
-                                    child: Text(
-                                      AppLocalizations.of(context).save,
-                                    ),
+                                    ],
                                   ),
+                                  const SizedBox(height: 20),
                                 ],
                               ),
-                              const SizedBox(height: 20),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+          if (model.isProcessing)
+            const ColoredBox(
+              color: Colors.white38,
+              child: Center(child: CircularProgressIndicator()),
+            )
+        ],
       ),
     );
   }
@@ -245,7 +260,10 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           if (success) {
-            Future<void>.delayed(const Duration(seconds: 1), context.pop);
+            Future<void>.delayed(
+              const Duration(milliseconds: 700),
+              context.pop,
+            );
           }
         }
       });

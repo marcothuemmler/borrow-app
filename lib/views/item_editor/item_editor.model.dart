@@ -8,6 +8,7 @@ part "item_editor.model.g.dart";
 class ItemEditorModel with _$ItemEditorModel {
   const factory ItemEditorModel({
     required bool isLoading,
+    required bool isProcessing,
     required bool hasError,
     required bool categoryNotSelected,
     required ItemEditorItemModel item,
