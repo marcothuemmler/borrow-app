@@ -4,6 +4,7 @@ import "package:borrow_app/widgets/various_components/image_placeholder.widget.d
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:skeletons/skeletons.dart";
 
 class DismissibleProfileItemCard extends StatelessWidget
     with DeleteConfirmMixin {
@@ -84,17 +85,28 @@ class DismissibleProfileItemCard extends StatelessWidget
                   children: <Widget>[
                     SizedBox(
                       width: 65,
+                      height: 65,
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(7),
                           bottomLeft: Radius.circular(7),
                         ),
                         child: _item.imageUrl is String
-                            ? Image(
+                            ? Image.network(
                                 height: double.infinity,
                                 width: double.infinity,
-                                image: NetworkImage(_item.imageUrl!),
+                                _item.imageUrl!,
                                 fit: BoxFit.cover,
+                                loadingBuilder: (
+                                  _,
+                                  Widget child,
+                                  ImageChunkEvent? event,
+                                ) {
+                                  if (event == null) {
+                                    return child;
+                                  }
+                                  return const SkeletonAvatar();
+                                },
                               )
                             : const ImagePlaceholder(
                                 iconData: Icons.image_outlined,

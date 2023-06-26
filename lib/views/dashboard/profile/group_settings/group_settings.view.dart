@@ -1,4 +1,5 @@
 import "package:borrow_app/services/routing/routes.dart";
+import "package:borrow_app/widgets/dialogs/leave_group_bottom_sheet.dialog.dart";
 import "package:borrow_app/widgets/items/settings_item.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -36,7 +37,24 @@ class GroupSettingsView extends StatelessWidget {
           SettingsItem(
             iconData: Icons.account_balance_wallet,
             text: AppLocalizations.of(context).balance,
-            onTap: () {},
+            onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(AppLocalizations.of(context).comingSoon),
+              ),
+            ),
+          ),
+          SettingsItem(
+            iconData: Icons.logout,
+            iconColor: Colors.red,
+            text: AppLocalizations.of(context).leaveGroup,
+            onTap: () => showModalBottomSheet<void>(
+              isScrollControlled: true,
+              context: context,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+              ),
+              builder: (BuildContext context) => const LeaveGroupBottomSheet(),
+            ),
           ),
         ],
       ),
