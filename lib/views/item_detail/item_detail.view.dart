@@ -37,17 +37,59 @@ class ItemDetailView extends ConsumerWidget {
       );
     }
     final ItemDetailItemModel item = model.item!;
+    final bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: AppBar(title: Text(item.name)),
       body: SafeArea(
-        child: Center(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 600),
+        child: isPortrait
+            ? SingleChildScrollView(
+                child: _ItemDetail(
+                  isPortrait: isPortrait,
+                  item: item,
+                  onTapContactOwner: () => controller.contactOwner(
+                    ownerId: item.owner.id,
+                  ),
+                ),
+              )
+            : _ItemDetail(
+                isPortrait: isPortrait,
+                item: item,
+                onTapContactOwner: () => controller.contactOwner(
+                  ownerId: item.owner.id,
+                ),
+              ),
+      ),
+    );
+  }
+}
+
+class _ItemDetail extends StatelessWidget {
+  const _ItemDetail({
+    required this.isPortrait,
+    required this.item,
+    required this.onTapContactOwner,
+  });
+
+  final bool isPortrait;
+  final ItemDetailItemModel item;
+  final void Function() onTapContactOwner;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 30,
+        vertical: isPortrait ? 30 : 15,
+      ),
+      child: Flex(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        direction: isPortrait ? Axis.vertical : Axis.horizontal,
+        children: <Widget>[
+          Flexible(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(30),
-              physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
                     child: AspectRatio(
@@ -102,7 +144,6 @@ class ItemDetailView extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: CircleAvatar(
@@ -133,9 +174,7 @@ class ItemDetailView extends ConsumerWidget {
                         return <PopupMenuItem<Text>>[
                           PopupMenuItem<Text>(
                             enabled: !item.isMyItem,
-                            onTap: () => controller.contactOwner(
-                              ownerId: item.owner.id,
-                            ),
+                            onTap: onTapContactOwner,
                             child: Text(
                               AppLocalizations.of(context).contactOwner,
                             ),
@@ -144,7 +183,21 @@ class ItemDetailView extends ConsumerWidget {
                       },
                     ),
                   ),
-                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
+          ),
+          if (!isPortrait)
+            const VerticalDivider(
+              width: 40,
+              color: CupertinoColors.systemGrey2,
+            ),
+          Flexible(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  if (isPortrait) const SizedBox(height: 10),
                   Text(
                     "${AppLocalizations.of(context).description}:",
                     style: const TextStyle(
@@ -157,7 +210,7 @@ class ItemDetailView extends ConsumerWidget {
                     item.description ??
                         AppLocalizations.of(context).noDescription,
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
                   Text(
                     "${AppLocalizations.of(context).available}:",
                     style: const TextStyle(
@@ -168,7 +221,7 @@ class ItemDetailView extends ConsumerWidget {
                   const SizedBox(height: 40),
                   DecoratedBox(
                     decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 230, 230, 230),
+                      color: CupertinoColors.systemGrey5,
                       borderRadius: BorderRadius.all(
                         Radius.circular(10),
                       ),
@@ -198,7 +251,7 @@ class ItemDetailView extends ConsumerWidget {
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
