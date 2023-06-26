@@ -2,10 +2,12 @@ import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/item_detail/item_detail.model.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:calendar_date_picker2/calendar_date_picker2.dart";
+import "package:easy_image_viewer/easy_image_viewer.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:skeletons/skeletons.dart";
 
 class ItemDetailView extends ConsumerWidget {
   final String _itemId;
@@ -68,11 +70,29 @@ class ItemDetailView extends ConsumerWidget {
                             Radius.circular(7),
                           ),
                           child: item.imageUrl is String
-                              ? Image.network(
-                                  item.imageUrl!,
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  fit: BoxFit.cover,
+                              ? GestureDetector(
+                                  onTap: () => showImageViewer(
+                                    context,
+                                    NetworkImage(item.imageUrl!),
+                                    swipeDismissible: true,
+                                    doubleTapZoomable: true,
+                                  ),
+                                  child: Image.network(
+                                    item.imageUrl!,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder: (
+                                      _,
+                                      Widget child,
+                                      ImageChunkEvent? event,
+                                    ) {
+                                      if (event is! ImageChunkEvent) {
+                                        return child;
+                                      }
+                                      return const SkeletonAvatar();
+                                    },
+                                  ),
                                 )
                               : const ImagePlaceholder(
                                   iconData: Icons.image_outlined,
