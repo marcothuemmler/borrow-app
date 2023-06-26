@@ -51,6 +51,7 @@ class ItemListItemModel with _$ItemListItemModel {
     required String? description,
     required ItemListCategoryModel? category,
     required ItemListUserModel owner,
+    required bool isActive,
     String? imageUrl,
   }) = _ItemListItemModel;
 

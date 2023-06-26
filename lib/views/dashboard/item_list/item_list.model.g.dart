@@ -81,6 +81,7 @@ _$_ItemListItemModel _$$_ItemListItemModelFromJson(Map<String, dynamic> json) =>
           : ItemListCategoryModel.fromJson(
               json['category'] as Map<String, dynamic>),
       owner: ItemListUserModel.fromJson(json['owner'] as Map<String, dynamic>),
+      isActive: json['isActive'] as bool,
       imageUrl: json['imageUrl'] as String?,
     );
 
@@ -92,6 +93,7 @@ Map<String, dynamic> _$$_ItemListItemModelToJson(
       'description': instance.description,
       'category': instance.category,
       'owner': instance.owner,
+      'isActive': instance.isActive,
       'imageUrl': instance.imageUrl,
     };
 
