@@ -28,7 +28,7 @@ class ItemDetailView extends ConsumerWidget {
         body: const Center(child: CircularProgressIndicator()),
       );
     }
-    if (model.hasError || model.item is! ItemDetailItemModel) {
+    if (model.hasError) {
       return Scaffold(
         appBar: AppBar(),
         body: Center(
@@ -44,20 +44,14 @@ class ItemDetailView extends ConsumerWidget {
       body: SafeArea(
         child: isPortrait
             ? SingleChildScrollView(
-                child: _ItemDetail(
-                  isPortrait: isPortrait,
+                child: _ItemDetail.portrait(
                   item: item,
-                  onTapContactOwner: () => controller.contactOwner(
-                    ownerId: item.owner.id,
-                  ),
+                  onTapContactOwner: controller.contactOwner,
                 ),
               )
-            : _ItemDetail(
-                isPortrait: isPortrait,
+            : _ItemDetail.landscape(
                 item: item,
-                onTapContactOwner: () => controller.contactOwner(
-                  ownerId: item.owner.id,
-                ),
+                onTapContactOwner: controller.contactOwner,
               ),
       ),
     );
@@ -66,26 +60,50 @@ class ItemDetailView extends ConsumerWidget {
 
 class _ItemDetail extends StatelessWidget {
   const _ItemDetail({
-    required this.isPortrait,
-    required this.item,
-    required this.onTapContactOwner,
-  });
+    required bool isPortrait,
+    required ItemDetailItemModel item,
+    required void Function({required String ownerId}) onTapContactOwner,
+  })  : _onTapContactOwner = onTapContactOwner,
+        _item = item,
+        _isPortrait = isPortrait;
 
-  final bool isPortrait;
-  final ItemDetailItemModel item;
-  final void Function() onTapContactOwner;
+  factory _ItemDetail.portrait({
+    required void Function({required String ownerId}) onTapContactOwner,
+    required ItemDetailItemModel item,
+  }) {
+    return _ItemDetail(
+      isPortrait: true,
+      item: item,
+      onTapContactOwner: onTapContactOwner,
+    );
+  }
+
+  factory _ItemDetail.landscape({
+    required void Function({required String ownerId}) onTapContactOwner,
+    required ItemDetailItemModel item,
+  }) {
+    return _ItemDetail(
+      isPortrait: false,
+      item: item,
+      onTapContactOwner: onTapContactOwner,
+    );
+  }
+
+  final bool _isPortrait;
+  final ItemDetailItemModel _item;
+  final void Function({required String ownerId}) _onTapContactOwner;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 30,
-        vertical: isPortrait ? 30 : 15,
+        vertical: _isPortrait ? 30 : 15,
       ),
       child: Flex(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        direction: isPortrait ? Axis.vertical : Axis.horizontal,
+        direction: _isPortrait ? Axis.vertical : Axis.horizontal,
         children: <Widget>[
           Flexible(
             child: SingleChildScrollView(
@@ -111,16 +129,16 @@ class _ItemDetail extends StatelessWidget {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(7),
                           ),
-                          child: item.imageUrl is String
+                          child: _item.imageUrl is String
                               ? GestureDetector(
                                   onTap: () => showImageViewer(
                                     context,
-                                    NetworkImage(item.imageUrl!),
+                                    NetworkImage(_item.imageUrl!),
                                     swipeDismissible: true,
                                     doubleTapZoomable: true,
                                   ),
                                   child: Image.network(
-                                    item.imageUrl!,
+                                    _item.imageUrl!,
                                     width: double.infinity,
                                     height: double.infinity,
                                     fit: BoxFit.cover,
@@ -147,8 +165,8 @@ class _ItemDetail extends StatelessWidget {
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: CircleAvatar(
-                      foregroundImage: item.owner.imageUrl is String
-                          ? NetworkImage(item.owner.imageUrl!)
+                      foregroundImage: _item.owner.imageUrl is String
+                          ? NetworkImage(_item.owner.imageUrl!)
                           : null,
                       radius: 14,
                       backgroundColor: CupertinoColors.systemGrey5,
@@ -156,7 +174,7 @@ class _ItemDetail extends StatelessWidget {
                       child: const Icon(Icons.person, size: 17),
                     ),
                     title: Text(
-                      "@${item.owner.username}",
+                      "@${_item.owner.username}",
                       style: const TextStyle(
                         color: Colors.black54,
                         fontSize: 14,
@@ -173,8 +191,10 @@ class _ItemDetail extends StatelessWidget {
                       itemBuilder: (BuildContext context) {
                         return <PopupMenuItem<Text>>[
                           PopupMenuItem<Text>(
-                            enabled: !item.isMyItem,
-                            onTap: onTapContactOwner,
+                            enabled: !_item.isMyItem,
+                            onTap: () => _onTapContactOwner(
+                              ownerId: _item.owner.id,
+                            ),
                             child: Text(
                               AppLocalizations.of(context).contactOwner,
                             ),
@@ -187,7 +207,7 @@ class _ItemDetail extends StatelessWidget {
               ),
             ),
           ),
-          if (!isPortrait)
+          if (!_isPortrait)
             const VerticalDivider(
               width: 40,
               color: CupertinoColors.systemGrey2,
@@ -197,7 +217,7 @@ class _ItemDetail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  if (isPortrait) const SizedBox(height: 10),
+                  if (_isPortrait) const SizedBox(height: 10),
                   Text(
                     "${AppLocalizations.of(context).description}:",
                     style: const TextStyle(
@@ -207,7 +227,7 @@ class _ItemDetail extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   Text(
-                    item.description ??
+                    _item.description ??
                         AppLocalizations.of(context).noDescription,
                   ),
                   const SizedBox(height: 30),
