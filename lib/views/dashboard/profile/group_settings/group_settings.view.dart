@@ -12,51 +12,54 @@ class GroupSettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.only(top: 20),
-      child: Column(
-        children: <Widget>[
-          SettingsItem(
-            iconData: Icons.category_rounded,
-            text: AppLocalizations.of(context).categories,
-            onTap: () {
-              context.pushNamed(
-                categorySettingsRoute.name,
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.only(top: 20),
+        child: Column(
+          children: <Widget>[
+            SettingsItem(
+              iconData: Icons.category_rounded,
+              text: AppLocalizations.of(context).categories,
+              onTap: () {
+                context.pushNamed(
+                  categorySettingsRoute.name,
+                  pathParameters: <String, String>{"groupId": groupId},
+                );
+              },
+            ),
+            SettingsItem(
+              iconData: Icons.emoji_objects,
+              text: AppLocalizations.of(context).items,
+              onTap: () => context.pushNamed(
+                profileItemListRoute.name,
                 pathParameters: <String, String>{"groupId": groupId},
-              );
-            },
-          ),
-          SettingsItem(
-            iconData: Icons.emoji_objects,
-            text: AppLocalizations.of(context).items,
-            onTap: () => context.pushNamed(
-              profileItemListRoute.name,
-              pathParameters: <String, String>{"groupId": groupId},
-            ),
-          ),
-          SettingsItem(
-            iconData: Icons.account_balance_wallet,
-            text: AppLocalizations.of(context).balance,
-            onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(AppLocalizations.of(context).comingSoon),
               ),
             ),
-          ),
-          SettingsItem(
-            iconData: Icons.logout,
-            iconColor: Colors.red,
-            text: AppLocalizations.of(context).leaveGroup,
-            onTap: () => showModalBottomSheet<void>(
-              isScrollControlled: true,
-              context: context,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+            SettingsItem(
+              iconData: Icons.account_balance_wallet,
+              text: AppLocalizations.of(context).balance,
+              onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(AppLocalizations.of(context).comingSoon),
+                ),
               ),
-              builder: (BuildContext context) => const LeaveGroupBottomSheet(),
             ),
-          ),
-        ],
+            SettingsItem(
+              iconData: Icons.logout,
+              iconColor: Colors.red,
+              text: AppLocalizations.of(context).leaveGroup,
+              onTap: () => showModalBottomSheet<void>(
+                isScrollControlled: true,
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                ),
+                builder: (BuildContext context) =>
+                    const LeaveGroupBottomSheet(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
