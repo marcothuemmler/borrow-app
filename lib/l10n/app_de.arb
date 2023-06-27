@@ -73,5 +73,6 @@
   "markItemBorrowed": "Als verliehen markieren",
   "newItem": "Neues Objekt",
   "itemSavedSuccessfully": "Objekt erfolgreich gespeichert",
-  "itemSaveFailed": "Objekt konnte nicht gespeichert werden"
+  "itemSaveFailed": "Objekt konnte nicht gespeichert werden",
+  "isBorrowed": "Verliehen"
 }

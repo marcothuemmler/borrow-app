@@ -73,5 +73,6 @@
   "markItemBorrowed": "Mark as borrowed",
   "newItem": "New Item",
   "itemSavedSuccessfully": "Item saved successfully",
-  "itemSaveFailed": "Could not save item"
+  "itemSaveFailed": "Could not save item",
+  "isBorrowed": "Borrowed"
 }

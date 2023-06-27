@@ -1,6 +1,7 @@
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class ItemCard extends StatelessWidget {
   final void Function()? _onTap;
@@ -16,7 +17,7 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Opacity(
-      opacity: _item.isActive ? 1.0 : 0.4,
+      opacity: _item.isActive ? 1.0 : 0.5,
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -50,28 +51,38 @@ class ItemCard extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(
                       width: 85,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.horizontal(
-                          left: Radius.circular(7),
-                          right: Radius.circular(3.5),
-                        ),
-                        child: _item.imageUrl is String
-                            ? Image.network(
-                                _item.imageUrl!,
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) {
-                                  return const ImagePlaceholder(
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.horizontal(
+                              left: Radius.circular(7),
+                              right: Radius.circular(3.5),
+                            ),
+                            child: _item.imageUrl is String
+                                ? Image.network(
+                                    _item.imageUrl!,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, __, ___) {
+                                      return const ImagePlaceholder(
+                                        size: 60,
+                                        iconData: Icons.image_outlined,
+                                      );
+                                    },
+                                  )
+                                : const ImagePlaceholder(
                                     size: 60,
                                     iconData: Icons.image_outlined,
-                                  );
-                                },
-                              )
-                            : const ImagePlaceholder(
-                                size: 60,
-                                iconData: Icons.image_outlined,
-                              ),
+                                  ),
+                          ),
+                          ... !_item.isActive ? [Center(
+                            child: Text(
+                                AppLocalizations.of(context).isBorrowed,
+                                style: const TextStyle(color: Colors.blueAccent),
+                            ),
+                          )] : [],
+                        ],
                       ),
                     ),
                     const SizedBox(width: 20),
