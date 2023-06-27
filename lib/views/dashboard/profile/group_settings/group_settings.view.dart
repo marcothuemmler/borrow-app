@@ -6,9 +6,10 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:go_router/go_router.dart";
 
 class GroupSettingsView extends StatelessWidget {
-  final String groupId;
+  final String _groupId;
 
-  const GroupSettingsView({super.key, required this.groupId});
+  const GroupSettingsView({super.key, required String groupId})
+      : _groupId = groupId;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class GroupSettingsView extends StatelessWidget {
               onTap: () {
                 context.pushNamed(
                   categorySettingsRoute.name,
-                  pathParameters: <String, String>{"groupId": groupId},
+                  pathParameters: <String, String>{"groupId": _groupId},
                 );
               },
             ),
@@ -32,7 +33,7 @@ class GroupSettingsView extends StatelessWidget {
               text: AppLocalizations.of(context).items,
               onTap: () => context.pushNamed(
                 profileItemListRoute.name,
-                pathParameters: <String, String>{"groupId": groupId},
+                pathParameters: <String, String>{"groupId": _groupId},
               ),
             ),
             SettingsItem(

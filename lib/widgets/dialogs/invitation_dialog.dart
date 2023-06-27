@@ -9,16 +9,10 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
 class InviteMembersDialog extends ConsumerWidget {
-  final String groupId;
-  final String groupName;
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  InviteMembersDialog({
-    super.key,
-    required this.groupId,
-    required this.groupName,
-  });
+  InviteMembersDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -67,7 +61,7 @@ class InviteMembersDialog extends ConsumerWidget {
                 child: TextFieldWidget(
                   text: AppLocalizations.of(context).enterEmail,
                   keyboardType: TextInputType.emailAddress,
-                  controller: emailController,
+                  controller: _emailController,
                   validator: (String? value) =>
                       controller.validateAndAddEmailToInvitations(
                     email: value,
@@ -83,7 +77,7 @@ class InviteMembersDialog extends ConsumerWidget {
                   TextButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        emailController.clear();
+                        _emailController.clear();
                       }
                     },
                     child: Text(AppLocalizations.of(context).add),

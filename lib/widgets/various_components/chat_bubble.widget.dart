@@ -2,14 +2,15 @@ import "package:borrow_app/views/chat/chat.model.dart";
 import "package:flutter/material.dart";
 
 class ChatBubble extends StatelessWidget {
-  final MessageModel message;
+  final MessageModel _message;
 
-  const ChatBubble({super.key, required this.message});
+  const ChatBubble({super.key, required MessageModel message})
+      : _message = message;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: message.isOwnMessage
+      mainAxisAlignment: _message.isOwnMessage
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
       children: <Widget>[
@@ -21,7 +22,7 @@ class ChatBubble extends StatelessWidget {
               horizontal: 20,
             ),
             decoration: BoxDecoration(
-              color: message.isOwnMessage
+              color: _message.isOwnMessage
                   ? const Color.fromRGBO(60, 120, 240, 1)
                   : const Color.fromRGBO(240, 240, 240, 1),
               borderRadius: const BorderRadius.all(Radius.circular(13)),
@@ -38,9 +39,10 @@ class ChatBubble extends StatelessWidget {
               children: <Widget>[
                 Flexible(
                   child: Text(
-                    message.content,
+                    _message.content,
                     style: TextStyle(
-                      color: message.isOwnMessage ? Colors.white : Colors.black,
+                      color:
+                          _message.isOwnMessage ? Colors.white : Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
                     ),

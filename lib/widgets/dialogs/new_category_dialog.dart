@@ -5,23 +5,26 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 class NewCategoryDialog extends StatelessWidget {
   NewCategoryDialog({
     super.key,
-    this.nameValidator,
-    required this.setName,
-    required this.setDescription,
-    required this.createCategoryCallback,
-  });
+    String? Function(String?)? nameValidator,
+    required void Function(String) setName,
+    required void Function(String) setDescription,
+    required void Function() createCategoryCallback,
+  })  : _createCategoryCallback = createCategoryCallback,
+        _setDescription = setDescription,
+        _setName = setName,
+        _nameValidator = nameValidator;
 
-  final String? Function(String?)? nameValidator;
-  final void Function(String) setName;
-  final void Function(String) setDescription;
-  final void Function() createCategoryCallback;
+  final String? Function(String?)? _nameValidator;
+  final void Function(String) _setName;
+  final void Function(String) _setDescription;
+  final void Function() _createCategoryCallback;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance
-        .addPostFrameCallback((_) => createCategoryCallback());
+        .addPostFrameCallback((_) => _createCategoryCallback());
     return AlertDialog(
       actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
       contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
@@ -41,14 +44,14 @@ class NewCategoryDialog extends StatelessWidget {
             children: <Widget>[
               TextFieldWidget(
                 text: AppLocalizations.of(context).name,
-                validator: nameValidator,
-                onChanged: setName,
+                validator: _nameValidator,
+                onChanged: _setName,
                 autocorrect: false,
               ),
               TextFieldWidget(
                 text: AppLocalizations.of(context).description,
                 validator: null,
-                onChanged: setDescription,
+                onChanged: _setDescription,
                 autocorrect: false,
               ),
             ],

@@ -174,7 +174,7 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
 }
 
 class _ItemEditor extends StatelessWidget {
-  const _ItemEditor({
+  const _ItemEditor._({
     required bool isPortrait,
     required bool categoryNotSelected,
     required XFile? patchedItemImage,
@@ -226,7 +226,7 @@ class _ItemEditor extends StatelessWidget {
     required void Function(ItemEditorCategoryModel? category) onCategoryChanged,
     required void Function() onSaveButtonPressed,
   }) =>
-      _ItemEditor(
+      _ItemEditor._(
         isPortrait: true,
         categoryNotSelected: categoryNotSelected,
         patchedItemImage: patchedItemImage,
@@ -254,7 +254,7 @@ class _ItemEditor extends StatelessWidget {
     required void Function(ItemEditorCategoryModel? category) onCategoryChanged,
     required void Function() onSaveButtonPressed,
   }) =>
-      _ItemEditor(
+      _ItemEditor._(
         isPortrait: false,
         categoryNotSelected: categoryNotSelected,
         patchedItemImage: patchedItemImage,

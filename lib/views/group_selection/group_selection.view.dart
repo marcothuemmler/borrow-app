@@ -109,10 +109,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                                 final bool? result = await showDialog(
                                   context: context,
                                   builder: (BuildContext context) =>
-                                      InviteMembersDialog(
-                                    groupId: group.id!,
-                                    groupName: group.name,
-                                  ),
+                                      InviteMembersDialog(),
                                 );
                                 controller.inviteGroupMembers(
                                   confirmed: result ?? false,

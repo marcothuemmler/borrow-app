@@ -8,17 +8,18 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class ItemFilterBottomSheet extends ConsumerWidget {
-  const ItemFilterBottomSheet({super.key, required this.groupId});
+  const ItemFilterBottomSheet({super.key, required String groupId})
+      : _groupId = groupId;
 
-  final String groupId;
+  final String _groupId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ItemListController controller = ref.read(
-      providers.itemListControllerProvider(groupId).notifier,
+      providers.itemListControllerProvider(_groupId).notifier,
     );
     final ItemListModel model = ref.watch(
-      providers.itemListControllerProvider(groupId),
+      providers.itemListControllerProvider(_groupId),
     );
     return Container(
       padding: const EdgeInsets.all(30),
