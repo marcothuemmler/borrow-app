@@ -1,10 +1,10 @@
+import "package:borrow_app/common/extensions/widget_extensions.dart";
 import "package:borrow_app/common/mixins/delete_confirm_dialog.mixin.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import "package:skeletons/skeletons.dart";
 
 class DismissibleProfileItemCard extends StatelessWidget
     with DeleteConfirmMixin {
@@ -97,16 +97,7 @@ class DismissibleProfileItemCard extends StatelessWidget
                                 width: double.infinity,
                                 _item.imageUrl!,
                                 fit: BoxFit.cover,
-                                loadingBuilder: (
-                                  _,
-                                  Widget child,
-                                  ImageChunkEvent? event,
-                                ) {
-                                  if (event == null) {
-                                    return child;
-                                  }
-                                  return const SkeletonAvatar();
-                                },
+                                loadingBuilder: imageLoadingBuilder,
                               )
                             : const ImagePlaceholder(
                                 iconData: Icons.image_outlined,

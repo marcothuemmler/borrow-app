@@ -1,3 +1,5 @@
+import "package:borrow_app/common/extensions/build_context_extensions.dart";
+import "package:borrow_app/common/extensions/widget_extensions.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/item_detail/item_detail.model.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
@@ -7,7 +9,6 @@ import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:skeletons/skeletons.dart";
 
 class ItemDetailView extends ConsumerWidget {
   final String _itemId;
@@ -37,12 +38,10 @@ class ItemDetailView extends ConsumerWidget {
       );
     }
     final ItemDetailItemModel item = model.item!;
-    final bool isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: AppBar(title: Text(item.name)),
       body: SafeArea(
-        child: isPortrait
+        child: context.isPortrait
             ? SingleChildScrollView(
                 child: _ItemDetail.portrait(
                   item: item,
@@ -109,56 +108,45 @@ class _ItemDetail extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Center(
-                    child: AspectRatio(
-                      aspectRatio: 1.5,
-                      child: Container(
-                        padding: const EdgeInsets.all(3),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Colors.white,
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: Colors.black12,
-                              offset: Offset(0, 3),
-                              blurRadius: 10,
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(7),
+                  AspectRatio(
+                    aspectRatio: 1.5,
+                    child: Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Colors.white,
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(0, 3),
+                            blurRadius: 10,
                           ),
-                          child: _item.imageUrl is String
-                              ? GestureDetector(
-                                  onTap: () => showImageViewer(
-                                    context,
-                                    NetworkImage(_item.imageUrl!),
-                                    swipeDismissible: true,
-                                    doubleTapZoomable: true,
-                                  ),
-                                  child: Image.network(
-                                    _item.imageUrl!,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    fit: BoxFit.cover,
-                                    loadingBuilder: (
-                                      _,
-                                      Widget child,
-                                      ImageChunkEvent? event,
-                                    ) {
-                                      if (event is! ImageChunkEvent) {
-                                        return child;
-                                      }
-                                      return const SkeletonAvatar();
-                                    },
-                                  ),
-                                )
-                              : const ImagePlaceholder(
-                                  iconData: Icons.image_outlined,
-                                  size: 150,
-                                ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(7),
                         ),
+                        child: _item.imageUrl is String
+                            ? GestureDetector(
+                                onTap: () => showImageViewer(
+                                  context,
+                                  NetworkImage(_item.imageUrl!),
+                                  swipeDismissible: true,
+                                  doubleTapZoomable: true,
+                                ),
+                                child: Image.network(
+                                  _item.imageUrl!,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: imageLoadingBuilder,
+                                ),
+                              )
+                            : const ImagePlaceholder(
+                                iconData: Icons.image_outlined,
+                                size: 150,
+                              ),
                       ),
                     ),
                   ),
