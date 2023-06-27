@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ItemEditorModel {
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isProcessing => throw _privateConstructorUsedError;
   bool get hasError => throw _privateConstructorUsedError;
   bool get categoryNotSelected => throw _privateConstructorUsedError;
   ItemEditorItemModel get item => throw _privateConstructorUsedError;
@@ -38,6 +39,7 @@ abstract class $ItemEditorModelCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isLoading,
+      bool isProcessing,
       bool hasError,
       bool categoryNotSelected,
       ItemEditorItemModel item,
@@ -62,6 +64,7 @@ class _$ItemEditorModelCopyWithImpl<$Res, $Val extends ItemEditorModel>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? isProcessing = null,
     Object? hasError = null,
     Object? categoryNotSelected = null,
     Object? item = null,
@@ -73,6 +76,10 @@ class _$ItemEditorModelCopyWithImpl<$Res, $Val extends ItemEditorModel>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isProcessing: null == isProcessing
+          ? _value.isProcessing
+          : isProcessing // ignore: cast_nullable_to_non_nullable
               as bool,
       hasError: null == hasError
           ? _value.hasError
@@ -120,6 +127,7 @@ abstract class _$$_ItemEditorModelCopyWith<$Res>
   @useResult
   $Res call(
       {bool isLoading,
+      bool isProcessing,
       bool hasError,
       bool categoryNotSelected,
       ItemEditorItemModel item,
@@ -143,6 +151,7 @@ class __$$_ItemEditorModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? isProcessing = null,
     Object? hasError = null,
     Object? categoryNotSelected = null,
     Object? item = null,
@@ -154,6 +163,10 @@ class __$$_ItemEditorModelCopyWithImpl<$Res>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isProcessing: null == isProcessing
+          ? _value.isProcessing
+          : isProcessing // ignore: cast_nullable_to_non_nullable
               as bool,
       hasError: null == hasError
           ? _value.hasError
@@ -188,6 +201,7 @@ class __$$_ItemEditorModelCopyWithImpl<$Res>
 class _$_ItemEditorModel implements _ItemEditorModel {
   const _$_ItemEditorModel(
       {required this.isLoading,
+      required this.isProcessing,
       required this.hasError,
       required this.categoryNotSelected,
       required this.item,
@@ -198,6 +212,8 @@ class _$_ItemEditorModel implements _ItemEditorModel {
 
   @override
   final bool isLoading;
+  @override
+  final bool isProcessing;
   @override
   final bool hasError;
   @override
@@ -218,7 +234,7 @@ class _$_ItemEditorModel implements _ItemEditorModel {
 
   @override
   String toString() {
-    return 'ItemEditorModel(isLoading: $isLoading, hasError: $hasError, categoryNotSelected: $categoryNotSelected, item: $item, itemImage: $itemImage, patchedItemImage: $patchedItemImage, categories: $categories)';
+    return 'ItemEditorModel(isLoading: $isLoading, isProcessing: $isProcessing, hasError: $hasError, categoryNotSelected: $categoryNotSelected, item: $item, itemImage: $itemImage, patchedItemImage: $patchedItemImage, categories: $categories)';
   }
 
   @override
@@ -228,6 +244,8 @@ class _$_ItemEditorModel implements _ItemEditorModel {
             other is _$_ItemEditorModel &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isProcessing, isProcessing) ||
+                other.isProcessing == isProcessing) &&
             (identical(other.hasError, hasError) ||
                 other.hasError == hasError) &&
             (identical(other.categoryNotSelected, categoryNotSelected) ||
@@ -245,6 +263,7 @@ class _$_ItemEditorModel implements _ItemEditorModel {
   int get hashCode => Object.hash(
       runtimeType,
       isLoading,
+      isProcessing,
       hasError,
       categoryNotSelected,
       item,
@@ -262,6 +281,7 @@ class _$_ItemEditorModel implements _ItemEditorModel {
 abstract class _ItemEditorModel implements ItemEditorModel {
   const factory _ItemEditorModel(
           {required final bool isLoading,
+          required final bool isProcessing,
           required final bool hasError,
           required final bool categoryNotSelected,
           required final ItemEditorItemModel item,
@@ -272,6 +292,8 @@ abstract class _ItemEditorModel implements ItemEditorModel {
 
   @override
   bool get isLoading;
+  @override
+  bool get isProcessing;
   @override
   bool get hasError;
   @override

@@ -1,20 +1,22 @@
 import "package:flutter/material.dart";
 
 class PasswordFieldWidget extends StatelessWidget {
-  final String text;
-  final String? Function(String?)? validator;
-  final void Function(String)? onChanged;
-  final void Function()? onTapIcon;
-  final bool obscureText;
+  final String _text;
+  final void Function(String)? _onChanged;
+  final void Function()? _onTapIcon;
+  final bool _obscureText;
 
   const PasswordFieldWidget({
     super.key,
-    required this.text,
-    required this.validator,
-    required this.onTapIcon,
-    required this.onChanged,
-    required this.obscureText,
-  });
+    required String text,
+    required String? Function(String?)? validator,
+    required void Function()? onTapIcon,
+    required void Function(String)? onChanged,
+    required bool obscureText,
+  })  : _obscureText = obscureText,
+        _onTapIcon = onTapIcon,
+        _onChanged = onChanged,
+        _text = text;
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +29,21 @@ class PasswordFieldWidget extends StatelessWidget {
           textInputAction: TextInputAction.next,
           autofillHints: const <String>[AutofillHints.password],
           autocorrect: false,
-          validator: validator,
           decoration: InputDecoration(
             errorMaxLines: 3,
             border: const OutlineInputBorder(),
-            labelText: text,
+            labelText: _text,
             suffixIcon: GestureDetector(
-              onTap: onTapIcon,
+              onTap: _onTapIcon,
               child: Icon(
-                obscureText
+                _obscureText
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
               ),
             ),
           ),
-          obscureText: obscureText,
-          onChanged: onChanged,
+          obscureText: _obscureText,
+          onChanged: _onChanged,
         ),
       ],
     );

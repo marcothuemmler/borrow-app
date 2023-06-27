@@ -74,5 +74,7 @@
   "newItem": "Neues Objekt",
   "itemSavedSuccessfully": "Objekt erfolgreich gespeichert",
   "itemSaveFailed": "Objekt konnte nicht gespeichert werden",
-  "isBorrowed": "Verliehen"
+  "isBorrowed": "Verliehen",
+  "leaveGroup": "Gruppe verlassen",
+  "leaveGroupWarning": "Ihre Gegenstände in dieser Gruppe werden gelöscht"
 }

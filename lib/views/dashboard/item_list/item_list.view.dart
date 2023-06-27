@@ -24,61 +24,63 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
     if (model.hasError) {
       return Center(child: Text(AppLocalizations.of(context).unspecifiedError));
     }
-    return ListRefreshIndicator(
-      isLoading: model.isLoading,
-      onAction: controller.refresh,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          if (model.items.isNotEmpty)
-            Expanded(
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
+    return SafeArea(
+      child: ListRefreshIndicator(
+        isLoading: model.isLoading,
+        onAction: controller.refresh,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            if (model.items.isNotEmpty)
+              Expanded(
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  padding: const EdgeInsets.only(top: 15),
+                  itemCount: model.items.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    final ItemListItemModel item = model.items.elementAt(index);
+                    return ItemCard(
+                      item: item,
+                      onTap: () => controller.navigateToItem(itemId: item.id),
+                    );
+                  },
                 ),
-                padding: const EdgeInsets.only(top: 15),
-                itemCount: model.items.length,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  final ItemListItemModel item = model.items.elementAt(index);
-                  return ItemCard(
-                    item: item,
-                    onTap: () => controller.navigateToItem(itemId: item.id),
-                  );
-                },
-              ),
-            )
-          else if (!model.isLoading)
-            Expanded(
-              child: Center(
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Center(
-                        child: Text(
-                          AppLocalizations.of(context).emptyGroupMessage,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 24,
+              )
+            else if (!model.isLoading)
+              Expanded(
+                child: Center(
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Center(
+                          child: Text(
+                            AppLocalizations.of(context).emptyGroupMessage,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 24,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 25),
-                      DottedBorderButton(
-                        title: AppLocalizations.of(context).addNewItem,
-                        icon: const Icon(Icons.add),
-                        onTap: controller.navigateToItemEditor,
-                        width: 220,
-                      ),
-                    ],
+                        const SizedBox(height: 25),
+                        DottedBorderButton(
+                          title: AppLocalizations.of(context).addNewItem,
+                          icon: const Icon(Icons.add),
+                          onTap: controller.navigateToItemEditor,
+                          width: 220,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

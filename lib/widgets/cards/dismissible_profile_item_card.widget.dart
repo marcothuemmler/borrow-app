@@ -1,3 +1,4 @@
+import "package:borrow_app/common/extensions/widget_extensions.dart";
 import "package:borrow_app/common/mixins/delete_confirm_dialog.mixin.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
@@ -84,17 +85,19 @@ class DismissibleProfileItemCard extends StatelessWidget
                   children: <Widget>[
                     SizedBox(
                       width: 65,
+                      height: 65,
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(7),
                           bottomLeft: Radius.circular(7),
                         ),
                         child: _item.imageUrl is String
-                            ? Image(
+                            ? Image.network(
                                 height: double.infinity,
                                 width: double.infinity,
-                                image: NetworkImage(_item.imageUrl!),
+                                _item.imageUrl!,
                                 fit: BoxFit.cover,
+                                loadingBuilder: imageLoadingBuilder,
                               )
                             : const ImagePlaceholder(
                                 iconData: Icons.image_outlined,

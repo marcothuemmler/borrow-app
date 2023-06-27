@@ -1,4 +1,5 @@
 import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/common/extensions/build_context_extensions.dart";
 import "package:borrow_app/common/mixins/form_validator.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/profile_settings/profile_settings.model.dart";
@@ -16,8 +17,7 @@ class ProfileSettingsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    final bool isPortrait = context.isPortrait;
     final ProfileSettingsController controller = ref.read(
       providers.profileSettingsControllerProvider.notifier,
     );

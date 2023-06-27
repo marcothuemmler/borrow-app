@@ -1,3 +1,4 @@
+import "package:borrow_app/common/extensions/widget_extensions.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/material.dart";
@@ -51,7 +52,8 @@ class ItemCard extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(
                       width: 85,
-                      child: Stack(
+                      height: 85,
+                    child: Stack(
                         children: [
                           ClipRRect(
                             borderRadius: const BorderRadius.horizontal(
@@ -69,7 +71,7 @@ class ItemCard extends StatelessWidget {
                                         size: 60,
                                         iconData: Icons.image_outlined,
                                       );
-                                    },
+                                    },loadingBuilder: imageLoadingBuilder,
                                   )
                                 : const ImagePlaceholder(
                                     size: 60,
