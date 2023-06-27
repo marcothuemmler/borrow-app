@@ -65,7 +65,7 @@ class GroupSelectionCard extends StatelessWidget {
                         BoxConstraints constraints,
                       ) {
                         return Stack(
-                          alignment: Alignment.bottomRight,
+                          fit: StackFit.expand,
                           children: <Widget>[
                             _groupImage is String
                                 ? Image.network(
@@ -83,22 +83,25 @@ class GroupSelectionCard extends StatelessWidget {
                                         ) *
                                         0.8,
                                   ),
-                            AnimatedOpacity(
-                              opacity: _inviteButtonHidden ? 0 : 1,
-                              duration: const Duration(milliseconds: 250),
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const CircleBorder(),
-                                    elevation: 5,
-                                    backgroundColor: Colors.white70,
-                                  ),
-                                  onPressed: _onTapInviteButton,
-                                  child: const Icon(
-                                    Icons.person_add,
-                                    color: Colors.black,
-                                    size: 22,
+                            Container(
+                              alignment: Alignment.bottomRight,
+                              child: AnimatedOpacity(
+                                opacity: _inviteButtonHidden ? 0 : 1,
+                                duration: const Duration(milliseconds: 250),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: const CircleBorder(),
+                                      elevation: 5,
+                                      backgroundColor: Colors.white70,
+                                    ),
+                                    onPressed: _onTapInviteButton,
+                                    child: const Icon(
+                                      Icons.person_add,
+                                      color: Colors.black,
+                                      size: 22,
+                                    ),
                                   ),
                                 ),
                               ),
