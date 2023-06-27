@@ -21,6 +21,13 @@ class ItemFilterBottomSheet extends ConsumerWidget {
     final ItemListModel model = ref.watch(
       providers.itemListControllerProvider(_groupId),
     );
+
+    final List<String> dropDownItemsBorrowed = [
+      AppLocalizations.of(context).allCategories,
+      AppLocalizations.of(context).available,
+      AppLocalizations.of(context).borrowedItems,
+    ];
+
     return Container(
       padding: const EdgeInsets.all(30),
       constraints: const BoxConstraints(maxWidth: 600),
@@ -54,6 +61,28 @@ class ItemFilterBottomSheet extends ConsumerWidget {
                     DropdownMenuItem<ItemListCategoryModel>(
                   value: category,
                   child: Text(category.name),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              AppLocalizations.of(context).borrowedItems,
+              style: TextStyle(
+                color: Colors.black.withOpacity(0.6),
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 250,
+              child: DropdownWidget<String>(
+                hint: Text(AppLocalizations.of(context).category),
+                items: dropDownItemsBorrowed,
+                onChanged: (s) {},
+                value: dropDownItemsBorrowed[0],
+                mapFunction: (String s) => DropdownMenuItem(
+                  value: s,
+                  child: Text(s),
                 ),
               ),
             ),
