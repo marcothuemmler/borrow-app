@@ -1,31 +1,34 @@
 import "package:flutter/material.dart";
 
 class SettingsItem extends StatelessWidget {
-  final String text;
-  final void Function()? onTap;
-  final IconData? iconData;
-  final Color? iconColor;
+  final String _text;
+  final void Function()? _onTap;
+  final IconData? _iconData;
+  final Color? _iconColor;
 
   const SettingsItem({
     super.key,
-    required this.text,
-    this.onTap,
-    this.iconData,
-    this.iconColor = Colors.black54,
-  });
+    required String text,
+    void Function()? onTap,
+    IconData? iconData,
+    Color? iconColor = Colors.black54,
+  })  : _iconColor = iconColor,
+        _iconData = iconData,
+        _onTap = onTap,
+        _text = text;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: _onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: SizedBox(
           height: 60,
           child: Row(
             children: <Widget>[
-              if (iconData is IconData)
-                Icon(iconData!, size: 24, color: iconColor),
+              if (_iconData is IconData)
+                Icon(_iconData!, size: 24, color: _iconColor),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -34,7 +37,7 @@ class SettingsItem extends StatelessWidget {
                   children: <Widget>[
                     const SizedBox(height: 8),
                     Text(
-                      text,
+                      _text,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14,

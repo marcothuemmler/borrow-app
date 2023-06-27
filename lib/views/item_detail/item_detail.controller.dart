@@ -29,10 +29,10 @@ class ItemDetailControllerImplementation extends ItemDetailController {
   }
 
   void _init() {
-    getItemDetails(itemId: _itemId);
+    _getItemDetails(itemId: _itemId);
   }
 
-  Future<void> getItemDetails({required String itemId}) async {
+  Future<void> _getItemDetails({required String itemId}) async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
       final ItemDetailItemModel response =

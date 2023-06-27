@@ -9,18 +9,22 @@ import "package:image_picker/image_picker.dart";
 class CreateGroupDialog extends StatelessWidget {
   CreateGroupDialog({
     super.key,
-    this.nameValidator,
-    this.descriptionValidator,
-    required this.onGroupNameChanged,
-    required this.onGroupDescriptionChanged,
-    required this.onImageChanged,
-  });
+    String? Function(String?)? nameValidator,
+    String? Function(String?)? descriptionValidator,
+    required void Function(String) onGroupNameChanged,
+    required void Function(String) onGroupDescriptionChanged,
+    required void Function(XFile?) onImageChanged,
+  })  : _onImageChanged = onImageChanged,
+        _onGroupDescriptionChanged = onGroupDescriptionChanged,
+        _onGroupNameChanged = onGroupNameChanged,
+        _descriptionValidator = descriptionValidator,
+        _nameValidator = nameValidator;
 
-  final String? Function(String?)? nameValidator;
-  final String? Function(String?)? descriptionValidator;
-  final void Function(String) onGroupNameChanged;
-  final void Function(String) onGroupDescriptionChanged;
-  final void Function(XFile?) onImageChanged;
+  final String? Function(String?)? _nameValidator;
+  final String? Function(String?)? _descriptionValidator;
+  final void Function(String) _onGroupNameChanged;
+  final void Function(String) _onGroupDescriptionChanged;
+  final void Function(XFile?) _onImageChanged;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -53,7 +57,7 @@ class CreateGroupDialog extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: ImageUpload(
-                      onImageChanged: onImageChanged,
+                      onImageChanged: _onImageChanged,
                       text: AppLocalizations.of(context).setGroupImage,
                     ),
                   ),
@@ -66,15 +70,15 @@ class CreateGroupDialog extends StatelessWidget {
                     TextFieldWidget(
                       text: AppLocalizations.of(context).groupName,
                       keyboardType: TextInputType.name,
-                      validator: nameValidator,
-                      onChanged: onGroupNameChanged,
+                      validator: _nameValidator,
+                      onChanged: _onGroupNameChanged,
                       autocorrect: false,
                     ),
                     TextFieldWidget(
                       text: AppLocalizations.of(context).groupDescription,
                       keyboardType: TextInputType.text,
-                      validator: descriptionValidator,
-                      onChanged: onGroupDescriptionChanged,
+                      validator: _descriptionValidator,
+                      onChanged: _onGroupDescriptionChanged,
                       autocorrect: false,
                     ),
                   ],

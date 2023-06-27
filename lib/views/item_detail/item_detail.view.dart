@@ -59,7 +59,7 @@ class ItemDetailView extends ConsumerWidget {
 }
 
 class _ItemDetail extends StatelessWidget {
-  const _ItemDetail({
+  const _ItemDetail._({
     required bool isPortrait,
     required ItemDetailItemModel item,
     required void Function({required String ownerId}) onTapContactOwner,
@@ -71,7 +71,7 @@ class _ItemDetail extends StatelessWidget {
     required void Function({required String ownerId}) onTapContactOwner,
     required ItemDetailItemModel item,
   }) {
-    return _ItemDetail(
+    return _ItemDetail._(
       isPortrait: true,
       item: item,
       onTapContactOwner: onTapContactOwner,
@@ -82,7 +82,7 @@ class _ItemDetail extends StatelessWidget {
     required void Function({required String ownerId}) onTapContactOwner,
     required ItemDetailItemModel item,
   }) {
-    return _ItemDetail(
+    return _ItemDetail._(
       isPortrait: false,
       item: item,
       onTapContactOwner: onTapContactOwner,

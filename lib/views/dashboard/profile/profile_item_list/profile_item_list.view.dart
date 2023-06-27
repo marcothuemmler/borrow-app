@@ -11,17 +11,18 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
-  final String groupId;
+  final String _groupId;
 
-  const ProfileItemListView({super.key, required this.groupId});
+  const ProfileItemListView({super.key, required String groupId})
+      : _groupId = groupId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfileItemListController controller = ref.read(
-      providers.profileItemListControllerProvider(groupId).notifier,
+      providers.profileItemListControllerProvider(_groupId).notifier,
     );
     final ProfileItemListModel model =
-        ref.watch(providers.profileItemListControllerProvider(groupId));
+        ref.watch(providers.profileItemListControllerProvider(_groupId));
     final bool isPortrait = context.isPortrait;
     final List<ProfileItemListItemModel> availableItems = model.filteredItems
         .where((ProfileItemListItemModel element) => element.isActive)

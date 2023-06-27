@@ -5,22 +5,27 @@ import "package:flutter/material.dart";
 import "package:skeletons/skeletons.dart";
 
 class GroupSelectionCard extends StatelessWidget {
-  final String groupName;
-  final String? groupDescription;
-  final void Function()? onTap;
-  final void Function()? onTapInviteButton;
-  final String? groupImage;
-  final bool inviteButtonHidden;
+  final String _groupName;
+  final String? _groupDescription;
+  final void Function()? _onTap;
+  final void Function()? _onTapInviteButton;
+  final String? _groupImage;
+  final bool _inviteButtonHidden;
 
   const GroupSelectionCard({
     super.key,
-    required this.onTap,
-    required this.onTapInviteButton,
-    required this.groupName,
-    required this.groupDescription,
-    required this.groupImage,
-    required this.inviteButtonHidden,
-  });
+    required void Function()? onTap,
+    required void Function()? onTapInviteButton,
+    required String groupName,
+    required String? groupDescription,
+    required String? groupImage,
+    required bool inviteButtonHidden,
+  })  : _inviteButtonHidden = inviteButtonHidden,
+        _groupImage = groupImage,
+        _onTapInviteButton = onTapInviteButton,
+        _onTap = onTap,
+        _groupDescription = groupDescription,
+        _groupName = groupName;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class GroupSelectionCard extends StatelessWidget {
         color: Colors.white,
       ),
       child: InkWell(
-        onTap: onTap,
+        onTap: _onTap,
         hoverColor: Colors.transparent,
         highlightColor: Colors.transparent,
         child: Column(
@@ -53,7 +58,7 @@ class GroupSelectionCard extends StatelessWidget {
                     topRight: Radius.circular(7),
                   ),
                   child: IgnorePointer(
-                    ignoring: inviteButtonHidden,
+                    ignoring: _inviteButtonHidden,
                     child: LayoutBuilder(
                       builder: (
                         BuildContext context,
@@ -62,9 +67,9 @@ class GroupSelectionCard extends StatelessWidget {
                         return Stack(
                           alignment: Alignment.bottomRight,
                           children: <Widget>[
-                            groupImage is String
+                            _groupImage is String
                                 ? Image.network(
-                                    groupImage!,
+                                    _groupImage!,
                                     height: double.infinity,
                                     width: double.infinity,
                                     fit: BoxFit.cover,
@@ -88,7 +93,7 @@ class GroupSelectionCard extends StatelessWidget {
                                         0.8,
                                   ),
                             AnimatedOpacity(
-                              opacity: inviteButtonHidden ? 0 : 1,
+                              opacity: _inviteButtonHidden ? 0 : 1,
                               duration: const Duration(milliseconds: 250),
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
@@ -98,7 +103,7 @@ class GroupSelectionCard extends StatelessWidget {
                                     elevation: 5,
                                     backgroundColor: Colors.white70,
                                   ),
-                                  onPressed: onTapInviteButton,
+                                  onPressed: _onTapInviteButton,
                                   child: const Icon(
                                     Icons.person_add,
                                     color: Colors.black,
@@ -124,10 +129,10 @@ class GroupSelectionCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(groupName, style: const TextStyle(fontSize: 16)),
+                  Text(_groupName, style: const TextStyle(fontSize: 16)),
                   const SizedBox(height: 10),
                   Text(
-                    groupDescription ?? "",
+                    _groupDescription ?? "",
                     style: const TextStyle(fontSize: 12, color: Colors.black45),
                   ),
                 ],

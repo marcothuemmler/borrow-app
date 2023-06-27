@@ -40,12 +40,12 @@ class ItemEditorControllerImplementation extends ItemEditorController {
 
   Future<void> _init() async {
     if (_itemId is String) {
-      getItemDetails();
+      _getItemDetails();
     }
     _getCategories();
   }
 
-  Future<void> getItemDetails() async {
+  Future<void> _getItemDetails() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
       final ItemEditorItemModel response =
