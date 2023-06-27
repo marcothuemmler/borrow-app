@@ -1,3 +1,4 @@
+import "package:borrow_app/common/extensions/build_context_extensions.dart";
 import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
@@ -21,8 +22,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
     );
     final ProfileItemListModel model =
         ref.watch(providers.profileItemListControllerProvider(groupId));
-    final bool isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    final bool isPortrait = context.isPortrait;
     final List<ProfileItemListItemModel> availableItems = model.filteredItems
         .where((ProfileItemListItemModel element) => element.isActive)
         .toList();
