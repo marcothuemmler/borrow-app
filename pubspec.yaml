@@ -54,6 +54,8 @@ dependencies:
   socket_io_client: ^2.0.2
   custom_refresh_indicator: ^2.2.1
   transparent_image: ^2.0.1
+  skeletons: ^0.0.3
+  easy_image_viewer: ^1.2.1
 
 dev_dependencies:
   flutter_test:

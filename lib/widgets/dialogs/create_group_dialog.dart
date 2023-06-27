@@ -1,3 +1,4 @@
+import "package:borrow_app/common/extensions/build_context_extensions.dart";
 import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
 import "package:borrow_app/widgets/various_components/image_upload.widget.dart";
 import "package:flutter/material.dart";
@@ -25,8 +26,7 @@ class CreateGroupDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    final bool isPortrait = context.isPortrait;
     return AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),

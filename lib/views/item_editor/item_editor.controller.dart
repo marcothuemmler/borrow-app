@@ -23,6 +23,7 @@ class ItemEditorControllerImplementation extends ItemEditorController {
           model ??
               const ItemEditorModel(
                 isLoading: false,
+                isProcessing: false,
                 hasError: false,
                 itemImage: null,
                 patchedItemImage: null,
@@ -67,8 +68,8 @@ class ItemEditorControllerImplementation extends ItemEditorController {
     if (state.item.category is ItemEditorCategoryModel) {
       try {
         state = state.copyWith(
-          hasError: true,
-          isLoading: false,
+          hasError: false,
+          isProcessing: true,
           categoryNotSelected: false,
         );
         if (_itemId is String) {
@@ -92,10 +93,10 @@ class ItemEditorControllerImplementation extends ItemEditorController {
             await _itemEditorService.deleteItemImage(itemId: itemId);
           }
         }
-        state = state.copyWith(isLoading: false);
+        state = state.copyWith(isProcessing: false);
         return true;
       } catch (error) {
-        state = state.copyWith(hasError: true, isLoading: false);
+        state = state.copyWith(hasError: true, isProcessing: false);
         return false;
       }
     } else {

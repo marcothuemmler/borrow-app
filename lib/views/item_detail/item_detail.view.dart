@@ -2,10 +2,12 @@ import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/item_detail/item_detail.model.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:calendar_date_picker2/calendar_date_picker2.dart";
+import "package:easy_image_viewer/easy_image_viewer.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:skeletons/skeletons.dart";
 
 class ItemDetailView extends ConsumerWidget {
   final String _itemId;
@@ -26,7 +28,7 @@ class ItemDetailView extends ConsumerWidget {
         body: const Center(child: CircularProgressIndicator()),
       );
     }
-    if (model.hasError || model.item is! ItemDetailItemModel) {
+    if (model.hasError) {
       return Scaffold(
         appBar: AppBar(),
         body: Center(
@@ -35,17 +37,77 @@ class ItemDetailView extends ConsumerWidget {
       );
     }
     final ItemDetailItemModel item = model.item!;
+    final bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: AppBar(title: Text(item.name)),
       body: SafeArea(
-        child: Center(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 600),
+        child: isPortrait
+            ? SingleChildScrollView(
+                child: _ItemDetail.portrait(
+                  item: item,
+                  onTapContactOwner: controller.contactOwner,
+                ),
+              )
+            : _ItemDetail.landscape(
+                item: item,
+                onTapContactOwner: controller.contactOwner,
+              ),
+      ),
+    );
+  }
+}
+
+class _ItemDetail extends StatelessWidget {
+  const _ItemDetail({
+    required bool isPortrait,
+    required ItemDetailItemModel item,
+    required void Function({required String ownerId}) onTapContactOwner,
+  })  : _onTapContactOwner = onTapContactOwner,
+        _item = item,
+        _isPortrait = isPortrait;
+
+  factory _ItemDetail.portrait({
+    required void Function({required String ownerId}) onTapContactOwner,
+    required ItemDetailItemModel item,
+  }) {
+    return _ItemDetail(
+      isPortrait: true,
+      item: item,
+      onTapContactOwner: onTapContactOwner,
+    );
+  }
+
+  factory _ItemDetail.landscape({
+    required void Function({required String ownerId}) onTapContactOwner,
+    required ItemDetailItemModel item,
+  }) {
+    return _ItemDetail(
+      isPortrait: false,
+      item: item,
+      onTapContactOwner: onTapContactOwner,
+    );
+  }
+
+  final bool _isPortrait;
+  final ItemDetailItemModel _item;
+  final void Function({required String ownerId}) _onTapContactOwner;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 30,
+        vertical: _isPortrait ? 30 : 15,
+      ),
+      child: Flex(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        direction: _isPortrait ? Axis.vertical : Axis.horizontal,
+        children: <Widget>[
+          Flexible(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(30),
-              physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
                     child: AspectRatio(
@@ -67,12 +129,30 @@ class ItemDetailView extends ConsumerWidget {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(7),
                           ),
-                          child: item.imageUrl is String
-                              ? Image.network(
-                                  item.imageUrl!,
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  fit: BoxFit.cover,
+                          child: _item.imageUrl is String
+                              ? GestureDetector(
+                                  onTap: () => showImageViewer(
+                                    context,
+                                    NetworkImage(_item.imageUrl!),
+                                    swipeDismissible: true,
+                                    doubleTapZoomable: true,
+                                  ),
+                                  child: Image.network(
+                                    _item.imageUrl!,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder: (
+                                      _,
+                                      Widget child,
+                                      ImageChunkEvent? event,
+                                    ) {
+                                      if (event is! ImageChunkEvent) {
+                                        return child;
+                                      }
+                                      return const SkeletonAvatar();
+                                    },
+                                  ),
                                 )
                               : const ImagePlaceholder(
                                   iconData: Icons.image_outlined,
@@ -82,12 +162,11 @@ class ItemDetailView extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: CircleAvatar(
-                      foregroundImage: item.owner.imageUrl is String
-                          ? NetworkImage(item.owner.imageUrl!)
+                      foregroundImage: _item.owner.imageUrl is String
+                          ? NetworkImage(_item.owner.imageUrl!)
                           : null,
                       radius: 14,
                       backgroundColor: CupertinoColors.systemGrey5,
@@ -95,7 +174,7 @@ class ItemDetailView extends ConsumerWidget {
                       child: const Icon(Icons.person, size: 17),
                     ),
                     title: Text(
-                      "@${item.owner.username}",
+                      "@${_item.owner.username}",
                       style: const TextStyle(
                         color: Colors.black54,
                         fontSize: 14,
@@ -112,9 +191,9 @@ class ItemDetailView extends ConsumerWidget {
                       itemBuilder: (BuildContext context) {
                         return <PopupMenuItem<Text>>[
                           PopupMenuItem<Text>(
-                            enabled: !item.isMyItem,
-                            onTap: () => controller.contactOwner(
-                              ownerId: item.owner.id,
+                            enabled: !_item.isMyItem,
+                            onTap: () => _onTapContactOwner(
+                              ownerId: _item.owner.id,
                             ),
                             child: Text(
                               AppLocalizations.of(context).contactOwner,
@@ -124,7 +203,21 @@ class ItemDetailView extends ConsumerWidget {
                       },
                     ),
                   ),
-                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
+          ),
+          if (!_isPortrait)
+            const VerticalDivider(
+              width: 40,
+              color: CupertinoColors.systemGrey2,
+            ),
+          Flexible(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  if (_isPortrait) const SizedBox(height: 10),
                   Text(
                     "${AppLocalizations.of(context).description}:",
                     style: const TextStyle(
@@ -134,10 +227,10 @@ class ItemDetailView extends ConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   Text(
-                    item.description ??
+                    _item.description ??
                         AppLocalizations.of(context).noDescription,
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
                   Text(
                     "${AppLocalizations.of(context).available}:",
                     style: const TextStyle(
@@ -148,7 +241,7 @@ class ItemDetailView extends ConsumerWidget {
                   const SizedBox(height: 40),
                   DecoratedBox(
                     decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 230, 230, 230),
+                      color: CupertinoColors.systemGrey5,
                       borderRadius: BorderRadius.all(
                         Radius.circular(10),
                       ),
@@ -178,7 +271,7 @@ class ItemDetailView extends ConsumerWidget {
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

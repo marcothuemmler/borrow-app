@@ -1,4 +1,5 @@
 import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/common/extensions/build_context_extensions.dart";
 import "package:borrow_app/common/mixins/form_validator.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/services/routing/routes.dart";
@@ -35,8 +36,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
     final GroupSelectionModel model = ref.watch(
       providers.groupSelectionControllerProvider,
     );
-    final bool isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
+    final bool isPortrait = context.isPortrait;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).myGroups),

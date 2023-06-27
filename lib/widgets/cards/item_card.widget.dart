@@ -1,6 +1,7 @@
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/material.dart";
+import "package:skeletons/skeletons.dart";
 
 class ItemCard extends StatelessWidget {
   final void Function()? _onTap;
@@ -48,6 +49,7 @@ class ItemCard extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(
                     width: 85,
+                    height: 85,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.horizontal(
                         left: Radius.circular(7),
@@ -64,6 +66,13 @@ class ItemCard extends StatelessWidget {
                                   size: 60,
                                   iconData: Icons.image_outlined,
                                 );
+                              },
+                              loadingBuilder:
+                                  (_, Widget child, ImageChunkEvent? event) {
+                                if (event is ImageChunkEvent) {
+                                  return const SkeletonAvatar();
+                                }
+                                return child;
                               },
                             )
                           : const ImagePlaceholder(

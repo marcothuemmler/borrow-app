@@ -2,6 +2,7 @@ import "dart:math";
 
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/material.dart";
+import "package:skeletons/skeletons.dart";
 
 class GroupSelectionCard extends StatelessWidget {
   final String groupName;
@@ -67,6 +68,16 @@ class GroupSelectionCard extends StatelessWidget {
                                     height: double.infinity,
                                     width: double.infinity,
                                     fit: BoxFit.cover,
+                                    loadingBuilder: (
+                                      _,
+                                      Widget child,
+                                      ImageChunkEvent? event,
+                                    ) {
+                                      if (event is! ImageChunkEvent) {
+                                        return child;
+                                      }
+                                      return const SkeletonAvatar();
+                                    },
                                   )
                                 : ImagePlaceholder(
                                     iconData: Icons.image_outlined,
