@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 
 class PasswordFieldWidget extends StatelessWidget {
   final String _text;
+  final String? Function(String?)? _validator;
   final void Function(String)? _onChanged;
   final void Function()? _onTapIcon;
   final bool _obscureText;
@@ -16,7 +17,8 @@ class PasswordFieldWidget extends StatelessWidget {
   })  : _obscureText = obscureText,
         _onTapIcon = onTapIcon,
         _onChanged = onChanged,
-        _text = text;
+        _text = text,
+        _validator = validator;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class PasswordFieldWidget extends StatelessWidget {
           textInputAction: TextInputAction.next,
           autofillHints: const <String>[AutofillHints.password],
           autocorrect: false,
+          validator: _validator,
           decoration: InputDecoration(
             errorMaxLines: 3,
             border: const OutlineInputBorder(),
