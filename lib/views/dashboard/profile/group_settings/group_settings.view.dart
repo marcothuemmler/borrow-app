@@ -1,8 +1,10 @@
 import "package:borrow_app/services/routing/routes.dart";
+import "package:borrow_app/views/dashboard/profile/group_settings/group_settings.model.dart";
 import "package:borrow_app/widgets/dialogs/leave_group_bottom_sheet.dialog.dart";
 import "package:borrow_app/widgets/items/settings_item.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
 class GroupSettingsView extends StatelessWidget {
@@ -55,8 +57,9 @@ class GroupSettingsView extends StatelessWidget {
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                 ),
-                builder: (BuildContext context) =>
-                    const LeaveGroupBottomSheet(),
+                builder: (BuildContext context) => LeaveGroupBottomSheet(
+                  groupId: _groupId,
+                ),
               ),
             ),
           ],
@@ -64,4 +67,11 @@ class GroupSettingsView extends StatelessWidget {
       ),
     );
   }
+}
+
+abstract class GroupSettingsController
+    extends StateNotifier<GroupSettingsModel> {
+  GroupSettingsController(super.state);
+
+  Future<bool> leaveGroup();
 }

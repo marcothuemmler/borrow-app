@@ -571,4 +571,14 @@ class RestBackendServiceImplementation implements BackendServiceAggregator {
       throw Exception("Could not delete profile image: $error");
     }
   }
+
+  @override
+  Future<void> leaveGroup({required String groupId}) async {
+    try {
+      final String? userId = await _storageService.read(key: "user-id");
+      await _client.delete<void>("/groups/$groupId/members/$userId");
+    } catch (error) {
+      throw Exception("Could not remove member: $error");
+    }
+  }
 }
