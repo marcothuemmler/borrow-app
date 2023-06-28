@@ -1,4 +1,5 @@
 import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
+import "package:borrow_app/common/mixins/filter_borrowed_items.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/widgets/buttons/dotted_border_button.widget.dart";
@@ -96,4 +97,6 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
   void selectCategory(ItemListCategoryModel? category);
 
   Future<void> refresh();
+
+  void setShowBorrowed(FilterBorrowedItemsOptions s);
 }

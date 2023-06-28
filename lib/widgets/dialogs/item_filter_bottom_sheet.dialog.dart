@@ -1,3 +1,4 @@
+import "package:borrow_app/common/mixins/filter_borrowed_items.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
@@ -22,10 +23,16 @@ class ItemFilterBottomSheet extends ConsumerWidget {
       providers.itemListControllerProvider(_groupId),
     );
 
-    final List<String> dropDownItemsBorrowed = [
-      AppLocalizations.of(context).allCategories,
-      AppLocalizations.of(context).available,
-      AppLocalizations.of(context).borrowedItems,
+    final List<FilterBorrowedDropdownItem> dropDownItemsBorrowed = [
+      FilterBorrowedDropdownItem(
+          borrowedOptionEnum: FilterBorrowedItemsOptions.ALL,
+          name:  AppLocalizations.of(context).allCategories),
+      FilterBorrowedDropdownItem(
+          borrowedOptionEnum: FilterBorrowedItemsOptions.AVAILABLE,
+          name:  AppLocalizations.of(context).available),
+      FilterBorrowedDropdownItem(
+          borrowedOptionEnum: FilterBorrowedItemsOptions.BORROWED,
+          name: AppLocalizations.of(context).borrowedItems),
     ];
 
     return Container(
@@ -75,14 +82,15 @@ class ItemFilterBottomSheet extends ConsumerWidget {
             const SizedBox(height: 20),
             SizedBox(
               width: 250,
-              child: DropdownWidget<String>(
+              child: DropdownWidget<FilterBorrowedDropdownItem>(
                 hint: Text(AppLocalizations.of(context).category),
                 items: dropDownItemsBorrowed,
-                onChanged: (s) {},
-                value: dropDownItemsBorrowed[0],
-                mapFunction: (String s) => DropdownMenuItem(
-                  value: s,
-                  child: Text(s),
+                onChanged: (e) {controller.setShowBorrowed(e!.borrowedOptionEnum);},
+                value: dropDownItemsBorrowed.where((e) =>
+                  e.borrowedOptionEnum == model.filterBorrowed).first,
+                mapFunction: (FilterBorrowedDropdownItem e) => DropdownMenuItem(
+                  value: e,
+                  child: Text(e.name),
                 ),
               ),
             ),

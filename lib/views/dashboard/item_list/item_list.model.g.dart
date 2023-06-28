@@ -20,6 +20,8 @@ _$_ItemListModel _$$_ItemListModelFromJson(Map<String, dynamic> json) =>
       items: (json['items'] as List<dynamic>)
           .map((e) => ItemListItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      filterBorrowed: $enumDecode(
+          _$FilterBorrowedItemsOptionsEnumMap, json['filterBorrowed']),
     );
 
 Map<String, dynamic> _$$_ItemListModelToJson(_$_ItemListModel instance) =>
@@ -29,7 +31,15 @@ Map<String, dynamic> _$$_ItemListModelToJson(_$_ItemListModel instance) =>
       'selectedCategory': instance.selectedCategory,
       'group': instance.group,
       'items': instance.items,
+      'filterBorrowed':
+          _$FilterBorrowedItemsOptionsEnumMap[instance.filterBorrowed]!,
     };
+
+const _$FilterBorrowedItemsOptionsEnumMap = {
+  FilterBorrowedItemsOptions.AVAILABLE: 'AVAILABLE',
+  FilterBorrowedItemsOptions.BORROWED: 'BORROWED',
+  FilterBorrowedItemsOptions.ALL: 'ALL',
+};
 
 _$_ItemListGroupModel _$$_ItemListGroupModelFromJson(
         Map<String, dynamic> json) =>
