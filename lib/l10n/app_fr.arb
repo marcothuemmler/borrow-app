@@ -50,7 +50,7 @@
   "deleteItem": "Supprimer l'objet?",
   "delete": "Suprimer",
   "filterByCategory": "Filtrer par catégorie:",
-  "filterByAvailibility": "Filtrer par disponibilité:",
+  "filterByAvailability": "Filtrer par disponibilité:",
   "filterByDate": "Filtrer par date:",
   "messages": "Messages",
   "preferences": "Réglages",
