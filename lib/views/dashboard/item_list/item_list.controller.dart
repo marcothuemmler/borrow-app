@@ -1,9 +1,9 @@
+import "package:borrow_app/common/enums/item_availability_filter_type.enum.dart";
 import "package:borrow_app/services/routing/routes.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.service.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:go_router/go_router.dart";
-import "package:borrow_app/common/enums/filter_borrowed_items_options.enum.dart";
 
 class ItemListControllerImplementation extends ItemListController {
   final ItemListService _itemListService;
@@ -26,7 +26,7 @@ class ItemListControllerImplementation extends ItemListController {
                 isLoading: false,
                 group: null,
                 items: <ItemListItemModel>[],
-                filterBorrowed: FilterBorrowedItemsOptions.ALL,
+                itemAvailabilityFilterType: ItemAvailabilityFilterType.showAll,
               ),
         ) {
     _init();
@@ -44,7 +44,7 @@ class ItemListControllerImplementation extends ItemListController {
         groupId: id,
       );
       state = state.copyWith(group: response, isLoading: false);
-      _filter();
+      _applyItemFilters();
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
     }
@@ -71,30 +71,30 @@ class ItemListControllerImplementation extends ItemListController {
     final ItemListCategoryModel? selectedCategory =
         category?.id is! String ? null : category;
     state = state.copyWith(selectedCategory: selectedCategory);
-    _filter();
+    _applyItemFilters();
   }
 
-  void _filter() {
+  void _applyItemFilters() {
     if (state.group is ItemListGroupModel) {
-      final category = state.selectedCategory;
-
-      final List<ItemListItemModel> filteredItems =
+      final ItemListCategoryModel? category = state.selectedCategory;
+      List<ItemListItemModel> filteredItems =
           state.group!.items.where((ItemListItemModel item) {
         return category is! ItemListCategoryModel ||
             item.category?.id == category.id;
       }).toList();
+      filteredItems = filteredItems.where(_availabilityFilterType).toList();
+      state = state.copyWith(items: filteredItems);
+    }
+  }
 
-      bool filterIsBorrowed(ItemListItemModel e) {
-        switch(state.filterBorrowed) {
-          case FilterBorrowedItemsOptions.AVAILABLE: return e.isActive;
-          case FilterBorrowedItemsOptions.BORROWED: return !e.isActive;
-          default: return true;
-        }
-      }
-
-      final List<ItemListItemModel> filteredItems2 =
-        filteredItems.where(filterIsBorrowed).toList();
-      state = state.copyWith(items: filteredItems2);
+  bool _availabilityFilterType(ItemListItemModel item) {
+    switch (state.itemAvailabilityFilterType) {
+      case ItemAvailabilityFilterType.showAvailable:
+        return item.isActive;
+      case ItemAvailabilityFilterType.showBorrowed:
+        return !item.isActive;
+      case ItemAvailabilityFilterType.showAll:
+        return true;
     }
   }
 
@@ -104,8 +104,12 @@ class ItemListControllerImplementation extends ItemListController {
   }
 
   @override
-  void setShowBorrowed(FilterBorrowedItemsOptions o) {
-    state = state.copyWith(filterBorrowed: o);
-    _filter();
+  void setItemAvailabilityFilterType(
+    ItemAvailabilityFilterType? itemFilterType,
+  ) {
+    if (itemFilterType is ItemAvailabilityFilterType) {
+      state = state.copyWith(itemAvailabilityFilterType: itemFilterType);
+      _applyItemFilters();
+    }
   }
 }

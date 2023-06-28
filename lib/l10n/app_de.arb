@@ -50,6 +50,7 @@
   "deleteItem": "Objekt löschen?",
   "delete": "Löschen",
   "filterByCategory": "Nach Kategorie filtern:",
+  "filterByAvailability": "Nach Verfügbarkeit filtern:",
   "filterByDate": "Nach Datum filtern:",
   "messages": "Nachrichten",
   "preferences": "Einstellungen",

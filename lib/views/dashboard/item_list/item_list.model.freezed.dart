@@ -26,7 +26,7 @@ mixin _$ItemListModel {
       throw _privateConstructorUsedError;
   ItemListGroupModel? get group => throw _privateConstructorUsedError;
   List<ItemListItemModel> get items => throw _privateConstructorUsedError;
-  FilterBorrowedItemsOptions get filterBorrowed =>
+  ItemAvailabilityFilterType get itemAvailabilityFilterType =>
       throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,7 +47,7 @@ abstract class $ItemListModelCopyWith<$Res> {
       ItemListCategoryModel? selectedCategory,
       ItemListGroupModel? group,
       List<ItemListItemModel> items,
-      FilterBorrowedItemsOptions filterBorrowed});
+      ItemAvailabilityFilterType itemAvailabilityFilterType});
 
   $ItemListCategoryModelCopyWith<$Res>? get selectedCategory;
   $ItemListGroupModelCopyWith<$Res>? get group;
@@ -71,7 +71,7 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
     Object? selectedCategory = freezed,
     Object? group = freezed,
     Object? items = null,
-    Object? filterBorrowed = null,
+    Object? itemAvailabilityFilterType = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -94,10 +94,10 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
               as List<ItemListItemModel>,
-      filterBorrowed: null == filterBorrowed
-          ? _value.filterBorrowed
-          : filterBorrowed // ignore: cast_nullable_to_non_nullable
-              as FilterBorrowedItemsOptions,
+      itemAvailabilityFilterType: null == itemAvailabilityFilterType
+          ? _value.itemAvailabilityFilterType
+          : itemAvailabilityFilterType // ignore: cast_nullable_to_non_nullable
+              as ItemAvailabilityFilterType,
     ) as $Val);
   }
 
@@ -141,7 +141,7 @@ abstract class _$$_ItemListModelCopyWith<$Res>
       ItemListCategoryModel? selectedCategory,
       ItemListGroupModel? group,
       List<ItemListItemModel> items,
-      FilterBorrowedItemsOptions filterBorrowed});
+      ItemAvailabilityFilterType itemAvailabilityFilterType});
 
   @override
   $ItemListCategoryModelCopyWith<$Res>? get selectedCategory;
@@ -165,7 +165,7 @@ class __$$_ItemListModelCopyWithImpl<$Res>
     Object? selectedCategory = freezed,
     Object? group = freezed,
     Object? items = null,
-    Object? filterBorrowed = null,
+    Object? itemAvailabilityFilterType = null,
   }) {
     return _then(_$_ItemListModel(
       isLoading: null == isLoading
@@ -188,10 +188,10 @@ class __$$_ItemListModelCopyWithImpl<$Res>
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<ItemListItemModel>,
-      filterBorrowed: null == filterBorrowed
-          ? _value.filterBorrowed
-          : filterBorrowed // ignore: cast_nullable_to_non_nullable
-              as FilterBorrowedItemsOptions,
+      itemAvailabilityFilterType: null == itemAvailabilityFilterType
+          ? _value.itemAvailabilityFilterType
+          : itemAvailabilityFilterType // ignore: cast_nullable_to_non_nullable
+              as ItemAvailabilityFilterType,
     ));
   }
 }
@@ -205,7 +205,7 @@ class _$_ItemListModel implements _ItemListModel {
       required this.selectedCategory,
       required this.group,
       required final List<ItemListItemModel> items,
-      required this.filterBorrowed})
+      required this.itemAvailabilityFilterType})
       : _items = items;
 
   factory _$_ItemListModel.fromJson(Map<String, dynamic> json) =>
@@ -228,11 +228,11 @@ class _$_ItemListModel implements _ItemListModel {
   }
 
   @override
-  final FilterBorrowedItemsOptions filterBorrowed;
+  final ItemAvailabilityFilterType itemAvailabilityFilterType;
 
   @override
   String toString() {
-    return 'ItemListModel(isLoading: $isLoading, hasError: $hasError, selectedCategory: $selectedCategory, group: $group, items: $items, filterBorrowed: $filterBorrowed)';
+    return 'ItemListModel(isLoading: $isLoading, hasError: $hasError, selectedCategory: $selectedCategory, group: $group, items: $items, itemAvailabilityFilterType: $itemAvailabilityFilterType)';
   }
 
   @override
@@ -248,8 +248,10 @@ class _$_ItemListModel implements _ItemListModel {
                 other.selectedCategory == selectedCategory) &&
             (identical(other.group, group) || other.group == group) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
-            (identical(other.filterBorrowed, filterBorrowed) ||
-                other.filterBorrowed == filterBorrowed));
+            (identical(other.itemAvailabilityFilterType,
+                    itemAvailabilityFilterType) ||
+                other.itemAvailabilityFilterType ==
+                    itemAvailabilityFilterType));
   }
 
   @JsonKey(ignore: true)
@@ -261,7 +263,7 @@ class _$_ItemListModel implements _ItemListModel {
       selectedCategory,
       group,
       const DeepCollectionEquality().hash(_items),
-      filterBorrowed);
+      itemAvailabilityFilterType);
 
   @JsonKey(ignore: true)
   @override
@@ -279,13 +281,13 @@ class _$_ItemListModel implements _ItemListModel {
 
 abstract class _ItemListModel implements ItemListModel {
   factory _ItemListModel(
-          {required final bool isLoading,
-          required final bool hasError,
-          required final ItemListCategoryModel? selectedCategory,
-          required final ItemListGroupModel? group,
-          required final List<ItemListItemModel> items,
-          required final FilterBorrowedItemsOptions filterBorrowed}) =
-      _$_ItemListModel;
+      {required final bool isLoading,
+      required final bool hasError,
+      required final ItemListCategoryModel? selectedCategory,
+      required final ItemListGroupModel? group,
+      required final List<ItemListItemModel> items,
+      required final ItemAvailabilityFilterType
+          itemAvailabilityFilterType}) = _$_ItemListModel;
 
   factory _ItemListModel.fromJson(Map<String, dynamic> json) =
       _$_ItemListModel.fromJson;
@@ -301,7 +303,7 @@ abstract class _ItemListModel implements ItemListModel {
   @override
   List<ItemListItemModel> get items;
   @override
-  FilterBorrowedItemsOptions get filterBorrowed;
+  ItemAvailabilityFilterType get itemAvailabilityFilterType;
   @override
   @JsonKey(ignore: true)
   _$$_ItemListModelCopyWith<_$_ItemListModel> get copyWith =>
@@ -1174,149 +1176,4 @@ abstract class _ItemListUserModel implements ItemListUserModel {
   @JsonKey(ignore: true)
   _$$_ItemListUserModelCopyWith<_$_ItemListUserModel> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$FilterBorrowedDropdownItem {
-  FilterBorrowedItemsOptions get borrowedOptionEnum =>
-      throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $FilterBorrowedDropdownItemCopyWith<FilterBorrowedDropdownItem>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $FilterBorrowedDropdownItemCopyWith<$Res> {
-  factory $FilterBorrowedDropdownItemCopyWith(FilterBorrowedDropdownItem value,
-          $Res Function(FilterBorrowedDropdownItem) then) =
-      _$FilterBorrowedDropdownItemCopyWithImpl<$Res,
-          FilterBorrowedDropdownItem>;
-  @useResult
-  $Res call({FilterBorrowedItemsOptions borrowedOptionEnum, String name});
-}
-
-/// @nodoc
-class _$FilterBorrowedDropdownItemCopyWithImpl<$Res,
-        $Val extends FilterBorrowedDropdownItem>
-    implements $FilterBorrowedDropdownItemCopyWith<$Res> {
-  _$FilterBorrowedDropdownItemCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? borrowedOptionEnum = null,
-    Object? name = null,
-  }) {
-    return _then(_value.copyWith(
-      borrowedOptionEnum: null == borrowedOptionEnum
-          ? _value.borrowedOptionEnum
-          : borrowedOptionEnum // ignore: cast_nullable_to_non_nullable
-              as FilterBorrowedItemsOptions,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_FilterBorrowedDropdownItemCopyWith<$Res>
-    implements $FilterBorrowedDropdownItemCopyWith<$Res> {
-  factory _$$_FilterBorrowedDropdownItemCopyWith(
-          _$_FilterBorrowedDropdownItem value,
-          $Res Function(_$_FilterBorrowedDropdownItem) then) =
-      __$$_FilterBorrowedDropdownItemCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({FilterBorrowedItemsOptions borrowedOptionEnum, String name});
-}
-
-/// @nodoc
-class __$$_FilterBorrowedDropdownItemCopyWithImpl<$Res>
-    extends _$FilterBorrowedDropdownItemCopyWithImpl<$Res,
-        _$_FilterBorrowedDropdownItem>
-    implements _$$_FilterBorrowedDropdownItemCopyWith<$Res> {
-  __$$_FilterBorrowedDropdownItemCopyWithImpl(
-      _$_FilterBorrowedDropdownItem _value,
-      $Res Function(_$_FilterBorrowedDropdownItem) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? borrowedOptionEnum = null,
-    Object? name = null,
-  }) {
-    return _then(_$_FilterBorrowedDropdownItem(
-      borrowedOptionEnum: null == borrowedOptionEnum
-          ? _value.borrowedOptionEnum
-          : borrowedOptionEnum // ignore: cast_nullable_to_non_nullable
-              as FilterBorrowedItemsOptions,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_FilterBorrowedDropdownItem implements _FilterBorrowedDropdownItem {
-  _$_FilterBorrowedDropdownItem(
-      {required this.borrowedOptionEnum, required this.name});
-
-  @override
-  final FilterBorrowedItemsOptions borrowedOptionEnum;
-  @override
-  final String name;
-
-  @override
-  String toString() {
-    return 'FilterBorrowedDropdownItem(borrowedOptionEnum: $borrowedOptionEnum, name: $name)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_FilterBorrowedDropdownItem &&
-            (identical(other.borrowedOptionEnum, borrowedOptionEnum) ||
-                other.borrowedOptionEnum == borrowedOptionEnum) &&
-            (identical(other.name, name) || other.name == name));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, borrowedOptionEnum, name);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_FilterBorrowedDropdownItemCopyWith<_$_FilterBorrowedDropdownItem>
-      get copyWith => __$$_FilterBorrowedDropdownItemCopyWithImpl<
-          _$_FilterBorrowedDropdownItem>(this, _$identity);
-}
-
-abstract class _FilterBorrowedDropdownItem
-    implements FilterBorrowedDropdownItem {
-  factory _FilterBorrowedDropdownItem(
-      {required final FilterBorrowedItemsOptions borrowedOptionEnum,
-      required final String name}) = _$_FilterBorrowedDropdownItem;
-
-  @override
-  FilterBorrowedItemsOptions get borrowedOptionEnum;
-  @override
-  String get name;
-  @override
-  @JsonKey(ignore: true)
-  _$$_FilterBorrowedDropdownItemCopyWith<_$_FilterBorrowedDropdownItem>
-      get copyWith => throw _privateConstructorUsedError;
 }

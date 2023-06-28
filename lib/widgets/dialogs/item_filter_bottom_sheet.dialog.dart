@@ -1,3 +1,4 @@
+import "package:borrow_app/common/enums/item_availability_filter_type.enum.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
@@ -6,7 +7,6 @@ import "package:calendar_date_picker2/calendar_date_picker2.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import 'package:borrow_app/common/enums/filter_borrowed_items_options.enum.dart';
 
 class ItemFilterBottomSheet extends ConsumerWidget {
   const ItemFilterBottomSheet({super.key, required String groupId})
@@ -22,18 +22,6 @@ class ItemFilterBottomSheet extends ConsumerWidget {
     final ItemListModel model = ref.watch(
       providers.itemListControllerProvider(_groupId),
     );
-
-    final List<FilterBorrowedDropdownItem> dropDownItemsBorrowed = [
-      FilterBorrowedDropdownItem(
-          borrowedOptionEnum: FilterBorrowedItemsOptions.ALL,
-          name:  AppLocalizations.of(context).allCategories),
-      FilterBorrowedDropdownItem(
-          borrowedOptionEnum: FilterBorrowedItemsOptions.AVAILABLE,
-          name:  AppLocalizations.of(context).available),
-      FilterBorrowedDropdownItem(
-          borrowedOptionEnum: FilterBorrowedItemsOptions.BORROWED,
-          name: AppLocalizations.of(context).borrowedItems),
-    ];
 
     return Container(
       padding: const EdgeInsets.all(30),
@@ -73,7 +61,7 @@ class ItemFilterBottomSheet extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              AppLocalizations.of(context).borrowedItems,
+              AppLocalizations.of(context).filterByAvailability,
               style: TextStyle(
                 color: Colors.black.withOpacity(0.6),
                 fontSize: 18,
@@ -82,15 +70,17 @@ class ItemFilterBottomSheet extends ConsumerWidget {
             const SizedBox(height: 20),
             SizedBox(
               width: 250,
-              child: DropdownWidget<FilterBorrowedDropdownItem>(
+              child: DropdownWidget<ItemAvailabilityFilterType>(
                 hint: Text(AppLocalizations.of(context).category),
-                items: dropDownItemsBorrowed,
-                onChanged: (e) {controller.setShowBorrowed(e!.borrowedOptionEnum);},
-                value: dropDownItemsBorrowed.where((e) =>
-                  e.borrowedOptionEnum == model.filterBorrowed).first,
-                mapFunction: (FilterBorrowedDropdownItem e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(e.name),
+                items: ItemAvailabilityFilterType.values,
+                onChanged: controller.setItemAvailabilityFilterType,
+                value: model.itemAvailabilityFilterType,
+                mapFunction: (ItemAvailabilityFilterType option) =>
+                    DropdownMenuItem<ItemAvailabilityFilterType>(
+                  value: option,
+                  child: Text(
+                    filterLocalizations(context: context)[option] ?? "",
+                  ),
                 ),
               ),
             ),

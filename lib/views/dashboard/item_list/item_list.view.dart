@@ -1,3 +1,4 @@
+import "package:borrow_app/common/enums/item_availability_filter_type.enum.dart";
 import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
@@ -7,7 +8,6 @@ import "package:borrow_app/widgets/various_components/list_refresh_indicator.wid
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import 'package:borrow_app/common/enums/filter_borrowed_items_options.enum.dart';
 
 class ItemListView extends ConsumerWidget with CategoryDialogMixin {
   final String _groupId;
@@ -98,5 +98,7 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
 
   Future<void> refresh();
 
-  void setShowBorrowed(FilterBorrowedItemsOptions s);
+  void setItemAvailabilityFilterType(
+    ItemAvailabilityFilterType? itemFilterType,
+  );
 }

@@ -50,6 +50,7 @@
   "deleteItem": "Delete item?",
   "delete": "Delete",
   "filterByCategory": "Filter by category:",
+  "filterByAvailability": "Filter by availability:",
   "filterByDate": "Filter by date:",
   "messages": "Messages",
   "preferences": "Preferences",

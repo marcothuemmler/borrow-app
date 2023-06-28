@@ -1,18 +1,18 @@
+import "package:borrow_app/common/enums/item_availability_filter_type.enum.dart";
 import "package:freezed_annotation/freezed_annotation.dart";
-import "package:borrow_app/common/enums/filter_borrowed_items_options.enum.dart";
 
 part "item_list.model.freezed.dart";
 part "item_list.model.g.dart";
 
 @freezed
-class ItemListModel with _$ItemListModel{
+class ItemListModel with _$ItemListModel {
   factory ItemListModel({
     required bool isLoading,
     required bool hasError,
     required ItemListCategoryModel? selectedCategory,
     required ItemListGroupModel? group,
     required List<ItemListItemModel> items,
-    required FilterBorrowedItemsOptions filterBorrowed,
+    required ItemAvailabilityFilterType itemAvailabilityFilterType,
   }) = _ItemListModel;
 
   factory ItemListModel.fromJson(Map<String, dynamic> json) =>
@@ -70,12 +70,4 @@ class ItemListUserModel with _$ItemListUserModel {
 
   factory ItemListUserModel.fromJson(Map<String, dynamic> json) =>
       _$ItemListUserModelFromJson(json);
-}
-
-@freezed
-class FilterBorrowedDropdownItem with _$FilterBorrowedDropdownItem {
-  factory FilterBorrowedDropdownItem({
-    required FilterBorrowedItemsOptions borrowedOptionEnum,
-    required String name,
-  }) = _FilterBorrowedDropdownItem;
 }
