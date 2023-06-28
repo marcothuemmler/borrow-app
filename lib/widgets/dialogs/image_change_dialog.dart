@@ -40,7 +40,7 @@ class ImageChangeDialog extends StatelessWidget {
             const SizedBox(height: 10),
             TextButton(
               onPressed: _onSelectImageFromCameraPressed,
-              child: Text("Bild aufnehmen"),
+              child: Text(AppLocalizations.of(context).takePicture),
             ),
             if (_showRemoveOption)
               Column(

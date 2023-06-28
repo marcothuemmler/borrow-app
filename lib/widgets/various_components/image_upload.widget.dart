@@ -1,4 +1,4 @@
-import "package:borrow_app/common/enums/image_upload.enum.dart";
+import "package:borrow_app/common/enums/image_chage_selection_type.enum.dart";
 import "package:borrow_app/widgets/dialogs/image_change_dialog.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/foundation.dart";

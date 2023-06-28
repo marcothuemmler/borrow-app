@@ -77,5 +77,6 @@
   "itemSaveFailed": "No se ha podido guardar el objeto",
   "isBorrowed": "Prestado",
   "leaveGroup": "Salir del grupo",
-  "leaveGroupWarning": "Sus objetos en este grupo serán borrados"
+  "leaveGroupWarning": "Sus objetos en este grupo serán borrados",
+  "takePicture": "Tomar foto"
 }

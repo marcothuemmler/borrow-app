@@ -77,5 +77,6 @@
   "itemSaveFailed": "Objekt konnte nicht gespeichert werden",
   "isBorrowed": "Verliehen",
   "leaveGroup": "Gruppe verlassen",
-  "leaveGroupWarning": "Ihre Gegenstände in dieser Gruppe werden gelöscht"
+  "leaveGroupWarning": "Ihre Gegenstände in dieser Gruppe werden gelöscht",
+  "takePicture": "Bild aufnehmen"
 }
