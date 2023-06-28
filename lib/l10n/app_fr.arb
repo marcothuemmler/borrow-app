@@ -78,5 +78,7 @@
   "isBorrowed": "Emprunté",
   "leaveGroup": "Quitter le groupe",
   "leaveGroupWarning": "Vos articles dans ce groupe seront supprimés",
-  "takePicture": "Prendre une photo"
+  "takePicture": "Prendre une photo",
+  "emptyGroupListTitle": "Vous n'avez pas encore de groupes",
+  "emptyGroupListMessage": "Vous pouvez créer vos propres groupes,\nou être invité par d'autres utilisateurs"
 }

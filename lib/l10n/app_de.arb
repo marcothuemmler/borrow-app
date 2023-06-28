@@ -78,5 +78,7 @@
   "isBorrowed": "Verliehen",
   "leaveGroup": "Gruppe verlassen",
   "leaveGroupWarning": "Ihre Gegenstände in dieser Gruppe werden gelöscht",
+  "emptyGroupListTitle": "Sie haben noch keine Gruppen",
+  "emptyGroupListMessage": "Sie können eigene Gruppen erstellen,\noder von anderen Nutzern eingeladen werden",
   "takePicture": "Bild aufnehmen"
 }

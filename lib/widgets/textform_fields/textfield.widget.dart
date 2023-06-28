@@ -46,6 +46,7 @@ class TextFieldWidget extends StatelessWidget {
             autocorrect: _autocorrect,
             validator: _validator,
             decoration: InputDecoration(
+              errorMaxLines: 3,
               border: const OutlineInputBorder(),
               labelText: _text,
             ),
