@@ -1,16 +1,15 @@
-import 'package:dartz/dartz.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:image_picker/image_picker.dart';
+import "package:freezed_annotation/freezed_annotation.dart";
+import "package:image_picker/image_picker.dart";
 
-part 'group_selection.model.freezed.dart';
-part 'group_selection.model.g.dart';
+part "group_selection.model.freezed.dart";
+part "group_selection.model.g.dart";
 
 @freezed
 class GroupSelectionModel with _$GroupSelectionModel {
   factory GroupSelectionModel({
     required bool isLoading,
     required bool hasError,
-    required Option<GroupSelectionUserModel> user,
+    required GroupSelectionUserModel? user,
     required GroupSelectionGroupModel? newGroup,
     required XFile? groupImage,
     required InvitationModel? invitations,
@@ -22,7 +21,8 @@ class GroupSelectionUserModel with _$GroupSelectionUserModel {
   factory GroupSelectionUserModel({
     required String id,
     required String username,
-    @Default([]) List<GroupSelectionGroupModel> groups,
+    @Default(<GroupSelectionGroupModel>[])
+        List<GroupSelectionGroupModel> groups,
   }) = _UserModel;
 
   factory GroupSelectionUserModel.fromJson(Map<String, dynamic> json) =>

@@ -1,44 +1,56 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class TextFieldWidget extends StatelessWidget {
-  final String text;
-  final String? Function(String?)? validator;
-  final void Function(String)? onChanged;
-  final bool autocorrect;
-  final Iterable<String>? autofillHints;
-  final TextInputType? keyboardType;
-  final TextEditingController? controller;
+  final String _text;
+  final String? Function(String?)? _validator;
+  final void Function(String)? _onChanged;
+  final bool _autocorrect;
+  final Iterable<String>? _autofillHints;
+  final TextInputType? _keyboardType;
+  final TextEditingController? _controller;
+  final String? _initialValue;
 
   const TextFieldWidget({
     super.key,
-    required this.text,
-    required this.validator,
-    required this.onChanged,
-    required this.autocorrect,
-    this.autofillHints,
-    this.keyboardType,
-    this.controller,
-  });
+    required String text,
+    required String? Function(String?)? validator,
+    required void Function(String)? onChanged,
+    required bool autocorrect,
+    Iterable<String>? autofillHints,
+    TextInputType? keyboardType,
+    TextEditingController? controller,
+    String? initialValue,
+  })  : _initialValue = initialValue,
+        _controller = controller,
+        _keyboardType = keyboardType,
+        _autofillHints = autofillHints,
+        _autocorrect = autocorrect,
+        _onChanged = onChanged,
+        _validator = validator,
+        _text = text;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         const SizedBox(height: 16),
-        Text(text),
-        const SizedBox(height: 10),
         Flexible(
           child: TextFormField(
-            controller: controller,
-            keyboardType: keyboardType,
+            initialValue: _initialValue,
+            controller: _controller,
+            keyboardType: _keyboardType,
             textInputAction: TextInputAction.next,
-            autofillHints: autofillHints,
-            autocorrect: autocorrect,
-            validator: validator,
-            decoration: const InputDecoration(border: OutlineInputBorder()),
-            onChanged: onChanged,
+            autofillHints: _autofillHints,
+            autocorrect: _autocorrect,
+            validator: _validator,
+            decoration: InputDecoration(
+              errorMaxLines: 3,
+              border: const OutlineInputBorder(),
+              labelText: _text,
+            ),
+            onChanged: _onChanged,
           ),
         ),
       ],

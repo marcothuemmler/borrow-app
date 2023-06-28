@@ -1,21 +1,19 @@
-import 'package:flutter/material.dart';
+import "package:borrow_app/views/chat/chat.model.dart";
+import "package:flutter/material.dart";
 
 class ChatBubble extends StatelessWidget {
-  final bool isOwnMessage;
-  final String content;
+  final MessageModel _message;
 
-  const ChatBubble({
-    super.key,
-    required this.isOwnMessage,
-    required this.content,
-  });
+  const ChatBubble({super.key, required MessageModel message})
+      : _message = message;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment:
-          isOwnMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
+      mainAxisAlignment: _message.isOwnMessage
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
+      children: <Widget>[
         Flexible(
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 4),
@@ -24,11 +22,11 @@ class ChatBubble extends StatelessWidget {
               horizontal: 20,
             ),
             decoration: BoxDecoration(
-              color: isOwnMessage
+              color: _message.isOwnMessage
                   ? const Color.fromRGBO(60, 120, 240, 1)
                   : const Color.fromRGBO(240, 240, 240, 1),
               borderRadius: const BorderRadius.all(Radius.circular(13)),
-              boxShadow: const [
+              boxShadow: const <BoxShadow>[
                 BoxShadow(
                   color: Colors.black38,
                   blurRadius: 2,
@@ -38,12 +36,13 @@ class ChatBubble extends StatelessWidget {
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Flexible(
                   child: Text(
-                    content,
+                    _message.content,
                     style: TextStyle(
-                      color: isOwnMessage ? Colors.white : Colors.black,
+                      color:
+                          _message.isOwnMessage ? Colors.white : Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
                     ),

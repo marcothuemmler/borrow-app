@@ -1,49 +1,52 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class PasswordFieldWidget extends StatelessWidget {
-  final String text;
-  final String? Function(String?)? validator;
-  final void Function(String)? onChanged;
-  final void Function()? onTapIcon;
-  final bool obscureText;
+  final String _text;
+  final String? Function(String?)? _validator;
+  final void Function(String)? _onChanged;
+  final void Function()? _onTapIcon;
+  final bool _obscureText;
 
   const PasswordFieldWidget({
     super.key,
-    required this.text,
-    required this.validator,
-    required this.onTapIcon,
-    required this.onChanged,
-    required this.obscureText,
-  });
+    required String text,
+    required String? Function(String?)? validator,
+    required void Function()? onTapIcon,
+    required void Function(String)? onChanged,
+    required bool obscureText,
+  })  : _obscureText = obscureText,
+        _onTapIcon = onTapIcon,
+        _onChanged = onChanged,
+        _text = text,
+        _validator = validator;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         const SizedBox(height: 16),
-        const Text('Password'),
-        const SizedBox(height: 10),
         TextFormField(
           keyboardType: TextInputType.visiblePassword,
           textInputAction: TextInputAction.next,
-          autofillHints: const [AutofillHints.password],
+          autofillHints: const <String>[AutofillHints.password],
           autocorrect: false,
-          validator: validator,
+          validator: _validator,
           decoration: InputDecoration(
             errorMaxLines: 3,
             border: const OutlineInputBorder(),
+            labelText: _text,
             suffixIcon: GestureDetector(
-              onTap: onTapIcon,
+              onTap: _onTapIcon,
               child: Icon(
-                obscureText
+                _obscureText
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
               ),
             ),
           ),
-          obscureText: obscureText,
-          onChanged: onChanged,
+          obscureText: _obscureText,
+          onChanged: _onChanged,
         ),
       ],
     );

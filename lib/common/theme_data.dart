@@ -1,24 +1,23 @@
 import "package:flutter/material.dart";
-import "package:flutter/services.dart";
 
-final themeData = ThemeData(
+final ThemeData themeData = ThemeData(
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       padding: const EdgeInsets.symmetric(
-        vertical: 14,
-        horizontal: 32,
+        vertical: 12,
+        horizontal: 20,
       ),
-      textStyle: const TextStyle(fontSize: 19),
+      textStyle: const TextStyle(fontSize: 16),
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
       padding: const EdgeInsets.symmetric(
-        vertical: 14,
-        horizontal: 32,
+        vertical: 12,
+        horizontal: 20,
       ),
-      textStyle: const TextStyle(fontSize: 19),
+      textStyle: const TextStyle(fontSize: 16),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(7),
@@ -27,16 +26,16 @@ final themeData = ThemeData(
     ),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    selectedIconTheme: IconThemeData(size: 36),
-    unselectedIconTheme: IconThemeData(size: 36),
+    selectedIconTheme: IconThemeData(size: 30),
+    unselectedIconTheme: IconThemeData(size: 30),
     showSelectedLabels: false,
     showUnselectedLabels: false,
   ),
   primarySwatch: Colors.blue,
   appBarTheme: const AppBarTheme(
-    systemOverlayStyle: SystemUiOverlayStyle.dark,
+    // systemOverlayStyle: SystemUiOverlayStyle.dark,
     titleTextStyle: TextStyle(
-      fontSize: 26,
+      fontSize: 18,
       fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
@@ -44,5 +43,18 @@ final themeData = ThemeData(
     elevation: 0.4,
     foregroundColor: Colors.black,
     centerTitle: false,
+  ),
+  listTileTheme: ListTileThemeData(
+    minLeadingWidth: 8,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+  ),
+  popupMenuTheme: const PopupMenuThemeData(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    ),
+  ),
+  textTheme: const TextTheme(
+    titleMedium: TextStyle(fontSize: 15),
   ),
 );

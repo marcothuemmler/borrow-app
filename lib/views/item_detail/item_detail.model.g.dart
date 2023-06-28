@@ -11,7 +11,9 @@ _$_ItemDetailItemModel _$$_ItemDetailItemModelFromJson(
     _$_ItemDetailItemModel(
       id: json['id'] as String,
       name: json['name'] as String,
+      imageUrl: json['imageUrl'] as String?,
       description: json['description'] as String?,
+      isMyItem: json['isMyItem'] as bool? ?? false,
       owner:
           ItemDetailUserModel.fromJson(json['owner'] as Map<String, dynamic>),
       category: ItemDetailCategoryModel.fromJson(
@@ -23,7 +25,9 @@ Map<String, dynamic> _$$_ItemDetailItemModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'imageUrl': instance.imageUrl,
       'description': instance.description,
+      'isMyItem': instance.isMyItem,
       'owner': instance.owner,
       'category': instance.category,
     };
@@ -54,6 +58,7 @@ _$_ItemDetailUserModel _$$_ItemDetailUserModelFromJson(
     _$_ItemDetailUserModel(
       id: json['id'] as String,
       username: json['username'] as String,
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$$_ItemDetailUserModelToJson(
@@ -61,4 +66,5 @@ Map<String, dynamic> _$$_ItemDetailUserModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'username': instance.username,
+      'imageUrl': instance.imageUrl,
     };

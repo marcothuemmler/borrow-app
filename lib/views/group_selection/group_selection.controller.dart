@@ -1,9 +1,9 @@
-import 'package:borrow_app/util/extensions.dart';
-import 'package:borrow_app/views/group_selection/group_selection.model.dart';
-import 'package:borrow_app/views/group_selection/group_selection.service.dart';
-import 'package:borrow_app/views/group_selection/group_selection.view.dart';
-import 'package:dartz/dartz.dart';
-import 'package:image_picker/image_picker.dart';
+import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/views/group_selection/group_selection.model.dart";
+import "package:borrow_app/views/group_selection/group_selection.service.dart";
+import "package:borrow_app/views/group_selection/group_selection.view.dart";
+import "package:flutter/material.dart";
+import "package:image_picker/image_picker.dart";
 
 class GroupSelectionControllerImplementation extends GroupSelectionController {
   final GroupSelectionService _groupSelectionService;
@@ -17,7 +17,7 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
               GroupSelectionModel(
                 isLoading: true,
                 hasError: false,
-                user: none(),
+                user: null,
                 newGroup: null,
                 groupImage: null,
                 invitations: null,
@@ -33,9 +33,8 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   Future<void> _getGroups() async {
     state = state.copyWith(isLoading: true, hasError: false);
     try {
-      final response = await _groupSelectionService.getGroups();
       state = state.copyWith(
-        user: optionOf(response),
+        user: await _groupSelectionService.getGroups(),
         isLoading: false,
         hasError: false,
       );
@@ -51,7 +50,8 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
     }
     try {
       state = state.copyWith(isLoading: true, hasError: false);
-      final response = await _groupSelectionService.postGroup(state.newGroup!);
+      final GroupSelectionGroupModel response =
+          await _groupSelectionService.postGroup(state.newGroup!);
       if (state.groupImage is XFile) {
         await _groupSelectionService.putGroupImage(
           groupId: response.id!,
@@ -61,20 +61,6 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
       _getGroups();
     } catch (error) {
       state = state.copyWith(hasError: true, isLoading: false);
-    }
-  }
-
-  @override
-  String? validateFormField({required String fieldName}) {
-    switch (fieldName) {
-      case 'groupName':
-        return state.newGroup!.name.length > 2
-            ? null
-            : "Der Gruppenname muss größer als 2 sein";
-      case 'groupDescription':
-        return null;
-      default:
-        return null;
     }
   }
 
@@ -103,17 +89,23 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   @override
   void setupMemberInvitation({required String groupId}) {
     state = state.copyWith(
-      invitations: InvitationModel(groupId: groupId, emails: {}),
+      invitations: InvitationModel(groupId: groupId, emails: <String>{}),
     );
   }
 
   @override
-  String? validateAndAddEmailToInvitations(String? email) {
-    final String? errorText =
-        email.isEmail ? null : "Bitte geben Sie eine gültige Email ein";
+  String? validateAndAddEmailToInvitations({
+    required String? email,
+    required BuildContext context,
+  }) {
+    final String? errorText = validateFormField(
+      fieldType: FormValidationType.email,
+      context: context,
+      value: email,
+    );
     if (errorText is! String) {
       state = state.copyWith.invitations!(
-        emails: {...state.invitations!.emails, email!},
+        emails: <String>{...state.invitations!.emails, email!},
       );
     }
     return errorText;
@@ -122,15 +114,24 @@ class GroupSelectionControllerImplementation extends GroupSelectionController {
   @override
   void removeMailFromInvitations(String email) {
     state = state.copyWith.invitations!(
-      emails: {...state.invitations!.emails.where((mail) => mail != email)},
+      emails: <String>{
+        ...state.invitations!.emails.where((String mail) => mail != email)
+      },
     );
   }
 
   @override
-  void inviteGroupMembers({required bool confirmed}) {
+  void inviteGroupMembers({required bool confirmed}) async {
     if (confirmed) {
-      _groupSelectionService.inviteGroupMembers(payload: state.invitations!);
+      try {
+        state = state.copyWith(isLoading: true, hasError: false);
+        await _groupSelectionService.inviteGroupMembers(
+          payload: state.invitations!,
+        );
+        state = state.copyWith(invitations: null, isLoading: false);
+      } catch (error) {
+        state = state.copyWith(hasError: true, isLoading: false);
+      }
     }
-    state = state.copyWith(invitations: null);
   }
 }

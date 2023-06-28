@@ -1,23 +1,18 @@
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/group_selection/group_selection.model.dart';
-import 'package:borrow_app/views/group_selection/group_selection.view.dart';
-import 'package:borrow_app/widgets/chips/invitation_chip.widget.dart';
-import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/group_selection/group_selection.model.dart";
+import "package:borrow_app/views/group_selection/group_selection.view.dart";
+import "package:borrow_app/widgets/chips/invitation_chip.widget.dart";
+import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 
 class InviteMembersDialog extends ConsumerWidget {
-  final String groupId;
-  final String groupName;
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  InviteMembersDialog({
-    Key? key,
-    required this.groupId,
-    required this.groupName,
-  }) : super(key: key);
+  InviteMembersDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +27,10 @@ class InviteMembersDialog extends ConsumerWidget {
       contentPadding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       actionsPadding: const EdgeInsets.all(20),
       actionsAlignment: MainAxisAlignment.end,
-      title: const Text("Invite members"),
+      title: Text(
+        AppLocalizations.of(context).invite,
+        style: const TextStyle(fontSize: 18),
+      ),
       content: SizedBox(
         width: 350,
         child: SingleChildScrollView(
@@ -47,8 +45,6 @@ class InviteMembersDialog extends ConsumerWidget {
                   scrollDirection: Axis.horizontal,
                   child: Wrap(
                     spacing: 8,
-                    alignment: WrapAlignment.start,
-                    direction: Axis.horizontal,
                     children: <InvitationChip>[
                       ...?model.invitations?.emails.map(
                         (String email) => InvitationChip(
@@ -63,10 +59,14 @@ class InviteMembersDialog extends ConsumerWidget {
               Form(
                 key: _formKey,
                 child: TextFieldWidget(
-                  text: "Enter email:",
+                  text: AppLocalizations.of(context).enterEmail,
                   keyboardType: TextInputType.emailAddress,
-                  controller: emailController,
-                  validator: controller.validateAndAddEmailToInvitations,
+                  controller: _emailController,
+                  validator: (String? value) =>
+                      controller.validateAndAddEmailToInvitations(
+                    email: value,
+                    context: context,
+                  ),
                   onChanged: null,
                   autocorrect: false,
                 ),
@@ -77,10 +77,10 @@ class InviteMembersDialog extends ConsumerWidget {
                   TextButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        emailController.clear();
+                        _emailController.clear();
                       }
                     },
-                    child: const Text("Add"),
+                    child: Text(AppLocalizations.of(context).add),
                   )
                 ],
               )
@@ -88,17 +88,26 @@ class InviteMembersDialog extends ConsumerWidget {
           ),
         ),
       ),
-      actions: <ButtonStyleButton>[
-        TextButton(
-          onPressed: context.pop,
-          child: const Text("Cancel"),
+      actions: <Widget>[
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: TextButton(
+                style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                onPressed: context.pop,
+                child: Text(AppLocalizations.of(context).cancel),
+              ),
+            ),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: model.invitations?.emails.isNotEmpty ?? false
+                    ? () => context.pop(true)
+                    : null,
+                child: Text(AppLocalizations.of(context).submit),
+              ),
+            ),
+          ],
         ),
-        ElevatedButton(
-          onPressed: model.invitations?.emails.isNotEmpty ?? false
-              ? () => context.pop(true)
-              : null,
-          child: const Text("Send"),
-        )
       ],
     );
   }

@@ -1,50 +1,57 @@
-import 'package:borrow_app/widgets/textform_fields/textfield.widget.dart';
-import 'package:flutter/material.dart';
+import "package:borrow_app/widgets/textform_fields/textfield.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class NewCategoryDialog extends StatelessWidget {
   NewCategoryDialog({
     super.key,
-    this.nameValidator,
-    required this.setName,
-    required this.setDescription,
-    required this.createCategoryCallback,
-  });
+    String? Function(String?)? nameValidator,
+    required void Function(String) setName,
+    required void Function(String) setDescription,
+    required void Function() createCategoryCallback,
+  })  : _createCategoryCallback = createCategoryCallback,
+        _setDescription = setDescription,
+        _setName = setName,
+        _nameValidator = nameValidator;
 
-  final String? Function(String?)? nameValidator;
-  final Function(String) setName;
-  final Function(String) setDescription;
-  final void Function() createCategoryCallback;
+  final String? Function(String?)? _nameValidator;
+  final void Function(String) _setName;
+  final void Function(String) _setDescription;
+  final void Function() _createCategoryCallback;
 
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance
-        .addPostFrameCallback((_) => createCategoryCallback());
+        .addPostFrameCallback((_) => _createCategoryCallback());
     return AlertDialog(
-      actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-      contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+      contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(10),
         ),
       ),
-      title: const Text('Neue Kategorie'),
+      title: Text(
+        AppLocalizations.of(context).newCategory,
+        style: const TextStyle(fontSize: 18),
+      ),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: ListBody(
             children: <Widget>[
               TextFieldWidget(
-                text: "Name",
-                validator: nameValidator,
-                onChanged: setName,
+                text: AppLocalizations.of(context).name,
+                validator: _nameValidator,
+                onChanged: _setName,
                 autocorrect: false,
               ),
               TextFieldWidget(
-                text: "Beschreibung",
+                text: AppLocalizations.of(context).description,
                 validator: null,
-                onChanged: setDescription,
+                onChanged: _setDescription,
                 autocorrect: false,
               ),
             ],
@@ -55,19 +62,23 @@ class NewCategoryDialog extends StatelessWidget {
         FocusTraversalGroup(
           policy: _ReversedTraversalPolicy(),
           child: Row(
-            children: [
-              TextButton(
-                child: const Text('Abbrechen'),
-                onPressed: () => Navigator.of(context).pop(false),
+            children: <Widget>[
+              Expanded(
+                child: TextButton(
+                  child: Text(AppLocalizations.of(context).cancel),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
               ),
-              ElevatedButton(
-                child: const Text('Einfügen'),
-                onPressed: () {
-                  _formKey.currentState!.save();
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.of(context).pop(true);
-                  }
-                },
+              Expanded(
+                child: ElevatedButton(
+                  child: Text(AppLocalizations.of(context).add),
+                  onPressed: () {
+                    _formKey.currentState!.save();
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.of(context).pop(true);
+                    }
+                  },
+                ),
               ),
             ],
           ),

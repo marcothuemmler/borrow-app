@@ -1,67 +1,97 @@
-import 'package:borrow_app/services/api/backend_service.dart';
-import 'package:borrow_app/services/api/rest_backend_service.dart';
-import 'package:borrow_app/services/routing/router.dart';
-import 'package:borrow_app/services/storage/secure_storage.service.dart';
-import 'package:borrow_app/util/dio.util.dart';
-import 'package:borrow_app/views/authentication/auth.model.dart';
-import 'package:borrow_app/views/authentication/login/login.controller.dart';
-import 'package:borrow_app/views/authentication/login/login.view.dart';
-import 'package:borrow_app/views/authentication/signup/signup.controller.dart';
-import 'package:borrow_app/views/authentication/signup/signup.view.dart';
-import 'package:borrow_app/views/chat/chat.controller.dart';
-import 'package:borrow_app/views/chat/chat.model.dart';
-import 'package:borrow_app/views/chat/chat.view.dart';
-import 'package:borrow_app/views/dashboard/dashboard.controller.dart';
-import 'package:borrow_app/views/dashboard/dashboard.model.dart';
-import 'package:borrow_app/views/dashboard/dashboard_wrapper.view.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.controller.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.model.dart';
-import 'package:borrow_app/views/dashboard/item_list/item_list.view.dart';
-import 'package:borrow_app/views/group_selection/group_selection.controller.dart';
-import 'package:borrow_app/views/group_selection/group_selection.model.dart';
-import 'package:borrow_app/views/group_selection/group_selection.view.dart';
-import 'package:borrow_app/views/item_detail/item_detail.controller.dart';
-import 'package:borrow_app/views/item_detail/item_detail.model.dart';
-import 'package:borrow_app/views/item_detail/item_detail.view.dart';
-import 'package:borrow_app/views/profile/categories_settings.controller.dart';
-import 'package:borrow_app/views/profile/categories_settings.view.dart';
-import 'package:borrow_app/views/profile/category_settings.model.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:go_router/go_router.dart';
+import "package:borrow_app/services/api/backend_service.dart";
+import "package:borrow_app/services/api/rest_backend_service.dart";
+import "package:borrow_app/services/api/websocket_service.dart";
+import "package:borrow_app/services/routing/router.dart";
+import "package:borrow_app/services/storage/secure_storage.service.dart";
+import "package:borrow_app/util/dio.util.dart";
+import "package:borrow_app/views/authentication/auth.model.dart";
+import "package:borrow_app/views/authentication/login/login.controller.dart";
+import "package:borrow_app/views/authentication/login/login.view.dart";
+import "package:borrow_app/views/authentication/signup/signup.controller.dart";
+import "package:borrow_app/views/authentication/signup/signup.view.dart";
+import "package:borrow_app/views/chat/chat.controller.dart";
+import "package:borrow_app/views/chat/chat.model.dart";
+import "package:borrow_app/views/chat/chat.view.dart";
+import "package:borrow_app/views/chat_list/chat_list.controller.dart";
+import "package:borrow_app/views/chat_list/chat_list.model.dart";
+import "package:borrow_app/views/chat_list/chat_list.view.dart";
+import "package:borrow_app/views/dashboard/dashboard.controller.dart";
+import "package:borrow_app/views/dashboard/dashboard.model.dart";
+import "package:borrow_app/views/dashboard/dashboard_wrapper.view.dart";
+import "package:borrow_app/views/dashboard/item_list/item_list.controller.dart";
+import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
+import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
+import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.controller.dart";
+import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart";
+import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
+import "package:borrow_app/views/dashboard/profile/group_settings/group_settings.controller.dart";
+import "package:borrow_app/views/dashboard/profile/group_settings/group_settings.model.dart";
+import "package:borrow_app/views/dashboard/profile/group_settings/group_settings.view.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.controller.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
+import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.view.dart";
+import "package:borrow_app/views/group_selection/group_selection.controller.dart";
+import "package:borrow_app/views/group_selection/group_selection.model.dart";
+import "package:borrow_app/views/group_selection/group_selection.view.dart";
+import "package:borrow_app/views/invitation_list/invitation_list.controller.dart";
+import "package:borrow_app/views/invitation_list/invitation_list.model.dart";
+import "package:borrow_app/views/invitation_list/invitation_list.view.dart";
+import "package:borrow_app/views/item_detail/item_detail.controller.dart";
+import "package:borrow_app/views/item_detail/item_detail.model.dart";
+import "package:borrow_app/views/item_detail/item_detail.view.dart";
+import "package:borrow_app/views/item_editor/item_editor.controller.dart";
+import "package:borrow_app/views/item_editor/item_editor.model.dart";
+import "package:borrow_app/views/item_editor/item_editor.view.dart";
+import "package:borrow_app/views/profile_settings/profile_settings.controller.dart";
+import "package:borrow_app/views/profile_settings/profile_settings.model.dart";
+import "package:borrow_app/views/profile_settings/profile_settings.view.dart";
+import "package:dio/dio.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:flutter_secure_storage/flutter_secure_storage.dart";
+import "package:go_router/go_router.dart";
 
-final providers = Providers();
+final Providers providers = Providers();
 
 class Providers {
-  final dioProvider = Provider<Dio>((ProviderRef ref) => DioUtil.dio);
+  final Provider<Dio> dioProvider = Provider<Dio>(
+    (ProviderRef<Dio> ref) => DioUtil.dio,
+  );
 
   final Provider<GoRouter> routerProvider = routerProviderDef;
 
-  final secureStorageProvider = Provider<FlutterSecureStorage>(
-    (ProviderRef ref) => const FlutterSecureStorage(),
+  final Provider<FlutterSecureStorage> secureStorageProvider =
+      Provider<FlutterSecureStorage>(
+    (ProviderRef<FlutterSecureStorage> ref) => const FlutterSecureStorage(),
   );
 
   final ChangeNotifierProvider<SecureStorageService>
       secureStorageServiceProvider =
       ChangeNotifierProvider<SecureStorageService>(
-    (ref) => SecureStorageService(
+    (ChangeNotifierProviderRef<SecureStorageService> ref) =>
+        SecureStorageService(
       storage: ref.read(providers.secureStorageProvider),
     ),
   );
 
   final Provider<BackendServiceAggregator> backendServiceProvider =
       Provider<BackendServiceAggregator>(
-    (ProviderRef ref) => RestBackendServiceImplementation(
+    (ProviderRef<BackendServiceAggregator> ref) =>
+        RestBackendServiceImplementation(
       dioClient: ref.read(providers.dioProvider),
       storageService: ref.read(providers.secureStorageServiceProvider),
     ),
   );
 
-  final StateNotifierProvider<SignupController, SignupModel>
+  final Provider<WebSocketService> webSocketServiceProvider =
+      Provider<WebSocketService>(
+    (ProviderRef<WebSocketService> ref) => WebSocketService(),
+  );
+
+  final AutoDisposeStateNotifierProvider<SignupController, SignupModel>
       signupControllerProvider =
-      StateNotifierProvider<SignupController, SignupModel>(
-    (ref) => SignupControllerImplementation(
+      AutoDisposeStateNotifierProvider<SignupController, SignupModel>(
+    (StateNotifierProviderRef<SignupController, SignupModel> ref) =>
+        SignupControllerImplementation(
       authService: ref.read(providers.backendServiceProvider),
     ),
   );
@@ -69,15 +99,22 @@ class Providers {
   final StateNotifierProvider<LoginController, LoginModel>
       loginControllerProvider =
       StateNotifierProvider<LoginController, LoginModel>(
-    (ref) => LoginControllerImplementation(
+    (StateNotifierProviderRef<LoginController, LoginModel> ref) =>
+        LoginControllerImplementation(
       authService: ref.read(providers.backendServiceProvider),
     ),
   );
 
-  final StateNotifierProviderFamily<DashboardController, DashboardModel, String>
-      dashboardControllerProvider =
-      StateNotifierProvider.family<DashboardController, DashboardModel, String>(
-    (ref, groupId) => DashboardControllerImplementation(
+  final AutoDisposeStateNotifierProviderFamily<DashboardController,
+          DashboardModel, String> dashboardControllerProvider =
+      AutoDisposeStateNotifierProvider.family<DashboardController,
+          DashboardModel, String>(
+    (
+      AutoDisposeStateNotifierProviderRef<DashboardController, DashboardModel>
+          ref,
+      String groupId,
+    ) =>
+        DashboardControllerImplementation(
       router: ref.read(providers.routerProvider),
       groupId: groupId,
     ),
@@ -87,8 +124,30 @@ class Providers {
           ItemListModel, String> itemListControllerProvider =
       AutoDisposeStateNotifierProvider.family<ItemListController, ItemListModel,
           String>(
-    (ref, groupId) => ItemListControllerImplementation(
+    (
+      AutoDisposeStateNotifierProviderRef<ItemListController, ItemListModel>
+          ref,
+      String groupId,
+    ) =>
+        ItemListControllerImplementation(
       itemListService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
+      groupId: groupId,
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<ProfileItemListController,
+          ProfileItemListModel, String> profileItemListControllerProvider =
+      AutoDisposeStateNotifierProvider.family<ProfileItemListController,
+          ProfileItemListModel, String>(
+    (
+      AutoDisposeStateNotifierProviderRef<ProfileItemListController,
+              ProfileItemListModel>
+          ref,
+      String groupId,
+    ) =>
+        ProfileItemListControllerImplementation(
+      profileItemListService: ref.read(providers.backendServiceProvider),
       router: ref.read(providers.routerProvider),
       groupId: groupId,
     ),
@@ -98,7 +157,12 @@ class Providers {
           GroupSelectionModel> groupSelectionControllerProvider =
       AutoDisposeStateNotifierProvider<GroupSelectionController,
           GroupSelectionModel>(
-    (ref) => GroupSelectionControllerImplementation(
+    (
+      AutoDisposeStateNotifierProviderRef<GroupSelectionController,
+              GroupSelectionModel>
+          ref,
+    ) =>
+        GroupSelectionControllerImplementation(
       groupSelectionService: ref.read(providers.backendServiceProvider),
     ),
   );
@@ -107,7 +171,12 @@ class Providers {
           ItemDetailModel, String> itemDetailControllerProvider =
       AutoDisposeStateNotifierProvider.family<ItemDetailController,
           ItemDetailModel, String>(
-    (ref, itemId) => ItemDetailControllerImplementation(
+    (
+      AutoDisposeStateNotifierProviderRef<ItemDetailController, ItemDetailModel>
+          ref,
+      String itemId,
+    ) =>
+        ItemDetailControllerImplementation(
       itemId: itemId,
       itemDetailService: ref.read(providers.backendServiceProvider),
       router: ref.read(providers.routerProvider),
@@ -115,22 +184,106 @@ class Providers {
   );
 
   final AutoDisposeStateNotifierProviderFamily<ChatController, ChatModel,
-          String> chatControllerProvider =
+          ChatControllerParameters> chatControllerProvider =
       AutoDisposeStateNotifierProvider.family<ChatController, ChatModel,
-          String>(
-    (ref, userId) => ChatControllerImplementation(
-      userId: userId,
-      chatService: ref.read(providers.backendServiceProvider),
-    ),
-  );
+          ChatControllerParameters>((
+    AutoDisposeStateNotifierProviderRef<ChatController, ChatModel> ref,
+    ChatControllerParameters parameters,
+  ) {
+    ref.onDispose(ref.read(providers.webSocketServiceProvider).disposeSocket);
+    return ChatControllerImplementation(
+      parameters: parameters,
+      socketService: ref.read(providers.webSocketServiceProvider),
+      storageService: ref.read(providers.secureStorageServiceProvider),
+    );
+  });
 
   final StateNotifierProviderFamily<CategoriesSettingsController,
           CategoryListDetailModel, String> categoriesListProvider =
       StateNotifierProvider.family<CategoriesSettingsController,
           CategoryListDetailModel, String>(
-    (ref, groupId) => CategoriesSettingsControllerImplementation(
+    (
+      StateNotifierProviderRef<CategoriesSettingsController,
+              CategoryListDetailModel>
+          ref,
+      String groupId,
+    ) =>
+        CategoriesSettingsControllerImplementation(
       groupId: groupId,
       categorySettingsService: ref.read(providers.backendServiceProvider),
     ),
   );
+
+  final AutoDisposeStateNotifierProvider<ChatListController, ChatListModel>
+      chatListControllerProvider =
+      AutoDisposeStateNotifierProvider<ChatListController, ChatListModel>(
+    (
+      AutoDisposeStateNotifierProviderRef<ChatListController, ChatListModel>
+          ref,
+    ) =>
+        ChatListControllerImplementation(
+      chatListService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
+      storageService: ref.read(providers.secureStorageServiceProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProvider<ProfileSettingsController,
+          ProfileSettingsModel> profileSettingsControllerProvider =
+      AutoDisposeStateNotifierProvider<ProfileSettingsController,
+          ProfileSettingsModel>(
+    (
+      AutoDisposeStateNotifierProviderRef<ProfileSettingsController,
+              ProfileSettingsModel>
+          ref,
+    ) =>
+        ProfileSettingsControllerImplementation(
+      profileSettingsService: ref.read(providers.backendServiceProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProvider<InvitationListController,
+          InvitationListModel> invitationListControllerProvider =
+      AutoDisposeStateNotifierProvider<InvitationListController,
+          InvitationListModel>(
+    (
+      AutoDisposeStateNotifierProviderRef<InvitationListController,
+              InvitationListModel>
+          ref,
+    ) =>
+        InvitationListControllerImplementation(
+      invitationListService: ref.read(providers.backendServiceProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<ItemEditorController,
+          ItemEditorModel, ItemEditorParameters> itemEditorProvider =
+      AutoDisposeStateNotifierProvider.family<ItemEditorController,
+          ItemEditorModel, ItemEditorParameters>(
+    (
+      AutoDisposeStateNotifierProviderRef<ItemEditorController, ItemEditorModel>
+          ref,
+      ItemEditorParameters itemEditorParameters,
+    ) =>
+        ItemEditorControllerImplementation(
+      itemEditorParameters: itemEditorParameters,
+      itemEditorService: ref.read(providers.backendServiceProvider),
+      router: ref.read(providers.routerProvider),
+    ),
+  );
+
+  final AutoDisposeStateNotifierProviderFamily<GroupSettingsController,
+          GroupSettingsModel, String> groupSettingsControllerProvider =
+      AutoDisposeStateNotifierProvider.family<GroupSettingsController,
+          GroupSettingsModel, String>((
+    AutoDisposeStateNotifierProviderRef<GroupSettingsController,
+            GroupSettingsModel>
+        ref,
+    String groupId,
+  ) {
+    return GroupSettingsControllerImplementation(
+      groupId: groupId,
+      groupSettingsService: ref.read(providers.backendServiceProvider),
+    );
+  });
 }

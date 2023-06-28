@@ -1,28 +1,31 @@
-import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
+import "package:dotted_border/dotted_border.dart";
+import "package:flutter/material.dart";
 
 class DottedBorderButton extends StatelessWidget {
-  final String title;
-  final Icon icon;
-  final void Function()? onTap;
-  final double? width;
+  final String _title;
+  final Icon _icon;
+  final void Function()? _onTap;
+  final double? _width;
 
   const DottedBorderButton({
     super.key,
-    required this.title,
-    required this.icon,
-    required this.onTap,
-    required this.width,
-  });
+    required String title,
+    required Icon icon,
+    required void Function()? onTap,
+    required double? width,
+  })  : _width = width,
+        _onTap = onTap,
+        _icon = icon,
+        _title = title;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: width,
+        width: _width,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: onTap,
+          onTap: _onTap,
           child: DottedBorder(
             borderType: BorderType.RRect,
             color: Colors.grey,
@@ -30,14 +33,12 @@ class DottedBorderButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                icon,
+              children: <Widget>[
+                _icon,
                 const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(title),
-                  ],
+                  children: <Widget>[Text(_title)],
                 ),
               ],
             ),

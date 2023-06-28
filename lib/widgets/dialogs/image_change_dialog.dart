@@ -1,18 +1,25 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class ImageChangeDialog extends StatelessWidget {
-  final void Function()? onSetImagePressed;
-  final void Function()? onRemoveImagePressed;
-  final void Function()? onCancelPressed;
-  final bool showRemoveOption;
+  final void Function()? _onSelectImageFromCameraPressed;
+  final void Function()? _onSelectImageFromGalleryPressed;
+  final void Function()? _onRemoveImagePressed;
+  final void Function()? _onCancelPressed;
+  final bool _showRemoveOption;
 
   const ImageChangeDialog({
     super.key,
-    required this.onSetImagePressed,
-    required this.onRemoveImagePressed,
-    required this.onCancelPressed,
-    required this.showRemoveOption,
-  });
+    required void Function()? onSelectImageFromGalleryPressed,
+    required void Function()? onSelectImageFromCameraPressed,
+    required void Function()? onRemoveImagePressed,
+    required void Function()? onCancelPressed,
+    required bool showRemoveOption,
+  })  : _showRemoveOption = showRemoveOption,
+        _onCancelPressed = onCancelPressed,
+        _onRemoveImagePressed = onRemoveImagePressed,
+        _onSelectImageFromCameraPressed = onSelectImageFromCameraPressed,
+        _onSelectImageFromGalleryPressed = onSelectImageFromGalleryPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -27,25 +34,30 @@ class ImageChangeDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             ElevatedButton(
-              onPressed: onSetImagePressed,
-              child: const Text("Upload Image"),
+              onPressed: _onSelectImageFromGalleryPressed,
+              child: Text(AppLocalizations.of(context).uploadImage),
             ),
-            if (showRemoveOption)
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: _onSelectImageFromCameraPressed,
+              child: Text(AppLocalizations.of(context).takePicture),
+            ),
+            if (_showRemoveOption)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   const SizedBox(height: 10),
                   TextButton(
                     style: TextButton.styleFrom(foregroundColor: Colors.red),
-                    onPressed: onRemoveImagePressed,
-                    child: const Text("Remove Image"),
+                    onPressed: _onRemoveImagePressed,
+                    child: Text(AppLocalizations.of(context).removeImage),
                   ),
                 ],
               ),
             const SizedBox(height: 10),
             TextButton(
-              onPressed: onCancelPressed,
-              child: const Text("Cancel"),
+              onPressed: _onCancelPressed,
+              child: Text(AppLocalizations.of(context).cancel),
             )
           ],
         ),

@@ -1,62 +1,72 @@
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/dashboard.model.dart";
-import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
-import "package:borrow_app/widgets/dropdowns/dropdown.widget.dart";
+import "package:borrow_app/widgets/dialogs/item_filter_bottom_sheet.dialog.dart";
+import "package:borrow_app/widgets/menus/app_menu.widget.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 
 class DashboardWrapperView extends ConsumerWidget {
-  final Widget child;
-  final String groupId;
+  final Widget _child;
+  final String _groupId;
 
   const DashboardWrapperView({
     super.key,
-    required this.child,
-    required this.groupId,
-  });
+    required Widget child,
+    required String groupId,
+  })  : _groupId = groupId,
+        _child = child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dashboardController = ref.read(
-      providers.dashboardControllerProvider(groupId).notifier,
+    final DashboardController controller = ref.read(
+      providers.dashboardControllerProvider(_groupId).notifier,
     );
-    final groupController = ref.read(
-      providers.itemListControllerProvider(groupId).notifier,
-    );
-    final dashboardModel = ref.watch(
-      providers.dashboardControllerProvider(groupId),
-    );
-    final groupModel = ref.watch(
-      providers.itemListControllerProvider(groupId),
-    );
+    final DashboardModel model =
+        ref.watch(providers.dashboardControllerProvider(_groupId));
+    final String location = GoRouter.of(context).location.toLowerCase();
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(dashboardModel.currentTitle ?? ""),
-            if (dashboardModel.currentIndex == 0)
-              DropdownWidget<ItemListCategoryModel>(
-                hint: const Text("Category"),
-                items: [
-                  ...?groupModel.group?.categories,
-                  ItemListCategoryModel(name: "All"),
-                ],
-                onChanged: groupController.selectCategory,
-                value: groupModel.selectedCategory,
-                mapFunction: (category) => DropdownMenuItem(
-                  value: category,
-                  child: Text(category.name),
-                ),
-              )
-          ],
+        leading: location.contains("settings")
+            ? BackButton(onPressed: controller.goBack)
+            : null,
+        title: Text(
+          model.currentIndex == 0
+              ? AppLocalizations.of(context).browse
+              : AppLocalizations.of(context).groupSettings,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
+        actions: <Widget>[
+          if (model.currentIndex == 0)
+            IconButton(
+              onPressed: () => showModalBottomSheet<void>(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.8,
+                ),
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
+                  ),
+                ),
+                context: context,
+                builder: (BuildContext context) => ItemFilterBottomSheet(
+                  groupId: _groupId,
+                ),
+              ),
+              icon: const Icon(Icons.filter_alt_sharp),
+            ),
+          const AppMenu(),
+        ],
       ),
-      body: child,
+      body: _child,
       bottomNavigationBar: BottomNavigationBar(
-        onTap: dashboardController.setCurrentIndex,
-        currentIndex: dashboardModel.currentIndex,
-        items: const [
+        onTap: controller.setCurrentIndex,
+        currentIndex: model.currentIndex,
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "home",
@@ -75,4 +85,6 @@ abstract class DashboardController extends StateNotifier<DashboardModel> {
   DashboardController(super.model);
 
   void setCurrentIndex(int index);
+
+  void goBack();
 }

@@ -1,15 +1,14 @@
-import 'package:dartz/dartz.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import "package:freezed_annotation/freezed_annotation.dart";
 
-part 'item_detail.model.freezed.dart';
-part 'item_detail.model.g.dart';
+part "item_detail.model.freezed.dart";
+part "item_detail.model.g.dart";
 
 @freezed
 class ItemDetailModel with _$ItemDetailModel {
   factory ItemDetailModel({
     required bool isLoading,
     required bool hasError,
-    required Option<ItemDetailItemModel> item,
+    required ItemDetailItemModel? item,
   }) = _ItemDetailModel;
 }
 
@@ -18,7 +17,9 @@ class ItemDetailItemModel with _$ItemDetailItemModel {
   factory ItemDetailItemModel({
     required String id,
     required String name,
+    String? imageUrl,
     String? description,
+    @Default(false) bool isMyItem,
     required ItemDetailUserModel owner,
     required ItemDetailCategoryModel category,
   }) = _ItemDetailItemModel;
@@ -45,6 +46,7 @@ class ItemDetailUserModel with _$ItemDetailUserModel {
   factory ItemDetailUserModel({
     required String id,
     required String username,
+    String? imageUrl,
   }) = _ItemDetailUserModel;
 
   factory ItemDetailUserModel.fromJson(Map<String, dynamic> json) =>

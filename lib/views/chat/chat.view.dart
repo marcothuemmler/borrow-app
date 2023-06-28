@@ -1,26 +1,32 @@
-import 'package:borrow_app/common/providers.dart';
-import 'package:borrow_app/views/chat/chat.model.dart';
-import 'package:borrow_app/widgets/various_components/chat_bubble.widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "package:borrow_app/common/providers.dart";
+import "package:borrow_app/views/chat/chat.model.dart";
+import "package:borrow_app/widgets/various_components/chat_bubble.widget.dart";
+import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class ChatView extends ConsumerWidget {
-  final String itemId;
-  final String userId;
-  final _textController = TextEditingController();
-  final _scrollController = ScrollController();
+  final ChatControllerParameters _chatParameters;
+  final TextEditingController _textController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   ChatView({
     super.key,
-    required this.itemId,
-    required this.userId,
-  });
+    required String itemId,
+    required String ownerId,
+    required String otherUserId,
+  }) : _chatParameters = ChatControllerParameters(
+          item: MessageItemModel(id: itemId, ownerId: ownerId),
+          otherUserId: otherUserId,
+        );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller =
-        ref.read(providers.chatControllerProvider(userId).notifier);
-    final model = ref.watch(providers.chatControllerProvider(userId));
+    final ChatController controller = ref.read(
+      providers.chatControllerProvider(_chatParameters).notifier,
+    );
+    final ChatModel model = ref.watch(
+      providers.chatControllerProvider(_chatParameters),
+    );
     WidgetsBinding.instance.addPostFrameCallback(_scrollDown);
     return Scaffold(
       appBar: AppBar(title: const Text("Title")),
@@ -30,30 +36,25 @@ class ChatView extends ConsumerWidget {
           child: Stack(
             fit: StackFit.expand,
             alignment: Alignment.bottomCenter,
-            children: [
+            children: <Widget>[
               ColoredBox(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Expanded(
-                      child: SingleChildScrollView(
-                        controller: _scrollController,
-                        physics: const AlwaysScrollableScrollPhysics(),
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 15,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            ...model.messages.map((message) {
-                              return ChatBubble(
-                                isOwnMessage: message.isOwnMessage,
-                                content: message.content,
-                              );
-                            }),
-                          ],
-                        ),
+                        controller: _scrollController,
+                        itemCount: model.messages.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ChatBubble(
+                            message: model.messages.elementAt(index),
+                          );
+                        },
                       ),
                     ),
                     Container(
@@ -63,7 +64,7 @@ class ChatView extends ConsumerWidget {
                       ),
                       color: const Color.fromRGBO(240, 240, 240, 1),
                       child: Row(
-                        children: [
+                        children: <Widget>[
                           Flexible(
                             child: TextField(
                               autofocus: true,
@@ -85,7 +86,7 @@ class ChatView extends ConsumerWidget {
                               );
                               _textController.clear();
                             },
-                            icon: const Icon(Icons.send_outlined),
+                            icon: const Icon(Icons.send),
                           )
                         ],
                       ),
