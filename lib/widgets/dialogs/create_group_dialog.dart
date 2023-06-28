@@ -31,92 +31,99 @@ class CreateGroupDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isPortrait = context.isPortrait;
-    return AlertDialog(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      title: Text(
-        AppLocalizations.of(context).newGroup,
-        style: const TextStyle(fontSize: 18),
-      ),
-      actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-      contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-      content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Flex(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            direction: isPortrait ? Axis.vertical : Axis.horizontal,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: SizedBox(
-                  height: 150,
-                  width: 150,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: ImageUpload(
-                      onImageChanged: _onImageChanged,
-                      text: AppLocalizations.of(context).setGroupImage,
+    return ScaffoldMessenger(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: AlertDialog(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          title: Text(
+            AppLocalizations.of(context).newGroup,
+            style: const TextStyle(fontSize: 18),
+          ),
+          actionsPadding:
+              const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+          contentPadding:
+              const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+          content: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Flex(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                direction: isPortrait ? Axis.vertical : Axis.horizontal,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SizedBox(
+                      height: 150,
+                      width: 150,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: ImageUpload(
+                          onImageChanged: _onImageChanged,
+                          text: AppLocalizations.of(context).setGroupImage,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Flexible(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <TextFieldWidget>[
-                    TextFieldWidget(
-                      text: AppLocalizations.of(context).groupName,
-                      keyboardType: TextInputType.name,
-                      validator: _nameValidator,
-                      onChanged: _onGroupNameChanged,
-                      autocorrect: false,
+                  Flexible(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <TextFieldWidget>[
+                        TextFieldWidget(
+                          text: AppLocalizations.of(context).groupName,
+                          keyboardType: TextInputType.name,
+                          validator: _nameValidator,
+                          onChanged: _onGroupNameChanged,
+                          autocorrect: false,
+                        ),
+                        TextFieldWidget(
+                          text: AppLocalizations.of(context).groupDescription,
+                          keyboardType: TextInputType.text,
+                          validator: _descriptionValidator,
+                          onChanged: _onGroupDescriptionChanged,
+                          autocorrect: false,
+                        ),
+                      ],
                     ),
-                    TextFieldWidget(
-                      text: AppLocalizations.of(context).groupDescription,
-                      keyboardType: TextInputType.text,
-                      validator: _descriptionValidator,
-                      onChanged: _onGroupDescriptionChanged,
-                      autocorrect: false,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
+          actions: <Widget>[
+            FocusTraversalGroup(
+              policy: _ReversedTraversalPolicy(),
+              child: Row(
+                children: <Widget>[
+                  SizedBox(width: isPortrait ? 0 : 200),
+                  Expanded(
+                    child: TextButton(
+                      style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                      child: Text(
+                        AppLocalizations.of(context).cancel,
+                      ),
+                      onPressed: () => context.pop(false),
+                    ),
+                  ),
+                  Expanded(
+                    child: ElevatedButton(
+                      child: Text(AppLocalizations.of(context).createGroup),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          context.pop(true);
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
-      actions: <Widget>[
-        FocusTraversalGroup(
-          policy: _ReversedTraversalPolicy(),
-          child: Row(
-            children: <Widget>[
-              SizedBox(width: isPortrait ? 0 : 200),
-              Expanded(
-                child: TextButton(
-                  style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                  child: Text(
-                    AppLocalizations.of(context).cancel,
-                  ),
-                  onPressed: () => context.pop(false),
-                ),
-              ),
-              Expanded(
-                child: ElevatedButton(
-                  child: Text(AppLocalizations.of(context).createGroup),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      context.pop(true);
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

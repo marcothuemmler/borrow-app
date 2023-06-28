@@ -1,3 +1,4 @@
+import "package:borrow_app/common/enums/image_upload.enum.dart";
 import "package:borrow_app/widgets/dialogs/image_change_dialog.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/foundation.dart";
@@ -117,45 +118,64 @@ class _ImageUploadState extends State<ImageUpload> {
 
   Future<void> _selectFile() async {
     try {
-      final bool? newImageSelected = await _showImageChangeDialog();
-      if (newImageSelected is! bool) {
-        return;
+      final ImageChangeSelectionType? newImageSelected =
+          await _showImageChangeDialog();
+      switch (newImageSelected) {
+        case ImageChangeSelectionType.uploadFromGallery:
+          final XFile? input = await ImagePicker().pickImage(
+            source: ImageSource.gallery,
+          );
+          _initImage(image: input);
+          _onImageChanged?.call(input);
+          return;
+        case ImageChangeSelectionType.uploadFromCamera:
+          final XFile? input = await ImagePicker().pickImage(
+            source: ImageSource.camera,
+          );
+          _initImage(image: input);
+          _onImageChanged?.call(input);
+          return;
+        case ImageChangeSelectionType.deleteExisting:
+          setState(() => _image = null);
+          _onImageChanged?.call(null);
+          return;
+        case ImageChangeSelectionType.noneSelected:
+        case null:
+          return;
       }
-      if (!newImageSelected) {
-        setState(() => _image = null);
-        _onImageChanged?.call(null);
-        return;
-      }
-      final XFile? input =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      _initImage(image: input);
-      _onImageChanged?.call(input);
     } catch (error) {
       _showErrorSnackBar();
     }
   }
 
   void _showErrorSnackBar() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.red,
-        content: Center(
-          child: Text(
-            AppLocalizations.of(context).imageSelectionFailed,
-            style: const TextStyle(fontSize: 16),
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Center(
+            child: Text(
+              AppLocalizations.of(context).imageSelectionFailed,
+              style: const TextStyle(fontSize: 16),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 
-  Future<bool?> _showImageChangeDialog() async {
-    return await showDialog(
+  Future<ImageChangeSelectionType?> _showImageChangeDialog() async {
+    return await showDialog<ImageChangeSelectionType>(
       context: context,
       builder: (BuildContext context) => ImageChangeDialog(
-        onSetImagePressed: () => context.pop(true),
-        onRemoveImagePressed: () => context.pop(false),
-        onCancelPressed: () => context.pop(),
+        onSelectImageFromCameraPressed: () =>
+            context.pop(ImageChangeSelectionType.uploadFromCamera),
+        onSelectImageFromGalleryPressed: () =>
+            context.pop(ImageChangeSelectionType.uploadFromGallery),
+        onRemoveImagePressed: () =>
+            context.pop(ImageChangeSelectionType.deleteExisting),
+        onCancelPressed: () =>
+            context.pop(ImageChangeSelectionType.noneSelected),
         showRemoveOption: _image is Image,
       ),
     );

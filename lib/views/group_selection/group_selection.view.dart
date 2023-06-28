@@ -162,6 +162,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
         ref.read(providers.groupSelectionControllerProvider.notifier);
     controller.createNewGroup();
     return showDialog<bool>(
+      useSafeArea: false,
       context: context,
       builder: (BuildContext context) {
         return SizedBox(
