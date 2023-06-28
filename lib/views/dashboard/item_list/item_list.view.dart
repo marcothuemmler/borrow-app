@@ -64,11 +64,12 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
                             AppLocalizations.of(context).emptyGroupMessage,
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: 24,
+                              fontSize: 20,
+                              color: Colors.blueGrey,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 25),
+                        const SizedBox(height: 15),
                         DottedBorderButton(
                           title: AppLocalizations.of(context).addNewItem,
                           icon: const Icon(Icons.add),

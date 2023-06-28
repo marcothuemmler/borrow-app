@@ -77,5 +77,7 @@
   "itemSaveFailed": "Could not save item",
   "isBorrowed": "Borrowed",
   "leaveGroup": "Leave group",
-  "leaveGroupWarning": "Your items in this group will be deleted"
+  "leaveGroupWarning": "Your items in this group will be deleted",
+  "emptyGroupListTitle": "You don't have any groups yet",
+  "emptyGroupListMessage": "You can create your own groups,\nor be invited by other users"
 }

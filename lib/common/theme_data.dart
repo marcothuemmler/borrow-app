@@ -55,4 +55,7 @@ final ThemeData themeData = ThemeData(
       borderRadius: BorderRadius.all(Radius.circular(10)),
     ),
   ),
+  textTheme: const TextTheme(
+    titleMedium: TextStyle(fontSize: 15),
+  ),
 );

@@ -8,8 +8,10 @@ import "package:borrow_app/widgets/cards/group_selection_card.widget.dart";
 import "package:borrow_app/widgets/dialogs/create_group_dialog.dart";
 import "package:borrow_app/widgets/dialogs/invitation_dialog.dart";
 import "package:borrow_app/widgets/menus/app_menu.widget.dart";
+import "package:borrow_app/widgets/various_components/animated_icon.widget.dart";
 import "package:carousel_indicator/carousel_indicator.dart";
 import "package:carousel_slider/carousel_slider.dart";
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -60,7 +62,7 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
       ),
       body: model.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : model.hasError || model.user is! GroupSelectionUserModel
+          : model.hasError
               ? Center(
                   child: Text(AppLocalizations.of(context).unspecifiedError),
                 )
@@ -118,38 +120,71 @@ class _GroupSelectionViewState extends ConsumerState<GroupSelectionView> {
                               inviteButtonHidden: index != _currentIndex,
                             );
                           },
+                        )
+                      else
+                        Column(
+                          children: <Widget>[
+                            const SizedBox(height: 10),
+                            const Icon(
+                              Icons.info_outline,
+                              color: CupertinoColors.systemGrey6,
+                              size: 50,
+                            ),
+                            const SizedBox(height: 15),
+                            Text(
+                              AppLocalizations.of(context).emptyGroupListTitle,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                color: Colors.blueGrey,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              AppLocalizations.of(context)
+                                  .emptyGroupListMessage,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            if (isPortrait)
+                              Column(
+                                children: const <Widget>[
+                                  SizedBox(height: 30),
+                                  AnimatedIconWidget(),
+                                ],
+                              )
+                          ],
                         ),
                       if (isPortrait)
-                        IntrinsicWidth(
-                          child: Column(
-                            children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            if (model.user!.groups.isNotEmpty)
                               const SizedBox(height: 20),
-                              if (model.user!.groups.isNotEmpty)
-                                Center(
-                                  child: CarouselIndicator(
-                                    animationDuration: 0,
-                                    space: 15,
-                                    height: 8,
-                                    width: 8,
-                                    activeColor: Colors.black,
-                                    color: Colors.black26,
-                                    count: model.user!.groups.length,
-                                    index: _currentIndex,
-                                  ),
-                                ),
-                              const SizedBox(height: 40),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  final bool confirmed =
-                                      await _showAlertDialog() ?? false;
-                                  controller.addGroup(confirmed: confirmed);
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context).newGroup,
-                                ),
+                            if (model.user!.groups.isNotEmpty)
+                              CarouselIndicator(
+                                animationDuration: 0,
+                                space: 15,
+                                height: 8,
+                                width: 8,
+                                activeColor: Colors.black,
+                                color: Colors.black26,
+                                count: model.user!.groups.length,
+                                index: _currentIndex,
                               ),
-                            ],
-                          ),
+                            const SizedBox(height: 40),
+                            ElevatedButton(
+                              onPressed: () async {
+                                final bool confirmed =
+                                    await _showAlertDialog() ?? false;
+                                controller.addGroup(confirmed: confirmed);
+                              },
+                              child: Text(
+                                AppLocalizations.of(context).newGroup,
+                              ),
+                            ),
+                          ],
                         ),
                     ],
                   ),

@@ -77,5 +77,7 @@
   "itemSaveFailed": "L'objet n'a pas pu être sauvegardé",
   "isBorrowed": "Emprunté",
   "leaveGroup": "Quitter le groupe",
-  "leaveGroupWarning": "Vos articles dans ce groupe seront supprimés"
+  "leaveGroupWarning": "Vos articles dans ce groupe seront supprimés",
+  "emptyGroupListTitle": "Vous n'avez pas encore de groupes",
+  "emptyGroupListMessage": "Vous pouvez créer vos propres groupes,\nou être invité par d'autres utilisateurs"
 }
