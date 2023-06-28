@@ -24,6 +24,9 @@ import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.controller.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/categories_settings.view.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
+import "package:borrow_app/views/dashboard/profile/group_settings/group_settings.controller.dart";
+import "package:borrow_app/views/dashboard/profile/group_settings/group_settings.model.dart";
+import "package:borrow_app/views/dashboard/profile/group_settings/group_settings.view.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.controller.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.model.dart";
 import "package:borrow_app/views/dashboard/profile/profile_item_list/profile_item_list.view.dart";
@@ -268,4 +271,19 @@ class Providers {
       router: ref.read(providers.routerProvider),
     ),
   );
+
+  final AutoDisposeStateNotifierProviderFamily<GroupSettingsController,
+          GroupSettingsModel, String> groupSettingsControllerProvider =
+      AutoDisposeStateNotifierProvider.family<GroupSettingsController,
+          GroupSettingsModel, String>((
+    AutoDisposeStateNotifierProviderRef<GroupSettingsController,
+            GroupSettingsModel>
+        ref,
+    String groupId,
+  ) {
+    return GroupSettingsControllerImplementation(
+      groupId: groupId,
+      groupSettingsService: ref.read(providers.backendServiceProvider),
+    );
+  });
 }
