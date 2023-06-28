@@ -77,5 +77,6 @@
   "itemSaveFailed": "L'objet n'a pas pu être sauvegardé",
   "isBorrowed": "Emprunté",
   "leaveGroup": "Quitter le groupe",
-  "leaveGroupWarning": "Vos articles dans ce groupe seront supprimés"
+  "leaveGroupWarning": "Vos articles dans ce groupe seront supprimés",
+  "takePicture": "Prendre une photo"
 }
