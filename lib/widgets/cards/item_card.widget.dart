@@ -2,6 +2,7 @@ import "package:borrow_app/common/extensions/widget_extensions.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:flutter/material.dart";
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class ItemCard extends StatelessWidget {
   final void Function()? _onTap;
@@ -17,21 +18,22 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: Colors.black12,
-            offset: Offset(0, 3),
+            color:
+                _item.isActive ? Colors.black12 : Colors.black.withOpacity(.1),
+            offset: const Offset(0, 3),
             blurRadius: 6,
           ),
         ],
       ),
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       child: Card(
+        color: _item.isActive
+            ? Colors.white
+            : Theme.of(context).scaffoldBackgroundColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
@@ -41,7 +43,7 @@ class ItemCard extends StatelessWidget {
         child: InkWell(
           onTap: _onTap,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+            padding: const EdgeInsets.all(3),
             child: SizedBox(
               height: 85,
               child: Row(
@@ -55,24 +57,45 @@ class ItemCard extends StatelessWidget {
                         left: Radius.circular(7),
                         right: Radius.circular(3.5),
                       ),
-                      child: _item.imageUrl is String
-                          ? Image.network(
-                              _item.imageUrl!,
-                              width: double.infinity,
-                              height: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) {
-                                return const ImagePlaceholder(
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          _item.imageUrl is String
+                              ? Image.network(
+                                  _item.imageUrl!,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (_, __, ___) {
+                                    return const ImagePlaceholder(
+                                      size: 60,
+                                      iconData: Icons.image_outlined,
+                                    );
+                                  },
+                                  loadingBuilder: imageLoadingBuilder,
+                                )
+                              : const ImagePlaceholder(
                                   size: 60,
                                   iconData: Icons.image_outlined,
-                                );
-                              },
-                              loadingBuilder: imageLoadingBuilder,
-                            )
-                          : const ImagePlaceholder(
-                              size: 60,
-                              iconData: Icons.image_outlined,
+                                ),
+                          if (!_item.isActive)
+                            ColoredBox(
+                              color: Colors.white60,
+                              child: Center(
+                                child: Transform.rotate(
+                                  angle: -.2,
+                                  child: Text(
+                                    AppLocalizations.of(context).isBorrowed,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.blueAccent,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(width: 20),

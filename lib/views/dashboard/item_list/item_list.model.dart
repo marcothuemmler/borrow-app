@@ -1,3 +1,4 @@
+import "package:borrow_app/common/enums/item_availability_filter_type.enum.dart";
 import "package:freezed_annotation/freezed_annotation.dart";
 
 part "item_list.model.freezed.dart";
@@ -11,6 +12,7 @@ class ItemListModel with _$ItemListModel {
     required ItemListCategoryModel? selectedCategory,
     required ItemListGroupModel? group,
     required List<ItemListItemModel> items,
+    required ItemAvailabilityFilterType itemAvailabilityFilterType,
   }) = _ItemListModel;
 
   factory ItemListModel.fromJson(Map<String, dynamic> json) =>
@@ -51,6 +53,7 @@ class ItemListItemModel with _$ItemListItemModel {
     required String? description,
     required ItemListCategoryModel? category,
     required ItemListUserModel owner,
+    required bool isActive,
     String? imageUrl,
   }) = _ItemListItemModel;
 

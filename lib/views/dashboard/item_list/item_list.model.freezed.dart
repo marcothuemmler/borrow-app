@@ -26,6 +26,8 @@ mixin _$ItemListModel {
       throw _privateConstructorUsedError;
   ItemListGroupModel? get group => throw _privateConstructorUsedError;
   List<ItemListItemModel> get items => throw _privateConstructorUsedError;
+  ItemAvailabilityFilterType get itemAvailabilityFilterType =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +46,8 @@ abstract class $ItemListModelCopyWith<$Res> {
       bool hasError,
       ItemListCategoryModel? selectedCategory,
       ItemListGroupModel? group,
-      List<ItemListItemModel> items});
+      List<ItemListItemModel> items,
+      ItemAvailabilityFilterType itemAvailabilityFilterType});
 
   $ItemListCategoryModelCopyWith<$Res>? get selectedCategory;
   $ItemListGroupModelCopyWith<$Res>? get group;
@@ -68,6 +71,7 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
     Object? selectedCategory = freezed,
     Object? group = freezed,
     Object? items = null,
+    Object? itemAvailabilityFilterType = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -90,6 +94,10 @@ class _$ItemListModelCopyWithImpl<$Res, $Val extends ItemListModel>
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
               as List<ItemListItemModel>,
+      itemAvailabilityFilterType: null == itemAvailabilityFilterType
+          ? _value.itemAvailabilityFilterType
+          : itemAvailabilityFilterType // ignore: cast_nullable_to_non_nullable
+              as ItemAvailabilityFilterType,
     ) as $Val);
   }
 
@@ -132,7 +140,8 @@ abstract class _$$_ItemListModelCopyWith<$Res>
       bool hasError,
       ItemListCategoryModel? selectedCategory,
       ItemListGroupModel? group,
-      List<ItemListItemModel> items});
+      List<ItemListItemModel> items,
+      ItemAvailabilityFilterType itemAvailabilityFilterType});
 
   @override
   $ItemListCategoryModelCopyWith<$Res>? get selectedCategory;
@@ -156,6 +165,7 @@ class __$$_ItemListModelCopyWithImpl<$Res>
     Object? selectedCategory = freezed,
     Object? group = freezed,
     Object? items = null,
+    Object? itemAvailabilityFilterType = null,
   }) {
     return _then(_$_ItemListModel(
       isLoading: null == isLoading
@@ -178,6 +188,10 @@ class __$$_ItemListModelCopyWithImpl<$Res>
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
               as List<ItemListItemModel>,
+      itemAvailabilityFilterType: null == itemAvailabilityFilterType
+          ? _value.itemAvailabilityFilterType
+          : itemAvailabilityFilterType // ignore: cast_nullable_to_non_nullable
+              as ItemAvailabilityFilterType,
     ));
   }
 }
@@ -190,7 +204,8 @@ class _$_ItemListModel implements _ItemListModel {
       required this.hasError,
       required this.selectedCategory,
       required this.group,
-      required final List<ItemListItemModel> items})
+      required final List<ItemListItemModel> items,
+      required this.itemAvailabilityFilterType})
       : _items = items;
 
   factory _$_ItemListModel.fromJson(Map<String, dynamic> json) =>
@@ -213,8 +228,11 @@ class _$_ItemListModel implements _ItemListModel {
   }
 
   @override
+  final ItemAvailabilityFilterType itemAvailabilityFilterType;
+
+  @override
   String toString() {
-    return 'ItemListModel(isLoading: $isLoading, hasError: $hasError, selectedCategory: $selectedCategory, group: $group, items: $items)';
+    return 'ItemListModel(isLoading: $isLoading, hasError: $hasError, selectedCategory: $selectedCategory, group: $group, items: $items, itemAvailabilityFilterType: $itemAvailabilityFilterType)';
   }
 
   @override
@@ -229,13 +247,23 @@ class _$_ItemListModel implements _ItemListModel {
             (identical(other.selectedCategory, selectedCategory) ||
                 other.selectedCategory == selectedCategory) &&
             (identical(other.group, group) || other.group == group) &&
-            const DeepCollectionEquality().equals(other._items, _items));
+            const DeepCollectionEquality().equals(other._items, _items) &&
+            (identical(other.itemAvailabilityFilterType,
+                    itemAvailabilityFilterType) ||
+                other.itemAvailabilityFilterType ==
+                    itemAvailabilityFilterType));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, hasError,
-      selectedCategory, group, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      hasError,
+      selectedCategory,
+      group,
+      const DeepCollectionEquality().hash(_items),
+      itemAvailabilityFilterType);
 
   @JsonKey(ignore: true)
   @override
@@ -257,7 +285,9 @@ abstract class _ItemListModel implements ItemListModel {
       required final bool hasError,
       required final ItemListCategoryModel? selectedCategory,
       required final ItemListGroupModel? group,
-      required final List<ItemListItemModel> items}) = _$_ItemListModel;
+      required final List<ItemListItemModel> items,
+      required final ItemAvailabilityFilterType
+          itemAvailabilityFilterType}) = _$_ItemListModel;
 
   factory _ItemListModel.fromJson(Map<String, dynamic> json) =
       _$_ItemListModel.fromJson;
@@ -272,6 +302,8 @@ abstract class _ItemListModel implements ItemListModel {
   ItemListGroupModel? get group;
   @override
   List<ItemListItemModel> get items;
+  @override
+  ItemAvailabilityFilterType get itemAvailabilityFilterType;
   @override
   @JsonKey(ignore: true)
   _$$_ItemListModelCopyWith<_$_ItemListModel> get copyWith =>
@@ -707,6 +739,7 @@ mixin _$ItemListItemModel {
   String? get description => throw _privateConstructorUsedError;
   ItemListCategoryModel? get category => throw _privateConstructorUsedError;
   ItemListUserModel get owner => throw _privateConstructorUsedError;
+  bool get isActive => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -727,6 +760,7 @@ abstract class $ItemListItemModelCopyWith<$Res> {
       String? description,
       ItemListCategoryModel? category,
       ItemListUserModel owner,
+      bool isActive,
       String? imageUrl});
 
   $ItemListCategoryModelCopyWith<$Res>? get category;
@@ -751,6 +785,7 @@ class _$ItemListItemModelCopyWithImpl<$Res, $Val extends ItemListItemModel>
     Object? description = freezed,
     Object? category = freezed,
     Object? owner = null,
+    Object? isActive = null,
     Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
@@ -774,6 +809,10 @@ class _$ItemListItemModelCopyWithImpl<$Res, $Val extends ItemListItemModel>
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as ItemListUserModel,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -816,6 +855,7 @@ abstract class _$$_ItemListItemModelCopyWith<$Res>
       String? description,
       ItemListCategoryModel? category,
       ItemListUserModel owner,
+      bool isActive,
       String? imageUrl});
 
   @override
@@ -840,6 +880,7 @@ class __$$_ItemListItemModelCopyWithImpl<$Res>
     Object? description = freezed,
     Object? category = freezed,
     Object? owner = null,
+    Object? isActive = null,
     Object? imageUrl = freezed,
   }) {
     return _then(_$_ItemListItemModel(
@@ -863,6 +904,10 @@ class __$$_ItemListItemModelCopyWithImpl<$Res>
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as ItemListUserModel,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -880,6 +925,7 @@ class _$_ItemListItemModel implements _ItemListItemModel {
       required this.description,
       required this.category,
       required this.owner,
+      required this.isActive,
       this.imageUrl});
 
   factory _$_ItemListItemModel.fromJson(Map<String, dynamic> json) =>
@@ -896,11 +942,13 @@ class _$_ItemListItemModel implements _ItemListItemModel {
   @override
   final ItemListUserModel owner;
   @override
+  final bool isActive;
+  @override
   final String? imageUrl;
 
   @override
   String toString() {
-    return 'ItemListItemModel(id: $id, name: $name, description: $description, category: $category, owner: $owner, imageUrl: $imageUrl)';
+    return 'ItemListItemModel(id: $id, name: $name, description: $description, category: $category, owner: $owner, isActive: $isActive, imageUrl: $imageUrl)';
   }
 
   @override
@@ -915,6 +963,8 @@ class _$_ItemListItemModel implements _ItemListItemModel {
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.owner, owner) || other.owner == owner) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl));
   }
@@ -922,7 +972,7 @@ class _$_ItemListItemModel implements _ItemListItemModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, description, category, owner, imageUrl);
+      runtimeType, id, name, description, category, owner, isActive, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -946,6 +996,7 @@ abstract class _ItemListItemModel implements ItemListItemModel {
       required final String? description,
       required final ItemListCategoryModel? category,
       required final ItemListUserModel owner,
+      required final bool isActive,
       final String? imageUrl}) = _$_ItemListItemModel;
 
   factory _ItemListItemModel.fromJson(Map<String, dynamic> json) =
@@ -961,6 +1012,8 @@ abstract class _ItemListItemModel implements ItemListItemModel {
   ItemListCategoryModel? get category;
   @override
   ItemListUserModel get owner;
+  @override
+  bool get isActive;
   @override
   String? get imageUrl;
   @override

@@ -50,6 +50,7 @@
   "deleteItem": "Delete item?",
   "delete": "Delete",
   "filterByCategory": "Filter by category:",
+  "filterByAvailability": "Filter by availability:",
   "filterByDate": "Filter by date:",
   "messages": "Messages",
   "preferences": "Preferences",
@@ -74,6 +75,7 @@
   "newItem": "New Item",
   "itemSavedSuccessfully": "Item saved successfully",
   "itemSaveFailed": "Could not save item",
+  "isBorrowed": "Borrowed",
   "leaveGroup": "Leave group",
   "leaveGroupWarning": "Your items in this group will be deleted"
 }

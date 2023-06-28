@@ -1,3 +1,4 @@
+import "package:borrow_app/common/enums/item_availability_filter_type.enum.dart";
 import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
@@ -96,4 +97,8 @@ abstract class ItemListController extends StateNotifier<ItemListModel> {
   void selectCategory(ItemListCategoryModel? category);
 
   Future<void> refresh();
+
+  void setItemAvailabilityFilterType(
+    ItemAvailabilityFilterType? itemFilterType,
+  );
 }

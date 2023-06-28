@@ -50,6 +50,7 @@
   "deleteItem": "Supprimer l'objet?",
   "delete": "Suprimer",
   "filterByCategory": "Filtrer par catégorie:",
+  "filterByAvailability": "Filtrer par disponibilité:",
   "filterByDate": "Filtrer par date:",
   "messages": "Messages",
   "preferences": "Réglages",
@@ -74,6 +75,7 @@
   "newItem": "Nouvel objet",
   "itemSavedSuccessfully": "Objet sauvegardé avec succès",
   "itemSaveFailed": "L'objet n'a pas pu être sauvegardé",
+  "isBorrowed": "Emprunté",
   "leaveGroup": "Quitter le groupe",
   "leaveGroupWarning": "Vos articles dans ce groupe seront supprimés"
 }

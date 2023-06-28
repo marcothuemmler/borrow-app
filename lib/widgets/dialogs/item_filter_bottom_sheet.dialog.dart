@@ -1,3 +1,4 @@
+import "package:borrow_app/common/enums/item_availability_filter_type.enum.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
@@ -21,6 +22,7 @@ class ItemFilterBottomSheet extends ConsumerWidget {
     final ItemListModel model = ref.watch(
       providers.itemListControllerProvider(_groupId),
     );
+
     return Container(
       padding: const EdgeInsets.all(30),
       constraints: const BoxConstraints(maxWidth: 600),
@@ -54,6 +56,31 @@ class ItemFilterBottomSheet extends ConsumerWidget {
                     DropdownMenuItem<ItemListCategoryModel>(
                   value: category,
                   child: Text(category.name),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              AppLocalizations.of(context).filterByAvailability,
+              style: TextStyle(
+                color: Colors.black.withOpacity(0.6),
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 250,
+              child: DropdownWidget<ItemAvailabilityFilterType>(
+                hint: Text(AppLocalizations.of(context).category),
+                items: ItemAvailabilityFilterType.values,
+                onChanged: controller.setItemAvailabilityFilterType,
+                value: model.itemAvailabilityFilterType,
+                mapFunction: (ItemAvailabilityFilterType option) =>
+                    DropdownMenuItem<ItemAvailabilityFilterType>(
+                  value: option,
+                  child: Text(
+                    filterLocalizations(context: context)[option] ?? "",
+                  ),
                 ),
               ),
             ),
