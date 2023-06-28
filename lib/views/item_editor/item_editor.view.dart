@@ -131,44 +131,39 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
     required ItemEditorController controller,
     required WidgetRef ref,
     required BuildContext context,
-  }) {
+  }) async {
     if (category?.id is String) {
       controller.selectCategory(category);
     } else {
       final CategoriesSettingsController categoriesSettingsController =
           ref.read(providers.categoriesListProvider(_groupId).notifier);
-      showNewCategoryDialog(categoriesSettingsController, context)
-          .then((bool? success) {
-        if (success == true) {
-          categoriesSettingsController.addCategory().then((_) {
-            controller.refreshCategories();
-          });
-        }
-      });
+      final bool? success = await showNewCategoryDialog(
+        categoriesSettingsController,
+        context,
+      );
+      if (success == true) {
+        await categoriesSettingsController.addCategory();
+        controller.refreshCategories();
+      }
     }
   }
 
-  void _saveItem(ItemEditorController controller, BuildContext context) {
+  void _saveItem(ItemEditorController controller, BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      controller.save().then((bool? success) {
-        if (success is bool) {
-          final SnackBar snackBar = SnackBar(
-            content: Text(
-              success == true
-                  ? AppLocalizations.of(context).itemSavedSuccessfully
-                  : AppLocalizations.of(context).itemSaveFailed,
-            ),
-            backgroundColor: success == true ? Colors.green : Colors.red,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          if (success) {
-            Future<void>.delayed(
-              const Duration(milliseconds: 700),
-              context.pop,
-            );
-          }
+      final bool? success = await controller.save();
+      if (success is bool && controller.mounted) {
+        final String snackBarText = success
+            ? AppLocalizations.of(context).itemSavedSuccessfully
+            : AppLocalizations.of(context).itemSaveFailed;
+        final SnackBar snackBar = SnackBar(
+          content: Text(snackBarText),
+          backgroundColor: success ? Colors.green : Colors.red,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        if (success) {
+          Future<void>.delayed(const Duration(milliseconds: 700), context.pop);
         }
-      });
+      }
     }
   }
 }
