@@ -1,5 +1,4 @@
 import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
-import "package:borrow_app/common/mixins/filter_borrowed_items.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/widgets/buttons/dotted_border_button.widget.dart";
@@ -8,6 +7,7 @@ import "package:borrow_app/widgets/various_components/list_refresh_indicator.wid
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import 'package:borrow_app/common/enums/filter_borrowed_items_options.enum.dart';
 
 class ItemListView extends ConsumerWidget with CategoryDialogMixin {
   final String _groupId;

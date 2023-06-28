@@ -1,4 +1,3 @@
-import "package:borrow_app/common/mixins/filter_borrowed_items.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
@@ -7,6 +6,7 @@ import "package:calendar_date_picker2/calendar_date_picker2.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import 'package:borrow_app/common/enums/filter_borrowed_items_options.enum.dart';
 
 class ItemFilterBottomSheet extends ConsumerWidget {
   const ItemFilterBottomSheet({super.key, required String groupId})

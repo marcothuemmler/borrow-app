@@ -1,11 +1,11 @@
-import "package:borrow_app/common/mixins/filter_borrowed_items.mixin.dart";
 import "package:borrow_app/services/routing/routes.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.model.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.service.dart";
 import "package:borrow_app/views/dashboard/item_list/item_list.view.dart";
 import "package:go_router/go_router.dart";
+import "package:borrow_app/common/enums/filter_borrowed_items_options.enum.dart";
 
-class ItemListControllerImplementation extends ItemListController with FilterBorrowedItems {
+class ItemListControllerImplementation extends ItemListController {
   final ItemListService _itemListService;
   final String _groupId;
   final GoRouter _router;

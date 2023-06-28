@@ -1,5 +1,5 @@
-import "package:borrow_app/common/mixins/filter_borrowed_items.mixin.dart";
 import "package:freezed_annotation/freezed_annotation.dart";
+import "package:borrow_app/common/enums/filter_borrowed_items_options.enum.dart";
 
 part "item_list.model.freezed.dart";
 part "item_list.model.g.dart";
