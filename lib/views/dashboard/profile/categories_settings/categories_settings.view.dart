@@ -1,14 +1,13 @@
-import "package:borrow_app/common/enums/form_validation_type.enum.dart";
+import "package:borrow_app/common/mixins/category_dialog.mixin.dart";
 import "package:borrow_app/common/mixins/form_validator.mixin.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/dashboard/profile/categories_settings/category_settings.model.dart";
-import "package:borrow_app/widgets/dialogs/new_category_dialog.dart";
 import "package:borrow_app/widgets/items/dismissible_item.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class CategoriesSettingsView extends ConsumerWidget {
+class CategoriesSettingsView extends ConsumerWidget with CategoryDialogMixin {
   final String _groupId;
 
   const CategoriesSettingsView({
@@ -48,7 +47,10 @@ class CategoriesSettingsView extends ConsumerWidget {
                       categories.elementAt(index);
                   return DismissibleItem(
                     item: category,
-                    onDismissed: (_) => controller.deleteCategory(category.id!),
+                    onDismissed: (_) async {
+                      await controller.deleteCategory(category.id!);
+                      _refreshItemListControllerProvider(ref: ref);
+                    },
                   );
                 },
               ),
@@ -61,44 +63,23 @@ class CategoriesSettingsView extends ConsumerWidget {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        onPressed: () => _onNewCategory(context, controller),
+        onPressed: () async {
+          final bool? value = await showNewCategoryDialog(controller, context);
+          if (value ?? false) {
+            await controller.addCategory();
+            _refreshItemListControllerProvider(ref: ref);
+          }
+        },
         label: Text(AppLocalizations.of(context).newCategory),
       ),
     );
   }
 
-  Future<void> _onNewCategory(
-    BuildContext context,
-    CategoriesSettingsController controller,
-  ) async {
-    final bool? value = await _showNewCategoryDialog(
-      context,
-      controller,
-    );
-    if (value ?? false) {
-      controller.addCategory();
+  void _refreshItemListControllerProvider({required WidgetRef ref}) {
+    if (ref.exists(providers.itemListControllerProvider(_groupId))) {
+      // ignore: unused_result
+      ref.refresh(providers.itemListControllerProvider(_groupId));
     }
-  }
-
-  Future<bool?> _showNewCategoryDialog(
-    BuildContext context,
-    CategoriesSettingsController controller,
-  ) async {
-    return showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return NewCategoryDialog(
-          nameValidator: (String? value) => controller.validateFormField(
-            fieldType: FormValidationType.categoryName,
-            context: context,
-            value: value,
-          ),
-          setName: controller.setNewCategoryName,
-          setDescription: controller.setNewCategoryDescription,
-          createCategoryCallback: controller.createNewCategory,
-        );
-      },
-    );
   }
 }
 
