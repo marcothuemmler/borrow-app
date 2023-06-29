@@ -61,7 +61,17 @@ class InvitationListView extends ConsumerWidget {
                       final String id = groupInvitation.id;
                       return InvitationListItem(
                         groupName: groupInvitation.name,
-                        onTapJoin: () => controller.joinGroup(groupId: id),
+                        onTapJoin: () async {
+                          await controller.joinGroup(groupId: id);
+                          if (ref.exists(
+                            providers.groupSelectionControllerProvider,
+                          )) {
+                            // ignore: unused_result
+                            ref.refresh(
+                              providers.groupSelectionControllerProvider,
+                            );
+                          }
+                        },
                         onTapDelete: () => controller.deleteGroupInvitation(
                           groupId: id,
                         ),
@@ -95,7 +105,7 @@ abstract class InvitationListController
     extends StateNotifier<InvitationListModel> {
   InvitationListController(super.state);
 
-  void joinGroup({required String groupId});
+  Future<void> joinGroup({required String groupId});
 
   void deleteGroupInvitation({required String groupId});
 }
