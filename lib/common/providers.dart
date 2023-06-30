@@ -190,7 +190,13 @@ class Providers {
     AutoDisposeStateNotifierProviderRef<ChatController, ChatModel> ref,
     ChatControllerParameters parameters,
   ) {
-    ref.onDispose(ref.read(providers.webSocketServiceProvider).disposeSocket);
+    ref.onDispose(() {
+      if (ref.exists(providers.chatListControllerProvider)) {
+        // ignore: unused_result
+        ref.refresh(providers.chatListControllerProvider);
+      }
+      ref.read(providers.webSocketServiceProvider).disposeSocket();
+    });
     return ChatControllerImplementation(
       parameters: parameters,
       socketService: ref.read(providers.webSocketServiceProvider),

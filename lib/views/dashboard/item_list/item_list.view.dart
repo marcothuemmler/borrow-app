@@ -30,14 +30,10 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
         isLoading: model.isLoading,
         onAction: controller.refresh,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             if (model.items.isNotEmpty)
               Expanded(
                 child: ListView.builder(
-                  physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics(),
-                  ),
                   padding: const EdgeInsets.only(top: 15),
                   itemCount: model.items.length,
                   shrinkWrap: true,
@@ -52,15 +48,13 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
               )
             else if (!model.isLoading)
               Expanded(
-                child: Center(
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Center(
-                          child: Text(
+                child: CustomScrollView(
+                  slivers: <SliverFillRemaining>[
+                    SliverFillRemaining(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
                             AppLocalizations.of(context).emptyGroupMessage,
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
@@ -68,17 +62,17 @@ class ItemListView extends ConsumerWidget with CategoryDialogMixin {
                               color: Colors.blueGrey,
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 15),
-                        DottedBorderButton(
-                          title: AppLocalizations.of(context).addNewItem,
-                          icon: const Icon(Icons.add),
-                          onTap: controller.navigateToItemEditor,
-                          width: 220,
-                        ),
-                      ],
+                          const SizedBox(height: 15),
+                          DottedBorderButton(
+                            title: AppLocalizations.of(context).addNewItem,
+                            icon: const Icon(Icons.add),
+                            onTap: controller.navigateToItemEditor,
+                            width: 220,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
           ],
