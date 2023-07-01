@@ -1,20 +1,20 @@
-import "package:borrow_app/services/api/websocket_service.dart";
 import "package:borrow_app/services/storage/secure_storage.service.dart";
 import "package:borrow_app/views/chat/chat.model.dart";
+import "package:borrow_app/views/chat/chat.service.dart";
 import "package:borrow_app/views/chat/chat.view.dart";
 
 class ChatControllerImplementation extends ChatController {
   final ChatControllerParameters _parameters;
-  final WebSocketService _socketService;
+  final ChatService _chatService;
   final SecureStorageService _storageService;
 
   ChatControllerImplementation({
     ChatModel? model,
     required ChatControllerParameters parameters,
-    required WebSocketService socketService,
+    required ChatService chatService,
     required SecureStorageService storageService,
   })  : _parameters = parameters,
-        _socketService = socketService,
+        _chatService = chatService,
         _storageService = storageService,
         super(
           model ??
@@ -30,13 +30,13 @@ class ChatControllerImplementation extends ChatController {
 
   void _init() async {
     state = state.copyWith(userId: await _storageService.read(key: "user-id"));
-    _socketService.onMessage(_loadMessage);
-    _socketService.onMessages(_loadMessages);
-    _socketService.connectSocket();
+    _chatService.onMessage(_loadMessage);
+    _chatService.onMessages(_loadMessages);
+    _chatService.connectSocket();
     final String? roomId = _parameters.item.ownerId != state.userId
         ? state.userId
         : _parameters.otherUserId;
-    _socketService.requestMessages(
+    _chatService.requestMessages(
       room: "${_parameters.item.id}|${_parameters.item.ownerId}|$roomId",
     );
   }
@@ -65,7 +65,7 @@ class ChatControllerImplementation extends ChatController {
       final String? roomId = _parameters.item.ownerId != state.userId
           ? state.userId
           : _parameters.otherUserId;
-      await _socketService.sendMessage(
+      await _chatService.sendMessage(
         room: "${_parameters.item.id}|${_parameters.item.ownerId}|$roomId",
         message: message,
         senderId: state.userId,

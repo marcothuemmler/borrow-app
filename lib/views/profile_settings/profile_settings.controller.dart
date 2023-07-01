@@ -74,13 +74,13 @@ class ProfileSettingsControllerImplementation
   }
 
   @override
-  void setUsername({required String username}) {
+  void setUsername(String username) {
     state = state.copyWith.patchedUser!(username: username);
     _compareUserData();
   }
 
   @override
-  void setEmail({required String email}) {
+  void setEmail(String email) {
     state = state.copyWith.patchedUser!(email: email);
     _compareUserData();
   }

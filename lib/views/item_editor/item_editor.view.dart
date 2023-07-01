@@ -85,7 +85,9 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
                       context: context,
                     );
                   },
-                  onSaveButtonPressed: () => _saveItem(controller, context),
+                  onSaveButtonPressed: () {
+                    _saveItem(controller, context, ref);
+                  },
                 ),
               ),
             )
@@ -113,7 +115,7 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
                     context: context,
                   );
                 },
-                onSaveButtonPressed: () => _saveItem(controller, context),
+                onSaveButtonPressed: () => _saveItem(controller, context, ref),
               ),
             ),
           if (model.isProcessing)
@@ -148,7 +150,11 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
     }
   }
 
-  void _saveItem(ItemEditorController controller, BuildContext context) async {
+  void _saveItem(
+    ItemEditorController controller,
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     if (_formKey.currentState!.validate()) {
       final bool? success = await controller.save();
       if (success is bool && controller.mounted) {
@@ -161,9 +167,25 @@ class ItemEditorView extends ConsumerWidget with CategoryDialogMixin {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         if (success) {
+          _refreshProfileItemListControllerProvider(ref);
+          _refreshItemListControllerProvider(ref);
           Future<void>.delayed(const Duration(milliseconds: 700), context.pop);
         }
       }
+    }
+  }
+
+  void _refreshProfileItemListControllerProvider(WidgetRef ref) {
+    if (ref.exists(providers.profileItemListControllerProvider(_groupId))) {
+      // ignore: unused_result
+      ref.refresh(providers.profileItemListControllerProvider(_groupId));
+    }
+  }
+
+  void _refreshItemListControllerProvider(WidgetRef ref) {
+    if (ref.exists(providers.itemListControllerProvider(_groupId))) {
+      // ignore: unused_result
+      ref.refresh(providers.itemListControllerProvider(_groupId));
     }
   }
 }

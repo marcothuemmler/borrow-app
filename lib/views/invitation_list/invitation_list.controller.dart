@@ -43,7 +43,7 @@ class InvitationListControllerImplementation extends InvitationListController {
   }
 
   @override
-  void joinGroup({required String groupId}) async {
+  Future<void> joinGroup({required String groupId}) async {
     try {
       state = state.copyWith(isLoading: true, hasError: false);
       await _invitationListService.joinGroup(groupId: groupId);

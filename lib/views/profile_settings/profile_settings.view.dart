@@ -42,6 +42,8 @@ class ProfileSettingsView extends ConsumerWidget {
         ),
       );
     }
+    // Workaround for https://github.com/flutter/flutter/issues/36271
+    final DeleteAccountDialog deleteAccountDialog = DeleteAccountDialog();
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context).profileSettings)),
       body: SafeArea(
@@ -80,10 +82,7 @@ class ProfileSettingsView extends ConsumerWidget {
                                 TextFormField(
                                   autocorrect: false,
                                   initialValue: model.patchedUser?.username,
-                                  onChanged: (String value) =>
-                                      controller.setUsername(
-                                    username: value,
-                                  ),
+                                  onChanged: controller.setUsername,
                                   validator: (String? value) {
                                     return controller.validateFormField(
                                       fieldType: FormValidationType.username,
@@ -102,10 +101,7 @@ class ProfileSettingsView extends ConsumerWidget {
                                 TextFormField(
                                   autocorrect: false,
                                   initialValue: model.patchedUser?.email,
-                                  onChanged: (String value) =>
-                                      controller.setEmail(
-                                    email: value,
-                                  ),
+                                  onChanged: controller.setEmail,
                                   validator: (String? value) {
                                     return controller.validateFormField(
                                       fieldType: FormValidationType.email,
@@ -176,8 +172,10 @@ class ProfileSettingsView extends ConsumerWidget {
                           ),
                         ),
                         context: context,
-                        builder: (BuildContext context) =>
-                            const DeleteAccountDialog(),
+                        builder: (_) => Padding(
+                          padding: MediaQuery.of(context).viewInsets,
+                          child: deleteAccountDialog,
+                        ),
                       ),
                       child: Text(
                         AppLocalizations.of(context).deleteAccount,
@@ -200,9 +198,9 @@ abstract class ProfileSettingsController
 
   void patchUser();
 
-  void setUsername({required String username});
+  void setUsername(String username);
 
-  void setEmail({required String email});
+  void setEmail(String email);
 
   void setProfileImage(XFile? file);
 
