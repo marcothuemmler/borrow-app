@@ -39,7 +39,7 @@ class ProfileItemListControllerImplementation
   }
 
   @override
-  void refresh() {
+  Future<void> refresh() async {
     _getGroupItemsAndCategories(id: _groupId);
   }
 

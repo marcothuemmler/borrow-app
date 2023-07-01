@@ -100,7 +100,7 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                               children: <Widget>[
                                 Expanded(
                                   child: ListRefreshIndicator(
-                                    onAction: () async => controller.refresh(),
+                                    onAction: controller.refresh,
                                     isLoading: model.isLoading,
                                     child: ListView.builder(
                                       physics:
@@ -131,21 +131,17 @@ class ProfileItemListView extends ConsumerWidget with CategoryDialogMixin {
                               children: <Widget>[
                                 Expanded(
                                   child: ListRefreshIndicator(
-                                    onAction: () async => controller.refresh(),
+                                    onAction: controller.refresh,
                                     isLoading: model.isLoading,
                                     child: ListView.builder(
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
                                       itemCount: borrowedItems.length,
                                       shrinkWrap: true,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        final ProfileItemListItemModel item =
-                                            borrowedItems.elementAt(index);
                                         return DismissibleProfileItemCard(
                                           text: AppLocalizations.of(context)
                                               .markItemAvailable,
-                                          item: item,
+                                          item: borrowedItems.elementAt(index),
                                           onTap: controller.navigateToItem,
                                           onDismiss: controller.deleteItem,
                                           onTapToggleAvailability:
@@ -183,7 +179,7 @@ abstract class ProfileItemListController
     extends StateNotifier<ProfileItemListModel> {
   ProfileItemListController(super.model);
 
-  void refresh();
+  Future<void> refresh();
 
   void navigateToItem({required String itemId});
 

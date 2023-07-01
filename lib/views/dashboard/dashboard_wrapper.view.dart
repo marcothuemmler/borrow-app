@@ -5,7 +5,6 @@ import "package:borrow_app/widgets/menus/app_menu.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:go_router/go_router.dart";
 
 class DashboardWrapperView extends ConsumerWidget {
   final Widget _child;
@@ -25,10 +24,9 @@ class DashboardWrapperView extends ConsumerWidget {
     );
     final DashboardModel model =
         ref.watch(providers.dashboardControllerProvider(_groupId));
-    final String location = GoRouter.of(context).location.toLowerCase();
     return Scaffold(
       appBar: AppBar(
-        leading: location.contains("settings")
+        leading: model.currentIndex == 1
             ? BackButton(onPressed: controller.goBack)
             : null,
         title: Text(

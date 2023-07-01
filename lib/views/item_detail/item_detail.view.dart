@@ -2,6 +2,7 @@ import "package:borrow_app/common/extensions/build_context_extensions.dart";
 import "package:borrow_app/common/extensions/widget_extensions.dart";
 import "package:borrow_app/common/providers.dart";
 import "package:borrow_app/views/item_detail/item_detail.model.dart";
+import "package:borrow_app/widgets/various_components/app_circle_avatar.widget.dart";
 import "package:borrow_app/widgets/various_components/image_placeholder.widget.dart";
 import "package:calendar_date_picker2/calendar_date_picker2.dart";
 import "package:easy_image_viewer/easy_image_viewer.dart";
@@ -152,14 +153,10 @@ class _ItemDetail extends StatelessWidget {
                   ),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    leading: CircleAvatar(
-                      foregroundImage: _item.owner.imageUrl is String
-                          ? NetworkImage(_item.owner.imageUrl!)
-                          : null,
+                    leading: AppCircleAvatar(
+                      imageUrl: _item.owner.imageUrl,
                       radius: 14,
-                      backgroundColor: CupertinoColors.systemGrey5,
-                      foregroundColor: Colors.grey,
-                      child: const Icon(Icons.person, size: 17),
+                      iconSize: 17,
                     ),
                     title: Text(
                       "@${_item.owner.username}",
@@ -171,10 +168,9 @@ class _ItemDetail extends StatelessWidget {
                     trailing: PopupMenuButton<Text>(
                       splashRadius: 1,
                       padding: EdgeInsets.zero,
-                      icon: const Icon(
-                        opticalSize: 1,
+                      icon: Icon(
                         Icons.more_vert,
-                        color: Colors.black54,
+                        color: Colors.black.withOpacity(0.8),
                       ),
                       itemBuilder: (BuildContext context) {
                         return <PopupMenuItem<Text>>[

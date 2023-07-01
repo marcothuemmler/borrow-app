@@ -199,7 +199,7 @@ class Providers {
     });
     return ChatControllerImplementation(
       parameters: parameters,
-      socketService: ref.read(providers.webSocketServiceProvider),
+      chatService: ref.read(providers.webSocketServiceProvider),
       storageService: ref.read(providers.secureStorageServiceProvider),
     );
   });

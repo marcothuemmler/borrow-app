@@ -1,5 +1,5 @@
 import "package:borrow_app/views/chat_list/chat_list.model.dart";
-import "package:flutter/cupertino.dart";
+import "package:borrow_app/widgets/various_components/app_circle_avatar.widget.dart";
 import "package:flutter/material.dart";
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:intl/intl.dart";
@@ -24,13 +24,9 @@ class ChatListItem extends StatelessWidget {
           horizontal: 15,
         ),
         child: ListTile(
-          leading: CircleAvatar(
+          leading: AppCircleAvatar(
+            imageUrl: _message.sender.imageUrl,
             radius: 19,
-            backgroundColor: CupertinoColors.systemGrey5,
-            foregroundImage: _message.sender.imageUrl is String
-                ? NetworkImage(_message.sender.imageUrl!)
-                : null,
-            child: const Icon(Icons.person, color: CupertinoColors.systemGrey),
           ),
           title: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
