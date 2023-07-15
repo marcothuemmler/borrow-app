@@ -14,11 +14,6 @@ community to be able to see what things other people are offering, and offer the
 * This project communicates with an API implemented in [NestJS](https://nestjs.com). You can configure the API_URL in
   the projects .env file located in the assets directory.
 
-    * ***<span style="color:#DC5000">Note: Due to limitations of the hosting service,
-      the WebSockets needed for the in-app chat unfortunately don't currently work on the public instance. Read more
-      <a href="https://vercel.com/guides/do-vercel-serverless-functions-support-websocket-connections">here</a>
-      </span>***
-
 * The backend connects to a Postgres database using TypeORM for entity mapping.
 * An instance of Min.IO S3 compatible object storage is used for group covers, profile pictures and item pictures.
 * In dev environment the API is accessible through OpenAPI
@@ -43,9 +38,6 @@ flutter gen-l10n
 ```
 
 * Create a .env file in the projects assets directory. See .env.template for assistance.<br>
-  There is a public instance of th API at https://borrow-api-marcothuemmler.vercel.app <br>
-  For testing purposes, you can set this URL as your API_URL in your .env file. *Note that WebSockets are currently not
-  supported by the hosting provider. Therefore, chat will unfortunately not work on the public instance.*
 
 ### Usage
 
